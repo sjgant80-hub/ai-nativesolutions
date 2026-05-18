@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Native Solutions — Architecture &amp; Vision</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #ffffff;
+  --text: #1a1a2e;
+  --dim: #6b7280;
+  --accent: #2d6b5a;
+  --accent2: #7c5ce0;
+  --warm: #c47a3d;
+  --blue: #3a6a8a;
+  --border: #e5e7eb;
+  --surface: #f9fafb;
+  --green: #059669;
+  --red: #dc2626;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  font-size: 11pt;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 48px;
+}
+
+/* Print optimisation */
+@media print {
+  body { padding: 0; font-size: 10pt; max-width: 100%; }
+  .page-break { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  a { color: var(--accent) !important; text-decoration: none !important; }
+  .toc a { color: var(--text) !important; }
+}
+
+/* Typography */
+h1 {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 28pt;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+h1 em { font-style: italic; color: var(--accent); }
+
+h2 {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 18pt;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 36px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--accent);
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 13pt;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 20px;
+  margin-bottom: 6px;
+}
+
+p { margin-bottom: 10px; }
+
+.subtitle {
+  font-size: 13pt;
+  color: var(--dim);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  color: var(--dim);
+  margin-bottom: 32px;
+  letter-spacing: 0.02em;
+}
+
+/* Cover */
+.cover {
+  text-align: center;
+  padding: 80px 0 60px;
+  border-bottom: 3px solid var(--accent);
+  margin-bottom: 40px;
+}
+.cover .logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.cover h1 { font-size: 32pt; margin-bottom: 12px; }
+.cover .subtitle { font-size: 14pt; }
+
+/* Table of contents */
+.toc { margin: 24px 0 40px; }
+.toc h3 { font-family: 'JetBrains Mono', monospace; font-size: 9pt; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+.toc ol { padding-left: 20px; }
+.toc li { margin-bottom: 4px; font-size: 10.5pt; }
+.toc a { color: var(--text); text-decoration: none; }
+.toc a:hover { color: var(--accent); }
+
+/* Callout boxes */
+.callout {
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  margin: 16px 0;
+  border-radius: 0 6px 6px 0;
+}
+.callout.key {
+  border-left-color: var(--warm);
+  background: #fffbf5;
+}
+.callout.blue {
+  border-left-color: var(--blue);
+  background: #f5f9fc;
+}
+.callout p { margin-bottom: 4px; }
+.callout p:last-child { margin-bottom: 0; }
+.callout-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.callout.key .callout-label { color: var(--warm); }
+.callout.blue .callout-label { color: var(--blue); }
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 10pt;
+}
+th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--border);
+  background: var(--surface);
+}
+td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+
+/* Code blocks */
+.code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt;
+  background: #1a1a2e;
+  color: #e0e0f0;
+  padding: 16px;
+  border-radius: 6px;
+  margin: 14px 0;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+}
+.code .kw { color: #7c5ce0; }
+.code .str { color: #00d4aa; }
+.code .cm { color: #6b7280; font-style: italic; }
+.code .num { color: #ffaa33; }
+
+/* Diagram boxes */
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 16px 0;
+  text-align: center;
+}
+.diagram-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  color: var(--dim);
+  margin-top: 8px;
+}
+
+/* Flow diagram */
+.flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.flow-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 9pt;
+  font-weight: 500;
+}
+.flow-box.hub { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.flow-box.agent { border-color: var(--accent2); color: var(--accent2); }
+.flow-arrow { color: var(--dim); font-size: 14pt; }
+
+/* Product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+@media print {
+  .product-grid { grid-template-columns: 1fr 1fr; }
+}
+.product-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+.product-item .p-name {
+  font-weight: 600;
+  font-size: 10.5pt;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.product-item .p-prime {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  color: var(--accent);
+}
+.product-item .p-desc {
+  font-size: 9.5pt;
+  color: var(--dim);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* Lists */
+ul, ol { padding-left: 22px; margin-bottom: 10px; }
+li { margin-bottom: 4px; }
+
+/* Emphasis */
+strong { font-weight: 600; }
+em { font-style: italic; }
+.highlight { color: var(--accent); font-weight: 600; }
+.mono { font-family: 'JetBrains Mono', monospace; font-size: 9pt; }
+
+/* Separator */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 28px 0;
+}
+
+/* Footer */
+.doc-footer {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 2px solid var(--accent);
+  font-size: 9pt;
+  color: var(--dim);
+  text-align: center;
+  line-height: 1.8;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- COVER PAGE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cover">
+  <div class="logo">◊·κ=1 · sovereign architecture</div>
+  <h1>AI Native <em>Solutions</em></h1>
+  <p class="subtitle">How to run an AI company on zero infrastructure,<br>where the products build each other and the empire runs itself.</p>
+  <p class="meta">Architecture Document · v1.0 · May 2026</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- TABLE OF CONTENTS -->
+<!-- ═══════════════════════════════════════ -->
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#s1">The Core Idea — What Is AI Native Solutions?</a></li>
+    <li><a href="#s2">Sovereign Architecture — Why One File Changes Everything</a></li>
+    <li><a href="#s3">The Triple Recursion — How the Site Eats Itself</a></li>
+    <li><a href="#s4">The Product Mesh — Every Tool Feeds Every Other Tool</a></li>
+    <li><a href="#s5">The 127-Agent System — Two Pools, One Architecture</a></li>
+    <li><a href="#s6">FallMesh Protocol — How Sovereign Tools Connect</a></li>
+    <li><a href="#s7">The Inbox — How One Person Runs an Empire</a></li>
+    <li><a href="#s8">The Economics — Running a Company for £0/month</a></li>
+    <li><a href="#s9">Build Order — What Gets Built When</a></li>
+    <li><a href="#s10">The Product Catalogue</a></li>
+  </ol>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §1 — THE CORE IDEA -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s1">1. The Core Idea</h2>
+
+<p>AI Native Solutions is a company that builds AI-powered tools. But unlike every other company in the space, it operates on a principle that sounds impossible until you see it working:</p>
+
+<div class="callout key">
+  <p class="callout-label">The premise</p>
+  <p><strong>Every tool is a single HTML file.</strong> No servers. No subscriptions. No cloud. No platform dependency. One file that runs in your browser, stores your data locally, and belongs to you forever.</p>
+</div>
+
+<p>This isn't a constraint — it's the entire strategy. When your product is one file, your hosting is free (GitHub Pages), your scaling is free (static CDN), your maintenance is free (no servers to crash), and your customer never gets locked in.</p>
+
+<p>The company currently has 12 products, all deployed and live, all interconnected through a mesh protocol, all managed by AI agents. The monthly infrastructure cost is <strong>£0</strong>.</p>
+
+<p>This document explains how that works.</p>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §2 — SOVEREIGN ARCHITECTURE -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s2">2. Sovereign Architecture</h2>
+
+<h3>What "sovereign" means</h3>
+
+<p>In the AI Native Solutions context, "sovereign" means a piece of software that:</p>
+
+<ul>
+  <li><strong>Runs entirely in the browser</strong> — no backend server required</li>
+  <li><strong>Stores data in IndexedDB</strong> — your data never leaves your device</li>
+  <li><strong>Ships as a single HTML file</strong> — no build step to run, no dependencies to install</li>
+  <li><strong>Works offline</strong> — once loaded, it needs nothing from the internet</li>
+  <li><strong>Belongs to the user</strong> — you can save the file, fork it, modify it, host it yourself</li>
+</ul>
+
+<p>This architecture eliminates entire categories of business cost: server provisioning, database management, scaling infrastructure, DevOps, monitoring, security patching, SSL certificates, uptime SLAs. All of it disappears when your product is a static file.</p>
+
+<h3>The technology stack</h3>
+
+<table>
+  <tr><th>Layer</th><th>Technology</th><th>Cost</th></tr>
+  <tr><td>Hosting</td><td>GitHub Pages (static CDN, global)</td><td>£0 forever</td></tr>
+  <tr><td>Storage</td><td>IndexedDB (browser-local)</td><td>£0 forever</td></tr>
+  <tr><td>AI (tier 1)</td><td>Google Gemini API (free tier)</td><td>£0</td></tr>
+  <tr><td>AI (tier 2)</td><td>DeepSeek API (free tier)</td><td>£0</td></tr>
+  <tr><td>AI (tier 3)</td><td>Anthropic Claude API (paid, fallback)</td><td>Pay per use</td></tr>
+  <tr><td>Version control</td><td>GitHub repositories</td><td>£0</td></tr>
+  <tr><td>CI/CD</td><td>GitHub Actions (static deploy)</td><td>£0</td></tr>
+  <tr><td>Domain</td><td>github.io subdomains</td><td>£0</td></tr>
+</table>
+
+<div class="callout">
+  <p class="callout-label">Key insight</p>
+  <p>The user brings their own API keys. The tools use a cascade — try the free provider first, fall back to paid only when necessary. The tool never phones home. The keys never leave the browser.</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §3 — THE TRIPLE RECURSION -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s3">3. The Triple Recursion</h2>
+
+<p>This is the architectural principle that makes AI Native Solutions unusual. The company is recursive — it uses its own products to run itself, at three distinct levels.</p>
+
+<h3>Recursion 1 — The site IS the product</h3>
+
+<p>The AI Native Solutions website is itself a sovereign single-file HTML application, deployed on GitHub Pages with zero servers. The company's marketing message is: "We build sovereign tools that run with zero infrastructure." The website <em>proves</em> this by being exactly that. The medium is the message.</p>
+
+<div class="callout">
+  <p>A visitor doesn't read about sovereign architecture — they're experiencing it. The site they're looking at is the proof of concept.</p>
+</div>
+
+<h3>Recursion 2 — The demos ARE the products</h3>
+
+<p>When you interact with a "demo" on the site — the AI concierge that qualifies leads, the psychology engine that analyses conversation patterns, the news tool that strips manipulation — you're not using a demonstration version. You're using the live product. There is no separate "production" instance. The demo IS the product because the product is a single file running in your browser.</p>
+
+<h3>Recursion 3 — Users become infrastructure</h3>
+
+<p>When someone downloads a sovereign tool (like FallCube, the file storage tool), their browser becomes a mesh node in a distributed network. More users means more distributed storage, which means more infrastructure — without spending anything. The company's infrastructure scales in proportion to its user base, at zero cost.</p>
+
+<div class="diagram">
+  <div class="flow">
+    <div class="flow-box hub">Site (sovereign HTML)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">Demos (live products)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">Users (mesh nodes)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box hub">More infrastructure</div>
+  </div>
+  <div class="diagram-label">Each layer feeds the next. The system grows by being used.</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §4 — THE PRODUCT MESH -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s4">4. The Product Mesh</h2>
+
+<p>The products don't exist in isolation. Every tool feeds data to, and receives data from, the other tools in the system. This is not a hierarchy with one product at the top — it's a fully connected mesh where information flows in every direction.</p>
+
+<h3>How the mesh works</h3>
+
+<p>Each product is a node in the mesh. When a product generates useful output — a lead score, a conversation analysis, a governance decision, a market signal — that output can be consumed by any other node that needs it. The connections are:</p>
+
+<table>
+  <tr><th>From</th><th>→</th><th>To</th><th>What Flows</th></tr>
+  <tr><td>AI Native hub</td><td>→</td><td>FallCRM</td><td>Qualified leads from AI concierge</td></tr>
+  <tr><td>FallCall</td><td>→</td><td>FallCRM</td><td>Call outcomes, client intelligence</td></tr>
+  <tr><td>FallCall Live</td><td>→</td><td>FallCall</td><td>Real-time call data stream</td></tr>
+  <tr><td>FallLearn</td><td>→</td><td>Hub</td><td>Course graduates become leads</td></tr>
+  <tr><td>FallLearn</td><td>⇄</td><td>FallGrade</td><td>Skill assessments, competency data</td></tr>
+  <tr><td>FallGrade</td><td>→</td><td>Si-Didy</td><td>Talent intelligence</td></tr>
+  <tr><td>FallSignal</td><td>→</td><td>FallWatch</td><td>News sentiment signals</td></tr>
+  <tr><td>FallForensics</td><td>→</td><td>Si-Didy</td><td>Political context for decisions</td></tr>
+  <tr><td>OracleEngine</td><td>→</td><td>All</td><td>Pattern recognition projections</td></tr>
+  <tr><td>FallWatch</td><td>→</td><td>Si-Didy</td><td>Market intelligence</td></tr>
+  <tr><td>FallConsensus</td><td>→</td><td>All</td><td>Governance decisions</td></tr>
+  <tr><td>FallMesh</td><td>⇄</td><td>All</td><td>Topology, discovery, protocol</td></tr>
+</table>
+
+<div class="callout blue">
+  <p class="callout-label">Why this matters</p>
+  <p>In a traditional company, each product is a silo with its own database and its own team. Here, every product enriches every other product. A lead who completes FallLearn becomes a qualified prospect in FallCRM. A market signal from FallWatch triggers a decision in FallConsensus. The system gets smarter as a whole, not just product by product.</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §5 — THE 127-AGENT SYSTEM -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s5">5. The 127-Agent System</h2>
+
+<p>At the operational layer, the company is run by AI agents — autonomous software entities that handle specific tasks without human intervention. There are two separate pools of 127 agents each, serving different purposes.</p>
+
+<h3>Why 127?</h3>
+
+<p>127 is 2⁷ − 1, a Mersenne prime. It's the ceiling of the agent architecture, chosen because it's the largest manageable number that still allows meaningful individual agent identity. The system is called <strong>MACCubeFACE(127)</strong>.</p>
+
+<h3>The 8+1 topology</h3>
+
+<p>Both agent pools share the same internal structure: one orchestrator (Ω) plus eight specialist groups (α through θ) of 16 agents each, plus one contrarian agent (Agent 127) that challenges the consensus. This gives: 1 + (8 × 16) − 1 + 1 = 127 total.</p>
+
+<h3>Pool 1 — AI Native 127 (Business)</h3>
+
+<p>This pool handles everything external-facing: clients, market, revenue. It is the company's workforce.</p>
+
+<table>
+  <tr><th>Group</th><th>Agents</th><th>Function</th><th>Tools Used</th></tr>
+  <tr><td><strong>α</strong> Inbound</td><td>1–16</td><td>Website concierge, lead qualification, inquiry routing</td><td>FallCall, FreudEngine</td></tr>
+  <tr><td><strong>β</strong> Sales</td><td>17–32</td><td>Follow-up sequences, demos, proposals, objection handling</td><td>FallCall, FallCRM</td></tr>
+  <tr><td><strong>γ</strong> Delivery</td><td>33–48</td><td>Deploy products to clients, onboarding, training</td><td>FallCube, FallOS</td></tr>
+  <tr><td><strong>δ</strong> Support</td><td>49–64</td><td>Answer client questions, troubleshoot, gather feedback</td><td>Si-Didy knowledge</td></tr>
+  <tr><td><strong>ε</strong> Marketing</td><td>65–80</td><td>Content creation, competitor monitoring, community</td><td>FallSignal, FallForensics</td></tr>
+  <tr><td><strong>ζ</strong> Finance</td><td>81–96</td><td>Invoicing, cash flow, forecasting, market intelligence</td><td>FallWatch</td></tr>
+  <tr><td><strong>η</strong> Guild</td><td>97–112</td><td>Recruitment, community management, contributor onboarding</td><td>FallGrade, FallConsensus</td></tr>
+  <tr><td><strong>θ</strong> Meta</td><td>113–126</td><td>Performance monitoring, cross-group correlation, architecture improvement</td><td>OracleEngine</td></tr>
+  <tr><td><strong>127</strong> Contrarian</td><td>127</td><td>Adversarial check on all decisions. Challenges assumptions.</td><td>All</td></tr>
+</table>
+
+<h3>Pool 2 — Si-Didy 127 (Personal)</h3>
+
+<p>This pool handles everything internal-facing: the founder's life, health, relationships, and growth. Si-Didy is the personal digital twin — an AI that knows everything about one person and manages their life operations.</p>
+
+<table>
+  <tr><th>Group</th><th>Agents</th><th>Function</th></tr>
+  <tr><td><strong>α</strong> Health</td><td>1–16</td><td>Sleep, exercise, nutrition, energy correlation, stress detection</td></tr>
+  <tr><td><strong>β</strong> Finance</td><td>17–32</td><td>Personal spending, investments, debt management</td></tr>
+  <tr><td><strong>γ</strong> Relationships</td><td>33–48</td><td>Communication management, social obligations, family coordination</td></tr>
+  <tr><td><strong>δ</strong> Work</td><td>49–64</td><td>Build priorities, context switching, session planning, progress tracking</td></tr>
+  <tr><td><strong>ε</strong> Learning</td><td>65–80</td><td>Skill gaps, reading lists, learning velocity</td></tr>
+  <tr><td><strong>ζ</strong> Creative</td><td>81–96</td><td>Build pipeline, product idea evaluation, architecture decisions</td></tr>
+  <tr><td><strong>η</strong> Environment</td><td>97–112</td><td>Calendar, logistics, household admin, travel</td></tr>
+  <tr><td><strong>θ</strong> Pattern</td><td>113–126</td><td>Cross-domain correlation engine — discovers hidden connections</td></tr>
+  <tr><td><strong>127</strong> Mirror</td><td>127</td><td>Meta-awareness. Asks: "Are the agents telling you what you want to hear?"</td></tr>
+</table>
+
+<div class="callout key">
+  <p class="callout-label">The critical difference</p>
+  <p><strong>AI Native 127</strong> = external. It handles clients, market, business. Its output is revenue and growth.</p>
+  <p><strong>Si-Didy 127</strong> = internal. It handles the founder's life. Its output is insights and patterns.</p>
+  <p><strong>Priority rule:</strong> Personal always overrides business. If a client deadline threatens health, Si-Didy flags it. The founder has final authority over everything, but the AI handles first — he just oversees.</p>
+</div>
+
+<h3>The shared substrate</h3>
+
+<p>Both pools run on identical architecture:</p>
+<ul>
+  <li>Same MACCubeFACE(127) agent topology</li>
+  <li>Same 8+1 group structure</li>
+  <li>Same bloom vector analysis for pattern recognition</li>
+  <li>Same free AI cascade (Gemini → DeepSeek → Anthropic)</li>
+  <li>Same sovereign HTML deployment</li>
+  <li>Same prime spine addressing: {2, 3, 5, 7, 11, 13, 17}</li>
+</ul>
+
+<p>The difference is domain context — business vocabulary versus personal vocabulary, professional tone versus intimate tone, market patterns versus life patterns.</p>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §6 — FALLMESH PROTOCOL -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s6">6. FallMesh Protocol</h2>
+
+<p>FallMesh is the protocol that connects all sovereign tools. Since there are no servers, the mesh uses a combination of techniques for peer-to-peer communication between browser-based tools.</p>
+
+<h3>Design principles</h3>
+
+<ol>
+  <li><strong>Sovereignty</strong> — Every node owns its data. No node can compel another. Keys are stored locally, never transmitted.</li>
+  <li><strong>Bring your own keys</strong> — Each tool stores API keys in its own IndexedDB. The mesh never sees them.</li>
+  <li><strong>Zero infrastructure</strong> — Discovery happens through static JSON manifests hosted on GitHub Pages. No signalling server needed.</li>
+  <li><strong>Prime spine addressing</strong> — Every node has a prime number address. The hub is 1 (unity). Products are primes. Agent groups are composites. This creates a mathematically elegant addressing space.</li>
+</ol>
+
+<h3>Communication channels</h3>
+
+<table>
+  <tr><th>Scope</th><th>Channel</th><th>How it works</th></tr>
+  <tr><td>Same origin</td><td>BroadcastChannel</td><td>Instant messaging between tabs on the same domain</td></tr>
+  <tr><td>Cross-tab</td><td>localStorage events</td><td>Write to localStorage, other tabs receive the event</td></tr>
+  <tr><td>Cross-origin</td><td>postMessage + URL fragments</td><td>Iframes or window.open with message passing</td></tr>
+  <tr><td>Persistence</td><td>IndexedDB per node</td><td>Each tool stores its own state locally</td></tr>
+  <tr><td>Discovery</td><td>Static mesh.json</td><td>Each repo publishes its node capabilities as JSON</td></tr>
+</table>
+
+<h3>The mesh envelope</h3>
+
+<p>Every message between nodes uses a standard envelope format:</p>
+
+<div class="code"><span class="cm">// FallMesh Protocol Envelope v1.0</span>
+{
+  <span class="str">"version"</span>:  <span class="str">"1.0"</span>,
+  <span class="str">"nodeId"</span>:   <span class="str">"fallcall"</span>,          <span class="cm">// sender's prime-spine address</span>
+  <span class="str">"type"</span>:     <span class="str">"data"</span>,               <span class="cm">// discovery | capability | data | heartbeat</span>
+  <span class="str">"origin"</span>:   <span class="str">"https://...github.io/fallcall/"</span>,
+  <span class="str">"ts"</span>:       <span class="num">1747526400000</span>,        <span class="cm">// Unix ms timestamp</span>
+  <span class="str">"payload"</span>:  { ... },              <span class="cm">// whatever the node is sending</span>
+  <span class="str">"sig"</span>:      <span class="str">"hmac-sha256-hash"</span>   <span class="cm">// signed with node secret</span>
+}</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §7 — THE INBOX -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s7">7. The Inbox — One Person, One Email Per Day</h2>
+
+<p>The entire system funnels down to one output: a daily digest email. AI handles everything. The founder reads one email per day and makes the decisions that only a human can make.</p>
+
+<h3>How inbound traffic is processed</h3>
+
+<div class="flow">
+  <div class="flow-box">Visitor</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box agent">α agents qualify</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">Route</div>
+</div>
+
+<p>The routing logic:</p>
+<ul>
+  <li><strong>Spam</strong> → voided. The founder never sees it.</li>
+  <li><strong>Curious but not ready</strong> → AI nurture sequence. Fully automated.</li>
+  <li><strong>Qualified lead</strong> → β sales agents engage. Founder gets a line in the digest.</li>
+  <li><strong>Urgent / high-value</strong> → Si-Didy flags it. Goes straight to inbox.</li>
+  <li><strong>Personal</strong> → Si-Didy personal mode handles it.</li>
+</ul>
+
+<h3>The daily digest format</h3>
+
+<div class="code" style="background:#f9fafb;color:#1a1a2e;border:1px solid #e5e7eb;">
+┌────────────────────────────────────────────┐
+│  AI NATIVE DAILY BRIEF                     │
+│                                            │
+│  LEADS:   5 new, 2 qualified, 1 hot       │
+│  SALES:   1 demo completed, 1 proposal    │
+│  REVENUE: £X this week, £X pipeline       │
+│  GUILD:   3 new applicants, 1 assessed    │
+│  MARKET:  FallWatch fired 4 signals       │
+│                                            │
+│  ACTIONS NEEDED (only what AI can't do):   │
+│  · Approve proposal for Acme Corp         │
+│  · Review Guild candidate (score: 87)     │
+│                                            │
+│  SI-DIDY PERSONAL:                         │
+│  · Sleep trending down (3 nights)         │
+│  · Build velocity up 40% this week        │
+│  · Reminder: family dinner Friday         │
+└────────────────────────────────────────────┘</div>
+
+<p>The founder reads this in 60 seconds. Makes 2–3 decisions. Replies with brief approvals. The agents execute. The empire continues.</p>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §8 — THE ECONOMICS -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s8">8. The Economics</h2>
+
+<h3>Running costs</h3>
+
+<table>
+  <tr><th>Item</th><th>Monthly Cost</th><th>How</th></tr>
+  <tr><td>Hosting (all products)</td><td>£0</td><td>GitHub Pages — unlimited, free, global CDN</td></tr>
+  <tr><td>Version control</td><td>£0</td><td>GitHub repositories — unlimited public repos</td></tr>
+  <tr><td>CI/CD</td><td>£0</td><td>GitHub Actions — generous free tier for static deploys</td></tr>
+  <tr><td>Database</td><td>£0</td><td>No database — IndexedDB runs in the user's browser</td></tr>
+  <tr><td>AI (primary)</td><td>£0</td><td>Gemini and DeepSeek free API tiers</td></tr>
+  <tr><td>AI (fallback)</td><td>Variable</td><td>Anthropic Claude — pay per use, only when free tiers fail</td></tr>
+  <tr><td>Domain</td><td>£0</td><td>Using github.io subdomains</td></tr>
+  <tr><td>SSL/TLS</td><td>£0</td><td>GitHub Pages includes HTTPS automatically</td></tr>
+  <tr><td>Monitoring</td><td>£0</td><td>GitHub Actions + agent self-reporting</td></tr>
+  <tr><td>Scaling</td><td>£0</td><td>Static files scale to millions of visitors automatically</td></tr>
+  <tr><td colspan="3" style="text-align:right; font-weight:600; border-top:2px solid var(--border);">Total: £0/month (+ minimal AI API costs)</td></tr>
+</table>
+
+<h3>The moat</h3>
+
+<p>The competitive advantage isn't a patent or a proprietary algorithm. It's a structural choice that competitors can't easily replicate:</p>
+
+<ul>
+  <li><strong>No vendor lock-in</strong> — Customers can fork any product and run it independently</li>
+  <li><strong>No infrastructure debt</strong> — Zero servers means zero maintenance, zero downtime, zero scaling problems</li>
+  <li><strong>Network effects at zero cost</strong> — Each user of mesh-enabled tools becomes infrastructure</li>
+  <li><strong>Recursive improvement</strong> — The products improve themselves by using each other</li>
+  <li><strong>Speed of deployment</strong> — A new product goes from concept to live global deployment in hours, not months</li>
+</ul>
+
+<div class="callout key">
+  <p class="callout-label">Why this is hard to copy</p>
+  <p>Most companies start with servers and databases, then try to reduce costs. AI Native Solutions started with zero and designed everything around that constraint. Retrofitting a traditional SaaS product into a single sovereign HTML file requires rethinking every architectural assumption. That's the moat — it's not a feature to add, it's a foundation to rebuild from.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §9 — BUILD ORDER -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s9">9. Build Order</h2>
+
+<table>
+  <tr><th>Phase</th><th>Status</th><th>What</th></tr>
+  <tr><td><strong>Phase 1</strong></td><td style="color:var(--green);font-weight:600;">✓ Complete</td><td>All product repos cross-linked. Every footer links back to hub. Every product card links to live deployment. Architecture documented. FallMesh deployed.</td></tr>
+  <tr><td><strong>Phase 2</strong></td><td style="color:var(--warm);font-weight:600;">→ Next</td><td>Wire AI concierge as α-agent interface. Add lead capture with FallCRM integration. Email digest system (daily brief to inbox).</td></tr>
+  <tr><td><strong>Phase 3</strong></td><td style="color:var(--dim);">Planned</td><td>Build FallWatch (127-agent market intelligence). This generates revenue fastest — same substrate as all other products.</td></tr>
+  <tr><td><strong>Phase 4</strong></td><td style="color:var(--dim);">Planned</td><td>Si-Didy upgrade: full orchestration hub for both 127-agent pools. Personal + business mode switching. Cross-pool intelligence sharing.</td></tr>
+  <tr><td><strong>Phase 5</strong></td><td style="color:var(--dim);">Planned</td><td>Full 127-agent deployment across both pools. Autonomous operation with inbox oversight. The empire runs itself.</td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- §10 — PRODUCT CATALOGUE -->
+<!-- ═══════════════════════════════════════ -->
+<h2 id="s10">10. The Product Catalogue</h2>
+
+<p>Every product is a sovereign single-file HTML application. Every product is live. Every product links to every other product through the mesh.</p>
+
+<div class="product-grid">
+  <div class="product-item no-break">
+    <div class="p-name">AI Native Solutions</div>
+    <div class="p-prime">Hub · p = 1</div>
+    <div class="p-desc">The central hub and marketing site. AI concierge qualifies visitors. Showcases all products. Is itself a sovereign tool — the triple recursion in action.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallCall</div>
+    <div class="p-prime">Product · p = 2</div>
+    <div class="p-desc">7-layer sales conversation analysis. Psychology engine with FreudEngine, ToneEngine, and BloomRouter. Detects objections, buying signals, and register shifts.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallCall Live</div>
+    <div class="p-prime">Product · p = 3</div>
+    <div class="p-desc">Chrome extension for real-time sales coaching. Shadow DOM sidebar overlay on any web-based VOIP. Live transcription via Deepgram, rolling window analysis.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallCRM Elite</div>
+    <div class="p-prime">Product · p = 5</div>
+    <div class="p-desc">Sovereign CRM. Client and lead data stored locally. Integrates with FallCall for conversation intelligence. No cloud, no subscription.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallLearn</div>
+    <div class="p-prime">Product · p = 7</div>
+    <div class="p-desc">7-module sovereign LMS. Context architecture for AI, from prediction mechanics to sovereignty. Self-adapting. Free forever. 233KB, zero dependencies.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallGrade</div>
+    <div class="p-prime">Product · p = 11</div>
+    <div class="p-desc">9-dimension portfolio grading engine. 8 developer archetypes. Skill gap analysis. Built for the Guild recruitment pipeline.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallConsensus</div>
+    <div class="p-prime">Product · p = 13</div>
+    <div class="p-desc">WebRTC mesh governance. 7-dimension bloom vectors. Cosine similarity convergence. Decentralised decision-making without hierarchy.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallSignal</div>
+    <div class="p-prime">Product · p = 17</div>
+    <div class="p-desc">Clean news engine. Detects and strips 18 manipulation techniques from news articles. Delivers signal, not noise.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallForensics</div>
+    <div class="p-prime">Product · p = 19</div>
+    <div class="p-desc">Political signal analysis. Contradiction tracing. Playbook exposure. Compares what politicians said versus what they did.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">OracleEngine</div>
+    <div class="p-prime">Product · p = 23</div>
+    <div class="p-desc">4-mode torus projection: POST-COG, LIVE, PRE-COG, COCHNO. Bloom vectors on prime spine. Pattern recognition for any data domain.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallWatch</div>
+    <div class="p-prime">Product · p = 29</div>
+    <div class="p-desc">127-agent market intelligence. Hedge fund substrate on free APIs (Yahoo Finance, CoinGecko, RSS). Convergence detection across agent groups.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">Fall127</div>
+    <div class="p-prime">Product · p = 31</div>
+    <div class="p-desc">The seed specification. Reference implementation of the 127-agent MACCubeFACE architecture. The blueprint that all agent pools are built from.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">FallMesh</div>
+    <div class="p-prime">Hub · p = 47</div>
+    <div class="p-desc">Sovereign mesh protocol. Connects all Fall tools peer-to-peer. Interactive topology visualizer. Prime spine addressing. Discovery via static manifests.</div>
+  </div>
+  <div class="product-item no-break">
+    <div class="p-name">Si-Didy</div>
+    <div class="p-prime">Orchestrator · p = 43</div>
+    <div class="p-desc">The hub of hubs. Digital twin and orchestrator for both 127-agent pools. Personal mode (life management) and business mode (company operations).</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- CLOSING -->
+<!-- ═══════════════════════════════════════ -->
+
+<h2 style="border-bottom:none;text-align:center;margin-top:40px;">The Summary</h2>
+
+<div class="callout" style="text-align:center;border-left:3px solid var(--accent);margin-top:20px;">
+  <p style="font-size:12pt;line-height:1.8;">
+    The site eats itself three times.<br>
+    The products feed each other.<br>
+    GitHub runs the infrastructure.<br>
+    AI handles the work.<br>
+    The founder reads one email per day.<br>
+    <strong>The empire runs itself.</strong>
+  </p>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <p><strong>AI Native Solutions</strong> · Architecture Document v1.0</p>
+  <p>May 2026 · ◊·κ=1</p>
+  <p>ai-nativesolutions.github.io</p>
+</div>
+
+</body>
+</html>
