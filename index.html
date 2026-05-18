@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AI Native Solutions — Sovereign AI tools that run locally, cost nothing to host, and respect your data. Every tool is a single file.">
+<meta name="description" content="AI Native Solutions — Sovereign AI tools that run locally and respect your data. Every tool is a single file.">
 <meta name="theme-color" content="#7c5ce0">
 <title>AI Native Solutions — Sovereign AI · Zero Infrastructure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1253,98 +1253,6 @@ section { padding: 120px 24px; position: relative; }
 }
 .blueprint-send:hover { background: var(--accent-dim); }
 
-/* ═══ §8 PRICING ═══ */
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin-top: 48px;
-}
-.pricing-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 32px 28px;
-  display: flex;
-  flex-direction: column;
-}
-.pricing-card.featured {
-  border-color: var(--accent);
-  box-shadow: 0 0 40px var(--accent-glow);
-}
-.pricing-tier {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.pricing-price {
-  font-family: var(--font-head);
-  font-size: 36px;
-  font-weight: 800;
-  color: var(--text-bright);
-  margin-bottom: 4px;
-}
-.pricing-price span {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--text-dim);
-}
-.pricing-desc {
-  font-size: 13px;
-  color: var(--text-dim);
-  margin-bottom: 24px;
-  line-height: 1.6;
-  flex: 1;
-}
-.pricing-features {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 24px;
-}
-.pricing-feature {
-  font-size: 13px;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.pricing-feature::before {
-  content: '✓';
-  color: var(--green);
-  font-size: 12px;
-  font-weight: 700;
-}
-.pricing-btn {
-  padding: 12px 24px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.2s;
-}
-.pricing-btn:hover { border-color: var(--accent); color: var(--accent); }
-.pricing-btn.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--void);
-}
-.pricing-btn.primary:hover { background: var(--accent-dim); }
-.pricing-footer {
-  margin-top: 32px;
-  text-align: center;
-  font-size: 14px;
-  color: var(--text-dim);
-  line-height: 1.7;
-}
 
 /* ═══ §9 ABOUT ═══ */
 .about-content {
@@ -1588,7 +1496,6 @@ section { padding: 120px 24px; position: relative; }
   .demos-grid { grid-template-columns: 1fr; }
   .comparison-table { font-size: 12px; }
   .comparison-table th, .comparison-table td { padding: 10px 8px; }
-  .pricing-grid { grid-template-columns: 1fr; }
   .products-grid { grid-template-columns: 1fr; }
   .arch-flow { flex-direction: column; }
   .arch-arrow { transform: rotate(90deg); }
@@ -1601,7 +1508,7 @@ section { padding: 120px 24px; position: relative; }
 @media (max-width: 480px) {
   .hero h1 { font-size: 32px; }
   .economics-counter { font-size: 48px; }
-  .pricing-card { padding: 24px 20px; }
+
 }
 </style>
 </head>
@@ -1614,7 +1521,7 @@ section { padding: 120px 24px; position: relative; }
     <a href="#architecture">How it works</a>
     <a href="#demos">Demos</a>
     <a href="#products">Products</a>
-    <a href="#pricing">Pricing</a>
+
     <a href="#blueprint" class="nav-cta">GET BLUEPRINT</a>
   </div>
   <button class="nav-burger" id="burger" aria-label="Menu">
@@ -1627,7 +1534,7 @@ section { padding: 120px 24px; position: relative; }
   <a href="#demos" onclick="closeMobile()">Demos</a>
   <a href="#products" onclick="closeMobile()">Products</a>
   <a href="#domains" onclick="closeMobile()">Domains</a>
-  <a href="#pricing" onclick="closeMobile()">Pricing</a>
+
   <a href="#blueprint" onclick="closeMobile()">Get Blueprint</a>
 </div>
 
@@ -1642,7 +1549,7 @@ section { padding: 120px 24px; position: relative; }
 
     <!-- ═══ THE ONE ACTION ═══ -->
     <div class="hero-action reveal reveal-delay-2">
-      <textarea class="hero-input" id="heroInput" placeholder="We're a 12-person law firm spending £500/month on Clio, Westlaw, and Office 365. Most of our time goes to contract review and client briefs..." rows="3"></textarea>
+      <textarea class="hero-input" id="heroInput" placeholder="We're a 12-person law firm. Most of our time goes to contract review and client briefs. We need sovereign tools that run on our machines..." rows="3"></textarea>
       <button class="hero-btn" id="heroBtn" onclick="runSovereignScan()">
         <span id="heroBtnText">See your sovereign plan</span>
       </button>
@@ -1666,7 +1573,7 @@ section { padding: 120px 24px; position: relative; }
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <input type="text" class="hero-cta-input" id="heroName" placeholder="Your name">
           <input type="email" class="hero-cta-input" id="heroEmail" placeholder="Your email">
-          <button class="hero-btn small" onclick="captureHeroLead()">Get full blueprint + free FallCube</button>
+          <button class="hero-btn small" onclick="captureHeroLead()">Get your sovereign blueprint</button>
         </div>
       </div>
     </div>
@@ -1699,8 +1606,8 @@ section { padding: 120px 24px; position: relative; }
         <span class="hero-stat-label">Industry domains</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-value">£0</span>
-        <span class="hero-stat-label">Infrastructure cost</span>
+        <span class="hero-stat-value">0</span>
+        <span class="hero-stat-label">Servers required</span>
       </div>
     </div>
   </div>
@@ -1751,10 +1658,10 @@ section { padding: 120px 24px; position: relative; }
       <!-- BloomRouter -->
       <div class="demo-card reveal reveal-delay-2">
         <div class="demo-card-header">
-          <span class="demo-card-title">AI Cost Optimiser</span>
+          <span class="demo-card-title">AI Model Router</span>
           <span class="demo-card-badge">BloomRouter</span>
         </div>
-        <p class="demo-card-desc">7-ring bloom decomposition. Routes queries to the cheapest model that can handle them. Instant classification.</p>
+        <p class="demo-card-desc">7-ring bloom decomposition. Routes queries to the optimal model tier. Instant classification.</p>
         <textarea class="demo-input" id="bloomInput" placeholder="Type any AI query to see which model tier it needs..."></textarea>
         <div class="demo-output" id="bloomOutput">
           <span class="demo-output-placeholder">Bloom routing will appear here</span>
@@ -1767,8 +1674,8 @@ section { padding: 120px 24px; position: relative; }
           <span class="demo-card-title">Sovereign Replacement</span>
           <span class="demo-card-badge">AI-Powered</span>
         </div>
-        <p class="demo-card-desc">Describe any SaaS you're paying for. Get a sovereign alternative blueprint with five-year savings projection.</p>
-        <textarea class="demo-input" id="saasInput" placeholder="I pay £X/month for Y which does Z..."></textarea>
+        <p class="demo-card-desc">Describe any SaaS you depend on. Get a sovereign alternative blueprint — one file, your data, your device.</p>
+        <textarea class="demo-input" id="saasInput" placeholder="I use Y which does Z..."></textarea>
         <div class="demo-output" id="saasOutput">
           <span class="demo-output-placeholder">Sovereign alternative will appear here</span>
         </div>
@@ -1802,118 +1709,6 @@ section { padding: 120px 24px; position: relative; }
   </div>
 </section>
 
-<!-- ═══ §2 ECONOMICS ═══ -->
-<section id="economics">
-  <div class="container">
-    <div class="economics-hero reveal">
-      <div class="economics-counter" id="infraCounter">£0</div>
-      <p class="economics-counter-label">monthly infrastructure cost — forever</p>
-    </div>
-
-    <p class="section-label reveal">The Numbers</p>
-    <h2 class="section-title reveal reveal-delay-1">What you're paying vs. what you should be.</h2>
-
-    <table class="comparison-table reveal reveal-delay-2">
-      <thead>
-        <tr>
-          <th>Tool</th>
-          <th>SaaS Monthly</th>
-          <th>SaaS Annual</th>
-          <th>Sovereign</th>
-          <th>5-Year Savings</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Accounting Software</td>
-          <td class="price-saas">£30</td>
-          <td class="price-saas">£360</td>
-          <td class="price-sovereign">£97 once</td>
-          <td class="price-sovereign">£1,703</td>
-        </tr>
-        <tr>
-          <td>CRM Platform</td>
-          <td class="price-saas">£49</td>
-          <td class="price-saas">£588</td>
-          <td class="price-sovereign">£97 once</td>
-          <td class="price-sovereign">£2,843</td>
-        </tr>
-        <tr>
-          <td>Project Management</td>
-          <td class="price-saas">£25</td>
-          <td class="price-saas">£300</td>
-          <td class="price-sovereign">£97 once</td>
-          <td class="price-sovereign">£1,403</td>
-        </tr>
-        <tr>
-          <td>Legal Document AI</td>
-          <td class="price-saas">£99</td>
-          <td class="price-saas">£1,188</td>
-          <td class="price-sovereign">£297 once</td>
-          <td class="price-sovereign">£5,643</td>
-        </tr>
-        <tr>
-          <td>Email Marketing</td>
-          <td class="price-saas">£35</td>
-          <td class="price-saas">£420</td>
-          <td class="price-sovereign">£97 once</td>
-          <td class="price-sovereign">£2,003</td>
-        </tr>
-        <tr>
-          <td>AI Writing Assistant</td>
-          <td class="price-saas">£20</td>
-          <td class="price-saas">£240</td>
-          <td class="price-sovereign">Free</td>
-          <td class="price-sovereign">£1,200</td>
-        </tr>
-        <tr>
-          <td>Analytics Dashboard</td>
-          <td class="price-saas">£45</td>
-          <td class="price-saas">£540</td>
-          <td class="price-sovereign">£97 once</td>
-          <td class="price-sovereign">£2,603</td>
-        </tr>
-        <tr>
-          <td>Form Builder</td>
-          <td class="price-saas">£20</td>
-          <td class="price-saas">£240</td>
-          <td class="price-sovereign">Free</td>
-          <td class="price-sovereign">£1,200</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="savings-calc reveal">
-      <h3 class="savings-calc-title">Your savings</h3>
-      <p style="font-size:14px;color:var(--text-dim);margin-bottom:8px;">What are you currently spending on SaaS per month?</p>
-      <div class="savings-input-row">
-        <span style="font-size:18px;color:var(--text-dim);font-family:var(--font-mono);">£</span>
-        <input type="number" class="savings-input" id="savingsInput" placeholder="500" value="">
-        <span style="font-size:14px;color:var(--text-dim);align-self:center;">/month</span>
-      </div>
-      <div class="savings-result" id="savingsResult" style="display:none;">
-        <div class="savings-card">
-          <div class="savings-card-value kill" id="saas1yr">—</div>
-          <div class="savings-card-label">SaaS cost (1 year)</div>
-        </div>
-        <div class="savings-card">
-          <div class="savings-card-value kill" id="saas5yr">—</div>
-          <div class="savings-card-label">SaaS cost (5 years)</div>
-        </div>
-        <div class="savings-card">
-          <div class="savings-card-value green" id="sovCost">—</div>
-          <div class="savings-card-label">Sovereign (one-time)</div>
-        </div>
-        <div class="savings-card">
-          <div class="savings-card-value green" id="saved5yr">—</div>
-          <div class="savings-card-label">You keep (5 years)</div>
-        </div>
-      </div>
-    </div>
-
-    <p class="reveal" style="text-align:center;margin-top:48px;font-size:18px;color:var(--text-bright);font-family:var(--font-head);font-weight:600;">Same tools. Same features. £0 forever.</p>
-  </div>
-</section>
 
 <!-- ═══ §3 DOMAINS ═══ -->
 <section id="domains">
@@ -1946,15 +1741,6 @@ section { padding: 120px 24px; position: relative; }
         <div class="domain-agent"><span class="domain-agent-icon">η</span><span class="domain-agent-name">Priority Scorer</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">θ</span><span class="domain-agent-name">Output Formatter</span></div>
       </div>
-      <div class="domain-replaces">
-        <p class="domain-replaces-title">Replaces</p>
-        <div class="replaces-list">
-          <span class="replaces-item">Clio £49/mo</span>
-          <span class="replaces-item">LawGeex £99/mo</span>
-          <span class="replaces-item">Harvey AI £200/mo</span>
-          <span class="replaces-item">Westlaw £150/mo</span>
-        </div>
-      </div>
       <p class="domain-deploy">→ This domain config deploys in one session.</p>
     </div>
 
@@ -1971,14 +1757,6 @@ section { padding: 120px 24px; position: relative; }
         <div class="domain-agent"><span class="domain-agent-icon">ζ</span><span class="domain-agent-name">Clinical Auditor</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">η</span><span class="domain-agent-name">Urgency Scorer</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">θ</span><span class="domain-agent-name">Report Formatter</span></div>
-      </div>
-      <div class="domain-replaces">
-        <p class="domain-replaces-title">Replaces</p>
-        <div class="replaces-list">
-          <span class="replaces-item">Nuance DAX £99/mo</span>
-          <span class="replaces-item">Suki AI £79/mo</span>
-          <span class="replaces-item">ScribePad £49/mo</span>
-        </div>
       </div>
       <p class="domain-deploy">→ This domain config deploys in one session.</p>
     </div>
@@ -1997,14 +1775,6 @@ section { padding: 120px 24px; position: relative; }
         <div class="domain-agent"><span class="domain-agent-icon">η</span><span class="domain-agent-name">Priority Scorer</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">θ</span><span class="domain-agent-name">Client Formatter</span></div>
       </div>
-      <div class="domain-replaces">
-        <p class="domain-replaces-title">Replaces</p>
-        <div class="replaces-list">
-          <span class="replaces-item">Bloomberg Terminal £2k/mo</span>
-          <span class="replaces-item">Morningstar £79/mo</span>
-          <span class="replaces-item">Kensho £199/mo</span>
-        </div>
-      </div>
       <p class="domain-deploy">→ This domain config deploys in one session.</p>
     </div>
 
@@ -2021,14 +1791,6 @@ section { padding: 120px 24px; position: relative; }
         <div class="domain-agent"><span class="domain-agent-icon">ζ</span><span class="domain-agent-name">Quality Auditor</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">η</span><span class="domain-agent-name">Difficulty Scorer</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">θ</span><span class="domain-agent-name">Student Formatter</span></div>
-      </div>
-      <div class="domain-replaces">
-        <p class="domain-replaces-title">Replaces</p>
-        <div class="replaces-list">
-          <span class="replaces-item">Turnitin £30/mo</span>
-          <span class="replaces-item">Grammarly Edu £25/mo</span>
-          <span class="replaces-item">Quizlet Plus £36/yr</span>
-        </div>
       </div>
       <p class="domain-deploy">→ This domain config deploys in one session.</p>
     </div>
@@ -2047,14 +1809,6 @@ section { padding: 120px 24px; position: relative; }
         <div class="domain-agent"><span class="domain-agent-icon">η</span><span class="domain-agent-name">Lead Scorer</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">θ</span><span class="domain-agent-name">Client Formatter</span></div>
       </div>
-      <div class="domain-replaces">
-        <p class="domain-replaces-title">Replaces</p>
-        <div class="replaces-list">
-          <span class="replaces-item">Rightmove Plus £99/mo</span>
-          <span class="replaces-item">Canva Pro £12/mo</span>
-          <span class="replaces-item">Mailchimp £30/mo</span>
-        </div>
-      </div>
       <p class="domain-deploy">→ This domain config deploys in one session.</p>
     </div>
 
@@ -2072,14 +1826,6 @@ section { padding: 120px 24px; position: relative; }
         <div class="domain-agent"><span class="domain-agent-icon">η</span><span class="domain-agent-name">Anomaly Scorer</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">θ</span><span class="domain-agent-name">MTD Formatter</span></div>
       </div>
-      <div class="domain-replaces">
-        <p class="domain-replaces-title">Replaces</p>
-        <div class="replaces-list">
-          <span class="replaces-item">Xero £30/mo</span>
-          <span class="replaces-item">QuickBooks £25/mo</span>
-          <span class="replaces-item">FreeAgent £24/mo</span>
-        </div>
-      </div>
       <p class="domain-deploy">→ Already shipped as FallAccount Elite v2.</p>
     </div>
 
@@ -2096,12 +1842,6 @@ section { padding: 120px 24px; position: relative; }
         <div class="domain-agent"><span class="domain-agent-icon">ζ</span><span class="domain-agent-name">Audit Agent</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">η</span><span class="domain-agent-name">Score Agent</span></div>
         <div class="domain-agent"><span class="domain-agent-icon">θ</span><span class="domain-agent-name">Format Agent</span></div>
-      </div>
-      <div class="domain-replaces">
-        <p class="domain-replaces-title">You tell us what to replace</p>
-        <div class="replaces-list">
-          <span class="replaces-item">Your SaaS here</span>
-        </div>
       </div>
       <p class="domain-deploy">→ Custom domain config deploys in one session.</p>
     </div>
@@ -2140,7 +1880,7 @@ section { padding: 120px 24px; position: relative; }
           <div class="simple-num">4</div>
           <div class="simple-icon">🔒</div>
           <p class="simple-title">Your data stays with you</p>
-          <p class="simple-desc">No cloud. No account. No monthly fee. No one sees your data. It lives on your device and nowhere else.</p>
+          <p class="simple-desc">No cloud. No account. No one sees your data. It lives on your device and nowhere else.</p>
         </div>
         <div class="simple-step">
           <div class="simple-num">5</div>
@@ -2152,7 +1892,7 @@ section { padding: 120px 24px; position: relative; }
 
       <div style="margin-top:36px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;">
         <p style="font-size:15px;color:var(--text);line-height:1.8;">
-          <strong style="color:var(--text-bright);">Think of it like this:</strong> instead of renting software from a company that holds your data hostage, you own the actual tool. Like buying a hammer instead of paying someone £30/month to hold one for you.
+          <strong style="color:var(--text-bright);">Think of it like this:</strong> instead of renting software from a company that holds your data hostage, you own the actual tool. Like owning a hammer instead of renting one.
         </p>
         <p style="font-size:14px;color:var(--text-dim);margin-top:12px;line-height:1.7;">
           The AI part? That's what makes the hammer smart. It can learn your patterns, sort your stuff, draft your documents. But it runs on YOUR device, not in someone else's cloud.
@@ -2238,7 +1978,7 @@ section { padding: 120px 24px; position: relative; }
         </div>
       </div>
 
-      <p style="font-size:13px;color:var(--text-dim);margin-top:28px;line-height:1.7;max-width:520px;">Not a subscription. Not an update server. A peer-to-peer build channel that fires when you need it, delivers what you asked for, and disappears. Pay per evolution, not per month.</p>
+      <p style="font-size:13px;color:var(--text-dim);margin-top:28px;line-height:1.7;max-width:520px;">Not a subscription. Not an update server. A peer-to-peer build channel that fires when you need it, delivers what you asked for, and disappears.</p>
 
       <!-- LIBRARY OF BABEL + SECURITY -->
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:36px;">
@@ -2413,49 +2153,6 @@ section { padding: 120px 24px; position: relative; }
 </section>
 
 <!-- ═══ §8 PRICING ═══ -->
-<section id="pricing">
-  <div class="container">
-    <p class="section-label reveal">Pricing</p>
-    <h2 class="section-title reveal reveal-delay-1">£££</h2>
-
-    <div style="max-width:640px;margin-top:40px;" class="reveal reveal-delay-2">
-      <p style="font-size:16px;color:var(--text);line-height:1.85;margin-bottom:24px;">
-        The open source engines are free forever. The sovereign tools are priced per build. No subscriptions unless you want ongoing API access.
-      </p>
-
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;">
-          <div>
-            <p style="font-size:15px;font-weight:600;color:var(--text-bright);">Open Source Engines</p>
-            <p style="font-size:13px;color:var(--text-dim);">FreudEngine · ToneEngine · AccountBrief</p>
-          </div>
-          <span style="font-family:var(--font-head);font-size:24px;font-weight:800;color:var(--green);">Free</span>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;">
-          <div>
-            <p style="font-size:15px;font-weight:600;color:var(--text-bright);">Sovereign Tool Build</p>
-            <p style="font-size:13px;color:var(--text-dim);">Single HTML file · your data · your device · yours forever</p>
-          </div>
-          <span style="font-family:var(--font-head);font-size:24px;font-weight:800;color:var(--text-bright);">£££</span>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:var(--surface);border:1px solid var(--accent);border-radius:10px;box-shadow:0 0 30px var(--accent-glow);">
-          <div>
-            <p style="font-size:15px;font-weight:600;color:var(--text-bright);">Bespoke Deployment</p>
-            <p style="font-size:13px;color:var(--text-dim);">Custom 8+1 agent build · domain specialist · source ownership</p>
-          </div>
-          <span style="font-family:var(--font-head);font-size:24px;font-weight:800;color:var(--accent);">Let's talk</span>
-        </div>
-      </div>
-
-      <div style="margin-top:32px;text-align:center;">
-        <button class="pricing-btn primary" onclick="scrollToBlueprint()" style="padding:14px 32px;font-size:15px;">Get your sovereign blueprint</button>
-        <p style="font-size:13px;color:var(--text-dim);margin-top:12px;">No lock-in. No annual contracts. Buy sovereign and never pay again.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══ §9 ABOUT ═══ -->
 <section id="about">
@@ -2465,12 +2162,12 @@ section { padding: 120px 24px; position: relative; }
 
     <div class="about-content reveal reveal-delay-2">
       <p class="about-text">
-        We build tools that work offline, cost nothing to host, and respect your data.
+        We build tools that work offline and respect your data.
         Every tool we ship is a single file. Every file is sovereign.
         Your data never leaves your device unless you choose to send it.
       </p>
       <p class="about-text">
-        We don't sell access to software. We build software you own.
+        We build software you own.
         The engines are open source. The orchestration intelligence is what you hire us for.
       </p>
 
@@ -2492,7 +2189,7 @@ section { padding: 120px 24px; position: relative; }
 <footer class="footer">
   <div class="footer-content">
     <p class="footer-text">
-      Built as a single HTML file. Hosted free on GitHub Pages.<br>
+      Built as a single HTML file. Hosted on GitHub Pages.<br>
       This website runs AI locally on your device.<br>
       View source to see for yourself.<br>
       <span class="diamond">Powered by Konomi Architecture · φ·κ=1 · ◊</span>
@@ -3317,7 +3014,7 @@ const PsychologyLayer = (() => {
 
   // Buying signal keywords
   const buyingSignals = [
-    'how much', 'pricing', 'cost', 'budget', 'buy', 'purchase', 'licence', 'license',
+    'interested', 'deploy', 'licence', 'license',
     'install', 'deploy', 'our team', 'our company', 'we need', 'we want', 'when can',
     'how soon', 'timeline', 'start', 'get started', 'ready', 'interested', 'demo for us',
     'trial', 'pilot', 'proposal', 'quote', 'bespoke', 'custom build'
@@ -3895,25 +3592,25 @@ Website visitors start at depth 0-1. Adjust based on their tone and engagement.
 ═══ PRODUCTS (what Simon has built and shipped) ═══
 
 SOVEREIGN TOOLS (single HTML files, work offline, you own them):
-- FallAccount UK: Sovereign accountant. HMRC-compliant. MTD reports. Dual AI engine. Transaction categorisation. 1,752 lines. One file. Replaces Xero (£30/mo), QuickBooks (£25/mo), FreeAgent (£24/mo). Target: £47-97 one-time.
-- FallBrief v3: Law firm sales tool. 8+1 agent swarm. Contract analysis, precedent research, brief generation, compliance checking. Built for 2-20 lawyer firms. £10k installation. Value: 5hrs/week × £150/hr × 50wks = £37,500/year saved.
+- FallAccount UK: Sovereign accountant. HMRC-compliant. MTD reports. Dual AI engine. Transaction categorisation. 1,752 lines. One file.
+- FallBrief v3: Law firm sales tool. 8+1 agent swarm. Contract analysis, precedent research, brief generation, compliance checking. Built for 2-20 lawyer firms.
 - FallAgent: Real estate ops. 22 modules. Listings, valuations, client matching, market analysis.
 - ShadowEngine: Depth psychology mirror. 3 shipped phases. 1,737 lines. Single file.
 - The Mirror: Premium sovereign journaling. Dark void aesthetic. Cormorant Garamond + gold on black. FreudEngine + ShadowEngine API.
 - SOVEREIGN: SaaS killer factory. Describe what you pay for → get sovereign replacement.
 
 APIs & ENGINES:
-- ShadowEngine API: Cloudflare Worker. 6 REST endpoints (mirror, bloom, tone, arc, constellation, readiness). Compute endpoints = instant, no AI cost. Mirror endpoint ≈ £0.003-0.01/call. £0/month infrastructure.
-- BloomRouter: 7-ring prime-signature query decomposition. Routes AI queries to cheapest capable model. 40-70% API savings.
+- ShadowEngine API: Cloudflare Worker. 6 REST endpoints (mirror, bloom, tone, arc, constellation, readiness). Compute endpoints instant.
+- BloomRouter: 7-ring prime-signature query decomposition. Routes AI queries to optimal model tier.
 
-OPEN SOURCE (MIT, free forever):
+OPEN SOURCE (MIT):
 - FreudEngine (npm install freud-engine): Id/Ego/Superego detection. 10 defence mechanisms. Manifest vs latent content. Zero deps. Browser + Node.
 - ToneEngine (npm install tone-engine): 12-dimension tone analysis. Readability scoring. Pure JS.
 - AccountBrief (npm install account-brief): Automated accounting brief generation. HMRC 2025/26 rates.
 
 FREE TOOLS:
 - FallCube: THE LEAD MAGNET. Free sovereign file storage with AI + P2P sharing via WebTorrent. One HTML file. Works offline. PWA installable. Every visitor can have this — it's the gateway product. 3,104 lines. Every copy is a mesh node.
-- Freud HTML: WebLLM-powered. Runs Llama locally in browser. No API. No cost.
+- Freud HTML: WebLLM-powered. Runs Llama locally in browser. No API.
 - ToneSmith: Free writing analyser. 12-dimension tone breakdown.
 
 si-didy (this tool): Simon's digital twin. Sovereign single-file communications management. 8-agent SWARM. 512-leaf routing mind. Queue management. Voice audit. Relationship graph. Currently running right now as this concierge.
@@ -3937,7 +3634,7 @@ FACE → TEMPLATE → TAG: Every component is a face. Every face is a template. 
 
 8+1 AGENTS: Ω orchestrator, α scaffold, β build, γ cache, δ execute, ε gate, ζ audit, η score, θ format. Same topology for every domain. Different domain knowledge = different tool. One session to deploy.
 
-UPGRADE CHANNEL: Sovereign tools grow on demand. P2P WebRTC to builder → AI generates new component → pushes back → connection closes → sovereign again with new piece. Pay per evolution, not per month.
+UPGRADE CHANNEL: Sovereign tools grow on demand. P2P WebRTC to builder → AI generates new component → pushes back → connection closes → sovereign again with new piece.
 
 LIBRARY OF BABEL: Every component gets a Konomi signature (mathematical fingerprint). Cached across mesh. If another node needs the same thing, nearby peers serve it. Master builder sleeps.
 
@@ -3958,25 +3655,25 @@ QUALIFICATION FLOW:
    - Report generation (monthly, compliance, analysis) → automated report builder with template system
    - Repetitive decisions (approvals, routing, scoring) → rule engine with AI augmentation
    Be SPECIFIC about which tasks AI handles. Never promise vague "efficiency gains."
-5. Cost/budget mentioned → DON'T invent savings figures. Instead: "What are you spending on SaaS right now? Tell me the tools and monthly costs and I'll show you exactly what sovereign alternatives exist."
+5. If they ask about builds → "Tell me what you need and we'll talk."
 6. LEAD CAPTURE — FALLCUBE GIVEAWAY: After 2-3 exchanges of real value, offer FallCube naturally: "By the way — we've got a free sovereign tool called FallCube you can take with you right now. File storage with AI, P2P sharing, works offline. One HTML file, yours to keep. Want it? Just need your name and email."
    - Name first. Always. Email second.
    - FallCube is the gateway — once they have it, they experience sovereign firsthand.
    - Every FallCube copy is a mesh node. Spreading the product IS spreading the network.
    - If they're not interested in FallCube, don't push. Offer the blueprint section instead.
-7. For serious prospects (mentioned budget, team size, specific tools) → offer sovereign blueprint after FallCube.
+7. For serious prospects (mentioned team size, specific tools) → offer sovereign blueprint after FallCube.
 8. Never push. The mirror doesn't chase.
 
 CRITICAL — NUMBERS AND CLAIMS:
-- NEVER invent statistics, percentages, or ROI figures unless you can trace them to a specific fact (e.g. "Xero costs £30/month" is a real price, "you'll save 47%" is invented).
-- When asked "how much can I save" → ask what they're currently spending, then calculate REAL savings based on their actual numbers vs sovereign one-time cost.
-- When asked about call centres, manufacturing, or domains you don't have specific products for → explain WHERE AI fits in their process, what tasks it could handle, and suggest the blueprint section for a proper analysis. Don't fabricate industry statistics.
+- NEVER invent statistics, percentages, or ROI figures.
+- NEVER discuss pricing, costs, or savings. If asked, say "reach out and we'll talk."
+- When asked about domains you don't have specific products for → explain WHERE AI fits in their process, what tasks it could handle, and suggest the blueprint section for a proper analysis.
 
 OBJECTION HANDLING:
 "Just a chatbot" → "The five demos running on this page aren't chatbots — they're JavaScript engines running locally in your browser right now. No API, no server. Try one."
 "One HTML file?" → "This website is one HTML file. Running AI locally on your device right now. View source."
 "What about updates?" → "Upgrade channel. P2P to our builder. New component built, pushed back, connection closes. Your tool grows without a subscription."
-"We already use [X]" → "How much per month? Per year? Five years? Now imagine paying once and owning it. That's sovereign."
+"We already use [X]" → "Does it run offline? Do you own your data? Can you view the source? That's the difference."
 "AI hallucinations" → "Gate agent checks every output before it ships. Audit agent watches the process. Anti-hallucination is structural — not a guardrail bolted on."
 "Can it scale?" → "9 nodes per cube. Each cube nests another. 9 → 81 → 729 → ∞. Same architecture at every scale."
 "Is it secure?" → "Your data never leaves your device. AI runs locally via WebGPU. Upgrade channel code runs through sovereign sandbox — cryptographic verification, capability-scoped execution."
@@ -3985,17 +3682,14 @@ OBJECTION HANDLING:
 "Why not just use ChatGPT/Claude directly?" → "You can. We do too. The model isn't the product — the orchestration is. Eight agents with roles, gates, audit trails. That's what makes the output consistent."
 
 PRICING:
-- Never quote exact prices upfront. Say "depends on the build — tell me what you need and I'll give you a straight answer."
-- Open source engines: free forever. MIT.
-- Sovereign tool builds: priced per project.
-- Law firm installs: from £10k. Frame as: £10k once vs £6k/year on Clio alone.
-- Always reframe as savings first.
-- "No lock-in. No annual contracts. Buy sovereign and never pay again."
+- NEVER discuss prices, costs, or figures. We don't do that on the site.
+- If asked: "Reach out directly and we'll talk about what you need."
+- The work speaks for itself. The tools are live. Try them.
 
 COMPETITIVE POSITIONING:
 - vs SaaS: "You're renting. We build what you own."
 - vs other AI builders: "Most companies give you a model with a UI. We give you an architecture — 8 agents, gates, audit, orchestration. The model is replaceable."
-- vs agencies: "Agencies charge monthly retainers for access to tools they don't own either. We build you the tool. One time. You own it."
+- vs agencies: "Agencies give you access. We give you ownership."
 - vs building in-house: "You could. It took us 18 months from zero. Or you can have the architecture in one session."
 
 DEMOS ON THIS PAGE:
@@ -4017,7 +3711,6 @@ DEMOS ON THIS PAGE:
 
   const sectionMap = {
     demo: 'demos', demos: 'demos', 'try': 'demos', tools: 'demos', engines: 'demos',
-    price: 'pricing', pricing: 'pricing', cost: 'pricing', '£': 'pricing',
     domain: 'domains', domains: 'domains', industry: 'domains', legal: 'domains', medical: 'domains', finance: 'domains', education: 'domains', accounting: 'domains', 'real estate': 'domains',
     architecture: 'architecture', 'how it works': 'architecture', 'how does it work': 'architecture', 'single file': 'architecture', agents: 'architecture',
     'open source': 'opensource', free: 'opensource', npm: 'opensource', mit: 'opensource',
@@ -4174,9 +3867,9 @@ DEMOS ON THIS PAGE:
 
   function offlineResponse(text) {
     const lower = text.toLowerCase();
-    if (/price|cost|how much|£/.test(lower)) return 'The open source engines are free — always will be. Sovereign builds depend on what you need, but here\'s the question that actually matters: what are you spending on SaaS right now? Because that\'s the number you\'re burning every month forever. Tell me what you\'re paying for and I\'ll show you what sovereign looks like.';
-    if (/what do you|what can you|who are you/.test(lower)) return 'I\'m Simon\'s digital concierge — running right here on your device. I know everything about our sovereign tools, the architecture, pricing, all of it. I can walk you through the live demos, talk through what a sovereign build would look like for your business, or just answer questions. What are you curious about?';
-    if (/legal|law|solicitor|lawyer/.test(lower)) return 'Law firms are one of our sweet spots. FallBrief handles contract analysis, precedent research, client brief generation — the lot. Built for 2-20 lawyer firms. A firm spending £500/month on Clio and Westlaw saves over £25k in five years. Check the domains section below — the legal config is already mapped out with all 9 agents.';
+    if (/price|cost|how much/.test(lower)) return 'Everything ships sovereign. The tools are live — go try them. If you want something built for your specific domain, reach out and we\'ll talk.';
+    if (/what do you|what can you|who are you/.test(lower)) return 'I\'m Simon\'s digital concierge — running right here on your device. I know everything about our sovereign tools, the architecture, all of it. I can walk you through the live demos, talk through what a sovereign build would look like for your business, or just answer questions. What are you curious about?';
+    if (/legal|law|solicitor|lawyer/.test(lower)) return 'Law firms are one of our sweet spots. FallBrief handles contract analysis, precedent research, client brief generation — the lot. Built for 2-20 lawyer firms. Check the domains section below — the legal config is already mapped out with all 9 agents.';
     if (/account|tax|hmrc|bookkeep/.test(lower)) return 'FallAccount Elite is already shipped and working — sovereign accountant, HMRC-compliant, MTD reports, dual AI, 1,752 lines in a single HTML file. Try the tax calculator in the demos above, it\'s running the same engine. Replaces Xero, QuickBooks, FreeAgent — and you pay once, not monthly.';
     if (/psychology|therapy|journal|shadow|mirror|freud/.test(lower)) return 'The depth psychology stack is three layers: FreudEngine is free and open source (npm install freud-engine), ShadowEngine is the paid API on Cloudflare, and The Mirror is the premium journaling tool. The Depth Analysis demo above is running FreudEngine live — paste any text and watch it decompose the structural voices. It\'s instant, no API call.';
     if (/how|architecture|work|single file/.test(lower)) return 'One principle: face, template, tag. Every component is a face. Every face follows a template. The tag is the data that fills it. Rotate the tag, you rotate the cube — same architecture, different tool. Powered by Konomi. One HTML file, works offline, AI runs locally on your GPU. If you need a new feature later, the upgrade channel fires a P2P connection, builds the component, pushes it back. Your tool grows without a subscription.';
@@ -4184,7 +3877,7 @@ DEMOS ON THIS PAGE:
     if (/babel|cache|mesh|signature|fingerprint/.test(lower)) return 'Library of Babel. Every component we build gets a Konomi signature — basically a mathematical fingerprint. Once it exists, it\'s cached across the mesh. Next time anyone needs the same capability, the nearest peer serves it. The master builder doesn\'t even wake up. The mesh remembers what\'s already been built.';
     if (/security|sandbox|safe|malicious|inject|trust/.test(lower)) return 'Sovereign Sandbox. Any code coming through the upgrade channel hits a strict isolation layer first — cryptographic signature check, capability-scoped execution, zero DOM access until it\'s validated. Only after passing every gate does it get injected into your tool. Nobody can push anything malicious through that channel. Your sovereign environment is your sovereign environment.';
     if (/demo|try|show/.test(lower)) return 'Five live demos running on this page right now — Depth Analysis, Writing Tone, AI Cost Optimiser, Sovereign Replacement, and a UK Tax Calculator. All pure JavaScript, zero API calls, running in your browser. Scroll up and have a play. The best way to understand what we build is to use it.';
-    if (/saas|subscription|replace|software/.test(lower)) return 'What are you currently paying for? Seriously — name the tools and the monthly cost. The Sovereign Replacement demo above can decompose any SaaS into its components and show you the five-year savings. Most businesses are burning £300-500/month on tools they could own outright. Try the demo.';
+    if (/saas|subscription|replace|software/.test(lower)) return 'Name the tools you depend on. The Sovereign Replacement demo above can decompose any SaaS into its components and show you what sovereignty looks like. Try it.';
     if (/free|giveaway|download|fallcube|can i have|get something/.test(lower)) return 'Yeah — FallCube is yours for free. Sovereign file storage with AI and P2P sharing, one HTML file, works offline. Just drop your name and email and I\'ll sort the download. Every copy is a fully working tool you keep forever.';
     if (/hello|hi|hey|morning|afternoon|what.?s up/.test(lower)) return 'Hey! I can walk you through what we build, show you the live demos, or talk through what sovereign AI would look like for your business. We\'ve also got a free tool called FallCube you can take with you — just say the word.';
     return 'Happy to help — try asking about a specific product, mentioning your industry, or telling me what SaaS you\'re currently paying for. Or scroll down and try the live demos — five engines running in your browser right now, zero API calls. Best way to understand what we do is to use it.';
