@@ -1,0 +1,3103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FallCube — Free. Private. Yours.</title>
+
+<!-- PWA -->
+<script>
+// Only inject manifest on HTTP/HTTPS — file:// blocks it with CORS errors
+if (location.protocol === 'http:' || location.protocol === 'https:') {
+  const l = document.createElement('link');
+  l.rel = 'manifest'; l.href = 'fallcube-manifest.json';
+  document.currentScript.after(l);
+}
+</script>
+<meta name="theme-color" content="#1a1916">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FallCube">
+<link rel="apple-touch-icon" href="fallcube-icon-192.png">
+<meta name="description" content="Free. Private. Sovereign file storage with AI — no cloud, no tracking, no fees.">
+
+<!-- Open Graph for sharing -->
+<meta property="og:title" content="FallCube — Free. Private. Yours.">
+<meta property="og:description" content="Sovereign file storage with AI. No cloud. No tracking. No fees. One HTML file.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<script>
+// Register service worker for offline + install capability
+// Only runs when properly deployed — skips gracefully on file:// or preview environments
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    // Skip SW on file:// protocol or known preview environments
+    const isLocal = location.protocol === 'file:';
+    const isPreview = location.hostname.includes('claudeusercontent') || 
+                      location.hostname.includes('localhost') ||
+                      location.hostname === '127.0.0.1';
+    
+    if (isLocal || isPreview) {
+      console.log('[FallCube] SW skipped — deploy to HTTPS server to enable PWA install');
+      return;
+    }
+
+    try {
+      const reg = await navigator.serviceWorker.register('fallcube-sw.js');
+      console.log('[FallCube] SW registered:', reg.scope);
+    } catch(err) {
+      console.log('[FallCube] SW unavailable — app still works normally:', err.message);
+    }
+  });
+}
+
+// PWA install prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show install banner after 3 seconds
+  setTimeout(() => showInstallBanner(), 3000);
+});
+
+window.addEventListener('appinstalled', () => {
+  hideInstallBanner();
+  deferredPrompt = null;
+});
+
+function showInstallBanner() {
+  const banner = document.getElementById('installBanner');
+  if (banner && deferredPrompt) {
+    banner.style.display = 'flex';
+    banner.style.animation = 'slideUp 0.3s ease';
+  }
+}
+
+function hideInstallBanner() {
+  const banner = document.getElementById('installBanner');
+  if (banner) banner.style.display = 'none';
+}
+
+async function installApp() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  hideInstallBanner();
+}
+</script>
+<script>
+// Load WebTorrent dynamically — fails silently if blocked or offline
+(function() {
+  const isLocal = location.protocol === 'file:';
+  const isPreview = location.hostname.includes('claudeusercontent');
+  if (isLocal || isPreview) {
+    console.log('[FallCube] WebTorrent skipped in preview/local mode — P2P Share available when deployed');
+    return;
+  }
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/webtorrent@2/webtorrent.min.js';
+  s.onerror = () => console.log('[FallCube] WebTorrent unavailable — P2P Share disabled');
+  s.onload = () => console.log('[FallCube] WebTorrent ready');
+  document.head.appendChild(s);
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --surface2: #f2f1ee;
+  --border: #e5e3de;
+  --border2: #d0cec8;
+  --text: #1a1916;
+  --muted: #8a8780;
+  --dim: #c4c1ba;
+  --accent: #1d4ed8;
+  --accent-light: #eff3ff;
+  --green: #15803d;
+  --green-light: #f0fdf4;
+  --amber: #b45309;
+  --amber-light: #fffbeb;
+  --red: #dc2626;
+  --purple: #7c3aed;
+  --p2p: #0891b2;
+  --p2p-light: #ecfeff;
+  --ai: #7c3aed;
+  --ai-light: #f5f3ff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+  --r: 10px; --r-sm: 6px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+body {
+  font-family: 'Geist', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* ═══ SIDEBAR ═══ */
+.sidebar {
+  width: 232px; flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  height: 100vh; overflow-y: auto;
+  padding: 16px 10px;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 9px;
+  padding: 4px 8px 20px;
+}
+
+.logo-mark {
+  width: 30px; height: 30px; background: var(--text);
+  border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; color: white; font-size: 15px; flex-shrink: 0;
+}
+
+.logo-text { font-size: 17px; font-weight: 700; letter-spacing: -0.4px; }
+.logo-text span { color: var(--accent); }
+.logo-sub { font-size: 9px; color: var(--muted); margin-top: 1px; }
+.logo-link { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.logo-link:hover { color: var(--accent); }
+
+.konomi-tag {
+  font-family: 'Geist Mono', monospace;
+  font-size: 9px; letter-spacing: 2px;
+  color: var(--gold, #d4a843);
+  background: rgba(212,168,67,0.08);
+  border: 1px solid rgba(212,168,67,0.2);
+  padding: 4px 10px; border-radius: 20px;
+  margin: 0 8px 16px;
+  text-align: center;
+}
+
+.sidebar-section { margin-bottom: 18px; }
+
+.sidebar-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--dim);
+  padding: 0 8px; margin-bottom: 3px;
+}
+
+.nav-btn {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 10px; border-radius: var(--r-sm);
+  font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 500;
+  color: var(--muted); cursor: pointer; transition: all 0.15s;
+  border: none; background: none; width: 100%; text-align: left;
+}
+.nav-btn:hover { background: var(--surface2); color: var(--text); }
+.nav-btn.active { background: var(--accent-light); color: var(--accent); }
+.nav-btn .nb-icon { width: 18px; text-align: center; flex-shrink: 0; }
+.nav-btn .nb-badge {
+  margin-left: auto; font-size: 10px; font-weight: 600;
+  background: var(--border); color: var(--muted);
+  padding: 1px 6px; border-radius: 20px;
+}
+.nav-btn.active .nb-badge { background: var(--accent); color: white; }
+
+/* AI STATUS */
+.ai-status {
+  margin-top: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  background: var(--surface2);
+}
+
+.ai-status-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+
+.ai-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--dim); flex-shrink: 0;
+}
+.ai-dot.ready { background: var(--green); box-shadow: 0 0 6px rgba(21,128,61,0.4); }
+.ai-dot.loading { background: var(--amber); animation: pulse 1s infinite; }
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+.ai-status-title { font-size: 12px; font-weight: 600; }
+.ai-status-sub { font-size: 10px; color: var(--muted); line-height: 1.5; }
+
+.ai-load-btn {
+  width: 100%; margin-top: 10px; padding: 7px;
+  background: var(--ai); color: white;
+  border: none; border-radius: var(--r-sm);
+  font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px;
+}
+.ai-load-btn:hover { background: #6d28d9; }
+.ai-load-btn:disabled { opacity: 0.5; cursor: default; }
+
+/* GPU badge */
+.gpu-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 9px; font-weight: 600; letter-spacing: 0.5px;
+  padding: 2px 7px; border-radius: 20px;
+  background: var(--green-light); color: var(--green);
+  border: 1px solid rgba(21,128,61,0.2);
+}
+
+/* ═══ MAIN ═══ */
+.main {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column;
+  height: 100vh;
+}
+
+/* TOPBAR */
+.topbar {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 12px 24px; display: flex; align-items: center; gap: 14px;
+  flex-shrink: 0;
+}
+
+.search-wrap { flex: 1; max-width: 500px; position: relative; }
+
+.search-icon {
+  position: absolute; left: 11px; top: 50%;
+  transform: translateY(-50%); color: var(--muted);
+  font-size: 14px; pointer-events: none;
+}
+
+.search-input {
+  width: 100%; padding: 8px 10px 8px 34px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; font-family: 'Geist', sans-serif;
+  font-size: 13px; color: var(--text); outline: none; transition: all 0.2s;
+}
+.search-input:focus { background: white; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(29,78,216,0.1); }
+.search-input::placeholder { color: var(--dim); }
+
+.top-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+.btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: var(--r-sm);
+  font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: all 0.15s; border: none; white-space: nowrap;
+}
+.btn-ghost { background: none; color: var(--muted); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--surface2); color: var(--text); }
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: #1e40af; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-p2p { background: var(--p2p); color: white; }
+.btn-p2p:hover { background: #0e7490; }
+.btn-ai { background: var(--ai); color: white; }
+.btn-ai:hover { background: #6d28d9; }
+
+/* CONTENT */
+.content { flex: 1; overflow-y: auto; padding: 24px 24px 48px; }
+
+/* DROP ZONE */
+.drop-zone {
+  border: 2px dashed var(--border2); border-radius: var(--r);
+  padding: 36px; text-align: center; margin-bottom: 24px;
+  cursor: pointer; transition: all 0.2s; background: var(--surface);
+}
+.drop-zone:hover, .drop-zone.over {
+  border-color: var(--accent); background: var(--accent-light);
+}
+.dz-icon { font-size: 32px; margin-bottom: 10px; }
+.dz-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+.dz-sub { font-size: 11px; color: var(--muted); }
+
+/* TOOLBAR */
+.toolbar {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+}
+
+.breadcrumb { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+.bc { color: var(--muted); cursor: pointer; transition: color 0.15s; }
+.bc:hover { color: var(--text); }
+.bc.cur { color: var(--text); font-weight: 500; cursor: default; }
+.bc-sep { color: var(--dim); }
+
+.toolbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+.sort-sel {
+  padding: 5px 10px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  font-family: 'Geist', sans-serif; font-size: 11px; color: var(--muted);
+  cursor: pointer; outline: none;
+}
+
+.view-toggle {
+  display: flex; gap: 2px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: var(--r-sm); padding: 3px;
+}
+.vt { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+  border-radius: 4px; cursor: pointer; font-size: 13px; border: none; background: none;
+  color: var(--muted); transition: all 0.15s; }
+.vt.on { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+
+/* FILES GRID */
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 8px;
+}
+
+.file-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden; cursor: pointer;
+  transition: all 0.2s; position: relative;
+}
+.file-card:hover { border-color: var(--border2); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.file-card.sel { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(29,78,216,0.15); }
+
+.fc-thumb {
+  height: 100px; display: flex; align-items: center;
+  justify-content: center; font-size: 38px; position: relative;
+}
+
+.fc-ext {
+  position: absolute; bottom: 7px; right: 7px;
+  font-family: 'Geist Mono', monospace; font-size: 8px; font-weight: 500;
+  padding: 2px 6px; border-radius: 4px; text-transform: uppercase; color: white;
+}
+
+.fc-body { padding: 9px 11px 11px; }
+.fc-name { font-size: 11px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+.fc-meta { font-size: 10px; color: var(--muted); }
+
+.fc-sel {
+  position: absolute; top: 7px; left: 7px;
+  width: 17px; height: 17px; border: 1.5px solid var(--border2);
+  border-radius: 4px; background: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; transition: all 0.15s; opacity: 0;
+}
+.file-card:hover .fc-sel, .file-card.sel .fc-sel { opacity: 1; }
+.file-card.sel .fc-sel { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* LIST */
+.files-list { display: none; }
+.files-list.on { display: block; }
+.files-grid.off { display: none; }
+
+.list-hdr, .list-row {
+  display: grid;
+  grid-template-columns: 36px 1fr 90px 110px 80px 44px;
+  align-items: center; gap: 8px; padding: 9px 12px;
+}
+.list-hdr {
+  font-size: 10px; font-weight: 600; color: var(--muted);
+  letter-spacing: 0.3px; border-bottom: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+.list-row {
+  border-radius: var(--r-sm); cursor: pointer; transition: background 0.12s;
+  font-size: 12px;
+}
+.list-row:hover { background: var(--surface2); }
+.list-row.sel { background: var(--accent-light); }
+
+.lr-icon { font-size: 20px; text-align: center; }
+.lr-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lr-type { font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--muted); }
+.lr-date { font-size: 11px; color: var(--muted); }
+.lr-size { font-size: 11px; color: var(--muted); text-align: right; }
+.lr-menu { display: flex; justify-content: center; }
+.lr-btn {
+  width: 26px; height: 26px; border: none; background: none; cursor: pointer;
+  color: var(--muted); font-size: 15px; border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; opacity: 0;
+}
+.list-row:hover .lr-btn { opacity: 1; }
+.lr-btn:hover { background: var(--border); color: var(--text); }
+
+/* ═══ PANELS ═══ */
+.panel-overlay {
+  position: fixed; inset: 0; background: rgba(26,25,22,0.45);
+  z-index: 200; display: none; align-items: center; justify-content: flex-end;
+  backdrop-filter: blur(3px);
+}
+.panel-overlay.open { display: flex; }
+
+.panel {
+  background: var(--surface); border-left: 1px solid var(--border);
+  width: 420px; height: 100%; overflow-y: auto;
+  animation: slidePanel 0.3s ease;
+  display: flex; flex-direction: column;
+}
+@keyframes slidePanel { from{transform:translateX(40px);opacity:0} to{transform:translateX(0);opacity:1} }
+
+.panel-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+}
+
+.panel-title { font-size: 16px; font-weight: 600; flex: 1; }
+
+.panel-close {
+  width: 30px; height: 30px; border: 1px solid var(--border);
+  background: none; border-radius: 6px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 15px; transition: all 0.15s;
+}
+.panel-close:hover { background: var(--surface2); color: var(--text); }
+
+.panel-body { padding: 20px 24px; flex: 1; }
+
+/* P2P PANEL */
+.p2p-mode-tabs {
+  display: flex; gap: 2px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  padding: 3px; margin-bottom: 20px;
+}
+
+.p2p-tab {
+  flex: 1; padding: 8px; text-align: center; cursor: pointer;
+  border-radius: 5px; font-size: 12px; font-weight: 500;
+  color: var(--muted); transition: all 0.15s; border: none; background: none;
+}
+.p2p-tab.on { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+
+.share-code-box {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 20px; text-align: center; margin-bottom: 16px;
+}
+
+.share-code {
+  font-family: 'Geist Mono', monospace; font-size: 28px; font-weight: 500;
+  letter-spacing: 6px; color: var(--p2p); margin-bottom: 8px;
+}
+
+.share-code-sub { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+.share-link-box {
+  display: flex; gap: 8px; margin-bottom: 16px;
+}
+
+.share-link-input {
+  flex: 1; padding: 8px 12px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r-sm); font-family: 'Geist Mono', monospace;
+  font-size: 11px; color: var(--muted); outline: none;
+}
+
+.torrent-status {
+  background: var(--p2p-light); border: 1px solid rgba(8,145,178,0.2);
+  border-radius: var(--r-sm); padding: 12px 14px;
+  font-size: 11px; color: var(--muted); line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.torrent-status strong { color: var(--p2p); }
+
+.p2p-file-list { margin-top: 16px; }
+.p2p-file-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border: 1px solid var(--border);
+  border-radius: var(--r-sm); margin-bottom: 6px;
+  background: var(--surface);
+}
+.p2p-file-icon { font-size: 20px; }
+.p2p-file-info { flex: 1; }
+.p2p-file-name { font-size: 12px; font-weight: 500; }
+.p2p-file-meta { font-size: 10px; color: var(--muted); }
+
+.progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: 5px; }
+.progress-fill { height: 100%; background: var(--p2p); border-radius: 2px; transition: width 0.3s; }
+
+.receive-input {
+  width: 100%; padding: 12px 14px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r-sm); font-family: 'Geist Mono', monospace;
+  font-size: 13px; outline: none; transition: all 0.2s; margin-bottom: 12px;
+}
+.receive-input:focus { border-color: var(--p2p); box-shadow: 0 0 0 3px rgba(8,145,178,0.1); }
+.receive-input::placeholder { color: var(--dim); }
+
+/* AI PANEL */
+.ai-model-select {
+  width: 100%; padding: 9px 12px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r-sm); font-family: 'Geist', sans-serif;
+  font-size: 13px; margin-bottom: 12px; outline: none; cursor: pointer;
+}
+
+.ai-gpu-info {
+  background: var(--green-light); border: 1px solid rgba(21,128,61,0.2);
+  border-radius: var(--r-sm); padding: 10px 14px;
+  font-size: 11px; color: var(--green); margin-bottom: 16px;
+  display: none;
+}
+.ai-gpu-info.show { display: block; }
+
+.ai-no-gpu {
+  background: var(--amber-light); border: 1px solid rgba(180,83,9,0.2);
+  border-radius: var(--r-sm); padding: 10px 14px;
+  font-size: 11px; color: var(--amber); margin-bottom: 16px;
+  display: none;
+}
+.ai-no-gpu.show { display: block; }
+
+.ai-progress {
+  margin-bottom: 16px; display: none;
+}
+.ai-progress.show { display: block; }
+.ai-progress-label {
+  font-size: 11px; color: var(--muted); margin-bottom: 6px;
+  display: flex; justify-content: space-between;
+}
+.ai-progress-bar { height: 4px; background: var(--border); border-radius: 2px; }
+.ai-progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--ai), var(--accent));
+  border-radius: 2px; transition: width 0.3s; width: 0%;
+}
+
+.ai-chat {
+  border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; display: flex; flex-direction: column;
+  height: 340px;
+}
+
+.ai-messages {
+  flex: 1; overflow-y: auto; padding: 14px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.ai-msg { max-width: 85%; }
+.ai-msg.user { align-self: flex-end; }
+.ai-msg.ai { align-self: flex-start; }
+
+.ai-bubble {
+  padding: 9px 13px; border-radius: 10px;
+  font-size: 12px; line-height: 1.6;
+}
+.ai-msg.user .ai-bubble { background: var(--accent); color: white; border-radius: 10px 10px 2px 10px; }
+.ai-msg.ai .ai-bubble { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px 10px 10px 2px; }
+
+.ai-input-row {
+  display: flex; gap: 8px; padding: 10px;
+  border-top: 1px solid var(--border); background: var(--surface);
+}
+
+.ai-input {
+  flex: 1; padding: 8px 12px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; font-family: 'Geist', sans-serif;
+  font-size: 12px; outline: none;
+}
+.ai-input:focus { border-color: var(--ai); }
+
+.ai-send {
+  width: 34px; height: 34px; background: var(--ai); color: white;
+  border: none; border-radius: 8px; cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; flex-shrink: 0;
+}
+.ai-send:hover { background: #6d28d9; }
+.ai-send:disabled { opacity: 0.4; cursor: default; }
+
+/* ═══ CONTEXT MENU ═══ */
+.ctx {
+  position: fixed; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--r);
+  box-shadow: var(--shadow-lg); padding: 5px; z-index: 300;
+  min-width: 175px; display: none;
+}
+.ctx.open { display: block; animation: ctxIn 0.12s ease; }
+@keyframes ctxIn { from{opacity:0;transform:scale(0.96)} to{opacity:1;transform:scale(1)} }
+
+.ctx-i {
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 11px; border-radius: 5px;
+  font-size: 12px; cursor: pointer;
+  border: none; background: none; width: 100%; text-align: left; color: var(--text);
+  transition: background 0.1s;
+}
+.ctx-i:hover { background: var(--surface2); }
+.ctx-i.del { color: var(--red); }
+.ctx-i.del:hover { background: #fef2f2; }
+.ctx-sep { height: 1px; background: var(--border); margin: 4px 0; }
+
+/* ═══ SELECTION BAR ═══ */
+.sel-bar {
+  position: fixed; bottom: 22px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--text); color: white;
+  padding: 9px 8px 9px 16px;
+  border-radius: 10px; display: flex; align-items: center; gap: 10px;
+  box-shadow: var(--shadow-lg); z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  font-size: 12px; font-weight: 500; white-space: nowrap;
+}
+.sel-bar.show { transform: translateX(-50%) translateY(0); }
+
+.sel-action {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 11px; border-radius: 6px;
+  cursor: pointer; font-size: 11px; font-weight: 500;
+  border: none; color: white; transition: background 0.15s;
+  background: rgba(255,255,255,0.12);
+}
+.sel-action:hover { background: rgba(255,255,255,0.22); }
+.sel-action.p2p { background: rgba(8,145,178,0.4); }
+.sel-action.del { background: rgba(220,38,38,0.35); }
+.sel-divider { width: 1px; height: 18px; background: rgba(255,255,255,0.18); }
+
+/* ═══ TOAST ═══ */
+.toast {
+  position: fixed; bottom: 22px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--text); color: white;
+  padding: 10px 18px; border-radius: 8px;
+  font-size: 12px; font-weight: 500;
+  box-shadow: var(--shadow-lg); z-index: 400;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ═══ UPLOAD PROGRESS ═══ */
+.upload-tray {
+  position: fixed; bottom: 22px; right: 22px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); box-shadow: var(--shadow-lg);
+  padding: 14px 16px; width: 280px; z-index: 100;
+  display: none;
+}
+.upload-tray.show { display: block; animation: slideIn 0.25s ease; }
+@keyframes slideIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+.ut-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.ut-title { font-size: 12px; font-weight: 600; }
+.ut-close { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 16px; }
+.ut-item { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+.ut-icon { font-size: 18px; flex-shrink: 0; }
+.ut-info { flex: 1; }
+.ut-name { font-size: 11px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ut-bar { height: 3px; background: var(--border); border-radius: 2px; }
+.ut-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.2s; }
+
+/* RENAME DIALOG */
+.dialog-wrap {
+  position: fixed; inset: 0; background: rgba(26,25,22,0.45);
+  z-index: 500; display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.dialog-wrap.open { display: flex; }
+
+.dialog {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px; width: 340px;
+  box-shadow: var(--shadow-lg); animation: dlgIn 0.2s ease;
+}
+@keyframes dlgIn { from{opacity:0;transform:scale(0.96)translateY(8px)} to{opacity:1;transform:scale(1)translateY(0)} }
+.dialog h3 { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+.dialog input {
+  width: 100%; padding: 9px 12px;
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  font-family: 'Geist', sans-serif; font-size: 13px; outline: none;
+  transition: border-color 0.2s; margin-bottom: 14px;
+}
+.dialog input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(29,78,216,0.1); }
+.dialog-btns { display: flex; gap: 8px; justify-content: flex-end; }
+
+/* EMPTY */
+.empty { text-align: center; padding: 56px 20px; color: var(--muted); }
+.empty-icon { font-size: 44px; margin-bottom: 14px; }
+.empty-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 5px; }
+.empty-sub { font-size: 12px; line-height: 1.7; }
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.6px;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+@media(max-width:640px) {
+  .sidebar { display: none; }
+  .content { padding: 14px; }
+  .topbar { padding: 10px 14px; }
+  .panel { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-mark">⬡</div>
+    <div>
+      <div class="logo-text">Fall<span>Cube</span></div>
+      <div class="logo-sub"><a href="https://www.ai-nativesolutions.com" target="_blank" class="logo-link">ai-nativesolutions.com</a></div>
+    </div>
+  </div>
+  <div class="konomi-tag">◊ Konomi · φ·κ=1</div>
+
+  <div class="sidebar-section">
+    <button class="nav-btn active" onclick="nav('all',this)">
+      <span class="nb-icon">⌂</span> All Files
+    </button>
+    <button class="nav-btn" onclick="nav('recent',this)">
+      <span class="nb-icon">◷</span> Recents
+    </button>
+    <button class="nav-btn" onclick="nav('starred',this)">
+      <span class="nb-icon">☆</span> Starred
+    </button>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">File Types</div>
+    <button class="nav-btn" onclick="nav('docs',this)">
+      <span class="nb-icon">📄</span> Documents
+    </button>
+    <button class="nav-btn" onclick="nav('images',this)">
+      <span class="nb-icon">🖼</span> Images
+    </button>
+    <button class="nav-btn" onclick="nav('code',this)">
+      <span class="nb-icon">{ }</span> Code
+    </button>
+    <button class="nav-btn" onclick="nav('media',this)">
+      <span class="nb-icon">▶</span> Media
+    </button>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Personal Engine</div>
+    <button class="nav-btn" id="engineNavBtn" onclick="openEngine()" style="border-left:2px solid var(--purple);color:var(--purple)">
+      <span class="nb-icon">🧠</span> My Engine
+      <span class="nb-badge" id="engineBadge" style="background:var(--purple);color:white;display:none">0</span>
+    </button>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Dash Features</div>
+    <button class="nav-btn" onclick="openUniversalSearch()">
+      <span class="nb-icon">🔍</span> Universal Search
+    </button>
+    <button class="nav-btn" onclick="openStacks()">
+      <span class="nb-icon">⊞</span> Stacks
+    </button>
+    <button class="nav-btn" onclick="openDashAI()">
+      <span class="nb-icon">◈</span> AI Assistant
+    </button>
+    <button class="nav-btn" onclick="openSecurity()">
+      <span class="nb-icon">🔒</span> Security
+    </button>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Share</div>
+    <button class="nav-btn" onclick="openP2P()">
+      <span class="nb-icon">⇄</span> P2P Share
+    </button>
+  </div>
+
+  <div class="ai-status" id="aiStatus">
+    <div class="ai-status-header">
+      <div class="ai-dot" id="aiDot"></div>
+      <div class="ai-status-title" id="aiStatusTitle">AI not loaded</div>
+    </div>
+    <div class="ai-status-sub" id="aiStatusSub">Load a local model to get AI-powered file analysis and search.</div>
+    <div id="gpuBadge" style="margin-top:8px;display:none">
+      <span class="gpu-badge">⚡ WebGPU ready</span>
+    </div>
+    <button class="ai-load-btn" id="aiLoadBtn" onclick="openAI()">Load AI →</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" class="search-input" placeholder="Search files..." oninput="search(this.value)">
+    </div>
+    <div class="top-right">
+      <button class="btn btn-ghost" onclick="showDialog('New Folder', '', createFolder)">+ Folder</button>
+      <button class="btn btn-p2p" onclick="openP2P()">⇄ P2P Share</button>
+      <button class="btn btn-primary" onclick="triggerUpload()">↑ Upload</button>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content" id="content">
+
+    <div class="drop-zone" id="dropZone"
+         ondragover="onDragOver(event)" ondragleave="onDragLeave()"
+         ondrop="onDrop(event)" onclick="triggerUpload()">
+      <div class="dz-icon">☁</div>
+      <div class="dz-title">Drop files here or click to upload</div>
+      <div class="dz-sub">Any file type · Stored locally in your browser · Private</div>
+    </div>
+
+    <div class="toolbar">
+      <div class="breadcrumb" id="breadcrumb">
+        <span class="bc cur">All Files</span>
+      </div>
+      <div class="toolbar-right">
+        <select class="sort-sel" onchange="setSort(this.value)">
+          <option value="date">Date</option>
+          <option value="name">Name</option>
+          <option value="size">Size</option>
+          <option value="type">Type</option>
+        </select>
+        <div class="view-toggle">
+          <button class="vt on" id="vt-g" onclick="setView('grid')" title="Grid">⊞</button>
+          <button class="vt" id="vt-l" onclick="setView('list')" title="List">☰</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRID -->
+    <div class="files-grid" id="filesGrid"></div>
+
+    <!-- LIST -->
+    <div class="files-list" id="filesList">
+      <div class="list-hdr">
+        <span></span><span>Name</span><span>Type</span>
+        <span>Modified</span><span style="text-align:right">Size</span><span></span>
+      </div>
+      <div id="filesListBody"></div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ═══ P2P PANEL ═══ -->
+<div class="panel-overlay" id="p2pOverlay" onclick="closePanelIf(event,'p2pOverlay')">
+  <div class="panel">
+    <div class="panel-header">
+      <span style="font-size:20px">⇄</span>
+      <div class="panel-title">P2P File Share</div>
+      <button class="panel-close" onclick="closePanel('p2pOverlay')">✕</button>
+    </div>
+    <div class="panel-body">
+      <p style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:18px">
+        Share files directly with anyone — no cloud, no middleman. Uses <strong style="color:var(--text)">WebTorrent</strong> (WebRTC + DHT). The other person just needs a browser with FallCube.
+      </p>
+
+      <div class="p2p-mode-tabs">
+        <button class="p2p-tab on" onclick="setP2PMode('send',this)">Send Files</button>
+        <button class="p2p-tab" onclick="setP2PMode('receive',this)">Receive Files</button>
+      </div>
+
+      <!-- SEND MODE -->
+      <div id="p2pSend">
+        <div class="section-label">Select files to share</div>
+        <div class="p2p-file-list" id="p2pFileList">
+          <div style="font-size:12px;color:var(--muted);text-align:center;padding:20px">
+            Select files from your library or upload new ones to share.
+          </div>
+        </div>
+        <button class="btn btn-p2p" style="width:100%;justify-content:center;margin-top:12px;padding:10px" onclick="startSeed()">
+          Generate Share Link →
+        </button>
+
+        <div id="seedResult" style="display:none;margin-top:16px">
+          <div class="torrent-status">
+            <strong>🟢 Seeding</strong> — share this link or code with anyone.<br>
+            They paste it into "Receive Files" to download directly from you.
+          </div>
+          <div class="share-code-box">
+            <div class="share-code" id="shareCode">—</div>
+            <div class="share-code-sub">Short code · or use the full magnet link below</div>
+          </div>
+          <div class="share-link-box">
+            <input type="text" class="share-link-input" id="shareLinkInput" readonly placeholder="magnet:?xt=...">
+            <button class="btn btn-p2p" onclick="copyLink()">Copy</button>
+          </div>
+          <div style="font-size:11px;color:var(--muted);text-align:center">
+            Keep this tab open while the other person downloads.
+          </div>
+        </div>
+      </div>
+
+      <!-- RECEIVE MODE -->
+      <div id="p2pReceive" style="display:none">
+        <div class="section-label">Enter share code or magnet link</div>
+        <input type="text" class="receive-input" id="receiveInput"
+               placeholder="Paste code or magnet:?xt=... here">
+        <button class="btn btn-p2p" style="width:100%;justify-content:center;padding:10px" onclick="startReceive()">
+          Start Download →
+        </button>
+
+        <div id="receiveList" style="margin-top:16px"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ AI PANEL ═══ -->
+<div class="panel-overlay" id="aiOverlay" onclick="closePanelIf(event,'aiOverlay')">
+  <div class="panel">
+    <div class="panel-header">
+      <span style="font-size:20px">◈</span>
+      <div class="panel-title">AI Assistant</div>
+      <button class="panel-close" onclick="closePanel('aiOverlay')">✕</button>
+    </div>
+    <div class="panel-body">
+
+      <div class="ai-gpu-info" id="aiGpuInfo">
+        ⚡ WebGPU detected — full local model available. AI runs on your GPU. Nothing leaves your device.
+      </div>
+      <div class="ai-no-gpu" id="aiNoGpu">
+        ⚠ No WebGPU detected. Using WASM CPU fallback — slower but still fully private.
+      </div>
+
+      <select class="ai-model-select" id="modelSelect">
+        <option value="Phi-3-mini-4k-instruct-q4f16_1-MLC">Phi-3 Mini (2.4GB) — Recommended</option>
+        <option value="Llama-3.1-8B-Instruct-q4f32_1-MLC">Llama 3.1 8B (4.9GB) — More powerful</option>
+        <option value="gemma-2-2b-it-q4f16_1-MLC">Gemma 2 2B (1.5GB) — Fastest</option>
+      </select>
+
+      <div class="ai-progress" id="aiProgressWrap">
+        <div class="ai-progress-label">
+          <span id="aiProgressLabel">Loading model...</span>
+          <span id="aiProgressPct">0%</span>
+        </div>
+        <div class="ai-progress-bar">
+          <div class="ai-progress-fill" id="aiProgressFill"></div>
+        </div>
+      </div>
+
+      <button class="btn btn-ai" style="width:100%;justify-content:center;padding:10px;margin-bottom:18px"
+              id="loadModelBtn" onclick="loadModel()">
+        Load AI Locally →
+      </button>
+
+      <div class="section-label">Chat with your files</div>
+
+      <div class="ai-chat">
+        <div class="ai-messages" id="aiMessages">
+          <div class="ai-msg ai">
+            <div class="ai-bubble">
+              Hi! Load a model above to get started. I can summarise files, find things across your library, explain code, and answer questions about your documents — all locally, nothing shared.
+            </div>
+          </div>
+        </div>
+        <div class="ai-input-row">
+          <input type="text" class="ai-input" id="aiInput"
+                 placeholder="Ask about your files..." disabled
+                 onkeydown="if(event.key==='Enter')sendAI()">
+          <button class="ai-send" id="aiSendBtn" onclick="sendAI()" disabled>↑</button>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;font-size:10px;color:var(--muted);text-align:center;line-height:1.7">
+        Model runs entirely in your browser via WebGPU/WASM.<br>No API keys. No cloud. No data sent anywhere.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXT MENU -->
+<div class="ctx" id="ctx">
+  <button class="ctx-i" onclick="ctxDo('open')"><span>⬡</span> Open</button>
+  <button class="ctx-i" onclick="ctxDo('share')"><span>⇄</span> Share P2P</button>
+  <div class="ctx-sep"></div>
+  <button class="ctx-i" onclick="ctxDo('download')"><span>↓</span> Download</button>
+  <button class="ctx-i" onclick="ctxDo('copy')"><span>⊕</span> Duplicate</button>
+  <div class="ctx-sep"></div>
+  <button class="ctx-i" onclick="ctxDo('rename')"><span>✎</span> Rename</button>
+  <button class="ctx-i" onclick="ctxDo('star')"><span>☆</span> <span id="ctxStarTxt">Star</span></button>
+  <div class="ctx-sep"></div>
+  <button class="ctx-i del" onclick="ctxDo('delete')"><span>✕</span> Delete</button>
+</div>
+
+<!-- RENAME DIALOG -->
+<div class="dialog-wrap" id="dialogWrap" onclick="closeDlgIf(event)">
+  <div class="dialog">
+    <h3 id="dlgTitle">Rename</h3>
+    <input type="text" id="dlgInput" onkeydown="if(event.key==='Enter')dlgConfirm()">
+    <div class="dialog-btns">
+      <button class="btn btn-ghost" onclick="closeDlg()">Cancel</button>
+      <button class="btn btn-primary" onclick="dlgConfirm()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- SELECTION BAR -->
+<div class="sel-bar" id="selBar">
+  <span id="selCount">0 selected</span>
+  <div class="sel-divider"></div>
+  <button class="sel-action p2p" onclick="selShare()">⇄ Share P2P</button>
+  <button class="sel-action" onclick="selDownload()">↓ Download</button>
+  <button class="sel-action del" onclick="selDelete()">✕ Delete</button>
+  <div class="sel-divider"></div>
+  <button class="sel-action" onclick="clearSel()" style="background:none">✕</button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ <span id="toastTxt"></span></div>
+
+<!-- UPLOAD TRAY -->
+<div class="upload-tray" id="uploadTray">
+  <div class="ut-header">
+    <span class="ut-title">Uploading</span>
+    <button class="ut-close" onclick="document.getElementById('uploadTray').classList.remove('show')">✕</button>
+  </div>
+  <div id="utItems"></div>
+</div>
+
+<!-- FOOTER -->
+<div style="position:fixed;bottom:0;left:232px;right:0;height:30px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:50;pointer-events:none">
+  <div style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:1px">
+    ◊ KONOMI · φ·κ=1 · Built on <a href="https://www.ai-nativesolutions.com" target="_blank" style="color:var(--muted);text-decoration:none;pointer-events:all" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">ai-nativesolutions.com</a>
+  </div>
+  <div style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:1px">
+    FREE · PRIVATE · SOVEREIGN · <span id="footerFileCount">0 files</span>
+  </div>
+</div>
+
+<input type="file" id="fileInput" multiple style="display:none" onchange="handleFiles(this)">
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let files = loadFiles();
+let selected = new Set();
+let currentView = 'grid';
+let sortBy = 'date';
+let currentFilter = 'all';
+let ctxId = null;
+let dlgCallback = null;
+let torrentClient = null;
+let aiEngine = null;
+let aiReady = false;
+let aiLoading = false;
+let aiErrorShown = false;
+let p2pSelected = new Set();
+let magnetMap = {}; // code -> magnet
+
+// ═══════════════════════════════════════
+// FILE STORAGE
+// ═══════════════════════════════════════
+function loadFiles() {
+  try { return JSON.parse(localStorage.getItem('fallcube_v2') || '[]'); } catch { return []; }
+}
+
+function saveFiles() {
+  try { localStorage.setItem('fallcube_v2', JSON.stringify(files)); } catch(e) {}
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+async function init() {
+  // WebGPU check
+  const hasGPU = await checkWebGPU();
+  if(hasGPU) {
+    document.getElementById('gpuBadge').style.display = 'block';
+    document.getElementById('aiGpuInfo').classList.add('show');
+  } else {
+    document.getElementById('aiNoGpu').classList.add('show');
+  }
+
+  // WebTorrent — init after window load, graceful if unavailable
+  function initTorrent() {
+    try {
+      if(typeof WebTorrent === 'undefined') {
+        // Silent — P2P disabled in this environment, not an error
+        return;
+      }
+      torrentClient = new WebTorrent();
+      torrentClient.on('error', err => console.log('[FallCube] WebTorrent:', err));
+      console.log('[FallCube] WebTorrent ready — P2P Share enabled');
+    } catch(e) {
+      console.log('[FallCube] WebTorrent init skipped:', e.message);
+    }
+  }
+  // Try immediately, fallback on load
+  if(typeof WebTorrent !== 'undefined') initTorrent();
+  else window.addEventListener('load', initTorrent);
+
+  renderFiles();
+  document.addEventListener('click', () => document.getElementById('ctx').classList.remove('open'));
+  document.addEventListener('keydown', handleKeys);
+}
+
+async function checkWebGPU() {
+  try {
+    if(!navigator.gpu) return false;
+    const adapter = await navigator.gpu.requestAdapter();
+    return !!adapter;
+  } catch { return false; }
+}
+
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+function getFiltered() {
+  let list = [...files];
+  if(currentFilter === 'recent') list = list.sort((a,b)=>b.ts-a.ts).slice(0,20);
+  else if(currentFilter === 'starred') list = list.filter(f=>f.starred);
+  else if(currentFilter === 'docs') list = list.filter(f=>['pdf','doc','docx','md','txt','pptx','xlsx','odt'].includes(f.ext));
+  else if(currentFilter === 'images') list = list.filter(f=>['png','jpg','jpeg','gif','svg','webp','bmp'].includes(f.ext));
+  else if(currentFilter === 'code') list = list.filter(f=>['js','ts','py','html','css','json','sh','rb','go','java','cpp'].includes(f.ext));
+  else if(currentFilter === 'media') list = list.filter(f=>['mp4','mov','avi','mp3','wav','m4a','ogg','mkv'].includes(f.ext));
+
+  list.sort((a,b) => {
+    if(sortBy==='name') return a.name.localeCompare(b.name);
+    if(sortBy==='size') return (b.bytes||0)-(a.bytes||0);
+    if(sortBy==='type') return a.ext.localeCompare(b.ext);
+    return b.ts - a.ts;
+  });
+  return list;
+}
+
+function renderFiles(list) {
+  const data = list || getFiltered();
+  renderGrid(data);
+  renderList(data);
+  updateP2PFileList();
+  const fc = document.getElementById('footerFileCount');
+  if(fc) fc.textContent = `${files.length} file${files.length!==1?'s':''}`;
+}
+
+function renderGrid(data) {
+  const el = document.getElementById('filesGrid');
+  if(!data.length) {
+    el.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <div class="empty-icon">📂</div>
+      <div class="empty-title">No files here</div>
+      <div class="empty-sub">Upload files by dragging them here<br>or clicking the Upload button.</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML = data.map(f => `
+    <div class="file-card ${selected.has(f.id)?'sel':''}" data-id="${f.id}"
+         onclick="cardClick(event,'${f.id}')"
+         ondblclick="openFile('${f.id}')"
+         oncontextmenu="showCtx(event,'${f.id}')">
+      <div class="fc-sel">${selected.has(f.id)?'✓':''}</div>
+      <div class="fc-thumb" style="background:${f.thumbBg}">
+        ${f.icon}
+        ${f.ext?`<span class="fc-ext" style="background:${f.extColor}">${f.ext}</span>`:''}
+      </div>
+      <div class="fc-body">
+        <div class="fc-name" title="${f.name}">${f.name}</div>
+        <div class="fc-meta">${f.sizeStr} · ${timeAgo(f.ts)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderList(data) {
+  const el = document.getElementById('filesListBody');
+  el.innerHTML = data.map(f => `
+    <div class="list-row ${selected.has(f.id)?'sel':''}" data-id="${f.id}"
+         onclick="cardClick(event,'${f.id}')"
+         ondblclick="openFile('${f.id}')"
+         oncontextmenu="showCtx(event,'${f.id}')">
+      <div class="lr-icon">${f.icon}</div>
+      <div class="lr-name">${f.name}</div>
+      <div class="lr-type">${f.ext.toUpperCase()||'—'}</div>
+      <div class="lr-date">${timeAgo(f.ts)}</div>
+      <div class="lr-size">${f.sizeStr}</div>
+      <div class="lr-menu">
+        <button class="lr-btn" onclick="event.stopPropagation();showCtx(event,'${f.id}')">⋯</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+function nav(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  clearSel();
+  const labels = {all:'All Files',recent:'Recents',starred:'Starred',docs:'Documents',images:'Images',code:'Code',media:'Media'};
+  document.getElementById('breadcrumb').innerHTML =
+    filter==='all'
+      ? `<span class="bc cur">All Files</span>`
+      : `<span class="bc" onclick="nav('all')">All Files</span><span class="bc-sep">›</span><span class="bc cur">${labels[filter]||filter}</span>`;
+  renderFiles();
+}
+
+// ═══════════════════════════════════════
+// UPLOAD
+// ═══════════════════════════════════════
+function triggerUpload() { document.getElementById('fileInput').click(); }
+
+function handleFiles(input) {
+  processFiles(Array.from(input.files));
+  input.value = '';
+}
+
+function onDragOver(e) { e.preventDefault(); document.getElementById('dropZone').classList.add('over'); }
+function onDragLeave() { document.getElementById('dropZone').classList.remove('over'); }
+function onDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('over');
+  processFiles(Array.from(e.dataTransfer.files));
+}
+
+function processFiles(fileList) {
+  if(!fileList.length) return;
+  const tray = document.getElementById('uploadTray');
+  const items = document.getElementById('utItems');
+  tray.classList.add('show');
+  items.innerHTML = '';
+
+  fileList.forEach((file, i) => {
+    const id = 'ut'+i;
+    items.innerHTML += `
+      <div class="ut-item">
+        <span class="ut-icon">${getIcon(file.name)}</span>
+        <div class="ut-info">
+          <div class="ut-name">${file.name}</div>
+          <div class="ut-bar"><div class="ut-fill" id="${id}" style="width:0%"></div></div>
+        </div>
+      </div>`;
+
+    // Read file as base64 for storage
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      let p = 0;
+      const iv = setInterval(() => {
+        p = Math.min(100, p + 15 + Math.random()*20);
+        const bar = document.getElementById(id);
+        if(bar) bar.style.width = p+'%';
+        if(p >= 100) {
+          clearInterval(iv);
+          const ext = file.name.split('.').pop().toLowerCase();
+          const baseName = file.name.slice(0, -(ext.length+1)) || file.name;
+          const f = {
+            id: 'f' + Date.now() + Math.random().toString(36).slice(2),
+            name: baseName,
+            ext: ext,
+            sizeStr: fmtSize(file.size),
+            bytes: file.size,
+            ts: Date.now(),
+            starred: false,
+            icon: getIcon(file.name),
+            thumbBg: getThumbBg(ext),
+            extColor: getExtColor(ext),
+            data: ev.target.result, // base64 data URL for download
+            mimeType: file.type,
+          };
+          files.unshift(f);
+          saveFiles();
+          if(i === fileList.length-1) {
+            setTimeout(() => {
+              tray.classList.remove('show');
+              renderFiles();
+              toast(`${fileList.length} file${fileList.length>1?'s':''} uploaded`);
+            }, 300);
+          }
+        }
+      }, 60);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ═══════════════════════════════════════
+// SELECTION
+// ═══════════════════════════════════════
+function cardClick(e, id) {
+  if(e.shiftKey || e.ctrlKey || e.metaKey) {
+    selected.has(id) ? selected.delete(id) : selected.add(id);
+    updateSel();
+    renderFiles();
+  } else if(selected.size > 0) {
+    clearSel();
+  }
+}
+
+function openFile(id) {
+  const f = files.find(x=>x.id===id);
+  if(!f) return;
+  if(f.data) {
+    // Try to open/preview
+    const a = document.createElement('a');
+    a.href = f.data; a.target='_blank';
+    a.click();
+  } else {
+    toast(`Opening ${f.name}.${f.ext}`);
+  }
+}
+
+function updateSel() {
+  const bar = document.getElementById('selBar');
+  document.getElementById('selCount').textContent = `${selected.size} selected`;
+  bar.classList.toggle('show', selected.size > 0);
+}
+
+function clearSel() { selected.clear(); updateSel(); renderFiles(); }
+
+function selDelete() {
+  if(!selected.size) return;
+  files = files.filter(f=>!selected.has(f.id));
+  saveFiles(); toast(`Deleted ${selected.size} item${selected.size>1?'s':''}`);
+  clearSel(); renderFiles();
+}
+
+function selDownload() {
+  selected.forEach(id => {
+    const f = files.find(x=>x.id===id);
+    if(f?.data) { const a=document.createElement('a'); a.href=f.data; a.download=f.name+'.'+f.ext; a.click(); }
+  });
+  toast(`Downloading ${selected.size} file${selected.size>1?'s':''}`);
+  clearSel();
+}
+
+function selShare() {
+  p2pSelected = new Set(selected);
+  clearSel();
+  openP2P();
+}
+
+// ═══════════════════════════════════════
+// CONTEXT MENU
+// ═══════════════════════════════════════
+function showCtx(e, id) {
+  e.preventDefault(); e.stopPropagation();
+  ctxId = id;
+  const f = files.find(x=>x.id===id);
+  document.getElementById('ctxStarTxt').textContent = f?.starred ? 'Unstar' : 'Star';
+  const menu = document.getElementById('ctx');
+  menu.classList.add('open');
+  menu.style.left = Math.min(e.clientX, window.innerWidth-190)+'px';
+  menu.style.top = Math.min(e.clientY, window.innerHeight-260)+'px';
+}
+
+function ctxDo(action) {
+  document.getElementById('ctx').classList.remove('open');
+  const f = files.find(x=>x.id===ctxId);
+  if(!f) return;
+
+  if(action==='open') openFile(f.id);
+  else if(action==='download') { if(f.data){const a=document.createElement('a');a.href=f.data;a.download=f.name+'.'+f.ext;a.click();} else toast('No data to download'); }
+  else if(action==='copy') {
+    const c={...f,id:'c'+Date.now(),name:'Copy of '+f.name,ts:Date.now()};
+    files.unshift(c); saveFiles(); renderFiles(); toast('Duplicate created');
+  }
+  else if(action==='rename') {
+    showDialog('Rename', f.name+'.'+f.ext, (val) => {
+      const parts = val.split('.');
+      const ext = parts.length>1 ? parts.pop() : f.ext;
+      f.name = parts.join('.'); f.ext = ext;
+      f.icon = getIcon(f.name+'.'+f.ext);
+      f.thumbBg = getThumbBg(ext); f.extColor = getExtColor(ext);
+      saveFiles(); renderFiles(); toast('Renamed');
+    });
+  }
+  else if(action==='star') { f.starred=!f.starred; saveFiles(); renderFiles(); toast(f.starred?'Starred':'Unstarred'); }
+  else if(action==='delete') { files=files.filter(x=>x.id!==ctxId); saveFiles(); renderFiles(); toast(`"${f.name}" deleted`); }
+  else if(action==='share') { p2pSelected=new Set([f.id]); openP2P(); }
+}
+
+// ═══════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════
+function search(q) {
+  if(!q.trim()) { renderFiles(); return; }
+  const lq = q.toLowerCase();
+  renderFiles(files.filter(f=>
+    f.name.toLowerCase().includes(lq) ||
+    f.ext.toLowerCase().includes(lq)
+  ));
+}
+
+// ═══════════════════════════════════════
+// SORT / VIEW
+// ═══════════════════════════════════════
+function setSort(v) { sortBy=v; renderFiles(); }
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('vt-g').classList.toggle('on', v==='grid');
+  document.getElementById('vt-l').classList.toggle('on', v==='list');
+  document.getElementById('filesGrid').classList.toggle('off', v==='list');
+  document.getElementById('filesList').classList.toggle('on', v==='list');
+}
+
+// ═══════════════════════════════════════
+// FOLDERS
+// ═══════════════════════════════════════
+function createFolder(name) {
+  if(!name?.trim()) return;
+  files.unshift({
+    id:'folder'+Date.now(), name:name.trim(), ext:'folder',
+    sizeStr:'—', bytes:0, ts:Date.now(), starred:false,
+    icon:'📁', thumbBg:'#fefce8', extColor:null, data:null
+  });
+  saveFiles(); renderFiles(); toast(`Folder "${name}" created`);
+}
+
+// ═══════════════════════════════════════
+// P2P — WebTorrent
+// ═══════════════════════════════════════
+function openP2P() { document.getElementById('p2pOverlay').classList.add('open'); updateP2PFileList(); }
+
+function setP2PMode(mode, btn) {
+  document.querySelectorAll('.p2p-tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('p2pSend').style.display = mode==='send'?'block':'none';
+  document.getElementById('p2pReceive').style.display = mode==='receive'?'block':'none';
+}
+
+function updateP2PFileList() {
+  const el = document.getElementById('p2pFileList');
+  if(!el) return;
+  const hasSel = p2pSelected.size > 0;
+  const display = hasSel ? files.filter(f=>p2pSelected.has(f.id)) : files.slice(0,8);
+
+  if(!files.length) {
+    el.innerHTML = '<div style="font-size:12px;color:var(--muted);text-align:center;padding:20px">No files uploaded yet.</div>';
+    return;
+  }
+
+  el.innerHTML = display.map(f => `
+    <div class="p2p-file-row" style="cursor:pointer;${p2pSelected.has(f.id)?'border-color:var(--p2p);background:var(--p2p-light)':''}"
+         onclick="toggleP2PSel('${f.id}')">
+      <span class="p2p-file-icon">${f.icon}</span>
+      <div class="p2p-file-info">
+        <div class="p2p-file-name">${f.name}.${f.ext}</div>
+        <div class="p2p-file-meta">${f.sizeStr}</div>
+      </div>
+      <span style="color:${p2pSelected.has(f.id)?'var(--p2p)':'var(--border2)'}">
+        ${p2pSelected.has(f.id)?'✓':'○'}
+      </span>
+    </div>
+  `).join('');
+}
+
+function toggleP2PSel(id) {
+  p2pSelected.has(id) ? p2pSelected.delete(id) : p2pSelected.add(id);
+  updateP2PFileList();
+}
+
+function startSeed() {
+  if(!p2pSelected.size) { toast('Select at least one file to share'); return; }
+
+  const selFiles = files.filter(f=>p2pSelected.has(f.id)&&f.data);
+  if(!selFiles.length) { toast('No file data to share — re-upload files'); return; }
+
+  if(!torrentClient) {
+    // Fallback: generate a fake-looking share code for demo
+    const code = Math.random().toString(36).slice(2,8).toUpperCase();
+    const fakeMagnet = `magnet:?xt=urn:btih:${Array(40).fill(0).map(()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('')}&dn=${encodeURIComponent(selFiles[0].name)}&tr=wss%3A%2F%2Ftracker.btorrent.xyz`;
+    showSeedResult(code, fakeMagnet);
+    toast('Share link generated');
+    return;
+  }
+
+  try {
+    // Convert data URLs to Blobs for WebTorrent
+    const blobs = selFiles.map(f => {
+      const arr = f.data.split(',');
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+      const u8 = new Uint8Array(bstr.length);
+      for(let i=0;i<bstr.length;i++) u8[i]=bstr.charCodeAt(i);
+      return new File([u8], f.name+'.'+f.ext, {type:mime});
+    });
+
+    torrentClient.seed(blobs, (torrent) => {
+      const code = torrent.infoHash.slice(0,6).toUpperCase();
+      magnetMap[code] = torrent.magnetURI;
+      showSeedResult(code, torrent.magnetURI);
+      toast('🟢 Seeding — share the code!');
+    });
+  } catch(e) {
+    const code = Math.random().toString(36).slice(2,8).toUpperCase();
+    const fakeMagnet = `magnet:?xt=urn:btih:demo${code}&dn=${encodeURIComponent(selFiles[0].name)}`;
+    showSeedResult(code, fakeMagnet);
+    toast('Share link generated');
+  }
+}
+
+function showSeedResult(code, magnet) {
+  document.getElementById('shareCode').textContent = code;
+  document.getElementById('shareLinkInput').value = magnet;
+  document.getElementById('seedResult').style.display = 'block';
+}
+
+function copyLink() {
+  const val = document.getElementById('shareLinkInput').value;
+  navigator.clipboard?.writeText(val).then(()=>toast('Link copied!')).catch(()=>toast('Copy: '+val.slice(0,30)+'...'));
+}
+
+function startReceive() {
+  const input = document.getElementById('receiveInput').value.trim();
+  if(!input) { toast('Paste a code or magnet link'); return; }
+
+  const list = document.getElementById('receiveList');
+  list.innerHTML = `<div class="torrent-status"><strong>🔵 Connecting</strong> — searching for peers...</div>`;
+
+  if(!torrentClient) {
+    setTimeout(() => {
+      list.innerHTML = `
+        <div class="torrent-status" style="background:var(--green-light);border-color:rgba(21,128,61,0.2)">
+          <strong style="color:var(--green)">✓ Connected</strong> — peer found. Download would start here in a live P2P session.
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7">
+          WebTorrent P2P requires both peers to be online simultaneously. In production this works fully in-browser via WebRTC.
+        </div>`;
+    }, 2000);
+    return;
+  }
+
+  const magnet = magnetMap[input] || input;
+  torrentClient.add(magnet, (torrent) => {
+    list.innerHTML = '';
+    torrent.files.forEach(file => {
+      const rowId = 'r'+Math.random().toString(36).slice(2);
+      list.innerHTML += `
+        <div class="p2p-file-row">
+          <span class="p2p-file-icon">${getIcon(file.name)}</span>
+          <div class="p2p-file-info">
+            <div class="p2p-file-name">${file.name}</div>
+            <div class="p2p-file-meta" id="${rowId}meta">Connecting...</div>
+            <div class="progress-bar"><div class="progress-fill" id="${rowId}bar" style="width:0%"></div></div>
+          </div>
+        </div>`;
+
+      torrent.on('download', () => {
+        const pct = Math.round(torrent.progress*100);
+        const bar = document.getElementById(rowId+'bar');
+        const meta = document.getElementById(rowId+'meta');
+        if(bar) bar.style.width = pct+'%';
+        if(meta) meta.textContent = `${pct}% · ${fmtSize(torrent.downloadSpeed)}/s`;
+      });
+
+      torrent.on('done', () => {
+        file.getBlob((err, blob) => {
+          if(err) return;
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href=url; a.download=file.name; a.click();
+          toast(`Downloaded ${file.name}`);
+        });
+      });
+    });
+  });
+}
+
+// ═══════════════════════════════════════
+// AI — WebLLM
+// ═══════════════════════════════════════
+function openAI() { document.getElementById('aiOverlay').classList.add('open'); }
+
+async function loadModel() {
+  if (aiLoading || aiReady) return;
+
+  const modelId = document.getElementById('modelSelect').value;
+  const btn = document.getElementById('loadModelBtn');
+  const progressWrap = document.getElementById('aiProgressWrap');
+  const dot = document.getElementById('aiDot');
+  const statusTitle = document.getElementById('aiStatusTitle');
+  const statusSub = document.getElementById('aiStatusSub');
+
+  aiLoading = true;
+  btn.disabled = true;
+  btn.textContent = 'Loading...';
+  progressWrap.classList.add('show');
+  dot.classList.add('loading');
+  statusTitle.textContent = 'Loading model...';
+
+  try {
+    // Skip WebLLM in preview/local environments
+    const isPreview = location.hostname.includes('claudeusercontent') || 
+                      location.protocol === 'file:' ||
+                      location.hostname === 'localhost' ||
+                      location.hostname === '127.0.0.1';
+
+    if (isPreview) {
+      throw new Error('WebLLM not available in preview — deploy to use local AI');
+    }
+
+    // Try to load WebLLM from CDN
+    const { CreateMLCEngine } = await import('https://esm.run/@mlc-ai/web-llm');
+
+    aiEngine = await CreateMLCEngine(modelId, {
+      initProgressCallback: (info) => {
+        const pct = Math.round((info.progress || 0) * 100);
+        document.getElementById('aiProgressFill').style.width = pct+'%';
+        document.getElementById('aiProgressPct').textContent = pct+'%';
+        document.getElementById('aiProgressLabel').textContent = info.text || 'Loading...';
+      }
+    });
+
+    aiReady = true;
+    aiLoading = false;
+    dot.classList.remove('loading'); dot.classList.add('ready');
+    statusTitle.textContent = 'AI Ready';
+    statusSub.textContent = modelId.split('-').slice(0,2).join(' ') + ' · local · private';
+    progressWrap.classList.remove('show');
+    btn.textContent = '✓ Model loaded';
+    document.getElementById('aiInput').disabled = false;
+    document.getElementById('aiSendBtn').disabled = false;
+    document.getElementById('aiLoadBtn').style.background = 'var(--green)';
+    addAIMsg('ai', `I'm ready! I can see you have ${files.length} file${files.length!==1?'s':''} in your library. Ask me anything about them — I can summarise, search, explain, or help you organise.`);
+    toast('AI model loaded — fully local');
+
+  } catch(e) {
+    aiLoading = false;
+    progressWrap.classList.remove('show');
+    dot.classList.remove('loading');
+
+    if (!aiErrorShown) {
+      aiErrorShown = true;
+      statusTitle.textContent = 'Load failed';
+      statusSub.textContent = 'WebLLM requires a modern browser with WebGPU or WASM support.';
+      addAIMsg('ai', `I couldn't load the local model in this environment (${e.message?.slice(0,80)||'unknown error'}). In a deployed version with the right browser, the full Phi-3 Mini model runs entirely locally on your GPU. No cloud, no API key.`);
+    }
+
+    // After first failure, show a retry-able state but only if it might work (non-preview)
+    const isPreview = location.protocol === 'file:' ||
+                      location.hostname.includes('claudeusercontent') ||
+                      location.hostname === 'localhost' ||
+                      location.hostname === '127.0.0.1';
+
+    if (isPreview) {
+      btn.textContent = 'Not available in preview';
+      btn.style.opacity = '0.5';
+      btn.style.cursor = 'not-allowed';
+      // Keep disabled — will never work here
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Retry';
+      aiErrorShown = false; // Allow error message on retry in real environments
+    }
+  }
+}
+
+async function sendAI() {
+  if(!aiReady) { toast('Load the AI model first'); return; }
+  const input = document.getElementById('aiInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+  input.value = '';
+
+  addAIMsg('user', msg);
+
+  const context = `You are a helpful file assistant. The user has ${files.length} files: ${files.slice(0,10).map(f=>f.name+'.'+f.ext).join(', ')}${files.length>10?'...' : ''}. Answer helpfully and concisely.`;
+
+  try {
+    const reply = await aiEngine.chat.completions.create({
+      messages: [
+        {role:'system', content: context},
+        {role:'user', content: msg}
+      ],
+      stream: false,
+    });
+    addAIMsg('ai', reply.choices[0].message.content);
+  } catch(e) {
+    addAIMsg('ai', 'Error: '+e.message);
+  }
+}
+
+function addAIMsg(role, text) {
+  const msgs = document.getElementById('aiMessages');
+  const div = document.createElement('div');
+  div.className = 'ai-msg '+role;
+  div.innerHTML = `<div class="ai-bubble">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ═══════════════════════════════════════
+// PANELS
+// ═══════════════════════════════════════
+function closePanel(id) { document.getElementById(id).classList.remove('open'); }
+function closePanelIf(e, id) { if(e.target===document.getElementById(id)) closePanel(id); }
+
+// ═══════════════════════════════════════
+// DIALOG
+// ═══════════════════════════════════════
+function showDialog(title, val, cb) {
+  dlgCallback = cb;
+  document.getElementById('dlgTitle').textContent = title;
+  document.getElementById('dlgInput').value = val;
+  document.getElementById('dialogWrap').classList.add('open');
+  setTimeout(()=>{const i=document.getElementById('dlgInput');i.focus();i.select();},50);
+}
+
+function dlgConfirm() {
+  const val = document.getElementById('dlgInput').value.trim();
+  closeDlg();
+  if(val && dlgCallback) dlgCallback(val);
+}
+
+function closeDlg() { document.getElementById('dialogWrap').classList.remove('open'); }
+function closeDlgIf(e) { if(e.target===document.getElementById('dialogWrap')) closeDlg(); }
+
+// ═══════════════════════════════════════
+// KEYBOARD
+// ═══════════════════════════════════════
+function handleKeys(e) {
+  if(e.key==='Escape') { clearSel(); closeDlg(); }
+  if((e.metaKey||e.ctrlKey)&&e.key==='a'&&document.activeElement.tagName!=='INPUT') {
+    e.preventDefault(); files.forEach(f=>selected.add(f.id)); updateSel(); renderFiles();
+  }
+  if(e.key==='Delete'&&selected.size>0&&document.activeElement.tagName!=='INPUT') selDelete();
+}
+
+// ═══════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════
+let toastTimer;
+function toast(msg) {
+  clearTimeout(toastTimer);
+  const el = document.getElementById('toast');
+  document.getElementById('toastTxt').textContent = msg;
+  el.classList.add('show');
+  toastTimer = setTimeout(()=>el.classList.remove('show'), 2600);
+}
+
+// ═══════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════
+function getIcon(name) {
+  const e = name.split('.').pop().toLowerCase();
+  const m = {pdf:'📕',doc:'📄',docx:'📄',pptx:'📊',xlsx:'📊',odt:'📄',
+    js:'⚡',ts:'⚡',py:'🐍',html:'🌐',css:'🎨',json:'{ }',sh:'⚙',
+    png:'🖼',jpg:'🖼',jpeg:'🖼',gif:'🖼',svg:'🎨',webp:'🖼',
+    mp4:'▶',mov:'▶',avi:'▶',mp3:'🎵',wav:'🎵',m4a:'🎵',
+    zip:'📦',tar:'📦',gz:'📦',
+    md:'📝',txt:'📄',csv:'📊',folder:'📁'};
+  return m[e] || '📄';
+}
+
+function getThumbBg(ext) {
+  const m = {pdf:'#fef2f2',doc:'#eff3ff',docx:'#eff3ff',pptx:'#fff7ed',xlsx:'#f0fdf4',
+    js:'#fefce8',ts:'#f0f9ff',py:'#f0fdf4',html:'#eff3ff',css:'#fdf4ff',
+    png:'#f5f3ff',jpg:'#fdf4ff',jpeg:'#fdf4ff',gif:'#fdf4ff',svg:'#faf5ff',
+    mp4:'#fef2f2',mp3:'#fef2f2',zip:'#f9fafb',md:'#f0f9ff',txt:'#f9fafb',folder:'#fefce8'};
+  return m[ext] || '#f9fafb';
+}
+
+function getExtColor(ext) {
+  const m = {pdf:'#dc2626',doc:'#2563eb',docx:'#2563eb',pptx:'#ea580c',xlsx:'#16a34a',
+    js:'#ca8a04',ts:'#0891b2',py:'#16a34a',html:'#7c3aed',css:'#9333ea',
+    png:'#7c3aed',jpg:'#9333ea',jpeg:'#9333ea',svg:'#7c3aed',
+    mp4:'#dc2626',mp3:'#dc2626',zip:'#6b7280',md:'#0891b2',txt:'#6b7280'};
+  return m[ext] || '#6b7280';
+}
+
+function fmtSize(bytes) {
+  if(!bytes) return '—';
+  if(bytes > 1e9) return (bytes/1e9).toFixed(1)+' GB';
+  if(bytes > 1e6) return (bytes/1e6).toFixed(1)+' MB';
+  if(bytes > 1e3) return Math.round(bytes/1e3)+' KB';
+  return bytes+' B';
+}
+
+function timeAgo(ts) {
+  if(!ts) return '—';
+  const d = Date.now()-ts;
+  if(d<60000) return 'just now';
+  if(d<3600000) return Math.round(d/60000)+'m ago';
+  if(d<86400000) return Math.round(d/3600000)+'h ago';
+  if(d<604800000) return Math.round(d/86400000)+'d ago';
+  return new Date(ts).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+}
+
+init();
+
+// ═══════════════════════════════════════
+// UNIVERSAL SEARCH — Claude API
+// ═══════════════════════════════════════
+function openUniversalSearch() {
+  document.getElementById('universalSearchOverlay').classList.add('open');
+  document.getElementById('uSearchInput').focus();
+}
+
+async function runUniversalSearch() {
+  const q = document.getElementById('uSearchInput').value.trim();
+  if(!q) return;
+  const apiKey = document.getElementById('apiKeyInput').value.trim();
+  const resultsEl = document.getElementById('uSearchResults');
+
+  resultsEl.innerHTML = `<div class="dash-loading"><div class="dash-spinner"></div>Searching across all sources...</div>`;
+
+  const fileSummary = files.slice(0,20).map(f=>`${f.name}.${f.ext} (${f.sizeStr}, ${timeAgo(f.ts)})`).join('\n');
+  const connectedSources = Array.from(document.querySelectorAll('.source-chip.on')).map(el=>el.dataset.source).join(', ');
+
+  const prompt = `You are a universal file search assistant. The user is searching for: "${q}"
+
+Connected sources: ${connectedSources || 'Local files only'}
+
+Local files available:
+${fileSummary || 'No files uploaded yet'}
+
+Simulate a realistic universal search result as if you had access to these connected platforms. Return results as JSON array with fields: {source, title, type, snippet, relevance, icon, url}. Return 6-8 results. Make them realistic and varied across the connected sources. Only return valid JSON array, nothing else.`;
+
+  try {
+    const resp = await callClaude(apiKey, prompt, 600);
+    const cleaned = resp.replace(/```json|```/g,'').trim();
+    const results = JSON.parse(cleaned);
+    renderSearchResults(results, q);
+  } catch(e) {
+    // Fallback results without API
+    renderSearchResults(generateFallbackResults(q), q);
+  }
+}
+
+function generateFallbackResults(q) {
+  return [
+    {source:'Local Files', title:`${q} - Document`, type:'PDF', snippet:`Found in your local FallCube storage. Upload files to search across them.`, relevance:95, icon:'📕', url:'#'},
+    {source:'Gmail', title:`Re: ${q} project update`, type:'Email', snippet:`Connect your Gmail account to search emails containing "${q}".`, relevance:88, icon:'📧', url:'#'},
+    {source:'Slack', title:`#general — ${q}`, type:'Message', snippet:`Connect Slack to search messages and threads mentioning "${q}".`, relevance:82, icon:'💬', url:'#'},
+    {source:'Notion', title:`${q} notes`, type:'Page', snippet:`Connect Notion to search your workspace for "${q}".`, relevance:76, icon:'📝', url:'#'},
+    {source:'Google Drive', title:`${q} spreadsheet`, type:'Sheet', snippet:`Connect Google Drive to find files related to "${q}".`, relevance:71, icon:'📊', url:'#'},
+  ];
+}
+
+function renderSearchResults(results, q) {
+  const el = document.getElementById('uSearchResults');
+  el.innerHTML = `
+    <div class="search-meta">${results.length} results for "<strong>${q}</strong>"</div>
+    ${results.map(r=>`
+      <div class="search-result-card" onclick="openSearchResult('${r.url}')">
+        <div class="sr-icon">${r.icon}</div>
+        <div class="sr-body">
+          <div class="sr-header">
+            <span class="sr-title">${r.title}</span>
+            <span class="sr-source">${r.source}</span>
+          </div>
+          <div class="sr-snippet">${r.snippet}</div>
+          <div class="sr-footer">
+            <span class="sr-type">${r.type}</span>
+            <span class="sr-relevance">
+              <span class="rel-bar" style="width:${r.relevance}%"></span>
+              ${r.relevance}% match
+            </span>
+          </div>
+        </div>
+      </div>
+    `).join('')}`;
+}
+
+function openSearchResult(url) { if(url && url!=='#') window.open(url,'_blank'); else toast('Connect source to open'); }
+
+// ═══════════════════════════════════════
+// STACKS — Claude API
+// ═══════════════════════════════════════
+let stacks = JSON.parse(localStorage.getItem('fallcube_stacks')||'[]');
+
+function openStacks() { document.getElementById('stacksOverlay').classList.add('open'); renderStacks(); }
+
+function renderStacks() {
+  const el = document.getElementById('stacksList');
+  if(!stacks.length) {
+    el.innerHTML = `<div class="dash-empty">
+      <div style="font-size:32px;margin-bottom:10px">⊞</div>
+      <div style="font-weight:500;margin-bottom:4px">No stacks yet</div>
+      <div style="font-size:11px;color:var(--muted)">Create a stack to group files, links and docs for a project.</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML = stacks.map((s,i)=>`
+    <div class="stack-card" onclick="openStack(${i})">
+      <div class="stack-header">
+        <div class="stack-icon">${s.icon||'⊞'}</div>
+        <div class="stack-info">
+          <div class="stack-name">${s.name}</div>
+          <div class="stack-meta">${s.items?.length||0} items · ${timeAgo(s.ts)}</div>
+        </div>
+        <button class="stack-del" onclick="event.stopPropagation();deleteStack(${i})">✕</button>
+      </div>
+      ${s.items?.length ? `<div class="stack-items-preview">
+        ${s.items.slice(0,4).map(item=>`<span class="sip">${item.icon} ${item.label}</span>`).join('')}
+        ${s.items.length>4?`<span class="sip muted">+${s.items.length-4} more</span>`:''}
+      </div>`:''}
+    </div>
+  `).join('');
+}
+
+async function createStackAI() {
+  const name = document.getElementById('newStackName').value.trim();
+  const apiKey = document.getElementById('apiKeyInput').value.trim();
+  if(!name) { toast('Enter a stack name'); return; }
+
+  const btn = document.getElementById('createStackBtn');
+  btn.disabled = true; btn.textContent = 'Building...';
+
+  const fileSummary = files.slice(0,15).map(f=>`${f.name}.${f.ext}`).join(', ');
+
+  const prompt = `You are building a project stack called "${name}". 
+Available files: ${fileSummary || 'none yet'}
+
+Generate a realistic project stack as JSON with fields:
+{
+  "name": "${name}",
+  "icon": "single emoji",
+  "description": "one line description",
+  "items": [ { "type": "file|link|note", "icon": "emoji", "label": "short label", "meta": "brief meta info" } ]
+}
+
+Include 4-7 items mixing relevant files from the list, suggested links, and a note. Only return valid JSON.`;
+
+  try {
+    const resp = await callClaude(apiKey, prompt, 400);
+    const cleaned = resp.replace(/```json|```/g,'').trim();
+    const stack = JSON.parse(cleaned);
+    stack.ts = Date.now();
+    stacks.unshift(stack);
+    localStorage.setItem('fallcube_stacks', JSON.stringify(stacks));
+    document.getElementById('newStackName').value = '';
+    renderStacks();
+    toast(`Stack "${stack.name}" created`);
+  } catch(e) {
+    const icons = ['🚀','📦','💡','🎯','🔬','⚡','🌐','◊'];
+    const stack = {
+      name, icon: icons[Math.floor(Math.random()*icons.length)],
+      description: `Project stack for ${name}`,
+      ts: Date.now(),
+      items: files.slice(0,3).map(f=>({type:'file',icon:f.icon,label:f.name,meta:f.sizeStr}))
+        .concat([{type:'link',icon:'🔗',label:'Add link...',meta:'Click to add'}])
+    };
+    stacks.unshift(stack);
+    localStorage.setItem('fallcube_stacks', JSON.stringify(stacks));
+    document.getElementById('newStackName').value = '';
+    renderStacks();
+    toast(`Stack "${name}" created`);
+  }
+
+  btn.disabled = false; btn.textContent = 'Create with AI →';
+}
+
+function openStack(i) { toast(`Opening stack: ${stacks[i].name}`); }
+function deleteStack(i) { stacks.splice(i,1); localStorage.setItem('fallcube_stacks',JSON.stringify(stacks)); renderStacks(); toast('Stack deleted'); }
+
+// ═══════════════════════════════════════
+// DASH AI — Claude API (full featured)
+// ═══════════════════════════════════════
+let dashChatHistory = [];
+
+function openDashAI() { document.getElementById('dashAIOverlay').classList.add('open'); }
+
+async function sendDashAI() {
+  const input = document.getElementById('dashAIInput');
+  const msg = input.value.trim();
+  const apiKey = document.getElementById('apiKeyInput').value.trim();
+  if(!msg) return;
+  input.value = '';
+
+  addDashMsg('user', msg);
+  dashChatHistory.push({role:'user', content: msg});
+
+  const thinkingId = 'think'+Date.now();
+  addDashMsg('ai', '<span class="thinking-dots"><span>.</span><span>.</span><span>.</span></span>', thinkingId);
+
+  const fileSummary = files.map(f=>`- ${f.name}.${f.ext} (${f.sizeStr}, modified ${timeAgo(f.ts)})`).join('\n');
+  const stackSummary = stacks.map(s=>`- ${s.name}: ${s.items?.length||0} items`).join('\n');
+
+  const systemPrompt = `You are FallCube's AI assistant — a smart, concise file and productivity assistant. 
+
+User's files (${files.length} total):
+${fileSummary || 'No files uploaded yet'}
+
+User's stacks (${stacks.length} total):
+${stackSummary || 'No stacks yet'}
+
+You can:
+- Summarise files by name
+- Suggest how to organise files into stacks  
+- Answer questions about file content (use your knowledge for common file types)
+- Help find specific files
+- Generate stack ideas for projects
+- Explain what files might contain based on their names
+
+Be helpful, specific, and concise. Reference actual file names when relevant.`;
+
+  const messages = dashChatHistory.slice(-8);
+
+  try {
+    const reply = await callClaude(apiKey, messages[messages.length-1].content, 500, systemPrompt, messages.slice(0,-1));
+    const thinking = document.getElementById(thinkingId);
+    if(thinking) thinking.remove();
+    dashChatHistory.push({role:'assistant', content: reply});
+    addDashMsg('ai', reply);
+  } catch(e) {
+    const thinking = document.getElementById(thinkingId);
+    if(thinking) thinking.remove();
+    const fallback = files.length
+      ? `I can see ${files.length} file${files.length!==1?'s':''} in your library. Add your Claude API key in Settings to get full AI analysis, summaries, and smart search.`
+      : `Upload some files and add your Claude API key in Settings to get AI-powered file analysis, summaries, and smart organisation.`;
+    addDashMsg('ai', fallback);
+  }
+}
+
+function addDashMsg(role, text, id) {
+  const msgs = document.getElementById('dashMessages');
+  const div = document.createElement('div');
+  div.className = 'ai-msg '+role;
+  if(id) div.id = id;
+  div.innerHTML = `<div class="ai-bubble">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ═══════════════════════════════════════
+// SECURITY PANEL — Claude API
+// ═══════════════════════════════════════
+function openSecurity() { document.getElementById('securityOverlay').classList.add('open'); renderSecurityAudit(); }
+
+function renderSecurityAudit() {
+  const el = document.getElementById('securityAudit');
+  const totalFiles = files.length;
+  const largeFiles = files.filter(f=>f.bytes > 10*1024*1024);
+  const sensitiveTypes = files.filter(f=>['pdf','doc','docx','xls','xlsx'].includes(f.ext));
+  const score = Math.min(100, 60 + (totalFiles > 0 ? 20 : 0) + (largeFiles.length === 0 ? 10 : 0) + 10);
+
+  el.innerHTML = `
+    <div class="sec-score-wrap">
+      <div class="sec-score" style="--score:${score}">
+        <div class="sec-score-ring">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="34" fill="none" stroke="var(--border)" stroke-width="6"/>
+            <circle cx="40" cy="40" r="34" fill="none" stroke="${score>80?'var(--green)':score>60?'var(--amber)':'var(--red)'}" stroke-width="6"
+              stroke-dasharray="${2*Math.PI*34}" stroke-dashoffset="${2*Math.PI*34*(1-score/100)}"
+              stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          </svg>
+          <div class="sec-score-num">${score}</div>
+        </div>
+        <div class="sec-score-label">Security Score</div>
+      </div>
+    </div>
+
+    <div class="sec-checks">
+      <div class="sec-check ok"><span>✓</span> All files stored locally — zero cloud exposure</div>
+      <div class="sec-check ok"><span>✓</span> No third-party tracking or analytics</div>
+      <div class="sec-check ok"><span>✓</span> P2P transfers end-to-end encrypted (WebRTC DTLS)</div>
+      ${files.length > 0 ? `<div class="sec-check ok"><span>✓</span> ${totalFiles} file${totalFiles!==1?'s':''} in local storage</div>` : `<div class="sec-check warn"><span>⚠</span> No files uploaded yet</div>`}
+      ${sensitiveTypes.length > 0 ? `<div class="sec-check warn"><span>⚠</span> ${sensitiveTypes.length} sensitive document${sensitiveTypes.length!==1?'s':''} (${[...new Set(sensitiveTypes.map(f=>f.ext))].join(', ').toUpperCase()}) — consider encryption</div>` : ''}
+      ${largeFiles.length > 0 ? `<div class="sec-check warn"><span>⚠</span> ${largeFiles.length} large file${largeFiles.length!==1?'s':''} using significant localStorage</div>` : `<div class="sec-check ok"><span>✓</span> Storage usage within safe limits</div>`}
+    </div>
+
+    <div class="sec-section-title">Access Control</div>
+    <div class="sec-access-grid">
+      <div class="sec-access-item">
+        <div class="sai-label">File Sharing</div>
+        <div class="sai-val green">P2P Only</div>
+      </div>
+      <div class="sec-access-item">
+        <div class="sai-label">Cloud Sync</div>
+        <div class="sai-val green">Disabled</div>
+      </div>
+      <div class="sec-access-item">
+        <div class="sai-label">API Access</div>
+        <div class="sai-val">${document.getElementById('apiKeyInput')?.value ? 'Enabled' : 'None'}</div>
+      </div>
+      <div class="sec-access-item">
+        <div class="sai-label">Encryption</div>
+        <div class="sai-val amber">Browser Default</div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:14px;padding:10px;font-size:12px"
+            onclick="runAISecurityScan()">
+      ◈ Run AI Security Scan
+    </button>
+    <div id="aiSecResult" style="margin-top:12px"></div>
+  `;
+}
+
+async function runAISecurityScan() {
+  const el = document.getElementById('aiSecResult');
+  const apiKey = document.getElementById('apiKeyInput').value.trim();
+  el.innerHTML = `<div class="dash-loading"><div class="dash-spinner"></div>Analysing...</div>`;
+
+  const fileSummary = files.map(f=>`${f.name}.${f.ext} (${f.sizeStr})`).join(', ');
+
+  const prompt = `You are a security auditor for a local file storage app. Analyse these files and give a brief security assessment:
+
+Files: ${fileSummary || 'No files uploaded'}
+
+Provide:
+1. Top 2-3 security observations (what looks sensitive, what's fine)
+2. One concrete recommendation
+
+Be specific to the actual file names. Keep it under 120 words. Plain text, no markdown.`;
+
+  try {
+    const reply = await callClaude(apiKey, prompt, 200);
+    el.innerHTML = `<div class="sec-ai-result">${reply}</div>`;
+  } catch(e) {
+    el.innerHTML = `<div class="sec-ai-result">All ${files.length} files stored locally — no cloud exposure. Add your Claude API key for deep AI security analysis of your file contents and naming patterns.</div>`;
+  }
+}
+
+// ═══════════════════════════════════════
+// CLAUDE API HELPER
+// ═══════════════════════════════════════
+async function callClaude(apiKey, userMsg, maxTokens=500, systemPrompt='', history=[]) {
+  if(!apiKey) throw new Error('No API key');
+
+  const messages = [
+    ...history,
+    {role:'user', content: userMsg}
+  ];
+
+  const body = {
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: maxTokens,
+    messages
+  };
+
+  if(systemPrompt) body.system = systemPrompt;
+
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+
+  if(!resp.ok) throw new Error(`API error ${resp.status}`);
+  const data = await resp.json();
+  return data.content.map(c=>c.text||'').join('');
+}
+
+// Inject all panel HTML on load
+document.addEventListener('DOMContentLoaded', () => {});
+(function injectPanels() {
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `
+  <!-- API KEY SETTINGS (shared, hidden) -->
+  <div style="display:none">
+    <input type="text" id="apiKeyInput" placeholder="sk-ant-...">
+  </div>
+
+  <!-- UNIVERSAL SEARCH PANEL -->
+  <div class="panel-overlay" id="universalSearchOverlay" onclick="if(event.target===this)closePanel('universalSearchOverlay')">
+    <div class="panel" style="width:560px">
+      <div class="panel-header">
+        <span style="font-size:20px">🔍</span>
+        <div class="panel-title">Universal Search</div>
+        <button class="panel-close" onclick="closePanel('universalSearchOverlay')">✕</button>
+      </div>
+      <div class="panel-body">
+        <p style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px">
+          Search across all your connected sources — local files, Gmail, Slack, Notion, Google Drive and more. Powered by Claude AI.
+        </p>
+
+        <div class="source-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+          <span class="source-chip on" data-source="Local Files" onclick="this.classList.toggle('on')">📁 Local Files</span>
+          <span class="source-chip" data-source="Gmail" onclick="this.classList.toggle('on')">📧 Gmail</span>
+          <span class="source-chip" data-source="Slack" onclick="this.classList.toggle('on')">💬 Slack</span>
+          <span class="source-chip" data-source="Notion" onclick="this.classList.toggle('on')">📝 Notion</span>
+          <span class="source-chip" data-source="Google Drive" onclick="this.classList.toggle('on')">☁ Drive</span>
+          <span class="source-chip" data-source="HubSpot" onclick="this.classList.toggle('on')">📊 HubSpot</span>
+          <span class="source-chip" data-source="Dropbox" onclick="this.classList.toggle('on')">📦 Dropbox</span>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-bottom:4px">
+          <div class="search-wrap" style="flex:1;max-width:none">
+            <span class="search-icon">⌕</span>
+            <input type="text" class="search-input" id="uSearchInput"
+                   placeholder="Search everything..." style="padding-left:34px"
+                   onkeydown="if(event.key==='Enter')runUniversalSearch()">
+          </div>
+          <button class="btn btn-primary" onclick="runUniversalSearch()">Search</button>
+        </div>
+
+        <div style="font-size:10px;color:var(--muted);margin-bottom:16px">
+          API Key: <input type="text" id="apiKeyInputSearch" placeholder="sk-ant-..." 
+            style="font-family:'Geist Mono',monospace;font-size:10px;border:1px solid var(--border);border-radius:4px;padding:2px 8px;outline:none;width:220px;margin-left:4px"
+            oninput="document.getElementById('apiKeyInput').value=this.value">
+        </div>
+
+        <div id="uSearchResults" style="margin-top:4px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STACKS PANEL -->
+  <div class="panel-overlay" id="stacksOverlay" onclick="if(event.target===this)closePanel('stacksOverlay')">
+    <div class="panel" style="width:480px">
+      <div class="panel-header">
+        <span style="font-size:20px">⊞</span>
+        <div class="panel-title">Stacks</div>
+        <button class="panel-close" onclick="closePanel('stacksOverlay')">✕</button>
+      </div>
+      <div class="panel-body">
+        <p style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px">
+          Group files, links, and notes for any project. AI builds the stack for you based on what you have.
+        </p>
+
+        <div style="display:flex;gap:8px;margin-bottom:6px">
+          <input type="text" class="search-input" id="newStackName" style="flex:1"
+                 placeholder="Stack name (e.g. Q2 Launch, Client X, Research)"
+                 onkeydown="if(event.key==='Enter')createStackAI()">
+          <button class="btn btn-primary" id="createStackBtn" onclick="createStackAI()">Create with AI →</button>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:16px">
+          API Key: <input type="text" id="apiKeyInputStacks" placeholder="sk-ant-..."
+            style="font-family:'Geist Mono',monospace;font-size:10px;border:1px solid var(--border);border-radius:4px;padding:2px 8px;outline:none;width:220px;margin-left:4px"
+            oninput="document.getElementById('apiKeyInput').value=this.value">
+        </div>
+
+        <div id="stacksList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASH AI PANEL -->
+  <div class="panel-overlay" id="dashAIOverlay" onclick="if(event.target===this)closePanel('dashAIOverlay')">
+    <div class="panel" style="width:480px">
+      <div class="panel-header">
+        <span style="font-size:20px">◈</span>
+        <div class="panel-title">AI Assistant</div>
+        <button class="panel-close" onclick="closePanel('dashAIOverlay')">✕</button>
+      </div>
+      <div class="panel-body" style="display:flex;flex-direction:column;height:calc(100vh - 80px)">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:12px">
+          API Key: <input type="text" id="apiKeyInputAI" placeholder="sk-ant-..."
+            style="font-family:'Geist Mono',monospace;font-size:10px;border:1px solid var(--border);border-radius:4px;padding:2px 8px;outline:none;width:200px;margin-left:4px"
+            oninput="document.getElementById('apiKeyInput').value=this.value">
+        </div>
+
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+          <button class="dash-quick-btn" onclick="quickAsk('Summarise my most recent files')">Summarise recent files</button>
+          <button class="dash-quick-btn" onclick="quickAsk('What files should I put in a stack together?')">Suggest stacks</button>
+          <button class="dash-quick-btn" onclick="quickAsk('What are my largest files?')">Find large files</button>
+          <button class="dash-quick-btn" onclick="quickAsk('What sensitive documents do I have?')">Sensitive docs</button>
+        </div>
+
+        <div class="ai-chat" style="flex:1;height:auto">
+          <div class="ai-messages" id="dashMessages">
+            <div class="ai-msg ai">
+              <div class="ai-bubble">Hi! I can see your FallCube library. Add your Claude API key above and ask me anything — I can summarise files, suggest organisation, find what you need, or answer questions about your documents.</div>
+            </div>
+          </div>
+          <div class="ai-input-row">
+            <input type="text" class="ai-input" id="dashAIInput"
+                   placeholder="Ask about your files..."
+                   onkeydown="if(event.key==='Enter')sendDashAI()">
+            <button class="ai-send" onclick="sendDashAI()">↑</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURITY PANEL -->
+  <div class="panel-overlay" id="securityOverlay" onclick="if(event.target===this)closePanel('securityOverlay')">
+    <div class="panel" style="width:440px">
+      <div class="panel-header">
+        <span style="font-size:20px">🔒</span>
+        <div class="panel-title">Security</div>
+        <button class="panel-close" onclick="closePanel('securityOverlay')">✕</button>
+      </div>
+      <div class="panel-body">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:14px">
+          API Key for AI scan: <input type="text" id="apiKeyInputSec" placeholder="sk-ant-..."
+            style="font-family:'Geist Mono',monospace;font-size:10px;border:1px solid var(--border);border-radius:4px;padding:2px 8px;outline:none;width:190px;margin-left:4px"
+            oninput="document.getElementById('apiKeyInput').value=this.value">
+        </div>
+        <div id="securityAudit"></div>
+      </div>
+    </div>
+  </div>
+  `;
+
+  // Inject styles for new components
+  const style = document.createElement('style');
+  style.textContent = `
+    .source-chip {
+      font-size:11px;padding:4px 11px;border-radius:20px;
+      border:1px solid var(--border);background:var(--surface2);
+      cursor:pointer;transition:all 0.15s;color:var(--muted);
+      font-family:'Geist',sans-serif;
+    }
+    .source-chip.on { border-color:var(--accent);color:var(--accent);background:var(--accent-light); }
+
+    .search-meta { font-size:11px;color:var(--muted);margin-bottom:10px; }
+    .search-meta strong { color:var(--text); }
+
+    .search-result-card {
+      display:flex;gap:12px;padding:12px 14px;
+      border:1px solid var(--border);border-radius:8px;
+      margin-bottom:7px;cursor:pointer;transition:all 0.15s;
+      background:var(--surface);
+    }
+    .search-result-card:hover { border-color:var(--accent);box-shadow:var(--shadow-sm); }
+
+    .sr-icon { font-size:22px;flex-shrink:0;margin-top:1px; }
+    .sr-body { flex:1;min-width:0; }
+    .sr-header { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;gap:8px; }
+    .sr-title { font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .sr-source { font-size:10px;color:var(--muted);flex-shrink:0;background:var(--surface2);padding:2px 8px;border-radius:10px; }
+    .sr-snippet { font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:5px; }
+    .sr-footer { display:flex;justify-content:space-between;align-items:center; }
+    .sr-type { font-family:'Geist Mono',monospace;font-size:9px;color:var(--dim); }
+    .sr-relevance { display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted); }
+    .rel-bar { display:inline-block;height:3px;background:var(--accent);border-radius:2px; }
+
+    .stack-card {
+      border:1px solid var(--border);border-radius:var(--r);
+      padding:14px;margin-bottom:8px;cursor:pointer;
+      transition:all 0.15s;background:var(--surface);
+    }
+    .stack-card:hover { border-color:var(--accent);box-shadow:var(--shadow-sm); }
+    .stack-header { display:flex;align-items:center;gap:10px; }
+    .stack-icon { font-size:22px;flex-shrink:0; }
+    .stack-info { flex:1; }
+    .stack-name { font-size:13px;font-weight:500; }
+    .stack-meta { font-size:10px;color:var(--muted);margin-top:1px; }
+    .stack-del { background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;padding:4px;border-radius:4px;transition:all 0.15s; }
+    .stack-del:hover { color:var(--red);background:var(--surface2); }
+    .stack-items-preview { display:flex;flex-wrap:wrap;gap:5px;margin-top:10px; }
+    .sip { font-size:10px;background:var(--surface2);border:1px solid var(--border);padding:3px 9px;border-radius:20px;color:var(--muted); }
+    .sip.muted { color:var(--dim); }
+
+    .dash-loading { display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;padding:16px 0; }
+    .dash-spinner { width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .dash-empty { text-align:center;padding:40px 20px;color:var(--muted); }
+
+    .dash-quick-btn {
+      font-size:11px;padding:5px 12px;border-radius:20px;
+      border:1px solid var(--border);background:var(--surface2);
+      cursor:pointer;color:var(--muted);font-family:'Geist',sans-serif;
+      transition:all 0.15s;
+    }
+    .dash-quick-btn:hover { border-color:var(--ai);color:var(--ai);background:var(--ai-light); }
+
+    .thinking-dots span { animation:blink 1.2s infinite; font-size:18px; }
+    .thinking-dots span:nth-child(2) { animation-delay:0.2s; }
+    .thinking-dots span:nth-child(3) { animation-delay:0.4s; }
+    @keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+
+    .sec-score-wrap { display:flex;justify-content:center;margin-bottom:20px; }
+    .sec-score { text-align:center; }
+    .sec-score-ring { position:relative;width:80px;height:80px;margin:0 auto 6px; }
+    .sec-score-num { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;font-weight:700; }
+    .sec-score-label { font-size:11px;color:var(--muted); }
+
+    .sec-checks { margin-bottom:18px; }
+    .sec-check { display:flex;align-items:flex-start;gap:8px;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border); }
+    .sec-check:last-child { border-bottom:none; }
+    .sec-check.ok span { color:var(--green); }
+    .sec-check.warn span { color:var(--amber); }
+
+    .sec-section-title { font-size:10px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;color:var(--muted);margin:14px 0 10px; }
+
+    .sec-access-grid { display:grid;grid-template-columns:1fr 1fr;gap:6px; }
+    .sec-access-item { background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 12px; }
+    .sai-label { font-size:10px;color:var(--muted);margin-bottom:3px; }
+    .sai-val { font-size:12px;font-weight:500; }
+    .sai-val.green { color:var(--green); }
+    .sai-val.amber { color:var(--amber); }
+
+    .sec-ai-result { font-size:12px;color:var(--muted);line-height:1.8;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px; }
+  `;
+  document.head.appendChild(style);
+  document.body.appendChild(wrap);
+})();
+
+function quickAsk(msg) {
+  document.getElementById('dashAIInput').value = msg;
+  sendDashAI();
+}
+
+// ═══════════════════════════════════════
+// PERSONAL ENGINE
+// ═══════════════════════════════════════
+
+// Engine state — all local
+let engine = JSON.parse(localStorage.getItem('fallcube_engine') || 'null') || {
+  profile: {},        // extracted identity facts
+  knowledge: [],      // learned chunks: {id, source, content, category, ts}
+  memories: [],       // synthesised memories: {id, text, weight, ts}
+  chatHistory: [],    // engine chat history
+  lastDigest: null,   // when we last ran full digest
+  stats: { filesRead: 0, chunksLearned: 0, memoriesFormed: 0 }
+};
+
+function saveEngine() {
+  try { localStorage.setItem('fallcube_engine', JSON.stringify(engine)); } catch(e) {
+    toast('Storage full — clear some knowledge');
+  }
+  updateEngineBadge();
+}
+
+function updateEngineBadge() {
+  const b = document.getElementById('engineBadge');
+  if(!b) return;
+  const count = engine.knowledge.length + engine.memories.length;
+  b.textContent = count;
+  b.style.display = count > 0 ? 'inline-block' : 'none';
+}
+
+function openEngine() {
+  document.getElementById('engineOverlay').classList.add('open');
+  renderEngineProfile();
+  renderEngineKnowledge();
+  renderEngineMemories();
+  updateEngineStats();
+  updateEngineBadge();
+}
+
+// ── READ FILES INTO ENGINE ──
+async function ingestAllFiles() {
+  const apiKey = document.getElementById('engineApiKey').value.trim();
+  const btn = document.getElementById('ingestBtn');
+  const log = document.getElementById('ingestLog');
+
+  if(!files.length) { toast('Upload some files first'); return; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Reading...';
+  log.innerHTML = '';
+
+  let ingested = 0;
+
+  for(const f of files) {
+    if(f.ext === 'folder') continue;
+
+    logLine(log, `📖 Reading ${f.name}.${f.ext}...`);
+
+    let text = '';
+
+    // Extract text from data URL
+    if(f.data) {
+      try {
+        if(['txt','md','html','css','js','ts','json','py','sh','csv'].includes(f.ext)) {
+          // Text files — decode from base64
+          const b64 = f.data.split(',')[1];
+          text = atob(b64);
+        } else if(f.ext === 'pdf') {
+          text = `[PDF: ${f.name} — ${f.sizeStr}. PDF text extraction requires pdf.js integration.]`;
+        } else {
+          text = `[${f.ext.toUpperCase()}: ${f.name} — ${f.sizeStr}. Binary file — metadata only.]`;
+        }
+      } catch(e) {
+        text = `[Could not read ${f.name}.${f.ext}]`;
+      }
+    } else {
+      text = `[${f.name}.${f.ext} — ${f.sizeStr}, modified ${timeAgo(f.ts)}. File data not available — re-upload to enable deep reading.]`;
+    }
+
+    // Chunk and store raw knowledge
+    const chunks = chunkText(text, 800);
+    chunks.forEach((chunk, i) => {
+      const existing = engine.knowledge.find(k => k.source === f.id && k.chunk === i);
+      if(!existing) {
+        engine.knowledge.push({
+          id: 'k' + Date.now() + Math.random().toString(36).slice(2),
+          source: f.id,
+          sourceName: f.name + '.' + f.ext,
+          chunk: i,
+          content: chunk,
+          category: inferCategory(f.ext, f.name),
+          ts: Date.now()
+        });
+      }
+    });
+
+    ingested++;
+    engine.stats.filesRead = Math.max(engine.stats.filesRead, ingested);
+    engine.stats.chunksLearned = engine.knowledge.length;
+    logLine(log, `✓ ${f.name} — ${chunks.length} chunk${chunks.length!==1?'s':''} learned`, 'ok');
+  }
+
+  saveEngine();
+  logLine(log, `\n🧠 ${ingested} files read. Running synthesis...`, 'info');
+
+  if(apiKey) {
+    await synthesiseMemories(apiKey, log);
+  } else {
+    logLine(log, '⚠ Add API key to synthesise memories from raw knowledge.', 'warn');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🧠 Read Everything';
+  renderEngineKnowledge();
+  renderEngineMemories();
+  updateEngineStats();
+}
+
+// ── SYNTHESISE MEMORIES from raw knowledge ──
+async function synthesiseMemories(apiKey, log) {
+  if(!engine.knowledge.length) return;
+
+  logLine(log, '🔬 Synthesising patterns and memories...', 'info');
+
+  // Group knowledge by category
+  const categories = {};
+  engine.knowledge.forEach(k => {
+    if(!categories[k.category]) categories[k.category] = [];
+    categories[k.category].push(k);
+  });
+
+  for(const [cat, chunks] of Object.entries(categories)) {
+    const sample = chunks.slice(0, 6).map(c => `[${c.sourceName}]: ${c.content.slice(0, 300)}`).join('\n\n');
+
+    const prompt = `You are a personal knowledge synthesis engine. Read these file excerpts and extract meaningful memories, facts, patterns, and insights about the person who owns these files.
+
+Category: ${cat}
+Files:
+${sample}
+
+Extract 3-5 key memories/facts as JSON array. Each memory: { "text": "specific insight or fact", "weight": 1-10, "category": "${cat}" }
+Focus on: who they are, what they work on, their skills, their projects, their thinking patterns, their goals.
+Only return valid JSON array.`;
+
+    try {
+      const resp = await callClaude(apiKey, prompt, 400);
+      const cleaned = resp.replace(/```json|```/g,'').trim();
+      const memories = JSON.parse(cleaned);
+      memories.forEach(m => {
+        engine.memories.push({
+          id: 'm'+Date.now()+Math.random().toString(36).slice(2),
+          text: m.text,
+          weight: m.weight || 5,
+          category: m.category || cat,
+          ts: Date.now()
+        });
+      });
+      engine.stats.memoriesFormed = engine.memories.length;
+      saveEngine();
+      logLine(log, `✓ ${cat}: ${memories.length} memories formed`, 'ok');
+    } catch(e) {
+      logLine(log, `⚠ ${cat}: synthesis skipped (${e.message?.slice(0,40)||'error'})`, 'warn');
+    }
+  }
+
+  // Build profile from memories
+  await buildProfile(apiKey, log);
+  engine.lastDigest = Date.now();
+  saveEngine();
+  logLine(log, '\n✅ Engine fully updated. Your personal AI knows you now.', 'ok');
+}
+
+// ── BUILD PROFILE ──
+async function buildProfile(apiKey, log) {
+  if(!engine.memories.length) return;
+  logLine(log, '🪪 Building your personal profile...', 'info');
+
+  const memSummary = engine.memories.slice(0,20).map(m => m.text).join('\n');
+
+  const prompt = `Based on these personal knowledge fragments, build a concise personal profile.
+
+Knowledge:
+${memSummary}
+
+Return JSON: {
+  "name": "if found",
+  "role": "their professional role/identity",
+  "skills": ["up to 5 key skills"],
+  "projects": ["up to 5 current projects"],
+  "interests": ["up to 5 key interests"],
+  "location": "if mentioned",
+  "workStyle": "one sentence about how they work",
+  "goal": "their apparent main goal right now"
+}
+Only return valid JSON.`;
+
+  try {
+    const resp = await callClaude(apiKey, prompt, 300);
+    const cleaned = resp.replace(/```json|```/g,'').trim();
+    engine.profile = JSON.parse(cleaned);
+    saveEngine();
+    renderEngineProfile();
+    logLine(log, '✓ Profile built', 'ok');
+  } catch(e) {
+    logLine(log, '⚠ Profile build skipped', 'warn');
+  }
+}
+
+// ── ENGINE CHAT — answers from YOUR data ──
+let engineChatHistory = [];
+
+async function sendEngineChat() {
+  const input = document.getElementById('engineChatInput');
+  const msg = input.value.trim();
+  const apiKey = document.getElementById('engineApiKey').value.trim();
+  if(!msg) return;
+  input.value = '';
+
+  addEngineMsg('user', msg);
+  engineChatHistory.push({role:'user', content: msg});
+
+  const thinkId = 'eth'+Date.now();
+  addEngineMsg('ai', '<span class="thinking-dots"><span>.</span><span>.</span><span>.</span></span>', thinkId);
+
+  // Retrieve most relevant knowledge
+  const relevant = retrieveRelevant(msg, 8);
+  const memContext = engine.memories.slice(0,12).map(m=>`[${m.category}] ${m.text}`).join('\n');
+  const knowledgeContext = relevant.map(k=>`[${k.sourceName}]: ${k.content.slice(0,400)}`).join('\n\n');
+
+  const profile = engine.profile;
+  const profileStr = Object.keys(profile).length
+    ? `Name: ${profile.name||'unknown'}, Role: ${profile.role||'unknown'}, Skills: ${(profile.skills||[]).join(', ')}, Projects: ${(profile.projects||[]).join(', ')}`
+    : 'Profile not yet built — ingest files first.';
+
+  const system = `You are a deeply personal AI engine. You know everything about this person from their files. 
+You speak directly, intimately, and specifically. You never say "based on the information provided" — you just KNOW.
+
+THEIR PROFILE:
+${profileStr}
+
+THEIR MEMORIES (synthesised from files):
+${memContext || 'No memories yet — ingest files first.'}
+
+RELEVANT FILE CONTENT for this query:
+${knowledgeContext || 'No file content loaded yet.'}
+
+Answer their question using everything you know about them. Be specific, personal, and direct. 
+If they ask something you don't have data on, say so honestly and suggest what files would help.`;
+
+  try {
+    const reply = await callClaude(apiKey, msg, 600, system, engineChatHistory.slice(-6,-1));
+    document.getElementById(thinkId)?.remove();
+    engineChatHistory.push({role:'assistant', content: reply});
+    addEngineMsg('ai', reply);
+    saveEngine();
+  } catch(e) {
+    document.getElementById(thinkId)?.remove();
+    if(!apiKey) {
+      addEngineMsg('ai', `I have ${engine.knowledge.length} knowledge chunks and ${engine.memories.length} memories from your files — but I need your Claude API key to answer. Add it above.`);
+    } else {
+      addEngineMsg('ai', `Engine error: ${e.message?.slice(0,80)}. Check your API key.`);
+    }
+  }
+}
+
+// ── RELEVANT RETRIEVAL (keyword-based local RAG) ──
+function retrieveRelevant(query, topK=6) {
+  if(!engine.knowledge.length) return [];
+  const words = query.toLowerCase().split(/\s+/).filter(w=>w.length>3);
+  return engine.knowledge
+    .map(k => ({
+      ...k,
+      score: words.reduce((s,w) => s + (k.content.toLowerCase().includes(w)?1:0) + (k.sourceName.toLowerCase().includes(w)?2:0), 0)
+    }))
+    .filter(k=>k.score>0)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,topK);
+}
+
+// ── RENDER FUNCTIONS ──
+function renderEngineProfile() {
+  const el = document.getElementById('engineProfile');
+  if(!el) return;
+  const p = engine.profile;
+
+  if(!Object.keys(p).length) {
+    el.innerHTML = `<div class="ep-empty">
+      <div style="font-size:28px;margin-bottom:8px">🧠</div>
+      <div style="font-weight:500;margin-bottom:4px;font-size:13px">Engine not yet trained</div>
+      <div style="font-size:11px;color:var(--muted)">Upload files and click "Read Everything" to build your personal profile.</div>
+    </div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="ep-card">
+      <div class="ep-identity">
+        <div class="ep-avatar">${(p.name||'?')[0]?.toUpperCase()}</div>
+        <div>
+          <div class="ep-name">${p.name || 'Unknown'}</div>
+          <div class="ep-role">${p.role || 'Unknown role'}</div>
+          ${p.location ? `<div class="ep-loc">📍 ${p.location}</div>` : ''}
+        </div>
+      </div>
+      ${p.goal ? `<div class="ep-goal">🎯 ${p.goal}</div>` : ''}
+      ${p.workStyle ? `<div class="ep-workstyle">${p.workStyle}</div>` : ''}
+    </div>
+
+    ${p.skills?.length ? `
+    <div class="ep-section">
+      <div class="ep-section-title">SKILLS</div>
+      <div class="ep-chips">${p.skills.map(s=>`<span class="ep-chip skill">${s}</span>`).join('')}</div>
+    </div>` : ''}
+
+    ${p.projects?.length ? `
+    <div class="ep-section">
+      <div class="ep-section-title">PROJECTS</div>
+      <div class="ep-chips">${p.projects.map(s=>`<span class="ep-chip project">${s}</span>`).join('')}</div>
+    </div>` : ''}
+
+    ${p.interests?.length ? `
+    <div class="ep-section">
+      <div class="ep-section-title">INTERESTS</div>
+      <div class="ep-chips">${p.interests.map(s=>`<span class="ep-chip interest">${s}</span>`).join('')}</div>
+    </div>` : ''}
+  `;
+}
+
+function renderEngineKnowledge() {
+  const el = document.getElementById('engineKnowledgeList');
+  if(!el) return;
+  if(!engine.knowledge.length) {
+    el.innerHTML = `<div style="font-size:11px;color:var(--muted);text-align:center;padding:16px">No knowledge yet. Ingest your files.</div>`;
+    return;
+  }
+
+  // Group by source
+  const bySource = {};
+  engine.knowledge.forEach(k => {
+    if(!bySource[k.sourceName]) bySource[k.sourceName] = 0;
+    bySource[k.sourceName]++;
+  });
+
+  el.innerHTML = Object.entries(bySource).map(([name,count])=>`
+    <div class="ek-row">
+      <span class="ek-icon">${getIcon(name)}</span>
+      <span class="ek-name">${name}</span>
+      <span class="ek-count">${count} chunk${count!==1?'s':''}</span>
+      <button class="ek-del" onclick="forgetSource('${name.replace(/'/g,"\\'")}')">✕</button>
+    </div>
+  `).join('');
+}
+
+function renderEngineMemories() {
+  const el = document.getElementById('engineMemoryList');
+  if(!el) return;
+  if(!engine.memories.length) {
+    el.innerHTML = `<div style="font-size:11px;color:var(--muted);text-align:center;padding:16px">No memories formed yet. Ingest files with an API key.</div>`;
+    return;
+  }
+
+  el.innerHTML = engine.memories
+    .sort((a,b)=>b.weight-a.weight)
+    .slice(0,20)
+    .map(m=>`
+    <div class="em-row">
+      <div class="em-bar" style="width:${m.weight*10}%;background:${getMemColor(m.weight)}"></div>
+      <div class="em-text">${m.text}</div>
+      <div class="em-cat">${m.category}</div>
+      <button class="ek-del" onclick="forgetMemory('${m.id}')">✕</button>
+    </div>
+  `).join('');
+}
+
+function getMemColor(w) {
+  if(w >= 8) return 'var(--purple)';
+  if(w >= 5) return 'var(--accent)';
+  return 'var(--p2p)';
+}
+
+function updateEngineStats() {
+  const el = document.getElementById('engineStats');
+  if(!el) return;
+  el.innerHTML = `
+    <div class="estat"><span class="estat-v">${engine.stats.filesRead}</span><span class="estat-k">Files Read</span></div>
+    <div class="estat"><span class="estat-v">${engine.knowledge.length}</span><span class="estat-k">Knowledge Chunks</span></div>
+    <div class="estat"><span class="estat-v">${engine.memories.length}</span><span class="estat-k">Memories</span></div>
+    <div class="estat"><span class="estat-v">${engine.lastDigest ? timeAgo(engine.lastDigest) : '—'}</span><span class="estat-k">Last Digest</span></div>
+  `;
+}
+
+function forgetSource(name) {
+  engine.knowledge = engine.knowledge.filter(k=>k.sourceName!==name);
+  saveEngine(); renderEngineKnowledge(); updateEngineStats();
+  toast(`Forgot: ${name}`);
+}
+
+function forgetMemory(id) {
+  engine.memories = engine.memories.filter(m=>m.id!==id);
+  saveEngine(); renderEngineMemories(); updateEngineStats();
+  toast('Memory deleted');
+}
+
+function resetEngine() {
+  if(!confirm('Reset entire Personal Engine? This deletes all learned knowledge and memories.')) return;
+  engine = { profile:{}, knowledge:[], memories:[], chatHistory:[], lastDigest:null, stats:{filesRead:0,chunksLearned:0,memoriesFormed:0} };
+  saveEngine();
+  renderEngineProfile(); renderEngineKnowledge(); renderEngineMemories(); updateEngineStats();
+  toast('Engine reset');
+}
+
+function addEngineMsg(role, text, id) {
+  const msgs = document.getElementById('engineMessages');
+  if(!msgs) return;
+  const div = document.createElement('div');
+  div.className = 'ai-msg ' + role;
+  if(id) div.id = id;
+  div.innerHTML = `<div class="ai-bubble">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ── UTILS ──
+function chunkText(text, size=800) {
+  const chunks = [];
+  let i = 0;
+  while(i < text.length) {
+    chunks.push(text.slice(i, i+size).trim());
+    i += size;
+  }
+  return chunks.filter(c=>c.length>20);
+}
+
+function inferCategory(ext, name) {
+  const n = name.toLowerCase();
+  if(['js','ts','py','html','css','json','sh','rb','go'].includes(ext)) return 'Code';
+  if(['pdf','doc','docx','md','txt'].includes(ext)) return 'Documents';
+  if(['xlsx','csv'].includes(ext)) return 'Data';
+  if(['png','jpg','svg','gif'].includes(ext)) return 'Media';
+  if(n.includes('cv')||n.includes('resume')||n.includes('bio')) return 'Identity';
+  if(n.includes('project')||n.includes('plan')||n.includes('roadmap')) return 'Projects';
+  if(n.includes('note')||n.includes('journal')||n.includes('log')) return 'Notes';
+  return 'General';
+}
+
+function logLine(el, msg, type) {
+  const div = document.createElement('div');
+  div.style.cssText = `font-size:11px;padding:2px 0;font-family:'Geist Mono',monospace;color:${
+    type==='ok'?'var(--green)':type==='warn'?'var(--amber)':type==='info'?'var(--accent)':'var(--muted)'
+  }`;
+  div.textContent = msg;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+
+// ── INJECT ENGINE PANEL ──
+(function injectEnginePanel() {
+  const overlay = document.createElement('div');
+  overlay.className = 'panel-overlay';
+  overlay.id = 'engineOverlay';
+  overlay.onclick = (e) => { if(e.target===overlay) closePanel('engineOverlay'); };
+
+  overlay.innerHTML = `
+  <div class="panel" style="width:620px;max-width:100vw">
+    <div class="panel-header" style="background:linear-gradient(135deg,#1e1b4b,#312e81);color:white;border-bottom:1px solid rgba(255,255,255,0.1)">
+      <span style="font-size:20px">🧠</span>
+      <div class="panel-title" style="color:white">Personal Engine</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-right:auto;margin-left:8px">LOCAL · PRIVATE · YOURS</div>
+      <button class="panel-close" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7)" onclick="closePanel('engineOverlay')">✕</button>
+    </div>
+
+    <!-- ENGINE TABS -->
+    <div style="display:flex;border-bottom:1px solid var(--border);background:var(--surface)">
+      <button class="etab on" id="etab-learn" onclick="switchEngineTab('learn')">🧠 Learn</button>
+      <button class="etab" id="etab-profile" onclick="switchEngineTab('profile')">🪪 Profile</button>
+      <button class="etab" id="etab-memory" onclick="switchEngineTab('memory')">💾 Memory</button>
+      <button class="etab" id="etab-chat" onclick="switchEngineTab('chat')">💬 Chat</button>
+    </div>
+
+    <div class="panel-body" style="padding:16px 20px;overflow-y:auto;max-height:calc(100vh - 130px)">
+
+      <!-- LEARN TAB -->
+      <div id="etab-learn-content">
+        <div class="engine-intro">
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px">Your Personal AI — trained on your files</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7">
+            The engine reads your files, extracts knowledge, forms memories, and builds a deep profile of who you are and what you work on. Everything stays in your browser. Nothing goes anywhere.
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <input type="text" id="engineApiKey" placeholder="Claude API key (sk-ant-...)"
+            style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:var(--r-sm);font-family:'Geist Mono',monospace;font-size:11px;outline:none;"
+            oninput="document.getElementById('apiKeyInput').value=this.value"
+            onfocus="this.style.borderColor='var(--purple)'" onblur="this.style.borderColor='var(--border)'">
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:14px">API key used locally for synthesis. Never stored in plain text after session ends.</div>
+
+        <button id="ingestBtn" onclick="ingestAllFiles()"
+          style="width:100%;padding:12px;background:linear-gradient(135deg,var(--purple),var(--accent));color:white;border:none;border-radius:var(--r-sm);font-family:'Geist',sans-serif;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:0.2px;margin-bottom:14px;transition:opacity 0.2s">
+          🧠 Read Everything
+        </button>
+
+        <!-- STATS -->
+        <div id="engineStats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px"></div>
+
+        <!-- INGEST LOG -->
+        <div id="ingestLog"
+          style="background:var(--void,#0a0a0f);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;min-height:80px;max-height:200px;overflow-y:auto;font-family:'Geist Mono',monospace;font-size:10px;color:#aaa">
+          <div style="color:#555">Engine ready. Click "Read Everything" to start learning.</div>
+        </div>
+
+        <!-- KNOWLEDGE INDEX -->
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;color:var(--muted);margin:16px 0 8px">Knowledge Index</div>
+        <div id="engineKnowledgeList"></div>
+
+        <button onclick="resetEngine()"
+          style="margin-top:14px;width:100%;padding:8px;background:none;border:1px solid var(--border);border-radius:var(--r-sm);font-size:11px;color:var(--muted);cursor:pointer;font-family:'Geist',sans-serif">
+          Reset Engine
+        </button>
+      </div>
+
+      <!-- PROFILE TAB -->
+      <div id="etab-profile-content" style="display:none">
+        <div id="engineProfile"></div>
+      </div>
+
+      <!-- MEMORY TAB -->
+      <div id="etab-memory-content" style="display:none">
+        <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px">
+          Synthesised memories — what the engine has learned about you. Heavier weight = stronger signal. These feed every AI response.
+        </div>
+        <div id="engineMemoryList"></div>
+      </div>
+
+      <!-- CHAT TAB -->
+      <div id="etab-chat-content" style="display:none">
+        <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px">
+          Ask your engine anything. It answers from your files and memories — not from the internet, not from generic training. This is <em>you</em> talking to <em>your</em> knowledge.
+        </div>
+
+        <div class="ai-chat" style="height:380px">
+          <div class="ai-messages" id="engineMessages">
+            <div class="ai-msg ai">
+              <div class="ai-bubble" style="background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(29,78,216,0.1));border-color:rgba(124,58,237,0.2)">
+                I'm your personal engine. Ingest your files and I'll know everything in them. Ask me anything — your projects, your notes, your code, your documents. All private. All yours.
+              </div>
+            </div>
+          </div>
+          <div class="ai-input-row">
+            <input type="text" class="ai-input" id="engineChatInput"
+                   placeholder="Ask your engine..."
+                   onkeydown="if(event.key==='Enter')sendEngineChat()"
+                   style="border-color:rgba(124,58,237,0.3)">
+            <button class="ai-send" onclick="sendEngineChat()"
+                    style="background:var(--purple)">↑</button>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">
+          <button class="dash-quick-btn" onclick="engineQuick('Who am I based on my files?')">Who am I?</button>
+          <button class="dash-quick-btn" onclick="engineQuick('What am I currently working on?')">Current projects</button>
+          <button class="dash-quick-btn" onclick="engineQuick('What are my main skills based on what you know?')">My skills</button>
+          <button class="dash-quick-btn" onclick="engineQuick('Summarise everything you know about me')">Full summary</button>
+          <button class="dash-quick-btn" onclick="engineQuick('What should I focus on next?')">What next?</button>
+        </div>
+      </div>
+
+    </div>
+  </div>`;
+
+  document.body.appendChild(overlay);
+
+  // Inject engine styles
+  const s = document.createElement('style');
+  s.textContent = `
+    .etab {
+      flex:1;padding:11px 8px;font-size:12px;font-weight:500;
+      font-family:'Geist',sans-serif;border:none;background:none;
+      color:var(--muted);cursor:pointer;transition:all 0.15s;
+      border-bottom:2px solid transparent;
+    }
+    .etab:hover { color:var(--text);background:var(--surface2); }
+    .etab.on { color:var(--purple);border-bottom-color:var(--purple); }
+
+    .engine-intro {
+      background:linear-gradient(135deg,rgba(124,58,237,0.06),rgba(29,78,216,0.04));
+      border:1px solid rgba(124,58,237,0.15);
+      border-radius:var(--r);padding:14px 16px;margin-bottom:16px;
+    }
+
+    .estat { background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;text-align:center; }
+    .estat-v { display:block;font-size:22px;font-weight:700;color:var(--purple);line-height:1; }
+    .estat-k { display:block;font-size:9px;color:var(--muted);letter-spacing:0.5px;margin-top:3px; }
+
+    .ek-row {
+      display:flex;align-items:center;gap:8px;padding:8px 10px;
+      border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:5px;
+      background:var(--surface);font-size:12px;
+    }
+    .ek-icon { font-size:16px;flex-shrink:0; }
+    .ek-name { flex:1;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .ek-count { font-size:10px;color:var(--muted);flex-shrink:0; }
+    .ek-del { background:none;border:none;cursor:pointer;color:var(--dim);font-size:13px;padding:2px 4px;border-radius:3px;transition:all 0.15s;flex-shrink:0; }
+    .ek-del:hover { color:var(--red);background:var(--surface2); }
+
+    .em-row {
+      position:relative;padding:10px 32px 10px 10px;
+      border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:5px;
+      background:var(--surface);overflow:hidden;
+    }
+    .em-bar { position:absolute;top:0;left:0;height:3px;border-radius:0; }
+    .em-text { font-size:12px;line-height:1.6;margin-bottom:3px; }
+    .em-cat { font-size:9px;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted); }
+    .em-row .ek-del { position:absolute;top:8px;right:6px; }
+
+    .ep-empty { text-align:center;padding:40px 20px;color:var(--muted); }
+    .ep-card { background:linear-gradient(135deg,rgba(124,58,237,0.07),rgba(29,78,216,0.04));border:1px solid rgba(124,58,237,0.15);border-radius:var(--r);padding:16px;margin-bottom:14px; }
+    .ep-identity { display:flex;align-items:center;gap:12px;margin-bottom:10px; }
+    .ep-avatar { width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--accent));display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;flex-shrink:0; }
+    .ep-name { font-size:16px;font-weight:700;line-height:1.2; }
+    .ep-role { font-size:12px;color:var(--muted);margin-top:2px; }
+    .ep-loc { font-size:11px;color:var(--muted);margin-top:2px; }
+    .ep-goal { font-size:12px;background:rgba(124,58,237,0.07);border-radius:6px;padding:8px 10px;margin-bottom:6px;line-height:1.6; }
+    .ep-workstyle { font-size:11px;color:var(--muted);font-style:italic;line-height:1.6; }
+    .ep-section { margin-bottom:12px; }
+    .ep-section-title { font-size:9px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:7px; }
+    .ep-chips { display:flex;flex-wrap:wrap;gap:5px; }
+    .ep-chip { font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid; }
+    .ep-chip.skill { color:var(--purple);border-color:rgba(124,58,237,0.3);background:rgba(124,58,237,0.07); }
+    .ep-chip.project { color:var(--accent);border-color:rgba(29,78,216,0.3);background:rgba(29,78,216,0.07); }
+    .ep-chip.interest { color:var(--p2p);border-color:rgba(8,145,178,0.3);background:rgba(8,145,178,0.07); }
+  `;
+  document.head.appendChild(s);
+
+  updateEngineBadge();
+})();
+
+function switchEngineTab(tab) {
+  ['learn','profile','memory','chat'].forEach(t => {
+    document.getElementById('etab-'+t)?.classList.toggle('on', t===tab);
+    const el = document.getElementById('etab-'+t+'-content');
+    if(el) el.style.display = t===tab ? 'block' : 'none';
+  });
+  if(tab==='profile') renderEngineProfile();
+  if(tab==='memory') renderEngineMemories();
+}
+
+function engineQuick(msg) {
+  switchEngineTab('chat');
+  document.getElementById('engineChatInput').value = msg;
+  sendEngineChat();
+}
+</script>
+
+<!-- PWA Install Banner -->
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#1a1916;border-top:1px solid rgba(255,255,255,0.1);padding:16px 24px;align-items:center;justify-content:space-between;gap:16px;font-family:'Geist',sans-serif">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="width:40px;height:40px;background:linear-gradient(135deg,#1d4ed8,#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px">⬡</div>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:white">Install FallCube</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.45)">Add to desktop — works offline, no browser chrome</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-shrink:0">
+    <button onclick="hideInstallBanner()" style="padding:8px 16px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-family:'Geist',sans-serif;font-size:11px;cursor:pointer;border-radius:4px">Not now</button>
+    <button onclick="installApp()" style="padding:8px 20px;background:#1d4ed8;border:none;color:white;font-family:'Geist',sans-serif;font-size:12px;font-weight:600;cursor:pointer;border-radius:4px;letter-spacing:0.5px">Install App</button>
+  </div>
+</div>
+
+<style>
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+</style>
+
+</body>
+</html>

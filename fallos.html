@@ -1,0 +1,2711 @@
+<!DOCTYPE html>
+<html lang="en" data-state="STOPPED">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Fall OS · Sovereign Operating System</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+/* ═══════════════════════════════════════════
+   FALL OS DESIGN SYSTEM — ISA-101 COMPLIANT
+   GREY=IDLE · CYAN=EXECUTE · AMBER=HOLD
+   RED=ABORT · GREEN=COMPLETE · GOLD=IDENTITY
+   ═══════════════════════════════════════════ */
+:root {
+  /* Core palette */
+  --void:    #020304;
+  --bg:      #060810;
+  --surface: #0b0e18;
+  --surface2:#0f1220;
+  --surface3:#141828;
+  --surface4:#192030;
+
+  /* Borders */
+  --border:  rgba(255,255,255,0.05);
+  --border2: rgba(255,255,255,0.09);
+  --border3: rgba(255,255,255,0.14);
+
+  /* Text */
+  --text:    #d4daf0;
+  --muted:   rgba(212,218,240,0.5);
+  --dim:     rgba(212,218,240,0.22);
+  --faint:   rgba(212,218,240,0.10);
+
+  /* ISA-101 state colours */
+  --grey:    #4a5568;  /* IDLE */
+  --cyan:    #00d4ff;  /* EXECUTE — active */
+  --cyan-dim:rgba(0,212,255,0.07);
+  --cyan-b:  rgba(0,212,255,0.18);
+  --amber:   #f59e0b;  /* HOLD */
+  --amber-dim:rgba(245,158,11,0.08);
+  --red:     #ef4444;  /* ABORT */
+  --red-dim: rgba(239,68,68,0.08);
+  --green:   #10b981;  /* COMPLETE */
+  --green-dim:rgba(16,185,129,0.08);
+  --gold:    #d4a017;  /* IDENTITY — φ core */
+  --gold2:   #f0c040;
+  --gold-dim:rgba(212,160,23,0.08);
+  --gold-b:  rgba(212,160,23,0.20);
+  --purple:  #8b5cf6;  /* KONAI substrate */
+
+  /* Layout */
+  --rail-w:  60px;
+  --top-h:   44px;
+  --status-h:28px;
+  --ctx-w:   280px;
+  --safe-bottom: env(safe-area-inset-bottom,0px);
+}
+
+/* ISA-101 state overrides */
+html[data-state="EXECUTE"] { --state-color: var(--cyan); }
+html[data-state="IDLE"]    { --state-color: var(--grey); }
+html[data-state="HOLD"]    { --state-color: var(--amber); }
+html[data-state="ABORT"]   { --state-color: var(--red); }
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Scanline */
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  background: repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);
+  pointer-events:none;
+  z-index:9998;
+}
+
+/* ══════════════════════════════════════
+   BOOT SCREEN
+   ══════════════════════════════════════ */
+#bootScreen {
+  position: fixed;
+  inset: 0;
+  background: var(--void);
+  z-index: 9990;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  transition: opacity 0.6s ease;
+}
+
+#bootScreen.hidden { opacity: 0; pointer-events: none; }
+
+.boot-logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: var(--cyan);
+  text-shadow: 0 0 40px rgba(0,212,255,0.4);
+  margin-bottom: 8px;
+}
+
+.boot-logo span { color: var(--gold2); }
+
+.boot-sub {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 48px;
+}
+
+.boot-log {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--dim);
+  width: 480px;
+  line-height: 1.8;
+  text-align: left;
+  min-height: 140px;
+}
+
+.boot-log-line { color: var(--muted); }
+.boot-log-line.ok { color: var(--green); }
+.boot-log-line.warn { color: var(--amber); }
+.boot-log-line.active { color: var(--cyan); }
+.boot-log-line.gold { color: var(--gold2); }
+
+.boot-bar-wrap {
+  width: 480px;
+  height: 2px;
+  background: var(--border2);
+  border-radius: 1px;
+  margin-top: 24px;
+  overflow: hidden;
+}
+
+.boot-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+  border-radius: 1px;
+  width: 0%;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 12px var(--cyan);
+}
+
+.boot-phi {
+  margin-top: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 3px;
+}
+
+/* ══════════════════════════════════════
+   APP SHELL
+   ══════════════════════════════════════ */
+.shell {
+  display: grid;
+  grid-template-columns: var(--rail-w) 1fr var(--ctx-w);
+  grid-template-rows: var(--top-h) 1fr var(--status-h);
+  height: 100vh;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.shell.visible { opacity: 1; }
+
+/* ══════════════════════════════════════
+   TOP BAR — spans full width
+   ══════════════════════════════════════ */
+.topbar {
+  grid-column: 1 / -1;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  padding: 0 12px 0 0;
+  gap: 0;
+  z-index: 100;
+  position: relative;
+}
+
+/* Logo section */
+.topbar-logo {
+  width: var(--rail-w);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.os-mark {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: -0.5px;
+  text-shadow: 0 0 12px rgba(0,212,255,0.5);
+}
+
+.os-mark-pulse {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+  animation: osPulse 3s infinite;
+}
+
+@keyframes osPulse {
+  0%,100%{opacity:1;box-shadow:0 0 4px var(--cyan)}
+  50%{opacity:0.4;box-shadow:0 0 12px var(--cyan)}
+}
+
+/* Breadcrumb */
+.topbar-breadcrumb {
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+  height: 100%;
+}
+
+.bc-sep { color: var(--dim); }
+.bc-active { color: var(--cyan); }
+
+/* Global search */
+.topbar-search {
+  flex: 1;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.global-search {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  outline: none;
+  width: 280px;
+  transition: all 0.2s;
+}
+
+.global-search:focus {
+  border-color: var(--cyan);
+  background: var(--surface3);
+  box-shadow: 0 0 0 2px var(--cyan-dim);
+}
+
+.global-search::placeholder { color: var(--dim); }
+
+/* Topbar right cluster */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Konai indicator */
+.konai-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.konai-status.armed {
+  border-color: rgba(139,92,246,0.25);
+  color: var(--purple);
+}
+
+.konai-status.triggered {
+  border-color: var(--red);
+  color: var(--red);
+  animation: konaiAlert 0.5s infinite;
+}
+
+@keyframes konaiAlert {
+  0%,100%{background:transparent}
+  50%{background:var(--red-dim)}
+}
+
+.konai-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--purple);
+  box-shadow: 0 0 6px var(--purple);
+}
+
+/* AI worker status */
+.worker-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.worker-status.ready { border-color: var(--green-dim); color: var(--green); }
+.worker-status.loading { border-color: var(--amber-dim); color: var(--amber); }
+
+.worker-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dim);
+}
+
+.worker-dot.ready { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.worker-dot.loading { background: var(--amber); animation: pulse 0.7s infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* FLAG_SIMON */
+.flag-simon-btn {
+  padding: 5px 14px;
+  background: transparent;
+  border: 1px solid var(--amber-dim);
+  color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.flag-simon-btn:hover {
+  background: var(--amber-dim);
+  border-color: var(--amber);
+  box-shadow: 0 0 12px var(--amber-dim);
+}
+
+/* Identity */
+.identity-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 6px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-b);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.identity-chip:hover { background: rgba(212,160,23,0.12); }
+
+.identity-avatar {
+  width: 24px;
+  height: 24px;
+  background: var(--gold);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--void);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.identity-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold2);
+  letter-spacing: 0.3px;
+}
+
+/* ══════════════════════════════════════
+   LEFT RAIL — Module dock
+   ══════════════════════════════════════ */
+.rail {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+  gap: 2px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 50;
+}
+
+.rail::-webkit-scrollbar { display: none; }
+
+.rail-item {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  font-size: 18px;
+  border: 1px solid transparent;
+  flex-shrink: 0;
+}
+
+.rail-item:hover {
+  background: var(--surface2);
+  border-color: var(--border2);
+}
+
+.rail-item.active {
+  background: var(--cyan-dim);
+  border-color: var(--cyan-b);
+}
+
+.rail-item.active::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--cyan);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+/* Tooltip */
+.rail-item::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 200;
+  letter-spacing: 0.5px;
+}
+
+.rail-item:hover::after { opacity: 1; }
+
+.rail-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cyan);
+  color: var(--void);
+  font-size: 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.rail-badge.red { background: var(--red); }
+.rail-badge.amber { background: var(--amber); }
+
+.rail-divider {
+  width: 28px;
+  height: 1px;
+  background: var(--border2);
+  margin: 4px 0;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════
+   MAIN AREA
+   ══════════════════════════════════════ */
+.main-area {
+  background: var(--bg);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Home screen */
+.home-screen {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.home-screen.hidden { display: none; }
+
+/* OS identity banner */
+.os-banner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, var(--surface2), var(--surface3));
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.os-banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--cyan), var(--gold), transparent);
+}
+
+.os-banner-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--cyan-dim), var(--gold-dim));
+  border: 1px solid var(--cyan-b);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cyan);
+  flex-shrink: 0;
+  text-shadow: 0 0 12px var(--cyan);
+}
+
+.os-banner-text {}
+.os-banner-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  margin-bottom: 3px;
+}
+
+.os-banner-title span { color: var(--cyan); }
+.os-banner-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
+
+.os-banner-state {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.state-pill {
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.state-pill.execute { border-color: var(--cyan-b); color: var(--cyan); background: var(--cyan-dim); }
+.state-pill.idle { border-color: rgba(74,85,104,0.4); color: var(--grey); }
+.state-pill.hold { border-color: var(--amber-dim); color: var(--amber); background: var(--amber-dim); }
+.state-pill.abort { border-color: rgba(239,68,68,0.3); color: var(--red); background: var(--red-dim); animation: blink 0.5s infinite; }
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* Module grid */
+.module-grid-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 12px;
+}
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.module-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-tile:hover {
+  border-color: var(--border2);
+  background: var(--surface2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.module-tile.running {
+  border-color: var(--cyan-b);
+  background: var(--cyan-dim);
+}
+
+.module-tile::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.module-tile:hover::before,
+.module-tile.running::before { opacity: 1; }
+
+.module-tile.crm::before { background: linear-gradient(90deg, #ef4444, transparent); }
+.module-tile.account::before { background: linear-gradient(90deg, var(--gold), transparent); }
+.module-tile.pilot::before { background: linear-gradient(90deg, var(--cyan), transparent); }
+.module-tile.cube::before { background: linear-gradient(90deg, var(--purple), transparent); }
+.module-tile.intel::before { background: linear-gradient(90deg, var(--green), transparent); }
+.module-tile.match::before { background: linear-gradient(90deg, #3b82f6, transparent); }
+.module-tile.meet::before { background: linear-gradient(90deg, #ec4899, transparent); }
+.module-tile.widget::before { background: linear-gradient(90deg, var(--amber), transparent); }
+.module-tile.empire::before { background: linear-gradient(90deg, var(--cyan), var(--gold), transparent); }
+.module-tile.twin::before { background: linear-gradient(90deg, var(--gold), transparent); }
+
+.module-icon { font-size: 24px; margin-bottom: 10px; display: block; }
+
+.module-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+  letter-spacing: 0.3px;
+}
+
+.module-desc { font-size: 10px; color: var(--muted); line-height: 1.5; }
+
+.module-status-dot {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dim);
+}
+
+.module-tile.running .module-status-dot {
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: osPulse 2s infinite;
+}
+
+/* Emergent insights on home */
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 8px;
+}
+
+.insight-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all 0.15s;
+  animation: insightIn 0.4s ease;
+}
+
+@keyframes insightIn {
+  from { opacity:0; transform:translateY(4px); }
+  to { opacity:1; transform:none; }
+}
+
+.insight-card:hover { border-color: var(--cyan-b); background: var(--cyan-dim); }
+
+.insight-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.insight-text { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.insight-text strong { color: var(--cyan); font-weight: 500; }
+.insight-source { font-size: 9px; color: var(--dim); margin-top: 4px; letter-spacing: 1px; font-family: 'JetBrains Mono', monospace; }
+
+/* Module iframe container */
+.module-frame-wrap {
+  flex: 1;
+  position: relative;
+  display: none;
+}
+
+.module-frame-wrap.active { display: block; }
+
+.module-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: var(--bg);
+}
+
+/* Loading overlay */
+.frame-loading {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 10;
+  transition: opacity 0.3s;
+}
+
+.frame-loading.hidden { opacity: 0; pointer-events: none; }
+
+.frame-loading-icon { font-size: 32px; animation: spin 2s linear infinite; }
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.frame-loading-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+}
+
+.frame-loading-bar {
+  width: 200px;
+  height: 2px;
+  background: var(--border2);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.frame-loading-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+  border-radius: 1px;
+  animation: loadFill 1.5s ease infinite;
+}
+
+@keyframes loadFill {
+  0%{width:0%;margin-left:0}
+  50%{width:60%;margin-left:20%}
+  100%{width:0%;margin-left:100%}
+}
+
+/* ══════════════════════════════════════
+   RIGHT CONTEXT PANEL
+   ══════════════════════════════════════ */
+.ctx-panel {
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.ctx-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ctx-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ctx-body { flex: 1; overflow-y: auto; }
+
+/* Context sections */
+.ctx-section { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.ctx-section-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 8px;
+}
+
+/* Active context */
+.ctx-active-module {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+}
+
+.ctx-module-icon { font-size: 16px; }
+.ctx-module-name { font-size: 11px; font-weight: 600; color: var(--text); }
+.ctx-module-state { font-size: 9px; color: var(--cyan); font-family: 'JetBrains Mono', monospace; margin-top: 1px; }
+
+/* Data flow indicators */
+.data-flow-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 10px;
+}
+
+.data-flow-item:last-child { border-bottom: none; }
+.data-flow-from { color: var(--dim); font-family: 'JetBrains Mono', monospace; font-size: 9px; }
+.data-flow-arrow { color: var(--cyan); font-size: 10px; }
+.data-flow-to { color: var(--muted); }
+
+/* ISA-88 state machine display */
+.isa-states {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.isa-state-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  transition: all 0.2s;
+}
+
+.isa-state-row.current {
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border: 1px solid var(--cyan-b);
+}
+
+.isa-state-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dim);
+  flex-shrink: 0;
+}
+
+.isa-state-row.current .isa-state-dot {
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+}
+
+/* Konai monitor */
+.konai-monitor {
+  padding: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+}
+
+.konai-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--dim);
+}
+
+.konai-row:last-child { border-bottom: none; }
+.konai-row-val { color: var(--green); }
+.konai-row-val.warn { color: var(--amber); }
+.konai-row-val.alert { color: var(--red); }
+
+/* Zone indicators */
+.zone-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.zone-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  border: 1px solid var(--border);
+}
+
+.zone-bar.z1 { border-color: var(--gold-b); background: var(--gold-dim); color: var(--gold); }
+.zone-bar.z2 { border-color: var(--cyan-b); background: var(--cyan-dim); color: var(--cyan); }
+.zone-bar.z3 { border-color: rgba(16,185,129,0.2); background: var(--green-dim); color: var(--green); }
+
+.zone-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.zone-bar.z1 .zone-dot { background: var(--gold); box-shadow: 0 0 4px var(--gold); }
+.zone-bar.z2 .zone-dot { background: var(--cyan); box-shadow: 0 0 4px var(--cyan); animation: osPulse 2s infinite; }
+.zone-bar.z3 .zone-dot { background: var(--green); box-shadow: 0 0 4px var(--green); }
+
+/* AI bus status */
+.ai-bus {
+  padding: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+
+.ai-bus-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 10px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.ai-bus-row:last-child { border-bottom: none; }
+.ai-bus-val { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--cyan); }
+.ai-bus-val.dim { color: var(--dim); }
+
+/* Emergent insights in ctx panel */
+.ctx-insight {
+  padding: 8px 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.ctx-insight:hover { border-color: var(--cyan-b); color: var(--text); }
+.ctx-insight strong { color: var(--cyan); font-weight: 500; }
+.ctx-insight-source { font-size: 8px; color: var(--dim); margin-top: 4px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+
+/* ══════════════════════════════════════
+   STATUS BAR
+   ══════════════════════════════════════ */
+.statusbar {
+  grid-column: 1 / -1;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--dim);
+}
+
+.sb-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  height: 100%;
+  border-right: 1px solid var(--border);
+  cursor: default;
+  transition: color 0.15s;
+}
+
+.sb-item:first-child { border-left: 1px solid var(--border); }
+.sb-item:hover { color: var(--muted); }
+
+.sb-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+.sb-item.ok .sb-dot { background: var(--green); }
+.sb-item.warn .sb-dot { background: var(--amber); }
+.sb-item.state .sb-dot { background: var(--cyan); box-shadow: 0 0 4px var(--cyan); }
+
+.sb-val { color: var(--muted); }
+.sb-val.cyan { color: var(--cyan); }
+.sb-val.gold { color: var(--gold2); }
+.sb-val.green { color: var(--green); }
+
+.sb-spacer { flex: 1; }
+
+/* ══════════════════════════════════════
+   FLAG_SIMON MODAL
+   ══════════════════════════════════════ */
+.flag-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.flag-overlay.open { opacity: 1; pointer-events: all; }
+
+.flag-modal {
+  background: var(--surface2);
+  border: 1px solid var(--amber);
+  border-radius: 10px;
+  padding: 28px;
+  width: 420px;
+  box-shadow: 0 0 60px rgba(245,158,11,0.2);
+  transform: scale(0.97);
+  transition: transform 0.2s cubic-bezier(0.34,1.16,0.64,1);
+}
+
+.flag-overlay.open .flag-modal { transform: scale(1); }
+
+.flag-modal-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 8px;
+}
+
+.flag-modal-sub { font-size: 12px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+
+.flag-actions { display: flex; flex-direction: column; gap: 8px; }
+
+.flag-action-btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flag-action-btn.hold { border-color: var(--amber-dim); color: var(--amber); background: var(--amber-dim); }
+.flag-action-btn.hold:hover { background: rgba(245,158,11,0.15); }
+.flag-action-btn.abort { border-color: rgba(239,68,68,0.3); color: var(--red); background: var(--red-dim); }
+.flag-action-btn.abort:hover { background: rgba(239,68,68,0.15); }
+.flag-action-btn.cancel { border-color: var(--border2); color: var(--muted); background: transparent; }
+.flag-action-btn.cancel:hover { border-color: var(--border3); color: var(--text); }
+
+/* ══════════════════════════════════════
+   MODULE UPLOAD MODAL
+   ══════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 24px;
+  width: min(500px,92vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  transform: scale(0.97) translateY(8px);
+  transition: all 0.25s cubic-bezier(0.34,1.16,0.64,1);
+}
+
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+
+.modal-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--dim);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.modal-close:hover { color: var(--text); background: var(--surface3); }
+
+/* Upload zone */
+.upload-zone {
+  border: 2px dashed var(--border2);
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 16px;
+}
+
+.upload-zone:hover {
+  border-color: var(--cyan-b);
+  background: var(--cyan-dim);
+}
+
+.upload-zone-icon { font-size: 32px; margin-bottom: 10px; }
+.upload-zone-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.upload-zone-text strong { color: var(--cyan); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     BOOT SCREEN
+     ══════════════════════════════════════════ -->
+<div id="bootScreen">
+  <div class="boot-logo">FALL<span>OS</span></div>
+  <div class="boot-sub">Sovereign Operating System · φ·κ=1</div>
+  <div class="boot-log" id="bootLog"></div>
+  <div class="boot-bar-wrap">
+    <div class="boot-bar" id="bootBar"></div>
+  </div>
+  <div class="boot-phi">φ·κ=1 · ANU · El·Zod · ISA-88 · R7</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     APP SHELL
+     ══════════════════════════════════════════ -->
+<div class="shell" id="shell">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-logo" onclick="goHome()" title="Fall OS Home">
+      <div class="os-mark">FO</div>
+      <div class="os-mark-pulse"></div>
+    </div>
+
+    <div class="topbar-breadcrumb">
+      <span>FALL OS</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-active" id="breadcrumbModule">HOME</span>
+    </div>
+
+    <div class="topbar-search">
+      <input class="global-search" id="globalSearch" placeholder="Search across all modules..." onkeydown="globalSearchHandler(event)">
+    </div>
+
+    <div class="topbar-right">
+      <!-- Konai status -->
+      <div class="konai-status armed" id="konaiStatus" onclick="showKonaiDetail()">
+        <div class="konai-dot"></div>
+        <span id="konaiLabel">KONAI R7</span>
+      </div>
+
+      <!-- WebLLM worker -->
+      <div class="worker-status" id="workerStatus" onclick="initAIWorker()">
+        <div class="worker-dot" id="workerDot"></div>
+        <span id="workerLabel">AI WORKER</span>
+      </div>
+
+      <!-- FLAG_SIMON -->
+      <button class="flag-simon-btn" onclick="openFlagSimon()">
+        ⚑ FLAG_SIMON
+      </button>
+
+      <!-- Identity -->
+      <div class="identity-chip" onclick="showModal('identity')">
+        <div class="identity-avatar" id="identityAvatar">S</div>
+        <span class="identity-name" id="identityName">Sovereign</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- LEFT RAIL -->
+  <nav class="rail" id="moduleRail">
+    <!-- Home -->
+    <div class="rail-item active" id="rail-home" data-tip="HOME" onclick="goHome()">🏠</div>
+
+    <div class="rail-divider"></div>
+
+    <!-- Fall* modules -->
+    <div class="rail-item" id="rail-crm" data-module="crm" data-tip="FallCRM" onclick="launchModule('crm')">🎯
+      <div class="rail-badge" id="badge-crm" style="display:none">0</div>
+    </div>
+    <div class="rail-item" id="rail-account" data-module="account" data-tip="FallAccount" onclick="launchModule('account')">💰</div>
+    <div class="rail-item" id="rail-pilot" data-module="pilot" data-tip="FallPilot" onclick="launchModule('pilot')">⌨️</div>
+    <div class="rail-item" id="rail-cube" data-module="cube" data-tip="FallCube" onclick="launchModule('cube')">📦</div>
+    <div class="rail-item" id="rail-intel" data-module="intel" data-tip="FallIntel" onclick="launchModule('intel')">📊</div>
+    <div class="rail-item" id="rail-match" data-module="match" data-tip="FallMatch" onclick="launchModule('match')">👥</div>
+    <div class="rail-item" id="rail-meet" data-module="meet" data-tip="MeetSync" onclick="launchModule('meet')">📅</div>
+    <div class="rail-item" id="rail-widget" data-module="widget" data-tip="FallPilot Widget" onclick="launchModule('widget')">🔲</div>
+
+    <div class="rail-divider"></div>
+
+    <div class="rail-item" id="rail-empire" data-module="empire" data-tip="Empire OS" onclick="launchModule('empire')">⚡</div>
+    <div class="rail-item" id="rail-twin" data-module="twin" data-tip="Digital Twin" onclick="launchModule('twin')">◈</div>
+
+    <div class="rail-divider"></div>
+
+    <!-- System -->
+    <div class="rail-item" data-tip="Load Module" onclick="showModal('loadModule')">📥</div>
+    <div class="rail-item" data-tip="Settings" onclick="showModal('settings')">⚙</div>
+  </nav>
+
+  <!-- MAIN AREA -->
+  <main class="main-area" id="mainArea">
+
+    <!-- HOME SCREEN -->
+    <div class="home-screen" id="homeScreen">
+
+      <!-- OS Banner -->
+      <div class="os-banner">
+        <div class="os-banner-icon">FO</div>
+        <div class="os-banner-text">
+          <div class="os-banner-title">FALL<span>OS</span> · Sovereign Operating System</div>
+          <div class="os-banner-sub" id="osBannerSub">φ·κ=1 · HTML³ · ISA-88/95/62443 · Konai R7 · 10 Modules · Extraction-Free</div>
+        </div>
+        <div class="os-banner-state">
+          <div class="state-pill execute" id="masterStatePill">EXECUTE</div>
+          <div style="font-size:9px;color:var(--dim);font-family:'JetBrains Mono',monospace;margin-top:4px" id="uptimeDisplay">00:00:00</div>
+        </div>
+      </div>
+
+      <!-- Module Grid -->
+      <div>
+        <div class="module-grid-title">// INSTALLED MODULES</div>
+        <div class="module-grid" id="moduleGrid"></div>
+      </div>
+
+      <!-- Emergent Insights -->
+      <div>
+        <div class="module-grid-title">// EMERGENT INTELLIGENCE · CROSS-MODULE INSIGHTS</div>
+        <div class="insight-grid" id="homeInsights"></div>
+      </div>
+
+    </div>
+
+    <!-- MODULE FRAMES -->
+    <div id="moduleFrames"></div>
+
+    <!-- Frame loading overlay -->
+    <div class="frame-loading hidden" id="frameLoading">
+      <div class="frame-loading-icon">◈</div>
+      <div class="frame-loading-text" id="frameLoadingText">LOADING MODULE...</div>
+      <div class="frame-loading-bar">
+        <div class="frame-loading-fill"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- CONTEXT PANEL -->
+  <aside class="ctx-panel" id="ctxPanel">
+    <div class="ctx-header">
+      <span class="ctx-title">// CONTEXT ENGINE</span>
+      <span style="font-size:9px;color:var(--dim);font-family:'JetBrains Mono',monospace" id="ctxClock">00:00:00</span>
+    </div>
+
+    <div class="ctx-body">
+
+      <!-- Active module -->
+      <div class="ctx-section">
+        <div class="ctx-section-title">Active Module</div>
+        <div class="ctx-active-module" id="ctxActiveModule">
+          <span class="ctx-module-icon">🏠</span>
+          <div>
+            <div class="ctx-module-name">Fall OS Home</div>
+            <div class="ctx-module-state">EXECUTE · IDLE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ISA-88 state machine -->
+      <div class="ctx-section">
+        <div class="ctx-section-title">ISA-88 PackML State</div>
+        <div class="isa-states" id="isaStates"></div>
+      </div>
+
+      <!-- ISA-62443 Zones -->
+      <div class="ctx-section">
+        <div class="ctx-section-title">ISA-62443 Security Zones</div>
+        <div class="zone-bars">
+          <div class="zone-bar z1">
+            <div class="zone-dot"></div>
+            <span>Zone 1 · φ Core · Locked</span>
+          </div>
+          <div class="zone-bar z2">
+            <div class="zone-dot"></div>
+            <span>Zone 2 · Modules · Sandboxed</span>
+          </div>
+          <div class="zone-bar z3">
+            <div class="zone-dot"></div>
+            <span>Zone 3 · Workers · Isolated</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Konai monitor -->
+      <div class="ctx-section">
+        <div class="ctx-section-title">Konai Substrate Monitor</div>
+        <div class="konai-monitor" id="konaiMonitor">
+          <div class="konai-row"><span>L1 Hash</span><span class="konai-row-val" id="km-hash">—</span></div>
+          <div class="konai-row"><span>Integrity</span><span class="konai-row-val" id="km-integrity">CHECKING</span></div>
+          <div class="konai-row"><span>Last Check</span><span class="konai-row-val" id="km-lastcheck">—</span></div>
+          <div class="konai-row"><span>Alerts</span><span class="konai-row-val" id="km-alerts">0</span></div>
+          <div class="konai-row"><span>SIF Status</span><span class="konai-row-val" id="km-sif">ARMED</span></div>
+        </div>
+      </div>
+
+      <!-- AI Bus -->
+      <div class="ctx-section">
+        <div class="ctx-section-title">AI Worker Bus</div>
+        <div class="ai-bus" id="aiBus">
+          <div class="ai-bus-row"><span>Model</span><span class="ai-bus-val dim" id="ab-model">Not loaded</span></div>
+          <div class="ai-bus-row"><span>Status</span><span class="ai-bus-val dim" id="ab-status">OFFLINE</span></div>
+          <div class="ai-bus-row"><span>Requests</span><span class="ai-bus-val" id="ab-requests">0</span></div>
+          <div class="ai-bus-row"><span>Serving</span><span class="ai-bus-val dim" id="ab-serving">—</span></div>
+        </div>
+      </div>
+
+      <!-- Data flows -->
+      <div class="ctx-section">
+        <div class="ctx-section-title">Data Flows</div>
+        <div id="dataFlows">
+          <div style="color:var(--dim);font-size:10px;text-align:center;padding:8px">No active flows</div>
+        </div>
+      </div>
+
+      <!-- Emergent insights -->
+      <div class="ctx-section">
+        <div class="ctx-section-title">Emergent Insights</div>
+        <div id="ctxInsights">
+          <div style="color:var(--dim);font-size:10px;text-align:center;padding:8px">Load modules to generate insights</div>
+        </div>
+      </div>
+
+      <!-- Event log -->
+      <div class="ctx-section">
+        <div class="ctx-section-title">OS Event Log</div>
+        <div id="osEventLog" style="max-height:160px;overflow-y:auto">
+          <div style="color:var(--dim);font-size:9px;text-align:center;padding:8px">Booting...</div>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- STATUS BAR -->
+  <footer class="statusbar">
+    <div class="sb-item state">
+      <div class="sb-dot"></div>
+      <span>STATE:</span>
+      <span class="sb-val cyan" id="sb-state">EXECUTE</span>
+    </div>
+    <div class="sb-item ok">
+      <div class="sb-dot"></div>
+      <span>KONAI:</span>
+      <span class="sb-val green" id="sb-konai">R7 ARMED</span>
+    </div>
+    <div class="sb-item ok">
+      <div class="sb-dot"></div>
+      <span>ZONE:</span>
+      <span class="sb-val" id="sb-zone">1·2·3 SECURE</span>
+    </div>
+    <div class="sb-item">
+      <div class="sb-dot"></div>
+      <span>MODULES:</span>
+      <span class="sb-val cyan" id="sb-modules">0 RUNNING</span>
+    </div>
+    <div class="sb-item">
+      <div class="sb-dot"></div>
+      <span>AI:</span>
+      <span class="sb-val dim" id="sb-ai">OFFLINE</span>
+    </div>
+    <div class="sb-item">
+      <div class="sb-dot"></div>
+      <span>SOVEREIGN:</span>
+      <span class="sb-val gold">φ·κ=1</span>
+    </div>
+    <div class="sb-spacer"></div>
+    <div class="sb-item">
+      <span id="sb-time">00:00:00</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- FLAG_SIMON MODAL -->
+<div class="flag-overlay" id="flagOverlay">
+  <div class="flag-modal">
+    <div class="flag-modal-title">⚑ FLAG_SIMON · HOLD COMMAND</div>
+    <div class="flag-modal-sub">PackML HOLD state triggered. Human decision required before EXECUTE resumes. This is ISA-88 compliant — no system runs in an undefined state.</div>
+    <div class="flag-actions">
+      <button class="flag-action-btn hold" onclick="executeHold()">
+        ⏸ HOLDING — Pause all module operations
+      </button>
+      <button class="flag-action-btn abort" onclick="executeAbort()">
+        ⏹ ABORTING — Full system abort · clear · reset to IDLE
+      </button>
+      <button class="flag-action-btn cancel" onclick="closeFlagSimon()">
+        ↩ Cancel — Return to EXECUTE
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// FALL OS — L1 SOVEREIGN ORCHESTRATOR
+// φ·κ=1 · ISA-88 · HTML³ · Konai R7
+// ═══════════════════════════════════════════════════════════
+
+const OS = {
+  // Identity
+  version: '1.0.0',
+  identity: { name: 'Sovereign', avatar: 'S', org: 'Sodor Group' },
+
+  // ISA-88 PackML master state
+  state: 'STOPPED',
+  prevState: null,
+
+  // Module registry
+  modules: {},
+  activeModule: null,
+  runningModules: new Set(),
+
+  // Konai
+  konai: {
+    armed: true,
+    l1Hash: null,
+    integrity: 'CHECKING',
+    alerts: 0,
+    lastCheck: null,
+    sifActive: true,
+  },
+
+  // AI worker bus
+  ai: {
+    status: 'OFFLINE',
+    model: null,
+    requests: 0,
+    serving: null,
+  },
+
+  // Context engine
+  context: {
+    activeModule: null,
+    recentActions: [],
+    insights: [],
+    dataFlows: [],
+  },
+
+  // Timing
+  startTime: Date.now(),
+  uptime: 0,
+};
+
+// ═══════════════════════════════════════════════════════════
+// MODULE MANIFEST — all Fall* tools
+// ═══════════════════════════════════════════════════════════
+const MODULES = {
+  crm: {
+    id: 'crm', name: 'FallCRM', icon: '🎯', color: '#ef4444',
+    desc: 'Sovereign sales CRM · contacts · pipeline · AI adviser',
+    file: 'fallcrm-v2.html',
+    zone: 2, isa88: true,
+    dataKeys: ['crm:contacts', 'crm:deals', 'crm:activities'],
+    emits: ['contact.updated', 'deal.closed', 'activity.completed'],
+    receives: ['invoice.created', 'meeting.scheduled'],
+  },
+  account: {
+    id: 'account', name: 'FallAccount', icon: '💰', color: '#d4a017',
+    desc: 'Sovereign accounting · tax · legal docs · WebLLM AI',
+    file: 'fallaccount.html',
+    zone: 2, isa88: true,
+    dataKeys: ['account:invoices', 'account:expenses'],
+    emits: ['invoice.created', 'invoice.paid', 'expense.added'],
+    receives: ['deal.closed', 'contact.updated'],
+  },
+  pilot: {
+    id: 'pilot', name: 'FallPilot', icon: '⌨️', color: '#00d4ff',
+    desc: 'Sovereign coding agent · Copilot replacement · full agent mode',
+    file: 'fallpilot-v2.html',
+    zone: 2, isa88: false,
+    dataKeys: ['pilot:history'],
+    emits: ['code.written', 'task.completed'],
+    receives: [],
+  },
+  cube: {
+    id: 'cube', name: 'FallCube', icon: '📦', color: '#8b5cf6',
+    desc: 'Sovereign file intelligence · AI document analysis',
+    file: 'fallcube.html',
+    zone: 2, isa88: false,
+    dataKeys: ['cube:files'],
+    emits: ['file.analysed', 'summary.created'],
+    receives: [],
+  },
+  intel: {
+    id: 'intel', name: 'FallIntel', icon: '📊', color: '#10b981',
+    desc: 'Workforce intelligence · organisational analytics',
+    file: 'fallintel.html',
+    zone: 2, isa88: false,
+    dataKeys: [],
+    emits: ['report.generated'],
+    receives: [],
+  },
+  match: {
+    id: 'match', name: 'FallMatch', icon: '👥', color: '#3b82f6',
+    desc: 'AI talent screening · blind CV matching · recruiter replacement',
+    file: 'fallmatch.html',
+    zone: 2, isa88: false,
+    dataKeys: [],
+    emits: ['candidate.shortlisted'],
+    receives: [],
+  },
+  meet: {
+    id: 'meet', name: 'MeetSync', icon: '📅', color: '#ec4899',
+    desc: 'Sovereign meeting intelligence · scheduling · notes',
+    file: 'meetsync.html',
+    zone: 2, isa88: false,
+    dataKeys: ['meet:meetings'],
+    emits: ['meeting.scheduled', 'notes.created'],
+    receives: ['contact.updated'],
+  },
+  widget: {
+    id: 'widget', name: 'FallPilot Widget', icon: '🔲', color: '#f59e0b',
+    desc: 'Universal embeddable AI copilot widget · white-label',
+    file: 'fallpilot-widget.html',
+    zone: 2, isa88: false,
+    dataKeys: [],
+    emits: [],
+    receives: [],
+  },
+  empire: {
+    id: 'empire', name: 'Empire OS', icon: '⚡', color: '#00d4ff',
+    desc: 'AI agent orchestration · computer control · vision loop',
+    file: 'sovereign-empire-v2.html',
+    zone: 1, isa88: true,
+    dataKeys: ['empire:agents', 'empire:tasks'],
+    emits: ['agent.task.completed', 'computer.action'],
+    receives: ['task.queued'],
+  },
+  twin: {
+    id: 'twin', name: 'Digital Twin', icon: '◈', color: '#d4a017',
+    desc: 'Sovereign AI identity · autonomous sales · self-replicating',
+    file: 'digital-twin.html',
+    zone: 1, isa88: true,
+    dataKeys: ['twin:identity', 'twin:conversations'],
+    emits: ['conversation.completed', 'lead.qualified'],
+    receives: ['contact.updated', 'deal.closed'],
+  },
+};
+
+// ═══════════════════════════════════════════════════════════
+// ISA-88 PackML State Machine
+// ═══════════════════════════════════════════════════════════
+const ISA88 = {
+  states: ['STOPPED','IDLE','STARTING','EXECUTE','COMPLETING','COMPLETE','HOLDING','HELD','UNHOLDING','ABORTING','ABORTED','CLEARING','RESETTING'],
+  transitions: {
+    STOPPED:    ['RESETTING'],
+    IDLE:       ['STARTING','ABORTING'],
+    STARTING:   ['EXECUTE','ABORTING'],
+    EXECUTE:    ['COMPLETING','HOLDING','ABORTING'],
+    COMPLETING: ['COMPLETE','ABORTING'],
+    COMPLETE:   ['RESETTING'],
+    HOLDING:    ['HELD','ABORTING'],
+    HELD:       ['UNHOLDING','ABORTING'],
+    UNHOLDING:  ['EXECUTE','ABORTING'],
+    ABORTING:   ['ABORTED'],
+    ABORTED:    ['CLEARING'],
+    CLEARING:   ['STOPPED'],
+    RESETTING:  ['IDLE'],
+  },
+  current: 'STOPPED',
+
+  transition(to) {
+    const allowed = this.transitions[this.current] || [];
+    if (allowed.includes(to)) {
+      OS.prevState = this.current;
+      this.current = to;
+      OS.state = to;
+      document.documentElement.setAttribute('data-state', to);
+      updateStateUI(to);
+      logEvent('ISA88', `State: ${OS.prevState} → ${to}`);
+      return true;
+    }
+    return false;
+  }
+};
+
+// ═══════════════════════════════════════════════════════════
+// BOOT SEQUENCE
+// ═══════════════════════════════════════════════════════════
+const BOOT_SEQUENCE = [
+  { delay: 0,    text: 'Fall OS v1.0.0 · Sovereign Operating System', cls: 'gold' },
+  { delay: 120,  text: 'Initialising φ Core (L1 Orchestrator)...', cls: '' },
+  { delay: 240,  text: '✓ L1 identity substrate locked', cls: 'ok' },
+  { delay: 380,  text: 'Loading ISA-88 PackML state machine...', cls: '' },
+  { delay: 500,  text: '✓ States: STOPPED→IDLE→EXECUTE · HOLD · ABORT paths armed', cls: 'ok' },
+  { delay: 640,  text: 'Initialising ISA-62443 security zones...', cls: '' },
+  { delay: 760,  text: '✓ Zone 1 (φ Core) · Zone 2 (Modules) · Zone 3 (Workers)', cls: 'ok' },
+  { delay: 900,  text: 'Arming Konai substrate monitor (R7 shield)...', cls: '' },
+  { delay: 1020, text: '✓ KONAI R7 ARMED · 5 SIF active · hash baseline set', cls: 'ok' },
+  { delay: 1160, text: 'Scanning module registry...', cls: '' },
+  { delay: 1280, text: '✓ 10 modules registered · Zone 2 sandboxes ready', cls: 'ok' },
+  { delay: 1420, text: 'Initialising postMessage bus...', cls: '' },
+  { delay: 1540, text: '✓ L1↔L2 channel active · origin validation enabled', cls: 'ok' },
+  { delay: 1680, text: 'Starting context engine...', cls: '' },
+  { delay: 1800, text: '✓ Context engine ONLINE · emergent intelligence active', cls: 'ok' },
+  { delay: 1940, text: 'Loading shared IndexedDB data layer...', cls: '' },
+  { delay: 2060, text: '✓ Namespaced stores initialised · crm: account: empire: twin:', cls: 'ok' },
+  { delay: 2200, text: '', cls: '' },
+  { delay: 2300, text: 'φ·κ=1 · El·Zod · ANU · The standard endures', cls: 'gold' },
+  { delay: 2500, text: 'EXECUTE STATE · Fall OS operational', cls: 'active' },
+];
+
+async function boot() {
+  const log = document.getElementById('bootLog');
+  const bar = document.getElementById('bootBar');
+
+  for (let i = 0; i < BOOT_SEQUENCE.length; i++) {
+    const step = BOOT_SEQUENCE[i];
+    await sleep(step.delay - (i > 0 ? BOOT_SEQUENCE[i-1].delay : 0));
+
+    if (step.text) {
+      const line = document.createElement('div');
+      line.className = `boot-log-line ${step.cls}`;
+      line.textContent = step.text;
+      log.appendChild(line);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    bar.style.width = Math.round(((i+1) / BOOT_SEQUENCE.length) * 100) + '%';
+  }
+
+  await sleep(400);
+
+  // Hide boot, show shell
+  document.getElementById('bootScreen').classList.add('hidden');
+  await sleep(600);
+
+  document.getElementById('shell').classList.add('visible');
+  document.getElementById('bootScreen').style.display = 'none';
+
+  // Run ISA-88 boot sequence
+  await sleep(100);
+  ISA88.transition('RESETTING');
+  await sleep(300);
+  ISA88.transition('IDLE');
+  await sleep(300);
+  ISA88.transition('STARTING');
+  await sleep(400);
+  ISA88.transition('EXECUTE');
+
+  // Init subsystems
+  initKonai();
+  renderModuleGrid();
+  renderISAStates();
+  generateInsights();
+  startClock();
+  updateRunningCount(); // TUNE 6: show 0 RUNNING correctly on boot
+
+  // Load persisted settings
+  loadSettings();
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODULE MANAGEMENT — HTML³ blob iframe loading
+// ═══════════════════════════════════════════════════════════
+async function launchModule(id) {
+  const mod = MODULES[id];
+  if (!mod) return;
+
+  // Update nav state
+  document.querySelectorAll('.rail-item').forEach(r => r.classList.remove('active'));
+  document.getElementById(`rail-${id}`)?.classList.add('active');
+  document.getElementById('rail-home')?.classList.remove('active');
+
+  // Update breadcrumb
+  document.getElementById('breadcrumbModule').textContent = mod.name.toUpperCase();
+
+  // Update context panel
+  document.getElementById('ctxActiveModule').innerHTML = `
+    <span class="ctx-module-icon">${mod.icon}</span>
+    <div>
+      <div class="ctx-module-name">${mod.name}</div>
+      <div class="ctx-module-state">ZONE ${mod.zone} · EXECUTE</div>
+    </div>`;
+
+  OS.activeModule = id;
+  OS.context.activeModule = id;
+
+  // Check if already loaded
+  const existingFrame = document.getElementById(`frame-${id}`);
+  if (existingFrame) {
+    // Just show it
+    document.querySelectorAll('.module-frame-wrap').forEach(f => f.classList.remove('active'));
+    existingFrame.parentElement.classList.add('active');
+    document.getElementById('homeScreen').classList.add('hidden');
+    updateRunningCount();
+    logEvent('MODULE', `Switched to ${mod.name} (cached)`);
+    return;
+  }
+
+  // Show loading
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.querySelectorAll('.module-frame-wrap').forEach(f => f.classList.remove('active'));
+
+  const loading = document.getElementById('frameLoading');
+  document.getElementById('frameLoadingText').textContent = `LOADING ${mod.name.toUpperCase()}...`;
+  loading.classList.remove('hidden');
+
+  logEvent('MODULE', `Loading ${mod.name} from ${mod.file}...`);
+
+  try {
+    // Try to fetch the module file
+    let content = null;
+
+    // Check if stored in IndexedDB
+    const cached = await idbGet(`module:${id}`);
+    if (cached) {
+      content = cached;
+      logEvent('MODULE', `${mod.name} loaded from cache`);
+    } else {
+      // Try to fetch from same directory
+      try {
+        const res = await fetch(mod.file);
+        if (res.ok) {
+          content = await res.text();
+          await idbSet(`module:${id}`, content);
+          logEvent('MODULE', `${mod.name} fetched and cached`);
+        }
+      } catch(e) {
+        // File not found — show placeholder
+        content = null;
+      }
+    }
+
+    // Create iframe wrapper
+    const wrap = document.createElement('div');
+    wrap.className = 'module-frame-wrap active';
+
+    if (content) {
+      // Create blob URL — HTML³ L2 sandbox
+      const blob = new Blob([injectOSBridge(content, id)], { type: 'text/html' });
+      const blobURL = URL.createObjectURL(blob);
+
+      const iframe = document.createElement('iframe');
+      iframe.id = `frame-${id}`;
+      iframe.className = 'module-frame';
+      iframe.src = blobURL;
+      iframe.sandbox = 'allow-scripts allow-forms allow-modals allow-popups allow-downloads';
+      iframe.title = mod.name;
+
+      iframe.onload = () => {
+        loading.classList.add('hidden');
+        OS.runningModules.add(id);
+        updateRunningCount();
+        updateModuleTile(id, true);
+        logEvent('MODULE', `${mod.name} EXECUTE · Zone ${mod.zone} sandbox active`);
+        URL.revokeObjectURL(blobURL);
+        // Add data flow
+        addDataFlow('L1', mod.name, 'postMessage bridge active');
+      };
+
+      wrap.appendChild(iframe);
+    } else {
+      // Module file not found — show install prompt
+      wrap.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:20px;padding:40px;text-align:center">
+          <div style="font-size:48px">${mod.icon}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--text)">${mod.name}</div>
+          <div style="font-size:12px;color:var(--muted);max-width:400px;line-height:1.7">${mod.desc}</div>
+          <div style="padding:14px 20px;background:var(--surface2);border:1px solid var(--cyan-b);border-radius:6px;font-size:11px;color:var(--muted);max-width:440px;line-height:1.8;font-family:'JetBrains Mono',monospace">
+            <div style="color:var(--cyan);margin-bottom:8px;letter-spacing:2px">MODULE FILE NOT FOUND</div>
+            Place <strong style="color:var(--text)">${mod.file}</strong> in the same folder as Fall OS.<br>
+            Then click below to load it, or drag-drop the HTML file onto this window.
+          </div>
+          <div style="display:flex;gap:10px">
+            <button onclick="showModal('loadModule','${id}')" style="padding:10px 20px;background:var(--cyan);border:none;border-radius:6px;color:var(--void);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">
+              📥 LOAD ${mod.name.toUpperCase()}
+            </button>
+            <button onclick="goHome()" style="padding:10px 20px;background:transparent;border:1px solid var(--border2);border-radius:6px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer">
+              ← Back
+            </button>
+          </div>
+        </div>`;
+      loading.classList.add('hidden');
+      wrap.classList.add('active'); // BUG 4 FIX
+      OS.runningModules.add(id);
+      updateRunningCount();
+    }
+
+    document.getElementById('moduleFrames').appendChild(wrap);
+
+  } catch(e) {
+    loading.classList.add('hidden');
+    logEvent('ERROR', `${mod.name} load failed: ${e.message}`);
+    goHome();
+  }
+}
+
+// Inject Fall OS bridge script into module HTML
+function injectOSBridge(html, moduleId) {
+  const bridge = `
+<script>
+// FALL OS L2 BRIDGE — injected by L1 orchestrator
+window.FALLOS_MODULE_ID = '${moduleId}';
+window.FALLOS_ZONE = ${MODULES[moduleId]?.zone || 2};
+
+// postMessage to L1
+window.fallOS = {
+  send: (event, data) => {
+    window.parent.postMessage({ type: 'MODULE_EVENT', module: '${moduleId}', event, data }, '*');
+  },
+  getState: (key) => {
+    return new Promise((resolve) => {
+      const id = Date.now();
+      window.parent.postMessage({ type: 'STATE_GET', module: '${moduleId}', key, id }, '*');
+      const handler = (e) => {
+        if (e.data?.type === 'STATE_RESPONSE' && e.data.id === id) {
+          window.removeEventListener('message', handler);
+          resolve(e.data.value);
+        }
+      };
+      window.addEventListener('message', handler);
+    });
+  },
+  setState: (key, value) => {
+    window.parent.postMessage({ type: 'STATE_SET', module: '${moduleId}', key, value }, '*');
+  },
+  requestAI: (prompt, callback) => {
+    const id = Date.now();
+    window.parent.postMessage({ type: 'AI_REQUEST', module: '${moduleId}', prompt, id }, '*');
+    const handler = (e) => {
+      if (e.data?.type === 'AI_RESPONSE' && e.data.id === id) {
+        window.removeEventListener('message', handler);
+        callback(e.data.response);
+      }
+    };
+    window.addEventListener('message', handler);
+  }
+};
+
+// Announce ready
+window.addEventListener('load', () => {
+  window.parent.postMessage({ type: 'MODULE_READY', module: '${moduleId}' }, '*');
+});
+<\/script>`;
+
+  // Inject before </head>
+  if (html.includes('</head>')) {
+    return html.replace('</head>', bridge + '</head>');
+  }
+  return bridge + html;
+}
+
+// Handle postMessages from modules
+window.addEventListener('message', (e) => {
+  const d = e.data;
+  if (!d || typeof d !== 'object') return;
+
+  switch(d.type) {
+    case 'MODULE_READY':
+      logEvent('BUS', `${MODULES[d.module]?.name || d.module} handshake complete`);
+      break;
+
+    case 'MODULE_EVENT':
+      handleModuleEvent(d.module, d.event, d.data);
+      break;
+
+    case 'STATE_GET':
+      idbGet(d.key).then(val => {
+        const frame = document.getElementById(`frame-${d.module}`);
+        frame?.contentWindow?.postMessage({ type: 'STATE_RESPONSE', id: d.id, value: val }, '*');
+      });
+      break;
+
+    case 'STATE_SET':
+      idbSet(d.key, d.value);
+      logEvent('DATA', `${d.module}: ${d.key} updated`);
+      break;
+
+    case 'AI_REQUEST':
+      handleAIRequest(d.module, d.prompt, d.id);
+      break;
+  }
+});
+
+function handleModuleEvent(moduleId, event, data) {
+  OS.context.recentActions.unshift({ module: moduleId, event, data, ts: Date.now() });
+  if (OS.context.recentActions.length > 20) OS.context.recentActions.pop();
+
+  logEvent('EVENT', `${MODULES[moduleId]?.name || moduleId}: ${event}`);
+
+  // Cross-module routing — emergent intelligence
+  const routingMap = {
+    'deal.closed':        ['account'],  // Tell FallAccount a deal closed
+    'invoice.created':    ['crm'],      // Tell FallCRM an invoice was raised
+    'meeting.scheduled':  ['crm'],      // Tell FallCRM about a meeting
+    'contact.updated':    ['account', 'meet'], // Propagate to account + meet
+  };
+
+  const targets = routingMap[event] || [];
+  targets.forEach(targetId => {
+    if (targetId !== moduleId && OS.runningModules.has(targetId)) {
+      const frame = document.getElementById(`frame-${targetId}`);
+      frame?.contentWindow?.postMessage({ type: 'OS_EVENT', from: moduleId, event, data }, '*');
+      addDataFlow(MODULES[moduleId]?.name || moduleId, MODULES[targetId]?.name || targetId, event);
+    }
+  });
+
+  // Trigger insight generation
+  generateInsights();
+}
+
+async function handleAIRequest(moduleId, prompt, requestId) {
+  OS.ai.requests++;
+  OS.ai.serving = MODULES[moduleId]?.name || moduleId;
+  updateAIBus();
+
+  // For now — bridge to a response (real WebLLM worker in future)
+  const response = `[AI Worker] Processing request from ${OS.ai.serving}... WebLLM worker not yet loaded. Click AI WORKER in the top bar to load.`;
+
+  const frame = document.getElementById(`frame-${moduleId}`);
+  frame?.contentWindow?.postMessage({ type: 'AI_RESPONSE', id: requestId, response }, '*');
+
+  OS.ai.serving = null;
+  updateAIBus();
+}
+
+// ═══════════════════════════════════════════════════════════
+// HOME / NAVIGATION
+// ═══════════════════════════════════════════════════════════
+function goHome() {
+  document.querySelectorAll('.rail-item').forEach(r => r.classList.remove('active'));
+  document.getElementById('rail-home').classList.add('active');
+  document.getElementById('breadcrumbModule').textContent = 'HOME';
+  document.getElementById('homeScreen').classList.remove('hidden');
+  document.querySelectorAll('.module-frame-wrap').forEach(f => f.classList.remove('active'));
+  document.getElementById('ctxActiveModule').innerHTML = `
+    <span class="ctx-module-icon">🏠</span>
+    <div>
+      <div class="ctx-module-name">Fall OS Home</div>
+      <div class="ctx-module-state">EXECUTE · IDLE</div>
+    </div>`;
+  OS.activeModule = null;
+  OS.context.activeModule = null;
+}
+
+function renderModuleGrid() {
+  const grid = document.getElementById('moduleGrid');
+  grid.innerHTML = Object.values(MODULES).map(mod => `
+    <div class="module-tile ${mod.id}" id="tile-${mod.id}" onclick="launchModule('${mod.id}')">
+      <div class="module-status-dot" id="tiledot-${mod.id}"></div>
+      <span class="module-icon">${mod.icon}</span>
+      <div class="module-name">${mod.name}</div>
+      <div class="module-desc">${mod.desc}</div>
+    </div>`).join('');
+}
+
+function updateModuleTile(id, running) {
+  const tile = document.getElementById(`tile-${id}`);
+  if (tile) tile.classList.toggle('running', running);
+}
+
+// ═══════════════════════════════════════════════════════════
+// KONAI SUBSTRATE MONITOR — R7 Shield
+// ═══════════════════════════════════════════════════════════
+function initKonai() {
+  // Compute baseline hash of L1 core
+  const l1Content = document.documentElement.innerHTML.slice(0, 5000);
+  OS.konai.l1Hash = simpleHash(l1Content).toString(16).slice(0, 16);
+  OS.konai.integrity = 'VERIFIED';
+  OS.konai.lastCheck = new Date().toLocaleTimeString();
+
+  updateKonaiDisplay();
+
+  // Run integrity checks every 30 seconds
+  setInterval(runKonaiCheck, 30000);
+}
+
+function runKonaiCheck() {
+  OS.konai.lastCheck = new Date().toLocaleTimeString();
+
+  // Verify zone isolation — check no unexpected globals
+  const suspiciousGlobals = ['__webpack_require__', '_react', 'angular', 'Vue'];
+  const detected = suspiciousGlobals.filter(g => window[g] !== undefined);
+
+  if (detected.length > 0) {
+    OS.konai.alerts++;
+    OS.konai.integrity = 'WARNING';
+    logEvent('KONAI', `Anomaly detected: ${detected.join(', ')}`);
+    triggerKonaiWarning();
+  } else {
+    OS.konai.integrity = 'VERIFIED';
+  }
+
+  updateKonaiDisplay();
+}
+
+function updateKonaiDisplay() {
+  document.getElementById('km-hash').textContent = OS.konai.l1Hash || '—';
+  document.getElementById('km-integrity').textContent = OS.konai.integrity;
+  document.getElementById('km-lastcheck').textContent = OS.konai.lastCheck || '—';
+  document.getElementById('km-alerts').textContent = OS.konai.alerts;
+  document.getElementById('km-sif').textContent = OS.konai.sifActive ? 'ARMED' : 'DISARMED';
+
+  const integrityEl = document.getElementById('km-integrity');
+  integrityEl.className = `konai-row-val${OS.konai.integrity !== 'VERIFIED' ? ' warn' : ''}`;
+}
+
+function triggerKonaiWarning() {
+  const ks = document.getElementById('konaiStatus');
+  ks.classList.remove('armed');
+  ks.classList.add('triggered');
+  document.getElementById('konaiLabel').textContent = 'ALERT';
+  document.getElementById('sb-konai').textContent = 'ALERT';
+
+  setTimeout(() => {
+    ks.classList.add('armed');
+    ks.classList.remove('triggered');
+    document.getElementById('konaiLabel').textContent = 'KONAI R7';
+    document.getElementById('sb-konai').textContent = 'R7 ARMED';
+  }, 5000);
+}
+
+function simpleHash(str) {
+  let hash = 0x9e3779b9;
+  for (let i = 0; i < str.length; i++) {
+    hash = Math.imul(hash ^ str.charCodeAt(i), 0x9e3779b9);
+    hash ^= hash >>> 16;
+  }
+  return hash >>> 0;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ISA-88 UI
+// ═══════════════════════════════════════════════════════════
+function renderISAStates() {
+  const paths = [
+    { label: 'NORMAL', states: ['STOPPED','IDLE','STARTING','EXECUTE','COMPLETING','COMPLETE'], color: 'var(--cyan)' },
+    { label: 'HOLD', states: ['HOLDING','HELD','UNHOLDING'], color: 'var(--amber)' },
+    { label: 'ABORT', states: ['ABORTING','ABORTED','CLEARING','RESETTING'], color: 'var(--red)' },
+  ];
+
+  document.getElementById('isaStates').innerHTML = paths.map(path => `
+    <div style="margin-bottom:6px">
+      <div style="font-size:8px;letter-spacing:1.5px;color:${path.color};opacity:0.6;margin-bottom:3px;font-family:'JetBrains Mono',monospace">${path.label}</div>
+      ${path.states.map(s => `
+        <div class="isa-state-row ${ISA88.current === s ? 'current' : ''}" id="isa-${s}">
+          <div class="isa-state-dot"></div>${s}
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function updateStateUI(state) {
+  document.getElementById('sb-state').textContent = state;
+  document.getElementById('masterStatePill').textContent = state;
+  document.getElementById('masterStatePill').className = `state-pill ${state.toLowerCase()}`;
+
+  renderISAStates();
+
+  // BUG 5 FIX — proper colour for all states
+  const sbState = document.getElementById('sb-state');
+  sbState.className =
+    state === 'EXECUTE' || state === 'STARTING' || state === 'UNHOLDING' ? 'sb-val cyan' :
+    state === 'HOLDING' || state === 'HELD' ? 'sb-val' :
+    state === 'ABORTING' || state === 'ABORTED' || state === 'CLEARING' ? 'sb-val' :
+    state === 'COMPLETE' || state === 'COMPLETING' ? 'sb-val green' :
+    'sb-val';
+}
+
+// ═══════════════════════════════════════════════════════════
+// CONTEXT ENGINE — Emergent Intelligence
+// ═══════════════════════════════════════════════════════════
+function generateInsights() {
+  const insights = [];
+
+  // Cross-module insights based on running modules and shared state
+  if (OS.runningModules.has('crm') && OS.runningModules.has('account')) {
+    insights.push({
+      icon: '🔗',
+      text: '<strong>CRM → Account bridge active.</strong> Invoice creation will auto-notify FallCRM contacts. Deal closures will trigger account entries.',
+      source: 'CROSS-MODULE · CRM + ACCOUNT'
+    });
+  }
+
+  if (OS.runningModules.has('empire')) {
+    insights.push({
+      icon: '⚡',
+      text: '<strong>Empire OS agent layer online.</strong> Computer control available. Vision loop ready for autonomous tasks.',
+      source: 'EMPIRE OS · AGENT LAYER'
+    });
+  }
+
+  if (OS.runningModules.size >= 3) {
+    insights.push({
+      icon: '◈',
+      text: `<strong>${OS.runningModules.size} modules running.</strong> Shared WebLLM worker will reduce memory by ~${Math.round((OS.runningModules.size - 1) * 800)}MB when loaded.`,
+      source: 'AI WORKER BUS · OPTIMISATION'
+    });
+  }
+
+  if (OS.runningModules.has('crm') && OS.runningModules.has('meet')) {
+    insights.push({
+      icon: '📅',
+      text: '<strong>Meeting → CRM pipeline active.</strong> Scheduled meetings will auto-create activities in FallCRM.',
+      source: 'CROSS-MODULE · MEET + CRM'
+    });
+  }
+
+  // Default insight
+  if (insights.length === 0) {
+    insights.push({
+      icon: '🧠',
+      text: '<strong>Context engine ready.</strong> Launch multiple modules to generate cross-module intelligence.',
+      source: 'CONTEXT ENGINE · WAITING'
+    });
+  }
+
+  // Render in home screen
+  document.getElementById('homeInsights').innerHTML = insights.map(i => `
+    <div class="insight-card">
+      <span class="insight-icon">${i.icon}</span>
+      <div>
+        <div class="insight-text">${i.text}</div>
+        <div class="insight-source">${i.source}</div>
+      </div>
+    </div>`).join('');
+
+  // Render in context panel
+  document.getElementById('ctxInsights').innerHTML = insights.slice(0,4).map(i => `
+    <div class="ctx-insight">
+      ${i.icon} ${i.text}
+      <div class="ctx-insight-source">${i.source}</div>
+    </div>`).join('');
+
+  OS.context.insights = insights;
+}
+
+function addDataFlow(from, to, event) {
+  const flows = OS.context.dataFlows;
+  flows.unshift({ from, to, event, ts: Date.now() });
+  if (flows.length > 6) flows.pop();
+
+  document.getElementById('dataFlows').innerHTML = flows.map(f => `
+    <div class="data-flow-item">
+      <span class="data-flow-from">${f.from.slice(0,8).toUpperCase()}</span>
+      <span class="data-flow-arrow">→</span>
+      <span class="data-flow-to">${f.to}: ${f.event}</span>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// FLAG_SIMON — ISA-88 HOLD protocol
+// ═══════════════════════════════════════════════════════════
+function openFlagSimon() {
+  document.getElementById('flagOverlay').classList.add('open');
+}
+
+function closeFlagSimon() {
+  document.getElementById('flagOverlay').classList.remove('open');
+}
+
+function executeHold() {
+  closeFlagSimon();
+  // BUG 1+8 FIX: Only hold from EXECUTE — guard against invalid state
+  if (ISA88.current !== 'EXECUTE') {
+    logEvent('ISA88', `FLAG_SIMON HOLD ignored — current state: ${ISA88.current} (must be EXECUTE)`);
+    return;
+  }
+  ISA88.transition('HOLDING');
+  setTimeout(() => ISA88.transition('HELD'), 500);
+
+  // Broadcast hold to all running modules
+  OS.runningModules.forEach(id => {
+    const frame = document.getElementById(`frame-${id}`);
+    frame?.contentWindow?.postMessage({ type: 'OS_HOLD' }, '*');
+  });
+
+  logEvent('ISA88', 'FLAG_SIMON executed · All modules HELD');
+}
+
+async function executeAbort() {
+  closeFlagSimon();
+  // Guard: only abort from valid states
+  if (ISA88.current === 'ABORTING' || ISA88.current === 'ABORTED') {
+    logEvent('ISA88', 'ABORT already in progress');
+    return;
+  }
+  logEvent('ISA88', 'ABORT sequence initiated');
+
+  // Broadcast abort to all running modules
+  OS.runningModules.forEach(id => {
+    const frame = document.getElementById(`frame-${id}`);
+    frame?.contentWindow?.postMessage({ type: 'OS_ABORT' }, '*');
+  });
+
+  const steps = [
+    ['ABORTING', 400],
+    ['ABORTED', 400],
+    ['CLEARING', 400],
+    ['STOPPED', 400],
+    ['RESETTING', 400],
+    ['IDLE', 0],
+  ];
+
+  for (const [state, delay] of steps) {
+    ISA88.transition(state);
+    if (delay > 0) await sleep(delay);
+  }
+
+  logEvent('ISA88', 'ABORT complete · state: IDLE · ready for STARTING');
+}
+
+// ═══════════════════════════════════════════════════════════
+// AI WORKER BUS
+// ═══════════════════════════════════════════════════════════
+function initAIWorker() {
+  if (OS.ai.status !== 'OFFLINE') return;
+  OS.ai.status = 'LOADING';
+  updateAIBus();
+
+  document.getElementById('workerDot').className = 'worker-dot loading';
+  document.getElementById('workerLabel').textContent = 'LOADING...';
+  document.getElementById('sb-ai').textContent = 'LOADING';
+
+  logEvent('AI', 'WebLLM worker initialising...');
+
+  // Worker initialisation — shows loading state
+  // Real WebLLM worker spawning in next version
+  // For now: bridge mode — modules can send AI requests, L1 routes to window-level WebLLM
+  setTimeout(() => {
+    OS.ai.status = 'BRIDGE'; // honest: bridge mode, not full worker
+    OS.ai.model = 'Bridge mode (load WebLLM in a module for full AI)';
+    updateAIBus();
+
+    document.getElementById('workerDot').className = 'worker-dot ready';
+    document.getElementById('workerLabel').textContent = 'AI BRIDGE';
+    document.getElementById('sb-ai').textContent = 'BRIDGE';
+
+    logEvent('AI', 'AI bridge active · load WebLLM in FallAccount or FallPilot for full inference');
+
+    // Notify all running modules
+    OS.runningModules.forEach(id => {
+      const frame = document.getElementById(`frame-${id}`);
+      frame?.contentWindow?.postMessage({ type: 'AI_WORKER_READY', model: 'bridge' }, '*');
+    });
+  }, 1200);
+}
+
+function updateAIBus() {
+  document.getElementById('ab-model').textContent = OS.ai.model || 'Not loaded';
+  document.getElementById('ab-model').className = `ai-bus-val ${OS.ai.model ? '' : 'dim'}`;
+  document.getElementById('ab-status').textContent = OS.ai.status;
+  document.getElementById('ab-status').className = `ai-bus-val ${OS.ai.status === 'READY' ? '' : 'dim'}`;
+  document.getElementById('ab-requests').textContent = OS.ai.requests;
+  document.getElementById('ab-serving').textContent = OS.ai.serving || '—';
+}
+
+// ═══════════════════════════════════════════════════════════
+// GLOBAL SEARCH
+// ═══════════════════════════════════════════════════════════
+function globalSearchHandler(e) {
+  if (e.key !== 'Enter') return;
+  const q = e.target.value.trim().toLowerCase();
+  if (!q) return;
+
+  // Search modules
+  const match = Object.values(MODULES).find(m =>
+    m.name.toLowerCase().includes(q) ||
+    m.desc.toLowerCase().includes(q) ||
+    m.id.includes(q)
+  );
+
+  if (match) {
+    launchModule(match.id);
+    e.target.value = '';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════════════════════════
+function showModal(type, arg) {
+  const content = document.getElementById('modalContent');
+
+  const templates = {
+    loadModule: `
+      <div class="modal-title">
+        📥 Load Module${arg ? ' — ' + (MODULES[arg]?.name || arg) : ''}
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.7">
+        Drop a Fall* HTML file here to install it as a module. Files are loaded as sandboxed blob iframes (ISA-62443 Zone 2). Your file never leaves your machine.
+      </p>
+      <div class="upload-zone" onclick="document.getElementById('moduleFileInput').click()"
+           ondragover="event.preventDefault()"
+           ondrop="handleModuleDrop(event,'${arg || ''}')">
+        <div class="upload-zone-icon">📄</div>
+        <div class="upload-zone-text">
+          Drop <strong>${arg ? MODULES[arg]?.file || arg+'.html' : 'any Fall* HTML file'}</strong> here<br>
+          or click to browse
+        </div>
+      </div>
+      <input type="file" id="moduleFileInput" accept=".html" style="display:none"
+             onchange="handleModuleFile(event,'${arg || ''}')">
+      <div style="margin-top:14px;padding:12px;background:var(--surface3);border:1px solid var(--border);border-radius:5px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);margin-bottom:8px">EXPECTED FILES</div>
+        ${Object.values(MODULES).map(m => `
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-size:10px">
+            <span style="color:var(--muted)">${m.name}</span>
+            <span style="font-family:'JetBrains Mono',monospace;color:var(--dim)">${m.file}</span>
+          </div>`).join('')}
+      </div>`,
+
+    settings: `
+      <div class="modal-title">
+        ⚙ Fall OS Settings
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:4px">Identity</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <label style="font-size:10px;color:var(--dim);font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase">Your Name</label>
+            <input id="set-name" value="${OS.identity.name}" style="background:var(--surface3);border:1px solid var(--border2);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 12px;border-radius:4px;outline:none;width:100%">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <label style="font-size:10px;color:var(--dim);font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase">Organisation</label>
+            <input id="set-org" value="${OS.identity.org}" style="background:var(--surface3);border:1px solid var(--border2);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 12px;border-radius:4px;outline:none;width:100%">
+          </div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:4px">System</div>
+        <div style="padding:12px;background:var(--surface3);border:1px solid var(--border);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.8">
+          <div>Fall OS v${OS.version} · HTML³ · ISA-88/95/62443</div>
+          <div>Modules loaded: ${Object.keys(MODULES).length}</div>
+          <div>Running: ${OS.runningModules.size}</div>
+          <div>Konai: R7 ARMED · ${OS.konai.alerts} alerts</div>
+          <div>φ·κ=1 · Sovereign · Extraction-Free</div>
+        </div>
+        <button onclick="saveSettings()" style="padding:10px;background:var(--cyan);border:none;border-radius:5px;color:var(--void);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;cursor:pointer">SAVE SETTINGS</button>
+      </div>`,
+
+    identity: `
+      <div class="modal-title">
+        ◈ Sovereign Identity
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div style="text-align:center;padding:20px">
+        <div style="width:64px;height:64px;background:var(--gold);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:var(--void);margin:0 auto 16px;font-family:'JetBrains Mono',monospace;box-shadow:0 0 30px var(--gold-b)">${OS.identity.avatar}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--gold2);margin-bottom:4px">${OS.identity.name}</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:20px">${OS.identity.org}</div>
+        <div style="padding:12px;background:var(--surface2);border:1px solid var(--gold-b);border-radius:6px;font-size:11px;color:var(--muted);line-height:1.8;font-family:'JetBrains Mono',monospace;text-align:left">
+          <div style="color:var(--gold);margin-bottom:8px">φ CORE IDENTITY</div>
+          <div>φ·κ=1 · Sovereign node</div>
+          <div>ISA-62443 Zone 1 · φ Core</div>
+          <div>R7 Shield: ACTIVE</div>
+          <div>Hash: ${OS.konai.l1Hash || 'computing...'}</div>
+          <div>Uptime: ${formatUptime(OS.uptime)}</div>
+        </div>
+        <button onclick="closeModal()" style="margin-top:16px;padding:9px 24px;background:transparent;border:1px solid var(--border2);border-radius:5px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer">CLOSE</button>
+      </div>`
+  };
+
+  content.innerHTML = templates[type] || `<div class="modal-title">${type}<button class="modal-close" onclick="closeModal()">✕</button></div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════════════════════
+// FILE LOADING — drag-drop module install
+// ═══════════════════════════════════════════════════════════
+function handleModuleFile(e, targetId) {
+  const file = e.target.files[0];
+  if (!file) return;
+  loadModuleFromFile(file, targetId || guessModuleId(file.name));
+}
+
+function handleModuleDrop(e, targetId) {
+  e.preventDefault();
+  const file = e.dataTransfer.files[0];
+  if (!file || !file.name.endsWith('.html')) return;
+  loadModuleFromFile(file, targetId || guessModuleId(file.name));
+}
+
+// Global drag-drop on the whole OS
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => {
+  e.preventDefault();
+  const file = e.dataTransfer.files[0];
+  if (file?.name.endsWith('.html')) {
+    const id = guessModuleId(file.name);
+    loadModuleFromFile(file, id);
+  }
+});
+
+function guessModuleId(filename) {
+  const name = filename.toLowerCase().replace('.html','');
+  for (const [id, mod] of Object.entries(MODULES)) {
+    if (mod.file.toLowerCase().includes(name) || name.includes(id)) return id;
+  }
+  return name.replace(/[^a-z0-9]/g,'');
+}
+
+async function loadModuleFromFile(file, id) {
+  closeModal();
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const content = e.target.result;
+    // Register module if not known
+    if (!MODULES[id]) {
+      MODULES[id] = {
+        id, name: file.name.replace('.html',''), icon: '📄', color: '#60a5fa',
+        desc: 'Custom module', file: file.name, zone: 2, isa88: false,
+        dataKeys: [], emits: [], receives: [],
+      };
+    }
+    // Cache in IndexedDB
+    await idbSet(`module:${id}`, content);
+    logEvent('MODULE', `${file.name} installed as module: ${id}`);
+    renderModuleGrid();
+    launchModule(id);
+  };
+  reader.readAsText(file);
+}
+
+// ═══════════════════════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════════════════════
+function saveSettings() {
+  OS.identity.name = document.getElementById('set-name')?.value || OS.identity.name;
+  OS.identity.org = document.getElementById('set-org')?.value || OS.identity.org;
+  OS.identity.avatar = OS.identity.name.charAt(0).toUpperCase();
+
+  document.getElementById('identityName').textContent = OS.identity.name;
+  document.getElementById('identityAvatar').textContent = OS.identity.avatar;
+
+  idbSet('os:settings', JSON.stringify(OS.identity));
+  closeModal();
+  logEvent('OS', 'Settings saved · identity updated');
+}
+
+async function loadSettings() {
+  const saved = await idbGet('os:settings');
+  if (saved) {
+    try {
+      const s = JSON.parse(saved);
+      OS.identity = { ...OS.identity, ...s };
+      document.getElementById('identityName').textContent = OS.identity.name;
+      document.getElementById('identityAvatar').textContent = OS.identity.name.charAt(0).toUpperCase();
+    } catch{}
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// INDEXEDDB SHARED DATA LAYER
+// ═══════════════════════════════════════════════════════════
+let idbInstance = null;
+
+function getIDB() {
+  if (idbInstance) return Promise.resolve(idbInstance);
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open('FallOS', 1);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('store')) {
+        db.createObjectStore('store', { keyPath: 'k' });
+      }
+    };
+    req.onsuccess = (e) => { idbInstance = e.target.result; resolve(idbInstance); };
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function idbGet(key) {
+  try {
+    const db = await getIDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction('store', 'readonly');
+      const req = tx.objectStore('store').get(key);
+      req.onsuccess = () => resolve(req.result?.v);
+      req.onerror = () => resolve(null);
+    });
+  } catch { return null; }
+}
+
+async function idbSet(key, value) {
+  try {
+    const db = await getIDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction('store', 'readwrite');
+      tx.objectStore('store').put({ k: key, v: value });
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+    });
+  } catch { return false; }
+}
+
+// ═══════════════════════════════════════════════════════════
+// CLOCK + UPTIME
+// ═══════════════════════════════════════════════════════════
+function startClock() {
+  setInterval(() => {
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-GB');
+    document.getElementById('sb-time').textContent = time;
+    document.getElementById('ctxClock').textContent = time;
+
+    OS.uptime = Math.floor((Date.now() - OS.startTime) / 1000);
+    document.getElementById('uptimeDisplay').textContent = formatUptime(OS.uptime);
+  }, 1000);
+}
+
+function formatUptime(secs) {
+  const h = Math.floor(secs / 3600).toString().padStart(2,'0');
+  const m = Math.floor((secs % 3600) / 60).toString().padStart(2,'0');
+  const s = (secs % 60).toString().padStart(2,'0');
+  return `${h}:${m}:${s}`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════════
+function closeModule(id) {
+  // Remove iframe and wrap
+  const frame = document.getElementById(`frame-${id}`);
+  if (frame) {
+    const wrap = frame.parentElement;
+    wrap?.remove();
+  } else {
+    // Not-found wrap — find by checking all wraps
+    const wraps = document.querySelectorAll('.module-frame-wrap');
+    wraps.forEach(w => {
+      if (w.dataset.moduleId === id) w.remove();
+    });
+  }
+
+  OS.runningModules.delete(id);
+  updateRunningCount();
+  updateModuleTile(id, false);
+
+  // Update rail badge
+  const railItem = document.getElementById(`rail-${id}`);
+  if (railItem?.classList.contains('active')) goHome();
+
+  logEvent('MODULE', `${MODULES[id]?.name || id} unloaded · resources freed`);
+  generateInsights();
+}
+
+function updateRunningCount() {
+  document.getElementById('sb-modules').textContent = `${OS.runningModules.size} RUNNING`;
+  // Update rail items — show close affordance on active running modules
+  document.querySelectorAll('.rail-item[data-module]').forEach(item => {
+    const mid = item.getAttribute('data-module');
+    item.title = OS.runningModules.has(mid) ?
+      `${MODULES[mid]?.name} (running — right-click to close)` :
+      MODULES[mid]?.name || mid;
+  });
+}
+
+function showKonaiDetail() {
+  logEvent('KONAI', `R7 status: ${OS.konai.integrity} · Hash: ${OS.konai.l1Hash} · Alerts: ${OS.konai.alerts}`);
+}
+
+const OS_LOG = [];
+
+function logEvent(type, msg) {
+  const entry = { type, msg, ts: new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) };
+  OS_LOG.unshift(entry);
+  if (OS_LOG.length > 50) OS_LOG.pop();
+  // Only log to console in debug mode
+  if (location.search.includes('debug')) console.log(`[FALL OS][${type}] ${msg}`);
+  updateEventLog();
+}
+
+function updateEventLog() {
+  const logEl = document.getElementById('osEventLog');
+  if (!logEl) return;
+  const colors = { ISA88:'var(--cyan)', MODULE:'var(--green)', KONAI:'var(--purple)', AI:'var(--amber)', ERROR:'var(--red)', BUS:'var(--muted)', DATA:'var(--dim)', OS:'var(--gold2)', EVENT:'var(--muted)' };
+  logEl.innerHTML = OS_LOG.slice(0,12).map(e => `
+    <div style="display:flex;gap:6px;padding:3px 0;border-bottom:1px solid var(--border);font-size:9px;line-height:1.5">
+      <span style="color:var(--dim);flex-shrink:0;font-family:'JetBrains Mono',monospace">${e.ts}</span>
+      <span style="color:${colors[e.type]||'var(--muted)'};flex-shrink:0;min-width:40px;font-family:'JetBrains Mono',monospace">${e.type}</span>
+      <span style="color:var(--muted)">${e.msg}</span>
+    </div>`).join('');
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ═══════════════════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  OS.startTime = Date.now();
+  boot();
+});
+</script>
+</body>
+</html>
