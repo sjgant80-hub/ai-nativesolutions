@@ -1947,6 +1947,14 @@ section { padding: 120px 24px; position: relative; }
         </div>
         <span class="ai-progress-label" id="aiProgressLabel">0%</span>
       </div>
+      <!-- Inline concierge chat -->
+      <div id="heroChatBox" style="margin-top:14px;">
+        <div id="heroChatMessages" style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="heroChatInput" placeholder="Ask me anything about our tools..." style="flex:1;padding:12px 14px;background:var(--void);border:1px solid var(--border-light);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:14px;" onkeydown="if(event.key==='Enter'){event.preventDefault();sendHeroChat();}">
+          <button onclick="sendHeroChat()" style="padding:10px 18px;background:var(--accent);border:none;border-radius:8px;color:white;font-size:16px;cursor:pointer;transition:background 0.2s;">→</button>
+        </div>
+      </div>
     </div>
 
     <div class="hero-stats reveal reveal-delay-4">
@@ -4753,6 +4761,39 @@ function toggleKeyRow() {
 function toggleAiPanel() {
   panelOpen = !panelOpen;
   aiPanel.classList.toggle('open', panelOpen);
+}
+
+// ── HERO INLINE CHAT ──
+const heroChatHistory = [];
+async function sendHeroChat() {
+  const input = document.getElementById('heroChatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+
+  const container = document.getElementById('heroChatMessages');
+  container.innerHTML += `<div style="align-self:flex-end;background:var(--accent);color:white;padding:8px 14px;border-radius:12px 12px 2px 12px;max-width:85%;font-size:13px;line-height:1.5;">${escapeHtml(msg)}</div>`;
+  container.scrollTop = container.scrollHeight;
+
+  // Typing indicator
+  const typingId = 'hero-typing-' + Date.now();
+  container.innerHTML += `<div id="${typingId}" style="align-self:flex-start;color:var(--text-dim);font-size:12px;font-family:var(--font-mono);padding:6px 0;">thinking...</div>`;
+  container.scrollTop = container.scrollHeight;
+
+  // Psychology layer
+  const psychResult = PsychologyLayer.analyse(msg);
+  const psychContext = PsychologyLayer.getContext();
+
+  // Generate
+  heroChatHistory.push({ role: 'user', content: msg });
+  const reply = await Concierge.generate(msg, heroChatHistory, psychContext);
+  heroChatHistory.push({ role: 'assistant', content: reply });
+
+  // Remove typing, show reply
+  const typingEl = document.getElementById(typingId);
+  if (typingEl) typingEl.remove();
+  container.innerHTML += `<div style="align-self:flex-start;background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:12px 12px 12px 2px;max-width:85%;font-size:13px;line-height:1.6;">${escapeHtml(reply)}</div>`;
+  container.scrollTop = container.scrollHeight;
 }
 
 async function sendAiMessage() {
