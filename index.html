@@ -1824,6 +1824,7 @@ section { padding: 120px 24px; position: relative; }
     <a href="#products">Products</a>
     <a href="#pricing">Pricing</a>
     <a href="#about">About</a>
+    <a href="javascript:void(0)" onclick="openSystemOverlay('https://sjgant80-hub.github.io/fallgo/','FallGo -- Full System Board')" style="color:var(--green);">View System</a>
     <a href="#blueprint" class="nav-cta">GET BLUEPRINT</a>
   </div>
   <button class="nav-burger" id="burger" aria-label="Menu">
@@ -1837,6 +1838,7 @@ section { padding: 120px 24px; position: relative; }
   <a href="#pricing" onclick="closeMobile()">Pricing</a>
   <a href="#demos" onclick="closeMobile()">Demos</a>
   <a href="#about" onclick="closeMobile()">About</a>
+  <a href="javascript:void(0)" onclick="closeMobile();openSystemOverlay('https://sjgant80-hub.github.io/fallgo/','FallGo -- Full System Board')" style="color:var(--green);">View System</a>
   <a href="#blueprint" onclick="closeMobile()">Get Blueprint</a>
 </div>
 
@@ -2702,7 +2704,56 @@ section { padding: 120px 24px; position: relative; }
   </div>
 </section>
 
-<!-- ═══ §10 FOOTER ═══ -->
+<!-- ═══ §11 SEE THE SYSTEM ═══ -->
+<section id="system" style="border-top: 1px solid var(--border); text-align: center;">
+  <div class="container">
+    <p class="section-label reveal">Behind the curtain</p>
+    <h2 class="section-title reveal reveal-delay-1" style="margin-left:auto;margin-right:auto;">This isn't a landing page.<br>It's the front door.</h2>
+    <p class="section-subtitle reveal reveal-delay-2" style="margin-left:auto;margin-right:auto;text-align:center;">
+      43 repositories. 30 mesh nodes. 14 shipped products. 5 production APIs.
+      All connected through a sovereign mesh protocol. All visible. All open.
+    </p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:40px;" class="reveal reveal-delay-3">
+      <button onclick="openSystemOverlay('https://sjgant80-hub.github.io/fallgo/', 'FallGo -- 3D System Board')" style="padding:16px 36px;background:var(--accent);border:none;border-radius:12px;color:var(--void);font-family:var(--font-head);font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:-0.01em;">Open FallGo Board</button>
+      <button onclick="openSystemOverlay('https://sjgant80-hub.github.io/fallmesh/', 'FallMesh -- Sovereign Topology')" style="padding:16px 36px;background:transparent;border:1px solid var(--accent);border-radius:12px;color:var(--accent);font-family:var(--font-head);font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:-0.01em;">Open FallMesh</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:48px;max-width:800px;margin-left:auto;margin-right:auto;" class="reveal reveal-delay-4">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:#c8371a;">9</div>
+        <div style="font-size:11px;color:var(--text-dim);font-family:var(--font-mono);margin-top:4px;">PRODUCTIVITY</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:#00AAFF;">10</div>
+        <div style="font-size:11px;color:var(--text-dim);font-family:var(--font-mono);margin-top:4px;">INTELLIGENCE</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:#00CEC9;">7</div>
+        <div style="font-size:11px;color:var(--text-dim);font-family:var(--font-mono);margin-top:4px;">PIPELINE APIs</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:#FFAA00;">7</div>
+        <div style="font-size:11px;color:var(--text-dim);font-family:var(--font-mono);margin-top:4px;">INFRASTRUCTURE</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:#44AA44;">8</div>
+        <div style="font-size:11px;color:var(--text-dim);font-family:var(--font-mono);margin-top:4px;">RESEARCH</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SYSTEM OVERLAY ═══ -->
+<div class="tool-overlay" id="systemOverlay">
+  <div class="tool-overlay-bar">
+    <span class="tool-overlay-name" id="systemOverlayName">FallGo</span>
+    <span style="flex:1;"></span>
+    <a id="systemOverlayExternal" href="#" target="_blank" rel="noopener" style="font-family:var(--font-mono);font-size:12px;color:var(--text-dim);padding:6px 14px;border:1px solid var(--border);border-radius:6px;margin-right:8px;transition:all 0.2s;">Open in new tab</a>
+    <button class="tool-overlay-close" onclick="closeSystemOverlay()">✕ Close</button>
+  </div>
+  <iframe id="systemOverlayFrame" src="" style="flex:1;width:100%;border:none;background:var(--void);"></iframe>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="footer-content">
     <p class="footer-text">
@@ -2713,7 +2764,7 @@ section { padding: 120px 24px; position: relative; }
     </p>
     <div class="footer-links">
       <a href="https://github.com/sjgant80-hub">GitHub</a>
-      <a href="https://sjgant80-hub.github.io/fallgo/">FallGo</a>
+      <a href="javascript:void(0)" onclick="openSystemOverlay('https://sjgant80-hub.github.io/fallgo/','FallGo')">FallGo</a>
       <a href="mailto:simon@ai-nativesolutions.com">Contact</a>
       <a href="https://linkedin.com/in/simon-gant">LinkedIn</a>
     </div>
@@ -3365,6 +3416,33 @@ function closeMobile() {
   const spans = burger.querySelectorAll('span');
   spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
 }
+
+// ─── SYSTEM OVERLAY ───
+function openSystemOverlay(url, name) {
+  const overlay = document.getElementById('systemOverlay');
+  const frame = document.getElementById('systemOverlayFrame');
+  const nameEl = document.getElementById('systemOverlayName');
+  const extLink = document.getElementById('systemOverlayExternal');
+  nameEl.textContent = name || 'System';
+  extLink.href = url;
+  frame.src = url;
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => overlay.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+}
+function closeSystemOverlay() {
+  const overlay = document.getElementById('systemOverlay');
+  const frame = document.getElementById('systemOverlayFrame');
+  overlay.classList.remove('open');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    frame.src = '';
+    document.body.style.overflow = '';
+  }, 300);
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeSystemOverlay();
+});
 
 // ─── SCROLL REVEAL ───
 const observer = new IntersectionObserver((entries) => {
