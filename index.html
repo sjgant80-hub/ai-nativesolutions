@@ -3584,23 +3584,25 @@ taxType.addEventListener('change', calcTax);
 const savingsInput = document.getElementById('savingsInput');
 const savingsResult = document.getElementById('savingsResult');
 
-savingsInput.addEventListener('input', () => {
-  const monthly = parseFloat(savingsInput.value);
-  if (!monthly || monthly <= 0) {
-    savingsResult.style.display = 'none';
-    return;
-  }
-  savingsResult.style.display = 'grid';
-  const annual = monthly * 12;
-  const fiveYear = annual * 5;
-  const sovCost = Math.round(monthly * 2.5); // rough sovereign equivalent
-  const saved = fiveYear - sovCost;
+if (savingsInput && savingsResult) {
+  savingsInput.addEventListener('input', () => {
+    const monthly = parseFloat(savingsInput.value);
+    if (!monthly || monthly <= 0) {
+      savingsResult.style.display = 'none';
+      return;
+    }
+    savingsResult.style.display = 'grid';
+    const annual = monthly * 12;
+    const fiveYear = annual * 5;
+    const sovCost = Math.round(monthly * 2.5);
+    const saved = fiveYear - sovCost;
 
-  document.getElementById('saas1yr').textContent = '£' + Math.round(annual).toLocaleString();
-  document.getElementById('saas5yr').textContent = '£' + Math.round(fiveYear).toLocaleString();
-  document.getElementById('sovCost').textContent = '£' + Math.round(sovCost).toLocaleString();
-  document.getElementById('saved5yr').textContent = '£' + Math.round(saved).toLocaleString();
-});
+    document.getElementById('saas1yr').textContent = '£' + Math.round(annual).toLocaleString();
+    document.getElementById('saas5yr').textContent = '£' + Math.round(fiveYear).toLocaleString();
+    document.getElementById('sovCost').textContent = '£' + Math.round(sovCost).toLocaleString();
+    document.getElementById('saved5yr').textContent = '£' + Math.round(saved).toLocaleString();
+  });
+}
 
 // ─── AI CONCIERGE — Phase 3 ───
 // ─── PSYCHOLOGY LAYER — Phase 4 (INVISIBLE) ───
