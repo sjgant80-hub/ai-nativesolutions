@@ -4535,16 +4535,10 @@ vs in-house: "18 months from zero. Or have the architecture now."
     const badge = document.getElementById('aiPanelBadge');
     const welcome = document.getElementById('aiWelcomeMsg');
 
-    // ── DEFAULT TO API — always start here ──
+    // ── DEFAULT TO API — proxy or direct key ──
     mode = 'api';
-    const hasKey = typeof getAiKey === 'function' && getAiKey();
-    if (hasKey) {
-      updateStatus('AI concierge ready — powered by Claude', 'api');
-      if (badge) { badge.textContent = 'READY'; badge.style.background = 'var(--green-glow)'; badge.style.color = 'var(--green)'; }
-    } else {
-      updateStatus('Add API key to enable full concierge', 'offline');
-      if (badge) { badge.textContent = 'KEY NEEDED'; badge.style.background = 'var(--gold-glow)'; badge.style.color = 'var(--gold)'; }
-    }
+    updateStatus('AI concierge ready — powered by Claude', 'api');
+    if (badge) { badge.textContent = 'READY'; badge.style.background = 'var(--green-glow)'; badge.style.color = 'var(--green)'; }
     if (welcome) welcome.textContent = "Hey — I'm the AI concierge for AI Native Solutions. I know every product, every API, every line of architecture across 43 repos. Tell me about your business and I'll show you exactly where sovereign AI fits. Or just ask me anything about what we build.";
 
     // ── CHECK IF LOCAL MODE IS POSSIBLE ──
@@ -4648,20 +4642,22 @@ vs in-house: "18 months from zero. Or have the architecture now."
     }
 
     if (mode === 'api') {
+      // Proxy URL — Cloudflare Worker holds the API key server-side
+      const PROXY_URL = 'https://ai-native-proxy.sjgant80.workers.dev';
       const apiKey = typeof getAiKey === 'function' ? getAiKey() : '';
-      if (!apiKey) {
-        updateStatus('API key required — click API button', 'offline');
-        return 'I need a Claude API key to have a full conversation. Click the API button at the top of this panel and paste your key (sk-ant-...). Your key stays in your browser — sovereign, like everything else here.';
-      }
+      const useProxy = !apiKey;
+
       try {
-        const response = await fetch('https://api.anthropic.com/v1/messages', {
+        const endpoint = useProxy ? PROXY_URL : 'https://api.anthropic.com/v1/messages';
+        const headers = { 'Content-Type': 'application/json' };
+        if (!useProxy) {
+          headers['x-api-key'] = apiKey;
+          headers['anthropic-version'] = '2023-06-01';
+          headers['anthropic-dangerous-direct-browser-access'] = 'true';
+        }
+        const response = await fetch(endpoint, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': apiKey,
-            'anthropic-version': '2023-06-01',
-            'anthropic-dangerous-direct-browser-access': 'true'
-          },
+          headers,
           body: JSON.stringify({
             model: 'claude-sonnet-4-20250514',
             max_tokens: 1024,
