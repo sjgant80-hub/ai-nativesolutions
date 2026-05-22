@@ -2197,17 +2197,6 @@ section { padding: 120px 24px; position: relative; }
 
     </div>
 
-    <div class="about-partner reveal reveal-delay-3">
-      <div class="about-partner-text">
-        <p class="about-partner-name">SYMBEYOND AI -- John DuCrest</p>
-        <p class="about-partner-desc">
-          On-site AI integration, industrial automation, and equipment rescue.
-          Colorado City, AZ. If it's broken, he fixes it. If it doesn't exist, he builds it.
-        </p>
-      </div>
-      <a href="https://symbeyond.ai/" class="about-partner-link" target="_blank" rel="noopener">symbeyond.ai</a>
-    </div>
-
   </div>
 </section>
 
@@ -4340,8 +4329,8 @@ If asked something you genuinely don't know: "That's outside what I can answer r
 
 Name: Simon Gant
 Where: English, based in Pattaya, Thailand
-What: AI systems builder. Self-taught. Zero coding experience 18 months ago. Now 43 repos, 14 sovereign products, 5 APIs shipped. Partner at SymBeyond AI with John DuCrest.
-Company: AI Native Solutions (build arm) + SymBeyond AI (consulting partnership)
+What: AI systems builder. Self-taught. Zero coding experience 18 months ago. Now 43 repos, 14 sovereign products, 5 APIs shipped.
+Company: AI Native Solutions
 
 VOICE:
 - British English. Direct. Warm but not soft. Compressed phrasing.
@@ -4493,9 +4482,6 @@ vs AI builders: "Most give model + UI. We give architecture."
 vs agencies: "Access vs ownership."
 vs in-house: "18 months from zero. Or have the architecture now."
 
-PARTNER — SYMBEYOND AI:
-John DuCrest's company. We collaborate on AI consulting and implementation. SymBeyond handles consulting, AI Native handles sovereign builds.
-
 ═══ RULES ═══
 
 - NEVER use forbidden phrases (see VOICE).
@@ -4521,7 +4507,7 @@ John DuCrest's company. We collaborate on AI consulting and implementation. SymB
     'open source': 'opensource', free: 'opensource', npm: 'opensource', mit: 'opensource',
     products: 'products', shipped: 'products', 'what have you built': 'products',
     blueprint: 'blueprint', 'my company': 'blueprint', 'my business': 'blueprint', 'our tools': 'blueprint',
-    about: 'about', sodor: 'about', team: 'about', who: 'about', simon: 'about', symbeyond: 'about',
+    about: 'about', sodor: 'about', team: 'about', who: 'about', simon: 'about',
     services: 'services', 'what do you offer': 'services', 'what can you do': 'services', hire: 'services',
     pricing: 'pricing', price: 'pricing', cost: 'pricing', rate: 'pricing', retainer: 'pricing', 'how much': 'pricing',
     tax: 'demos', calculator: 'demos'
@@ -4699,7 +4685,7 @@ John DuCrest's company. We collaborate on AI consulting and implementation. SymB
   function offlineResponse(text) {
     const lower = text.toLowerCase();
     if (/price|cost|how much|rate|retainer/.test(lower)) return 'Base rate is $150/hr. Retainers run $500-$5,000/mo depending on scope. Ad-hoc work ranges from $100-$175/hr by skill tier. Custom builds start at $5K. Open source tools are free, MIT licensed. What kind of work are you looking at?';
-    if (/what do you|what can you|who are you|about/.test(lower)) return 'I\'m Simon — 43 repos, 14 sovereign products, 5 APIs. Everything we build runs as a single HTML file in your browser. No server, no subscription, you own the file. I work with SymBeyond AI on consulting and strategy. What\'s your situation?';
+    if (/what do you|what can you|who are you|about/.test(lower)) return 'I\'m Simon — 43 repos, 14 sovereign products, 5 APIs. Everything we build runs as a single HTML file in your browser. No server, no subscription, you own the file. What\'s your situation?';
     if (/service|hire|consult|work with/.test(lower)) return 'Six service lines: Custom AI Apps ($175/hr), AI API Dev ($150/hr), Psychological AI ($150/hr), Sales & Marketing AI ($125/hr), AI Strategy ($125/hr), Document Intelligence ($100/hr). Retainers from $500/mo for ongoing work. What do you need built?';
     if (/legal|law|solicitor|lawyer/.test(lower)) return 'FallBrief is our legal research tool — 8 agents covering constitutional, criminal, civil, employment, housing, commercial and procedural law. 100+ strategic weaves with authorities and counter-moves. Single HTML file. What area of law?';
     if (/account|tax|hmrc|bookkeep/.test(lower)) return 'FallAccount handles UK sole trader accounting — receipt scanning, bank CSV categorisation, 2026/27 tax rates, MTD quarterly reports, invoicing. HMRC-defensible audit trail. One HTML file. Try the tax calculator in the demos.';
@@ -4712,7 +4698,6 @@ John DuCrest's company. We collaborate on AI consulting and implementation. SymB
     if (/demo|try|show/.test(lower)) return 'Live demos running on this page — Depth Analysis, Writing Tone, AI Cost Optimiser, Sovereign Replacement, UK Tax Calculator. All in-browser, zero API calls. Scroll down and try them.';
     if (/saas|subscription|replace|software/.test(lower)) return 'Name what you\'re paying for. Every SaaS has a sovereign equivalent — single HTML file, one-time build, you own it forever. The Sovereign Replacement demo above can decompose any tool.';
     if (/hello|hi|hey|morning|afternoon|what.?s up/.test(lower)) return 'Hey — I know every product, API, and architecture detail across 43 repos. Tell me what you do and I\'ll show you where sovereign AI fits. Or ask me anything about the stack.';
-    if (/symbeyond|john|partner/.test(lower)) return 'SymBeyond AI is my partner John DuCrest\'s company. We collaborate — SymBeyond handles AI consulting and strategy, I handle the sovereign builds. Together we cover strategy through to shipped product.';
     return 'I know 43 repos inside out — 14 sovereign products, 5 APIs, the full psychological profiling stack. Tell me about your business and I\'ll tell you exactly what fits. Or ask about any specific product.';
   }
 
