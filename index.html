@@ -5208,34 +5208,55 @@ textareas.forEach((ta, i) => {
 </script>
 <!-- /◊·κ KONOMI LICENCE -->
 
-<!-- ◊·κ KCC LEDGER — Konomi Cube Coin (drop-in, no deps) -->
+<!-- ◊·κ KCC LEDGER — Konomi Cube Coin + OnlyBrains bridge (drop-in, no deps) -->
 <!--
-  Ω(KCC) v18: proof of contribution · not speculation
+  Ω(KCC) v18 · proof of contribution · not speculation
     earn by: compute(R0)·signal(R1)·filter(R2)·care(R3)·build(R4)·verify(R5)·govern(R6)
     spend: you don't · KCC accumulates · revenue finds you
-    ledger: the tools themselves · no separate chain · Ed25519 signed
+    ledger: the tools themselves · no separate chain · local-first + optional OnlyBrains anchor
     bloom IS identity · the shape of your contribution IS your address
-  Interop: BroadcastChannel('fall-kcc') · same-origin sync between Fall* tools.
-  Depends on: window.NODE (mesh shim) for tool identity. Optional: window.konomi for signing.
+
+  OnlyBrains bridge:
+    · Wallet auto-create via GET /api/wallet?key=kcc-<id> (fire-and-forget on first boot)
+    · Mesh interop via 4 BroadcastChannels: fall-kcc · kcc-mesh · onlybrains-mesh · ass-os-mesh
+    · Local ledger remains primary; OnlyBrains is the optional cross-mesh anchor
+
+  Depends on: window.NODE (mesh shim) for tool identity.
 -->
 <script>
 (function kccShim(){
   if (!window.NODE) return;
   var KCC_KEY = 'kcc_ledger_' + (window.NODE.id || 'node') + '_v1';
+  var ONLYBRAINS_API = 'https://onlybrains.onrender.com';
 
-  // ── ring labels (R0..R6) — Schumann harmonics + Ω(KCC) earning verbs
+  // ── ring map · canonical from Konomi seed (anatomy/architecture naming + earning verbs) ──
   var RINGS = [
-    { i:0, label:'compute',  v:'R0', hz:'7.83',  glyph:'●', colour:'#660044', verb:'do' },
-    { i:1, label:'signal',   v:'R1', hz:'15.66', glyph:'〜', colour:'#cc3366', verb:'detect' },
-    { i:2, label:'filter',   v:'R2', hz:'23.49', glyph:'┃', colour:'#cc6600', verb:'gate' },
-    { i:3, label:'care',     v:'R3', hz:'31.32', glyph:'♡', colour:'#cccc00', verb:'tend' },
-    { i:4, label:'build',    v:'R4', hz:'39.15', glyph:'△', colour:'#66cc00', verb:'make' },
-    { i:5, label:'verify',   v:'R5', hz:'46.98', glyph:'◐', colour:'#0066cc', verb:'check' },
-    { i:6, label:'govern',   v:'R6', hz:'54.81', glyph:'◯', colour:'#6600cc', verb:'steward' }
+    { i:0, v:'R0', anat:'ground',  verb:'compute', hz:'7.83',  colour:'#B42838' },
+    { i:1, v:'R1', anat:'signal',  verb:'signal',  hz:'15.66', colour:'#008CC8' },
+    { i:2, v:'R2', anat:'gate',    verb:'filter',  hz:'23.49', colour:'#DCA030' },
+    { i:3, v:'R3', anat:'heart',   verb:'care',    hz:'31.32', colour:'#28B450' },
+    { i:4, v:'R4', anat:'voice',   verb:'build',   hz:'39.15', colour:'#5078DC' },
+    { i:5, v:'R5', anat:'mirror',  verb:'verify',  hz:'46.98', colour:'#8C50C8' },
+    { i:6, v:'R6', anat:'watcher', verb:'govern',  hz:'54.81', colour:'#787878' }
   ];
 
+  // ── shared kcc-key (matches Thomas's kcc-trace.js convention) ──
+  // localStorage is per-origin · one key for all tools on sjgant80-hub.github.io
+  function getKccKey(){
+    try {
+      var k = localStorage.getItem('kcc-key');
+      if (!k) {
+        k = 'kcc-' + Array.from(crypto.getRandomValues(new Uint8Array(4)))
+          .map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+        localStorage.setItem('kcc-key', k);
+      }
+      return k;
+    } catch(_){ return 'kcc-anon'; }
+  }
+  var KEY = getKccKey();
+
   // ── load / persist ────────────────────────────
-  var LEDGER = { events:[], head:null, last_export:null };
+  var LEDGER = { events:[], head:null, last_export:null, ob_balance:null, ob_last_sync:null };
   try {
     var raw = localStorage.getItem(KCC_KEY);
     if (raw) LEDGER = Object.assign(LEDGER, JSON.parse(raw));
@@ -5244,7 +5265,6 @@ textareas.forEach((ta, i) => {
     try { localStorage.setItem(KCC_KEY, JSON.stringify(LEDGER)); } catch(_){}
   }
 
-  // ── canonical JSON + simple hash (FNV-1a 32-bit) for chain-link ──
   function canon(o){
     if (o===null||typeof o!=='object') return JSON.stringify(o);
     if (Array.isArray(o)) return '['+o.map(canon).join(',')+']';
@@ -5257,9 +5277,8 @@ textareas.forEach((ta, i) => {
     return ('00000000'+h.toString(16)).slice(-8);
   }
 
-  // ── core emit · attaches event to ring ────────
   function emit(action, ringId, weight, meta){
-    var ring = typeof ringId === 'number' ? ringId : (RINGS.findIndex(function(r){ return r.label===ringId || r.v===ringId; }));
+    var ring = typeof ringId === 'number' ? ringId : (RINGS.findIndex(function(r){ return r.verb===ringId || r.anat===ringId || r.v===ringId; }));
     if (ring < 0 || ring > 6) ring = 0;
     var ev = {
       v: 1,
@@ -5276,15 +5295,16 @@ textareas.forEach((ta, i) => {
     LEDGER.events.push(ev);
     LEDGER.head = ev.h;
     persist();
-    // Broadcast on the fall-kcc mesh so other tools see contribution
-    if (window.kccChannel) {
-      try { window.kccChannel.postMessage({ type:'kcc:event', from:NODE.id, prime:NODE.prime, ev:ev }); } catch(_){}
+    // Broadcast across all 4 mesh channels (fall-kcc + Thomas's 3)
+    if (window.kccChannels) {
+      window.kccChannels.forEach(function(ch){
+        try { ch.postMessage({ source: NODE.id, type:'kcc:event', from:NODE.id, prime:NODE.prime, ts:Date.now(), ev:ev }); } catch(_){}
+      });
     }
     updateBadge();
     return ev;
   }
 
-  // ── bloom rollup · sums weights per ring ──────
   function bloom(opts){
     opts = opts || {};
     var since = opts.since || 0;
@@ -5297,7 +5317,6 @@ textareas.forEach((ta, i) => {
     return b;
   }
 
-  // ── prime product · bloom-as-identity per Ω(BLOOM.MATH) ──
   function primeProduct(){
     var b = bloom();
     var primes = [2,3,5,7,11,13,17];
@@ -5309,23 +5328,14 @@ textareas.forEach((ta, i) => {
     return prod.toString();
   }
 
-  // ── shape descriptor · [r0..r6] human-readable ──
   function shape(){
     var b = bloom();
     var sum = b.reduce(function(a,x){ return a+x; }, 0);
     var peak = b.indexOf(Math.max.apply(null, b));
-    var gate = b[2];
-    var shapeName;
-    if (sum === 0) shapeName = 'unbloomed';
-    else if (peak === 4) shapeName = 'builder';
-    else if (peak === 1) shapeName = 'signaller';
-    else if (peak === 6) shapeName = 'steward';
-    else if (peak === 3) shapeName = 'tender';
-    else shapeName = RINGS[peak].label;
-    return { vec:b, sum:sum, peak:peak, peakRing:RINGS[peak], gate:gate, shape:shapeName };
+    var name = sum === 0 ? 'unbloomed' : RINGS[peak].verb;
+    return { vec:b, sum:sum, peak:peak, peakRing:RINGS[peak], shape:name };
   }
 
-  // ── export · signed contribution proof ────────
   function exportProof(opts){
     opts = opts || {};
     var payload = {
@@ -5336,11 +5346,11 @@ textareas.forEach((ta, i) => {
       issued: new Date().toISOString(),
       event_count: LEDGER.events.length,
       head: LEDGER.head,
-      first_event: LEDGER.events.length ? LEDGER.events[0].t : null,
-      last_event:  LEDGER.events.length ? LEDGER.events[LEDGER.events.length-1].t : null,
       bloom: bloom(),
       prime_product: primeProduct(),
-      shape: shape()
+      shape: shape(),
+      kcc_key: KEY,
+      onlybrains_balance: LEDGER.ob_balance
     };
     if (opts.includeEvents) payload.events = LEDGER.events;
     LEDGER.last_export = Date.now();
@@ -5348,14 +5358,33 @@ textareas.forEach((ta, i) => {
     return payload;
   }
 
-  // ── floating badge · click to view bloom ──────
+  // ── OnlyBrains wallet sync · fire-and-forget · 4s timeout ──
+  function syncOnlyBrains(){
+    if (!window.fetch || !window.AbortController) return Promise.resolve(null);
+    var ctrl = new AbortController();
+    var t = setTimeout(function(){ ctrl.abort(); }, 4000);
+    return fetch(ONLYBRAINS_API + '/api/wallet?key=' + encodeURIComponent(KEY), { signal: ctrl.signal })
+      .then(function(r){ clearTimeout(t); return r.json(); })
+      .then(function(w){
+        if (w && typeof w.balance !== 'undefined') {
+          LEDGER.ob_balance = { balance: w.balance, mined: w.mined, calls: w.calls };
+          LEDGER.ob_last_sync = Date.now();
+          persist();
+          updateBadge();
+        }
+        return w;
+      })
+      .catch(function(_){ clearTimeout(t); return null; });
+  }
+
+  // ── floating badge · KCC sparkline + $KONO balance ──
   var bloomBadge = null;
   function injectBadge(){
     if (document.getElementById('kcc-badge')) return;
     var el = document.createElement('div');
     el.id = 'kcc-badge';
     el.style.cssText = 'position:fixed;bottom:12px;left:120px;background:rgba(0,0,0,.65);color:#dbe1ea;padding:5px 10px;border-radius:6px;font-family:monospace;font-size:11px;cursor:pointer;z-index:9999;letter-spacing:.06em;border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px);display:flex;align-items:center;gap:6px';
-    el.title = 'Konomi Cube Coin · ledger';
+    el.title = 'Konomi Cube Coin · ledger · OnlyBrains-linked';
     el.onclick = function(){ showLedger(); };
     document.body.appendChild(el);
     bloomBadge = el;
@@ -5369,7 +5398,10 @@ textareas.forEach((ta, i) => {
       var sz = Math.min(11, 2 + Math.round(v/2));
       return '<span style="display:inline-block;width:3px;height:'+sz+'px;background:'+RINGS[i].colour+';margin:0 1px;border-radius:1px;vertical-align:middle"></span>';
     }).join('');
-    bloomBadge.innerHTML = '<span style="opacity:.7">KCC</span> '+sparks+' <span style="opacity:.85">'+sum+'</span>';
+    var ob = (LEDGER.ob_balance && LEDGER.ob_balance.balance !== undefined)
+      ? ' · <span style="color:#d4af37">$KONO ' + LEDGER.ob_balance.balance + '</span>'
+      : '';
+    bloomBadge.innerHTML = '<span style="opacity:.7">KCC</span> '+sparks+' <span style="opacity:.85">'+sum+'</span>'+ob;
   }
 
   function showLedger(){
@@ -5378,17 +5410,21 @@ textareas.forEach((ta, i) => {
     var rows = RINGS.map(function(r, i){
       var v = b[i];
       var pct = sh.sum ? Math.round(v/sh.sum*100) : 0;
-      return '<tr><td style="color:'+r.colour+'">'+r.v+'</td><td>'+r.label+'</td><td>'+r.hz+' Hz</td><td style="text-align:right;font-weight:700">'+v+'</td><td style="color:#8a8a8a">'+pct+'%</td></tr>';
+      return '<tr><td style="color:'+r.colour+';padding:4px 0;font-weight:600">'+r.v+'</td><td>'+r.anat+'</td><td style="color:#8a8a8a">'+r.verb+'</td><td>'+r.hz+' Hz</td><td style="text-align:right;font-weight:700">'+v+'</td><td style="color:#8a8a8a">'+pct+'%</td></tr>';
     }).join('');
     var recent = LEDGER.events.slice(-8).reverse().map(function(ev){
       var d = new Date(ev.t).toLocaleString();
-      return '<div style="font-size:11px;color:#a8b0bc;padding:3px 0">'+d+' · <span style="color:'+RINGS[ev.ring].colour+'">'+RINGS[ev.ring].v+'</span> · '+ev.action+(ev.weight!==1?' ×'+ev.weight:'')+'</div>';
+      return '<div style="font-size:11px;color:#a8b0bc;padding:3px 0">'+d+' · <span style="color:'+RINGS[ev.ring].colour+';font-weight:600">'+RINGS[ev.ring].v+'</span> · '+ev.action+(ev.weight!==1?' ×'+ev.weight:'')+'</div>';
     }).join('') || '<div style="color:#8a8a8a;font-size:12px;padding:6px 0">no events yet</div>';
+    var obSection = LEDGER.ob_balance
+      ? '<div style="background:#0c0e12;border:1px solid #2a2f3a;border-radius:8px;padding:10px;margin:10px 0;display:flex;justify-content:space-between;gap:12px;font-size:12px"><div><div style="color:#d4af37;font-weight:700">$KONO ' + LEDGER.ob_balance.balance + '</div><div style="color:#8a8a8a;font-size:10px">mined: ' + (LEDGER.ob_balance.mined||0) + ' · calls: ' + (LEDGER.ob_balance.calls||0) + '</div></div><div style="color:#8a8a8a;font-size:10px;text-align:right">OnlyBrains wallet<br><code>'+KEY+'</code></div></div>'
+      : '<div style="background:#0c0e12;border:1px solid #2a2f3a;border-radius:8px;padding:10px;margin:10px 0;font-size:11px;color:#8a8a8a;text-align:center">$KONO wallet not synced · <a href="#" onclick="event.preventDefault(); window.kcc.syncOnlyBrains();" style="color:#d4af37">retry</a></div>';
     var modal = document.createElement('div');
     modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,sans-serif';
-    modal.innerHTML='<div style="background:#161821;border:1px solid #2a2f3a;border-radius:12px;padding:24px;max-width:580px;width:100%;color:#dbe1ea;max-height:88vh;overflow:auto"><h3 style="margin:0 0 4px;color:#e6e8ee">◊·κ KCC Ledger</h3><p style="margin:0 0 14px;font-size:12px;color:#8a8a8a">'+window.NODE.name+' · prime '+window.NODE.prime+' · shape: '+sh.shape+' · '+sh.sum+' events</p><table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px"><thead><tr style="border-bottom:1px solid #2a2f3a"><th style="text-align:left;padding:6px 0">ring</th><th style="text-align:left">earn by</th><th style="text-align:left">Hz</th><th style="text-align:right">count</th><th>%</th></tr></thead><tbody>'+rows+'</tbody></table><h4 style="font-size:11px;color:#8a8a8a;letter-spacing:.08em;text-transform:uppercase;margin:14px 0 4px">recent events</h4>'+recent+'<div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><button id="kcc-export" style="background:#5b8def;color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600">export proof</button><button id="kcc-close" style="background:transparent;color:#8a8a8a;border:1px solid #2a2f3a;padding:8px 14px;border-radius:6px;cursor:pointer">close</button><span style="margin-left:auto;align-self:center;font-size:11px;color:#8a8a8a">head: <code>'+(LEDGER.head||'∅')+'</code></span></div></div>';
+    modal.innerHTML='<div style="background:#161821;border:1px solid #2a2f3a;border-radius:12px;padding:24px;max-width:580px;width:100%;color:#dbe1ea;max-height:88vh;overflow:auto"><h3 style="margin:0 0 4px;color:#e6e8ee">◊·κ KCC Ledger</h3><p style="margin:0 0 12px;font-size:12px;color:#8a8a8a">'+window.NODE.name+' · prime '+window.NODE.prime+' · shape: '+sh.shape+' · '+sh.sum+' events</p>'+obSection+'<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px"><thead><tr style="border-bottom:1px solid #2a2f3a"><th style="text-align:left;padding:6px 0">ring</th><th style="text-align:left">anat</th><th style="text-align:left">earn by</th><th style="text-align:left">Hz</th><th style="text-align:right">count</th><th>%</th></tr></thead><tbody>'+rows+'</tbody></table><h4 style="font-size:11px;color:#8a8a8a;letter-spacing:.08em;text-transform:uppercase;margin:14px 0 4px">recent events</h4>'+recent+'<div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><button id="kcc-export" style="background:#5b8def;color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600">export proof</button><button id="kcc-sync" style="background:transparent;color:#d4af37;border:1px solid #d4af37;padding:8px 14px;border-radius:6px;cursor:pointer">sync wallet</button><button id="kcc-close" style="background:transparent;color:#8a8a8a;border:1px solid #2a2f3a;padding:8px 14px;border-radius:6px;cursor:pointer">close</button><span style="margin-left:auto;align-self:center;font-size:11px;color:#8a8a8a">head: <code>'+(LEDGER.head||'∅')+'</code></span></div></div>';
     document.body.appendChild(modal);
     modal.querySelector('#kcc-close').onclick = function(){ modal.remove(); };
+    modal.querySelector('#kcc-sync').onclick = function(){ syncOnlyBrains().then(function(){ modal.remove(); showLedger(); }); };
     modal.querySelector('#kcc-export').onclick = function(){
       var p = exportProof({ includeEvents:true });
       var blob = new Blob([JSON.stringify(p, null, 2)], { type:'application/json' });
@@ -5399,20 +5435,24 @@ textareas.forEach((ta, i) => {
     modal.onclick = function(e){ if (e.target===modal) modal.remove(); };
   }
 
-  // ── BroadcastChannel for cross-tool KCC ───────
-  try {
-    window.kccChannel = new BroadcastChannel('fall-kcc');
-    window.kccChannel.onmessage = function(e){
-      if (!e.data || e.data.from === NODE.id) return;
-      // R1 signal · every cross-tool KCC event we observe earns a tiny signal credit
-      // (low weight to prevent gaming · 0.1 per observed event)
-      // disabled by default to avoid pollution; opt-in via:
-      // window.KCC_LISTEN = true;
-      if (window.KCC_LISTEN && e.data.type === 'kcc:event') {
-        emit('observed:' + e.data.from, 1, 0.1, { ev_h:e.data.ev && e.data.ev.h });
-      }
-    };
-  } catch(_){}
+  // ── 4-channel mesh interop · fall-kcc + Thomas's 3 ──
+  var CHANNEL_NAMES = ['fall-kcc', 'kcc-mesh', 'onlybrains-mesh', 'ass-os-mesh'];
+  window.kccChannels = [];
+  CHANNEL_NAMES.forEach(function(name){
+    try {
+      var ch = new BroadcastChannel(name);
+      window.kccChannels.push(ch);
+      ch.onmessage = function(e){
+        var m = e.data;
+        if (!m || m.from === NODE.id || m.source === NODE.id) return;
+        if (window.KCC_LISTEN && (m.type === 'kcc:event')) {
+          emit('observed:' + (m.from || m.source || 'peer'), 1, 0.1, { ev_h: m.ev && m.ev.h, channel: name });
+        }
+      };
+    } catch(_){}
+  });
+  // Back-compat alias
+  if (window.kccChannels.length > 0) window.kccChannel = window.kccChannels[0];
 
   // ── public API ────────────────────────────────
   window.kcc = {
@@ -5423,8 +5463,11 @@ textareas.forEach((ta, i) => {
     primeProduct: primeProduct,
     rings: RINGS,
     ledger: function(){ return { events: LEDGER.events.slice(), head: LEDGER.head }; },
-    clear: function(){ if (confirm('Clear KCC ledger for ' + NODE.id + '? Cannot undo.')) { LEDGER = { events:[], head:null, last_export:null }; persist(); updateBadge(); } },
-    showLedger: showLedger
+    clear: function(){ if (confirm('Clear KCC ledger for ' + NODE.id + '? Cannot undo.')) { LEDGER = { events:[], head:null, last_export:null, ob_balance:null, ob_last_sync:null }; persist(); updateBadge(); } },
+    showLedger: showLedger,
+    syncOnlyBrains: syncOnlyBrains,
+    kccKey: function(){ return KEY; },
+    onlybrains: function(){ return LEDGER.ob_balance; }
   };
 
   // ── boot ──────────────────────────────────────
@@ -5433,13 +5476,18 @@ textareas.forEach((ta, i) => {
       await new Promise(function(r){ document.addEventListener('DOMContentLoaded', r, { once:true }); });
     }
     injectBadge();
-    // R0 compute · daily-open ground tick (capped at one per UTC day)
     var todayKey = 'kcc_open_' + new Date().toISOString().slice(0,10);
     if (!sessionStorage.getItem(todayKey)) {
       sessionStorage.setItem(todayKey, '1');
       emit('app:open', 0, 1);
     }
-    try { console.log('%c◊·κ KCC', 'color:#c2a060;font-weight:bold', NODE.name + ' · ' + LEDGER.events.length + ' events · shape: ' + shape().shape); } catch(_){}
+    // Sync wallet at most once per hour
+    var lastSync = LEDGER.ob_last_sync || 0;
+    if (Date.now() - lastSync > 3600 * 1000) {
+      syncOnlyBrains();
+    }
+    try { console.log('%c◊·κ KCC', 'color:#c2a060;font-weight:bold',
+      NODE.name + ' · ' + LEDGER.events.length + ' events · shape: ' + shape().shape + ' · key: ' + KEY); } catch(_){}
   })();
 })();
 </script>
