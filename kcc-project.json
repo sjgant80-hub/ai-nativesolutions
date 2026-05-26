@@ -1,0 +1,86 @@
+{
+  "_udt": "KccProject",
+  "name": "AI Native Solutions",
+  "slug": "ai-nativesolutions",
+  "domain": "agency · the bridge",
+  "prime": 113,
+  "token": "KCC",
+  "api": "https://onlybrains.onrender.com",
+  "mining": true,
+  "primes": [
+    2,
+    3,
+    5,
+    7,
+    11,
+    13,
+    17
+  ],
+  "primorial": 510510,
+  "phi": 0.6180339887498949,
+  "kappa": 0.6180339887498949,
+  "bsv_anchor": true,
+  "mesh_channels": [
+    "fall-kcc",
+    "kcc-mesh",
+    "onlybrains-mesh",
+    "ass-os-mesh"
+  ],
+  "hf_dataset": "SolarTesla/onlybrains-reasoning-10k",
+  "operator": "sjgant80-hub",
+  "ecosystem": "sjgant80-hub/Fall*",
+  "konomi_pubkey_b64": "bQWcb/SgeWVIEa0H+YYGhzohMfo9zcDysqZEvzYtXTw=",
+  "layers": [
+    "FACE",
+    "SWARM",
+    "CASCADE",
+    "BLOOM",
+    "PERSIST",
+    "SKIN",
+    "ASS"
+  ],
+  "rings": {
+    "R0": {
+      "anat": "ground",
+      "verb": "compute",
+      "prime": 2,
+      "hz": 7.83
+    },
+    "R1": {
+      "anat": "signal",
+      "verb": "signal",
+      "prime": 3,
+      "hz": 15.66
+    },
+    "R2": {
+      "anat": "gate",
+      "verb": "filter",
+      "prime": 5,
+      "hz": 23.49
+    },
+    "R3": {
+      "anat": "heart",
+      "verb": "care",
+      "prime": 7,
+      "hz": 31.32
+    },
+    "R4": {
+      "anat": "voice",
+      "verb": "build",
+      "prime": 11,
+      "hz": 39.15
+    },
+    "R5": {
+      "anat": "mirror",
+      "verb": "verify",
+      "prime": 13,
+      "hz": 46.98
+    },
+    "R6": {
+      "anat": "watcher",
+      "verb": "govern",
+      "prime": 17,
+      "hz": 54.81
+    }
+  }
+}
