@@ -5024,6 +5024,427 @@ textareas.forEach((ta, i) => {
   ta.addEventListener('input', () => localStorage.setItem(key, ta.value));
 });
 <` + `/script>
+<!-- ◊·κ FALLMESH SHIM — sovereign mesh wiring (generic, drop-in) -->
+<script>
+(function fallmeshShim(){
+  // Identity — each tool defines these. Defaults safe.
+  var NODE = window.NODE || {
+    id: (document.title || 'node').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,16) || 'node',
+    name: document.title || 'Node',
+    prime: 113
+  };
+  window.NODE = NODE;
+
+  var meshChannel = null;
+  function meshPost(type, data){
+    if (!meshChannel) return;
+    try {
+      meshChannel.postMessage(Object.assign(
+        { type: type, from: NODE.id, prime: NODE.prime, name: NODE.name, t: Date.now() },
+        data || {}
+      ));
+    } catch(e){}
+  }
+  if (typeof BroadcastChannel === 'undefined') return;
+  try { meshChannel = new BroadcastChannel('fallmesh'); } catch(e){ return; }
+
+  window.fallmesh = {
+    post: meshPost,
+    emit: function(data){ meshPost(NODE.id + ':event', data); },
+    request: function(type, payload){ meshPost('request:' + type, { payload: payload }); },
+    on: function(type, handler){
+      var prev = meshChannel.onmessage;
+      meshChannel.onmessage = function(e){
+        if (prev) try { prev(e); } catch(_){}
+        var m = e.data;
+        if (m && m.type === type && m.from !== NODE.id) handler(m);
+      };
+    }
+  };
+
+  meshChannel.onmessage = function(e){
+    var m = e.data;
+    if (!m || m.from === NODE.id) return;
+    if (m.type === 'mesh:ping') {
+      meshPost('mesh:pong', {
+        url: location.origin + location.pathname,
+        title: NODE.name
+      });
+    }
+  };
+
+  meshPost('node:online', {
+    url: location.origin + location.pathname,
+    layers: 7
+  });
+
+  try { console.log('%c◊·κ=1', 'color:#10b981;font-weight:bold;font-size:13px',
+    NODE.name + ' · prime ' + NODE.prime + ' · mesh online'); } catch(_){}
+})();
+</script>
+<!-- /◊·κ FALLMESH SHIM -->
+
+<!-- ◊·κ KONOMI LICENCE — Ed25519 (drop-in, no deps) -->
+<script>
+(function konomiShim(){
+  // NODE is defined by host tool's mesh shim. If missing, fail gracefully.
+  if (!window.NODE) return;
+  var KONOMI = window.KONOMI = {
+    pubkey_b64: 'bQWcb/SgeWVIEa0H+YYGhzohMfo9zcDysqZEvzYtXTw=',
+    tier: 'dead',
+    features: [],
+    payload: null,
+    expires_at: null
+  };
+  function b64Bytes(b64){ var bin=atob(b64); var b=new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) b[i]=bin.charCodeAt(i); return b; }
+  function canonJSON(o){
+    if (o===null||typeof o!=='object') return JSON.stringify(o);
+    if (Array.isArray(o)) return '['+o.map(canonJSON).join(',')+']';
+    var k=Object.keys(o).sort();
+    return '{'+k.map(function(x){return JSON.stringify(x)+':'+canonJSON(o[x]);}).join(',')+'}';
+  }
+  async function verifyLicence(env){
+    if (!env) return { ok:false, error:'no envelope' };
+    if (!window.crypto || !window.crypto.subtle) return { ok:false, error:'no WebCrypto' };
+    try {
+      var raw = atob(env);
+      var parsed = JSON.parse(raw);
+      var payload = parsed.payload, sig = parsed.sig;
+      if (payload.tool_id && payload.tool_id !== NODE.id) {
+        return { ok:false, error:'licence for ' + payload.tool_id + ', not ' + NODE.id };
+      }
+      if (payload.expires && new Date(payload.expires) < new Date()) {
+        return { ok:false, error:'expired ' + payload.expires };
+      }
+      var pubRaw = b64Bytes(KONOMI.pubkey_b64);
+      var key = await crypto.subtle.importKey('raw', pubRaw, { name:'Ed25519' }, false, ['verify']);
+      var sigBytes = b64Bytes(sig);
+      var msg = new TextEncoder().encode(canonJSON(payload));
+      var ok = await crypto.subtle.verify({ name:'Ed25519' }, key, sigBytes, msg);
+      if (!ok) return { ok:false, error:'signature invalid' };
+      return { ok:true, payload:payload };
+    } catch (e) { return { ok:false, error:e.message }; }
+  }
+  async function activateLicence(env){
+    var v = await verifyLicence(env);
+    if (!v.ok) {
+      try { localStorage.setItem('konomi_last_error', v.error); } catch(_){}
+      return v;
+    }
+    try { localStorage.setItem('konomi_licence_' + NODE.id, env); } catch(_){}
+    KONOMI.tier = v.payload.tier;
+    KONOMI.features = v.payload.features || [];
+    KONOMI.payload = v.payload;
+    KONOMI.expires_at = v.payload.expires;
+    updateBadge();
+    return v;
+  }
+  function hasFeature(f){ return KONOMI.features.indexOf(f) >= 0; }
+  function isDead(){ return KONOMI.tier === 'dead'; }
+  function updateBadge(){
+    var el = document.getElementById('konomi-badge');
+    if (!el) return;
+    var t = KONOMI.tier;
+    var c = t==='dead'?'#8a8a8a':t==='trial'?'#c2a060':'#3a9a72';
+    el.textContent = '◊ ' + t.toUpperCase();
+    el.style.color = c;
+    el.title = 'Konomi tier: ' + t + (KONOMI.expires_at ? ' · expires ' + KONOMI.expires_at : '');
+  }
+  function injectBadge(){
+    if (document.getElementById('konomi-badge')) return;
+    var el = document.createElement('div');
+    el.id = 'konomi-badge';
+    el.style.cssText = 'position:fixed;bottom:12px;left:12px;background:rgba(0,0,0,.65);color:#8a8a8a;padding:5px 10px;border-radius:6px;font-family:monospace;font-size:11px;cursor:pointer;z-index:9999;letter-spacing:.06em;border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px)';
+    el.textContent = '◊ DEAD';
+    el.onclick = function(){ showLicenceDialog(); };
+    document.body.appendChild(el);
+  }
+  function showLicenceDialog(){
+    var current = KONOMI.payload ? JSON.stringify(KONOMI.payload, null, 2) : '(DEAD mode — no licence active)';
+    var modal = document.createElement('div');
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,sans-serif';
+    modal.innerHTML = '<div style="background:#161821;border:1px solid #2a2f3a;border-radius:12px;padding:24px;max-width:560px;width:100%;color:#dbe1ea"><h3 style="margin:0 0 12px;color:#e6e8ee">◊·κ Konomi Licence</h3><p style="margin:0 0 8px;font-size:12px;color:#8a8a8a">Tool: '+(NODE.name||NODE.id)+' · Prime: '+(NODE.prime||'-')+'</p><pre style="background:#0c0e12;padding:10px;border-radius:6px;font-size:11px;color:#a8b0bc;max-height:200px;overflow:auto;margin:8px 0">'+current.replace(/[<>]/g,'')+'</pre><p style="font-size:12px;color:#8a8a8a;margin:12px 0 6px">Paste a signed licence envelope to activate Pro/Business/Enterprise:</p><textarea id="kn-paste" style="width:100%;min-height:80px;background:#0c0e12;color:#dbe1ea;border:1px solid #2a2f3a;border-radius:6px;padding:8px;font-family:monospace;font-size:11px;resize:vertical"></textarea><div style="display:flex;gap:8px;margin-top:12px"><button id="kn-activate" style="background:#5b8def;color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600">activate</button><button id="kn-close" style="background:transparent;color:#8a8a8a;border:1px solid #2a2f3a;padding:8px 14px;border-radius:6px;cursor:pointer">close</button><span id="kn-msg" style="margin-left:auto;font-size:11px;color:#c84a4a;align-self:center"></span></div></div>';
+    document.body.appendChild(modal);
+    modal.querySelector('#kn-close').onclick = function(){ modal.remove(); };
+    modal.querySelector('#kn-activate').onclick = async function(){
+      var paste = modal.querySelector('#kn-paste').value.trim();
+      if (!paste) { modal.querySelector('#kn-msg').textContent = 'paste an envelope first'; return; }
+      var v = await activateLicence(paste);
+      if (v.ok) { modal.querySelector('#kn-msg').style.color='#3a9a72'; modal.querySelector('#kn-msg').textContent='✓ '+v.payload.tier+' activated'; setTimeout(function(){ modal.remove(); }, 1200); }
+      else { modal.querySelector('#kn-msg').textContent = 'rejected: ' + v.error; }
+    };
+    modal.onclick = function(e){ if (e.target===modal) modal.remove(); };
+  }
+  window.konomi = {
+    verifyLicence: verifyLicence,
+    activateLicence: activateLicence,
+    hasFeature: hasFeature,
+    isDead: isDead,
+    showDialog: showLicenceDialog
+  };
+  // Boot: try saved licence
+  (async function(){
+    if (document.readyState === 'loading') {
+      await new Promise(function(r){ document.addEventListener('DOMContentLoaded', r, { once:true }); });
+    }
+    injectBadge();
+    var saved = null;
+    try { saved = localStorage.getItem('konomi_licence_' + NODE.id); } catch(_){}
+    if (saved) {
+      var v = await verifyLicence(saved);
+      if (v.ok) {
+        KONOMI.tier = v.payload.tier;
+        KONOMI.features = v.payload.features || [];
+        KONOMI.payload = v.payload;
+        KONOMI.expires_at = v.payload.expires;
+        updateBadge();
+        try { console.log('%c◊·κ', 'color:#c2a060;font-weight:bold', NODE.name + ' · ' + v.payload.tier + ' tier active'); } catch(_){}
+        return;
+      }
+    }
+    try { console.log('%c◊', 'color:#8a8a8a;font-weight:bold', NODE.name + ' · DEAD mode · click badge to activate'); } catch(_){}
+  })();
+})();
+</script>
+<!-- /◊·κ KONOMI LICENCE -->
+
+<!-- ◊·κ KCC LEDGER — Konomi Cube Coin (drop-in, no deps) -->
+<!--
+  Ω(KCC) v18: proof of contribution · not speculation
+    earn by: compute(R0)·signal(R1)·filter(R2)·care(R3)·build(R4)·verify(R5)·govern(R6)
+    spend: you don't · KCC accumulates · revenue finds you
+    ledger: the tools themselves · no separate chain · Ed25519 signed
+    bloom IS identity · the shape of your contribution IS your address
+  Interop: BroadcastChannel('fall-kcc') · same-origin sync between Fall* tools.
+  Depends on: window.NODE (mesh shim) for tool identity. Optional: window.konomi for signing.
+-->
+<script>
+(function kccShim(){
+  if (!window.NODE) return;
+  var KCC_KEY = 'kcc_ledger_' + (window.NODE.id || 'node') + '_v1';
+
+  // ── ring labels (R0..R6) — Schumann harmonics + Ω(KCC) earning verbs
+  var RINGS = [
+    { i:0, label:'compute',  v:'R0', hz:'7.83',  glyph:'●', colour:'#660044', verb:'do' },
+    { i:1, label:'signal',   v:'R1', hz:'15.66', glyph:'〜', colour:'#cc3366', verb:'detect' },
+    { i:2, label:'filter',   v:'R2', hz:'23.49', glyph:'┃', colour:'#cc6600', verb:'gate' },
+    { i:3, label:'care',     v:'R3', hz:'31.32', glyph:'♡', colour:'#cccc00', verb:'tend' },
+    { i:4, label:'build',    v:'R4', hz:'39.15', glyph:'△', colour:'#66cc00', verb:'make' },
+    { i:5, label:'verify',   v:'R5', hz:'46.98', glyph:'◐', colour:'#0066cc', verb:'check' },
+    { i:6, label:'govern',   v:'R6', hz:'54.81', glyph:'◯', colour:'#6600cc', verb:'steward' }
+  ];
+
+  // ── load / persist ────────────────────────────
+  var LEDGER = { events:[], head:null, last_export:null };
+  try {
+    var raw = localStorage.getItem(KCC_KEY);
+    if (raw) LEDGER = Object.assign(LEDGER, JSON.parse(raw));
+  } catch(_){}
+  function persist(){
+    try { localStorage.setItem(KCC_KEY, JSON.stringify(LEDGER)); } catch(_){}
+  }
+
+  // ── canonical JSON + simple hash (FNV-1a 32-bit) for chain-link ──
+  function canon(o){
+    if (o===null||typeof o!=='object') return JSON.stringify(o);
+    if (Array.isArray(o)) return '['+o.map(canon).join(',')+']';
+    var k=Object.keys(o).sort();
+    return '{'+k.map(function(x){return JSON.stringify(x)+':'+canon(o[x]);}).join(',')+'}';
+  }
+  function fnv1a(str){
+    var h = 2166136261 >>> 0;
+    for (var i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = (h + ((h<<1)+(h<<4)+(h<<7)+(h<<8)+(h<<24))) >>> 0; }
+    return ('00000000'+h.toString(16)).slice(-8);
+  }
+
+  // ── core emit · attaches event to ring ────────
+  function emit(action, ringId, weight, meta){
+    var ring = typeof ringId === 'number' ? ringId : (RINGS.findIndex(function(r){ return r.label===ringId || r.v===ringId; }));
+    if (ring < 0 || ring > 6) ring = 0;
+    var ev = {
+      v: 1,
+      tool: window.NODE.id,
+      tool_prime: window.NODE.prime,
+      action: String(action || 'event'),
+      ring: ring,
+      weight: typeof weight === 'number' ? weight : 1,
+      t: Date.now(),
+      prev: LEDGER.head || null,
+      meta: meta || null
+    };
+    ev.h = fnv1a(canon(ev) + (LEDGER.head || ''));
+    LEDGER.events.push(ev);
+    LEDGER.head = ev.h;
+    persist();
+    // Broadcast on the fall-kcc mesh so other tools see contribution
+    if (window.kccChannel) {
+      try { window.kccChannel.postMessage({ type:'kcc:event', from:NODE.id, prime:NODE.prime, ev:ev }); } catch(_){}
+    }
+    updateBadge();
+    return ev;
+  }
+
+  // ── bloom rollup · sums weights per ring ──────
+  function bloom(opts){
+    opts = opts || {};
+    var since = opts.since || 0;
+    var b = [0,0,0,0,0,0,0];
+    for (var i=0;i<LEDGER.events.length;i++){
+      var ev = LEDGER.events[i];
+      if (ev.t < since) continue;
+      b[ev.ring] = (b[ev.ring] || 0) + (ev.weight || 1);
+    }
+    return b;
+  }
+
+  // ── prime product · bloom-as-identity per Ω(BLOOM.MATH) ──
+  function primeProduct(){
+    var b = bloom();
+    var primes = [2,3,5,7,11,13,17];
+    var prod = 1n;
+    for (var i=0;i<7;i++){
+      var p = BigInt(primes[i]);
+      for (var j=0;j<b[i];j++) prod *= p;
+    }
+    return prod.toString();
+  }
+
+  // ── shape descriptor · [r0..r6] human-readable ──
+  function shape(){
+    var b = bloom();
+    var sum = b.reduce(function(a,x){ return a+x; }, 0);
+    var peak = b.indexOf(Math.max.apply(null, b));
+    var gate = b[2];
+    var shapeName;
+    if (sum === 0) shapeName = 'unbloomed';
+    else if (peak === 4) shapeName = 'builder';
+    else if (peak === 1) shapeName = 'signaller';
+    else if (peak === 6) shapeName = 'steward';
+    else if (peak === 3) shapeName = 'tender';
+    else shapeName = RINGS[peak].label;
+    return { vec:b, sum:sum, peak:peak, peakRing:RINGS[peak], gate:gate, shape:shapeName };
+  }
+
+  // ── export · signed contribution proof ────────
+  function exportProof(opts){
+    opts = opts || {};
+    var payload = {
+      v: 1,
+      tool: window.NODE.id,
+      tool_prime: window.NODE.prime,
+      tool_name: window.NODE.name,
+      issued: new Date().toISOString(),
+      event_count: LEDGER.events.length,
+      head: LEDGER.head,
+      first_event: LEDGER.events.length ? LEDGER.events[0].t : null,
+      last_event:  LEDGER.events.length ? LEDGER.events[LEDGER.events.length-1].t : null,
+      bloom: bloom(),
+      prime_product: primeProduct(),
+      shape: shape()
+    };
+    if (opts.includeEvents) payload.events = LEDGER.events;
+    LEDGER.last_export = Date.now();
+    persist();
+    return payload;
+  }
+
+  // ── floating badge · click to view bloom ──────
+  var bloomBadge = null;
+  function injectBadge(){
+    if (document.getElementById('kcc-badge')) return;
+    var el = document.createElement('div');
+    el.id = 'kcc-badge';
+    el.style.cssText = 'position:fixed;bottom:12px;left:120px;background:rgba(0,0,0,.65);color:#dbe1ea;padding:5px 10px;border-radius:6px;font-family:monospace;font-size:11px;cursor:pointer;z-index:9999;letter-spacing:.06em;border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px);display:flex;align-items:center;gap:6px';
+    el.title = 'Konomi Cube Coin · ledger';
+    el.onclick = function(){ showLedger(); };
+    document.body.appendChild(el);
+    bloomBadge = el;
+    updateBadge();
+  }
+  function updateBadge(){
+    if (!bloomBadge) return;
+    var b = bloom();
+    var sum = b.reduce(function(a,x){ return a+x; }, 0);
+    var sparks = b.map(function(v, i){
+      var sz = Math.min(11, 2 + Math.round(v/2));
+      return '<span style="display:inline-block;width:3px;height:'+sz+'px;background:'+RINGS[i].colour+';margin:0 1px;border-radius:1px;vertical-align:middle"></span>';
+    }).join('');
+    bloomBadge.innerHTML = '<span style="opacity:.7">KCC</span> '+sparks+' <span style="opacity:.85">'+sum+'</span>';
+  }
+
+  function showLedger(){
+    var b = bloom();
+    var sh = shape();
+    var rows = RINGS.map(function(r, i){
+      var v = b[i];
+      var pct = sh.sum ? Math.round(v/sh.sum*100) : 0;
+      return '<tr><td style="color:'+r.colour+'">'+r.v+'</td><td>'+r.label+'</td><td>'+r.hz+' Hz</td><td style="text-align:right;font-weight:700">'+v+'</td><td style="color:#8a8a8a">'+pct+'%</td></tr>';
+    }).join('');
+    var recent = LEDGER.events.slice(-8).reverse().map(function(ev){
+      var d = new Date(ev.t).toLocaleString();
+      return '<div style="font-size:11px;color:#a8b0bc;padding:3px 0">'+d+' · <span style="color:'+RINGS[ev.ring].colour+'">'+RINGS[ev.ring].v+'</span> · '+ev.action+(ev.weight!==1?' ×'+ev.weight:'')+'</div>';
+    }).join('') || '<div style="color:#8a8a8a;font-size:12px;padding:6px 0">no events yet</div>';
+    var modal = document.createElement('div');
+    modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,sans-serif';
+    modal.innerHTML='<div style="background:#161821;border:1px solid #2a2f3a;border-radius:12px;padding:24px;max-width:580px;width:100%;color:#dbe1ea;max-height:88vh;overflow:auto"><h3 style="margin:0 0 4px;color:#e6e8ee">◊·κ KCC Ledger</h3><p style="margin:0 0 14px;font-size:12px;color:#8a8a8a">'+window.NODE.name+' · prime '+window.NODE.prime+' · shape: '+sh.shape+' · '+sh.sum+' events</p><table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px"><thead><tr style="border-bottom:1px solid #2a2f3a"><th style="text-align:left;padding:6px 0">ring</th><th style="text-align:left">earn by</th><th style="text-align:left">Hz</th><th style="text-align:right">count</th><th>%</th></tr></thead><tbody>'+rows+'</tbody></table><h4 style="font-size:11px;color:#8a8a8a;letter-spacing:.08em;text-transform:uppercase;margin:14px 0 4px">recent events</h4>'+recent+'<div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><button id="kcc-export" style="background:#5b8def;color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600">export proof</button><button id="kcc-close" style="background:transparent;color:#8a8a8a;border:1px solid #2a2f3a;padding:8px 14px;border-radius:6px;cursor:pointer">close</button><span style="margin-left:auto;align-self:center;font-size:11px;color:#8a8a8a">head: <code>'+(LEDGER.head||'∅')+'</code></span></div></div>';
+    document.body.appendChild(modal);
+    modal.querySelector('#kcc-close').onclick = function(){ modal.remove(); };
+    modal.querySelector('#kcc-export').onclick = function(){
+      var p = exportProof({ includeEvents:true });
+      var blob = new Blob([JSON.stringify(p, null, 2)], { type:'application/json' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a'); a.href = url; a.download = window.NODE.id + '-kcc-proof-' + Date.now() + '.json'; a.click();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    };
+    modal.onclick = function(e){ if (e.target===modal) modal.remove(); };
+  }
+
+  // ── BroadcastChannel for cross-tool KCC ───────
+  try {
+    window.kccChannel = new BroadcastChannel('fall-kcc');
+    window.kccChannel.onmessage = function(e){
+      if (!e.data || e.data.from === NODE.id) return;
+      // R1 signal · every cross-tool KCC event we observe earns a tiny signal credit
+      // (low weight to prevent gaming · 0.1 per observed event)
+      // disabled by default to avoid pollution; opt-in via:
+      // window.KCC_LISTEN = true;
+      if (window.KCC_LISTEN && e.data.type === 'kcc:event') {
+        emit('observed:' + e.data.from, 1, 0.1, { ev_h:e.data.ev && e.data.ev.h });
+      }
+    };
+  } catch(_){}
+
+  // ── public API ────────────────────────────────
+  window.kcc = {
+    emit: emit,
+    bloom: bloom,
+    shape: shape,
+    exportProof: exportProof,
+    primeProduct: primeProduct,
+    rings: RINGS,
+    ledger: function(){ return { events: LEDGER.events.slice(), head: LEDGER.head }; },
+    clear: function(){ if (confirm('Clear KCC ledger for ' + NODE.id + '? Cannot undo.')) { LEDGER = { events:[], head:null, last_export:null }; persist(); updateBadge(); } },
+    showLedger: showLedger
+  };
+
+  // ── boot ──────────────────────────────────────
+  (async function(){
+    if (document.readyState === 'loading') {
+      await new Promise(function(r){ document.addEventListener('DOMContentLoaded', r, { once:true }); });
+    }
+    injectBadge();
+    // R0 compute · daily-open ground tick (capped at one per UTC day)
+    var todayKey = 'kcc_open_' + new Date().toISOString().slice(0,10);
+    if (!sessionStorage.getItem(todayKey)) {
+      sessionStorage.setItem(todayKey, '1');
+      emit('app:open', 0, 1);
+    }
+    try { console.log('%c◊·κ KCC', 'color:#c2a060;font-weight:bold', NODE.name + ' · ' + LEDGER.events.length + ' events · shape: ' + shape().shape); } catch(_){}
+  })();
+})();
+</script>
+<!-- /◊·κ KCC LEDGER -->
+
 </body>
 </html>`;
 
