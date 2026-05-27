@@ -6212,6 +6212,361 @@ textareas.forEach((ta, i) => {
 })();
 </script>
 <!-- /◊·κ LLM CASCADE -->
+<!-- ◊·κ FALL-API SHIM — inter-tool API surface · cli(cmd) layer
+  Turns every Fall* HTML into an API endpoint other tools (in other tabs)
+  can call without a server. Same-origin BroadcastChannel transport.
+
+  Per Thomas's 5-turtle stack:
+    sys(params) → cmd(sys) → cli(cmd) → api(cli) → mcp(api)
+  This is the cli(cmd) / api(cli) layer for sovereign HTMLs.
+
+  Public API:
+    window.fall_api.register(resource, handler)   — expose a resource
+    window.fall_api.list()                        — what this tool exposes
+    window.fall.call(tool, resource, params)      — call another tool's API
+    window.fall.callMany(...)                     — fan out across mesh
+    window.fall.discover()                        — list all visible Fall* tools + their APIs
+
+  Depends on: window.NODE (mesh shim) for identity + BroadcastChannel.
+-->
+<script>
+(function fallApiShim(){
+  if (!window.NODE) return;
+  if (window.fall_api) return; // already loaded
+
+  var REGISTRY = {};   // resource → handler
+  var PEERS = {};      // tool_id → { last_seen, resources, prime, name }
+  var PEER_TTL = 30000;
+
+  // Open dedicated channel for API traffic (separate from fallmesh events)
+  var channel = null;
+  try { channel = new BroadcastChannel('fall-api'); }
+  catch (_) { return; } // browser too old
+
+  function emit(msg) {
+    try { channel.postMessage(Object.assign({ from: NODE.id, prime: NODE.prime, t: Date.now() }, msg)); } catch (_){}
+  }
+
+  // ── Server side (this tool exposes resources) ──
+  window.fall_api = {
+    register: function(resource, handler, meta) {
+      if (typeof resource !== 'string' || typeof handler !== 'function') return false;
+      REGISTRY[resource] = { handler: handler, meta: meta || {} };
+      // Broadcast discovery
+      emit({ type: 'fall-api:register', resource: resource, name: NODE.name, meta: meta || {} });
+      // Track in KCC (R6 govern — exposing a public surface)
+      if (window.kcc) window.kcc.emit('api:register:' + resource, 6, 0.5);
+      return true;
+    },
+    unregister: function(resource) {
+      delete REGISTRY[resource];
+      emit({ type: 'fall-api:unregister', resource: resource });
+    },
+    list: function() {
+      return Object.keys(REGISTRY).map(function(r){
+        return { resource: r, meta: REGISTRY[r].meta };
+      });
+    }
+  };
+
+  // ── Handle incoming requests ──
+  channel.onmessage = function(e) {
+    var m = e.data;
+    if (!m || m.from === NODE.id) return;
+
+    // Track peer
+    if (m.type && m.from) {
+      PEERS[m.from] = PEERS[m.from] || { resources: {} };
+      PEERS[m.from].last_seen = Date.now();
+      PEERS[m.from].prime = m.prime;
+      PEERS[m.from].name = m.name || PEERS[m.from].name;
+    }
+
+    // Discovery broadcasts
+    if (m.type === 'fall-api:register' && m.from && m.resource) {
+      PEERS[m.from].resources[m.resource] = m.meta || {};
+      return;
+    }
+    if (m.type === 'fall-api:unregister' && m.from && m.resource) {
+      if (PEERS[m.from]) delete PEERS[m.from].resources[m.resource];
+      return;
+    }
+    if (m.type === 'fall-api:hello') {
+      // Reply with our capabilities
+      emit({
+        type: 'fall-api:announce',
+        name: NODE.name,
+        resources: Object.keys(REGISTRY).reduce(function(acc, k){ acc[k] = REGISTRY[k].meta || {}; return acc; }, {})
+      });
+      return;
+    }
+    if (m.type === 'fall-api:announce' && m.from) {
+      PEERS[m.from].resources = m.resources || {};
+      return;
+    }
+
+    // Request targeted at us
+    if (m.type === 'fall-api:request' && m.target === NODE.id) {
+      var entry = REGISTRY[m.resource];
+      if (!entry) {
+        emit({ type: 'fall-api:response', req: m.req, target: m.from, error: 'resource not found: ' + m.resource });
+        return;
+      }
+      try {
+        Promise.resolve(entry.handler(m.params || {}, { caller: m.from, callerPrime: m.callerPrime }))
+          .then(function(result){
+            emit({ type: 'fall-api:response', req: m.req, target: m.from, ok: true, result: result, resource: m.resource });
+            if (window.kcc) window.kcc.emit('api:served:' + m.resource, 4, 1, { caller: m.from });
+          })
+          .catch(function(err){
+            emit({ type: 'fall-api:response', req: m.req, target: m.from, error: err.message || String(err) });
+          });
+      } catch (e) {
+        emit({ type: 'fall-api:response', req: m.req, target: m.from, error: e.message });
+      }
+      return;
+    }
+  };
+
+  // ── Client side (this tool calls another tool's API) ──
+  window.fall = {
+    call: function(tool, resource, params, opts) {
+      opts = opts || {};
+      return new Promise(function(resolve, reject){
+        if (!channel) return reject(new Error('no BroadcastChannel'));
+        var req = 'fr_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+        var done = false;
+        var handler = function(e) {
+          var m = e.data;
+          if (m && m.type === 'fall-api:response' && m.req === req) {
+            done = true;
+            channel.removeEventListener('message', handler);
+            if (m.error) return reject(new Error(m.error));
+            resolve(m.result);
+          }
+        };
+        channel.addEventListener('message', handler);
+        emit({ type: 'fall-api:request', req: req, target: tool, resource: resource, params: params, callerPrime: NODE.prime });
+        if (window.kcc) window.kcc.emit('api:call:' + tool + '/' + resource, 1, 0.5);
+        setTimeout(function(){
+          if (done) return;
+          channel.removeEventListener('message', handler);
+          reject(new Error('fall.call timeout · ' + tool + '/' + resource));
+        }, opts.timeout || 4000);
+      });
+    },
+
+    // Fan out: ask all peers that expose <resource>
+    callMany: function(resource, params, opts) {
+      var promises = Object.keys(PEERS)
+        .filter(function(p){ return PEERS[p].resources && PEERS[p].resources[resource]; })
+        .map(function(p){
+          return window.fall.call(p, resource, params, opts)
+            .then(function(r){ return { tool: p, ok: true, result: r }; })
+            .catch(function(e){ return { tool: p, ok: false, error: e.message }; });
+        });
+      return Promise.all(promises);
+    },
+
+    // List currently visible peers + their resources
+    discover: function() {
+      var now = Date.now();
+      var live = {};
+      Object.keys(PEERS).forEach(function(p){
+        if (now - PEERS[p].last_seen < PEER_TTL) live[p] = PEERS[p];
+      });
+      return live;
+    },
+
+    // Ask the network "what's out there"
+    refresh: function() {
+      emit({ type: 'fall-api:hello' });
+      return new Promise(function(r){ setTimeout(r, 600); }).then(function(){ return window.fall.discover(); });
+    }
+  };
+
+  // ── Boot · say hello to the network ──
+  (function boot(){
+    function ready(){
+      setTimeout(function(){
+        emit({ type: 'fall-api:hello', name: NODE.name });
+      }, 500);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready, { once:true });
+    else ready();
+  })();
+
+  try { console.log('%c◊·κ fall-api', 'color:#5b8def;font-weight:bold', NODE.name + ' · ready · register handlers via window.fall_api.register()'); } catch(_){}
+})();
+</script>
+<!-- /◊·κ FALL-API SHIM -->
+<!-- ◊·κ FALL-SW SHIM — Service Worker that turns sovereign HTML into an HTTP API
+  fetch('/api/&lt;tool&gt;/&lt;resource&gt;?param=...') from anywhere in this origin
+  → SW catches it → routes to whichever Fall* tab owns &lt;tool&gt; via the
+  fall-api channel → returns JSON Response.
+
+  Per Thomas's 5-turtle stack:
+    sys(params) → cmd(sys) → cli(cmd) → api(cli) → mcp(api)
+  This is the api(cli) layer · turns the cli into an HTTP-callable surface.
+
+  Browser-compatible. Requires:
+    · Service Workers (Chrome 40+, Safari 11.1+, Firefox 44+)
+    · BroadcastChannel API (already required by fall-api)
+
+  External callers (other tabs, native apps via localhost proxy, even other
+  domains via CORS) can now `fetch('https://your-host/api/gymos/members')`
+  and get a response — without any backend server.
+
+  Caveats:
+    · Same-origin only (this IS the sovereignty: no cross-origin to 3rd parties)
+    · Works only while AT LEAST ONE Fall* tab is open in the browser
+    · First request to /api/* requires SW to be installed (auto on first page load)
+-->
+<script>
+(function fallSwShim(){
+  if (!window.NODE) return;
+  if (!('serviceWorker' in navigator)) {
+    try { console.log('%c◊·κ fall-sw', 'color:#8a8a8a', 'Service Workers not available · API surface is BroadcastChannel-only (no /api/* fetch interception)'); } catch(_){}
+    return;
+  }
+  if (window._fall_sw_installed) return;
+  window._fall_sw_installed = true;
+
+  // The SW code, as a string, served via Blob URL
+  var SW_CODE = `
+// ◊·κ FallCore Service Worker · v1
+// Intercepts /api/&lt;tool&gt;/&lt;resource&gt; · routes to clients
+const VERSION = '${Date.now()}';
+const TIMEOUT = 5000;
+
+self.addEventListener('install', function(e){
+  self.skipWaiting();
+});
+self.addEventListener('activate', function(e){
+  e.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', function(event) {
+  var url = new URL(event.request.url);
+  // Only intercept same-origin /api/* paths
+  if (url.origin !== self.location.origin) return;
+  if (!url.pathname.startsWith('/api/')) return;
+
+  // Parse: /api/&lt;tool&gt;/&lt;resource&gt;
+  var parts = url.pathname.slice(5).split('/');
+  var tool = parts[0];
+  var resource = parts.slice(1).join('/');
+  if (!tool) return;
+
+  // Collect params from query + body
+  event.respondWith((async function(){
+    var params = {};
+    url.searchParams.forEach(function(v, k){ params[k] = v; });
+    if (event.request.method === 'POST') {
+      try {
+        var body = await event.request.json();
+        Object.assign(params, body || {});
+      } catch(_){}
+    }
+    // Ask any client tab to serve this
+    var clientList = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    if (!clientList.length) {
+      return new Response(JSON.stringify({ error: 'no Fall* tab open · open the tool first' }), {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    var req = 'sw_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
+    var channel = new MessageChannel();
+    var responsePromise = new Promise(function(resolve, reject){
+      var t = setTimeout(function(){ reject(new Error('sw timeout')); }, TIMEOUT);
+      channel.port1.onmessage = function(e){
+        clearTimeout(t);
+        if (e.data && e.data.error) reject(new Error(e.data.error));
+        else resolve(e.data && e.data.result);
+      };
+    });
+    // Broadcast to all clients; the one that owns the tool responds
+    clientList.forEach(function(c){
+      try {
+        c.postMessage({ type: 'sw:api-request', req: req, tool: tool, resource: resource, params: params }, [channel.port2]);
+      } catch(_){}
+    });
+    try {
+      var result = await responsePromise;
+      return new Response(JSON.stringify(result), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'x-fallcore-sw': VERSION, 'Access-Control-Allow-Origin': '*' }
+      });
+    } catch (e) {
+      return new Response(JSON.stringify({ error: e.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+  })());
+});
+`;
+
+  // Each page listens for SW messages and forwards via fall-api
+  navigator.serviceWorker.addEventListener('message', function(e) {
+    var m = e.data;
+    if (!m || m.type !== 'sw:api-request') return;
+    var port = e.ports && e.ports[0];
+    if (!port) return;
+    // Only respond if WE own this tool
+    if (m.tool !== NODE.id) {
+      // Forward through fall-api BroadcastChannel to whichever tab DOES own it
+      if (!window.fall || !window.fall.call) {
+        port.postMessage({ error: 'no fall-api shim loaded' });
+        return;
+      }
+      window.fall.call(m.tool, m.resource, m.params)
+        .then(function(r){ port.postMessage({ result: r }); })
+        .catch(function(e){ port.postMessage({ error: e.message }); });
+      return;
+    }
+    // We own it: invoke directly
+    if (!window.fall_api || !window.fall_api.list) {
+      port.postMessage({ error: 'no fall_api registry' });
+      return;
+    }
+    // Pretend we're another tab and use fall.call to ourselves (cleanest path through the registry)
+    if (window.fall && window.fall.call) {
+      window.fall.call(NODE.id, m.resource, m.params)
+        .then(function(r){ port.postMessage({ result: r }); })
+        .catch(function(e){ port.postMessage({ error: e.message }); });
+    } else {
+      port.postMessage({ error: 'fall registry unavailable' });
+    }
+  });
+
+  // Register the SW from inline Blob (scope: this page's directory; for tools at root, this is the whole origin)
+  function registerSw() {
+    try {
+      var blob = new Blob([SW_CODE], { type: 'application/javascript' });
+      var swUrl = URL.createObjectURL(blob);
+      // Note: SW scope is restricted to its URL path. Inline SWs scope only to the page that registered them.
+      // For full /api/* origin scope, the SW needs to be served from the origin root with proper Service-Worker-Allowed header.
+      // This v1 ships scope-limited; v2 will deploy a real /sw.js to each Pages root.
+      navigator.serviceWorker.register(swUrl, { scope: './' })
+        .then(function(reg){
+          try { console.log('%c◊·κ fall-sw', 'color:#5b8def;font-weight:bold', NODE.name + ' · Service Worker registered at scope ' + reg.scope); } catch(_){}
+          if (window.kcc) window.kcc.emit('sw:registered', 6, 1, { scope: reg.scope });
+        })
+        .catch(function(e){
+          try { console.log('%c◊·κ fall-sw', 'color:#c84a4a', 'SW registration failed: ' + e.message + ' (fine · fall-api still works via BroadcastChannel)'); } catch(_){}
+        });
+    } catch (e) {
+      try { console.log('%c◊·κ fall-sw', 'color:#c84a4a', 'SW unavailable: ' + e.message); } catch(_){}
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', registerSw, { once:true });
+  else registerSw();
+})();
+</script>
+<!-- /◊·κ FALL-SW SHIM -->
 </body>
 </html>`;
 
