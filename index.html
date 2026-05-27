@@ -5599,6 +5599,451 @@ textareas.forEach((ta, i) => {
 </script>
 <!-- /◊·κ KCC LEDGER -->
 
+<!-- ◊·κ LLM CASCADE — T0→T4 sovereign fallback (drop-in, no deps except optional WebLLM ESM)
+  T0  · deterministic / template fallback (always works, never fails)
+  T1  · user's own API key (Anthropic / OpenAI / Google · stored in localStorage)
+  T2  · same-origin mesh peer (BroadcastChannel('fallmesh') · ask other tabs)
+  T3  · OnlyBrains /api/reason (paid via $KONO · uses window.kcc.reason)
+  T4  · WebLLM in-browser (Llama-3.2-3B by default · ~1.7GB one-time download · runs offline)
+
+  Public API:
+    window.llm.ask(prompt, opts)         → { provider, tier, text, ms } | { error }
+    window.llm.providers()               → { anthropic:bool, openai:bool, google:bool, mesh:bool, onlybrains:bool, webllm:'ready'|'downloading'|'not-loaded' }
+    window.llm.setKey(provider, key)     → stores key
+    window.llm.preloadWebLLM(modelId?)   → kicks off WebLLM download
+    window.llm.tier()                    → 'T1' / 'T2' / 'T3' / 'T4' / 'T0' — current default tier
+    window.llm.config                    → { preferred: ['anthropic','onlybrains','webllm','t0'] }
+-->
+<script>
+(function llmCascade(){
+  if (window.llm) return;
+
+  var STORE_KEY = 'llm_cascade_v1';
+  var STATE = {
+    keys: {},                  // { anthropic: 'sk-ant-...', openai: '...', google: '...' }
+    webllm: { status: 'not-loaded', model: null, progress: 0, message: '' },
+    // T1 user keys → T3 OnlyBrains → T4 WebLLM (if loaded) → T2 mesh (slow, last) → T0 fallback
+    preferred: ['anthropic', 'openai', 'google', 'onlybrains', 'webllm', 'mesh', 't0'],
+    log: []                    // last 50 calls: { t, provider, tier, ms, ok, prompt_chars }
+  };
+  try {
+    var raw = localStorage.getItem(STORE_KEY);
+    if (raw) STATE = Object.assign(STATE, JSON.parse(raw));
+  } catch(_){}
+  function persist(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(STATE)); } catch(_){} }
+
+  function trace(provider, tier, ms, ok, prompt) {
+    STATE.log.unshift({ t: Date.now(), provider: provider, tier: tier, ms: ms, ok: !!ok, prompt_chars: (prompt || '').length });
+    if (STATE.log.length > 50) STATE.log.length = 50;
+    persist();
+    if (window.kcc) {
+      // R5 verify when AI returns useful output; R0 compute on every call
+      window.kcc.emit('llm:' + provider + (ok ? '' : ':fail'), ok ? 5 : 0, ok ? 1 : 0.2, { tier: tier, ms: ms });
+    }
+  }
+
+  function withTimeout(promise, ms, label) {
+    return Promise.race([
+      promise,
+      new Promise(function(_, rej){ setTimeout(function(){ rej(new Error((label||'op') + ' timeout')); }, ms || 30000); })
+    ]);
+  }
+
+  // ── T1 providers — direct from browser (CORS-allowed endpoints) ──
+  var T1 = {
+    anthropic: {
+      tier: 'T1',
+      label: 'Anthropic',
+      hasKey: function(){ return !!STATE.keys.anthropic; },
+      ask: async function(prompt, opts){
+        if (!STATE.keys.anthropic) throw new Error('no anthropic key');
+        var r = await withTimeout(fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': STATE.keys.anthropic,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: opts.model || 'claude-sonnet-4-20250514',
+            max_tokens: opts.max_tokens || 2048,
+            system: opts.system || 'You are a helpful assistant for ' + (window.NODE ? window.NODE.name : 'this app') + '. Reply concisely.',
+            messages: [{ role: 'user', content: prompt }]
+          })
+        }), 45000, 'anthropic');
+        if (!r.ok) throw new Error('anthropic ' + r.status);
+        var j = await r.json();
+        return j.content[0].text;
+      }
+    },
+    openai: {
+      tier: 'T1',
+      label: 'OpenAI',
+      hasKey: function(){ return !!STATE.keys.openai; },
+      ask: async function(prompt, opts){
+        if (!STATE.keys.openai) throw new Error('no openai key');
+        var r = await withTimeout(fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + STATE.keys.openai },
+          body: JSON.stringify({
+            model: opts.model || 'gpt-4o-mini',
+            max_tokens: opts.max_tokens || 2048,
+            messages: [
+              { role: 'system', content: opts.system || 'You are a helpful assistant. Reply concisely.' },
+              { role: 'user', content: prompt }
+            ]
+          })
+        }), 45000, 'openai');
+        if (!r.ok) throw new Error('openai ' + r.status);
+        var j = await r.json();
+        return j.choices[0].message.content;
+      }
+    },
+    google: {
+      tier: 'T1',
+      label: 'Google',
+      hasKey: function(){ return !!STATE.keys.google; },
+      ask: async function(prompt, opts){
+        if (!STATE.keys.google) throw new Error('no google key');
+        var model = opts.model || 'gemini-2.0-flash';
+        var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(STATE.keys.google);
+        var r = await withTimeout(fetch(url, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ role:'user', parts: [{ text: (opts.system ? opts.system + '\n\n' : '') + prompt }] }],
+            generationConfig: { maxOutputTokens: opts.max_tokens || 2048 }
+          })
+        }), 45000, 'google');
+        if (!r.ok) throw new Error('google ' + r.status);
+        var j = await r.json();
+        return j.candidates[0].content.parts[0].text;
+      }
+    }
+  };
+
+  // ── T2 mesh peer (ask another tab) ──
+  var T2 = {
+    mesh: {
+      tier: 'T2',
+      label: 'Mesh peer',
+      available: function(){ try { return !!window.BroadcastChannel; } catch(_){ return false; } },
+      ask: function(prompt, opts){
+        return new Promise(function(resolve, reject){
+          if (!window.BroadcastChannel) return reject(new Error('no BroadcastChannel'));
+          var ch;
+          try { ch = new BroadcastChannel('fallmesh'); }
+          catch(e){ return reject(new Error('mesh open failed')); }
+          var reqId = 'llmreq_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+          var handler = function(e){
+            var m = e.data;
+            if (m && m.type === 'llm:response' && m.req === reqId) {
+              ch.removeEventListener('message', handler);
+              ch.close();
+              if (m.text) resolve(m.text);
+              else reject(new Error(m.error || 'mesh empty'));
+            }
+          };
+          ch.addEventListener('message', handler);
+          try {
+            ch.postMessage({
+              type: 'llm:request', req: reqId,
+              from: window.NODE ? window.NODE.id : 'anon',
+              prompt: prompt, opts: opts || {}
+            });
+          } catch(e){ ch.close(); return reject(e); }
+          setTimeout(function(){
+            try { ch.removeEventListener('message', handler); ch.close(); } catch(_){}
+            reject(new Error('mesh timeout'));
+          }, opts.mesh_timeout || 2000);
+        });
+      }
+    }
+  };
+
+  // ── T3 OnlyBrains (via window.kcc) ──
+  var T3 = {
+    onlybrains: {
+      tier: 'T3',
+      label: 'OnlyBrains',
+      available: function(){ return !!(window.kcc && window.kcc.reason); },
+      ask: async function(prompt, opts){
+        if (!window.kcc || !window.kcc.reason) throw new Error('kcc not loaded');
+        var r = await withTimeout(window.kcc.reason(prompt, opts.strategy || 'CoT'), 60000, 'onlybrains');
+        if (r && r.error) throw new Error('onlybrains: ' + r.error);
+        // Shape: response varies by OnlyBrains API · normalise
+        if (typeof r === 'string') return r;
+        return r.text || r.answer || r.result || r.output || JSON.stringify(r);
+      }
+    }
+  };
+
+  // ── T4 WebLLM (in-browser, requires WebGPU) ──
+  var WEBLLM_DEFAULT_MODEL = 'Llama-3.2-3B-Instruct-q4f16_1-MLC';
+  var webllmEngine = null;
+  var webllmLoadPromise = null;
+  function hasWebGPU(){ return typeof navigator !== 'undefined' && !!navigator.gpu; }
+  async function loadWebLLM(modelId) {
+    if (webllmEngine) return webllmEngine;
+    if (webllmLoadPromise) return webllmLoadPromise;
+    if (!hasWebGPU()) throw new Error('WebGPU unavailable in this browser');
+    STATE.webllm.status = 'downloading';
+    STATE.webllm.model = modelId || WEBLLM_DEFAULT_MODEL;
+    STATE.webllm.progress = 0;
+    STATE.webllm.message = 'starting…';
+    persist();
+    updateUI();
+    webllmLoadPromise = (async function(){
+      var mod = await import('https://esm.run/@mlc-ai/web-llm');
+      var fn = mod.CreateMLCEngine || mod.createMLCEngine;
+      if (!fn) throw new Error('WebLLM API not found in module');
+      webllmEngine = await fn(STATE.webllm.model, {
+        initProgressCallback: function(p){
+          STATE.webllm.progress = p.progress || 0;
+          STATE.webllm.message = p.text || '';
+          persist();
+          updateUI();
+        }
+      });
+      STATE.webllm.status = 'ready';
+      STATE.webllm.message = 'ready';
+      persist();
+      updateUI();
+      return webllmEngine;
+    })().catch(function(e){
+      STATE.webllm.status = 'error';
+      STATE.webllm.message = e.message || String(e);
+      persist();
+      updateUI();
+      webllmLoadPromise = null;
+      throw e;
+    });
+    return webllmLoadPromise;
+  }
+  var T4 = {
+    webllm: {
+      tier: 'T4',
+      label: 'WebLLM (offline)',
+      available: function(){ return hasWebGPU(); },
+      ask: async function(prompt, opts){
+        var eng = await loadWebLLM(opts.model);
+        var r = await eng.chat.completions.create({
+          messages: [
+            { role: 'system', content: opts.system || 'You are a helpful assistant. Reply concisely.' },
+            { role: 'user', content: prompt }
+          ],
+          max_tokens: opts.max_tokens || 1024,
+          temperature: opts.temperature == null ? 0.7 : opts.temperature
+        });
+        return r.choices[0].message.content;
+      }
+    }
+  };
+
+  // ── T0 deterministic fallback (last resort, never throws) ──
+  var T0 = {
+    t0: {
+      tier: 'T0',
+      label: 'Offline fallback',
+      available: function(){ return true; },
+      ask: async function(prompt, opts){
+        if (opts.fallback) return typeof opts.fallback === 'function' ? opts.fallback(prompt) : opts.fallback;
+        return '[T0] No AI provider available. Add an API key (Settings → AI Cascade), enable WebLLM, or check internet connection. Prompt was: ' + String(prompt || '').slice(0, 200);
+      }
+    }
+  };
+
+  var ALL = Object.assign({}, T1, T2, T3, T4, T0);
+
+  // Listen for mesh peer requests — if other tabs ask us, answer using our T1 provider only
+  // (don't recurse into mesh asking mesh asking mesh)
+  try {
+    var peerCh = new BroadcastChannel('fallmesh');
+    peerCh.addEventListener('message', async function(e){
+      var m = e.data;
+      if (!m || m.type !== 'llm:request' || m.from === (window.NODE && window.NODE.id)) return;
+      // Try T1 only — don't recurse
+      for (var i = 0; i < STATE.preferred.length; i++) {
+        var p = STATE.preferred[i];
+        if (p === 'mesh' || p === 't0' || !ALL[p]) continue;
+        if (ALL[p].tier !== 'T1') continue;
+        if (ALL[p].hasKey && !ALL[p].hasKey()) continue;
+        try {
+          var text = await ALL[p].ask(m.prompt, m.opts || {});
+          peerCh.postMessage({ type: 'llm:response', req: m.req, text: text, served_by: window.NODE && window.NODE.id });
+          return;
+        } catch(_){}
+      }
+      // Couldn't help — silently ignore
+    });
+  } catch(_){}
+
+  // ── Main ask() — walks the cascade ──
+  async function ask(prompt, opts) {
+    opts = opts || {};
+    var order = opts.order || STATE.preferred;
+    var skipped = [];
+    for (var i = 0; i < order.length; i++) {
+      var name = order[i];
+      var p = ALL[name];
+      if (!p) continue;
+      if (p.available && !p.available()) { skipped.push({ name: name, reason: 'unavailable' }); continue; }
+      if (p.hasKey && !p.hasKey()) { skipped.push({ name: name, reason: 'no key' }); continue; }
+      var t0 = Date.now();
+      try {
+        var text = await p.ask(prompt, opts);
+        var ms = Date.now() - t0;
+        trace(name, p.tier, ms, true, prompt);
+        return { provider: name, tier: p.tier, label: p.label, text: text, ms: ms, skipped: skipped };
+      } catch(e) {
+        var ms2 = Date.now() - t0;
+        trace(name, p.tier, ms2, false, prompt);
+        skipped.push({ name: name, reason: e.message || String(e), ms: ms2 });
+      }
+    }
+    return { error: 'all providers failed', skipped: skipped };
+  }
+
+  function providers() {
+    return {
+      anthropic: !!STATE.keys.anthropic,
+      openai: !!STATE.keys.openai,
+      google: !!STATE.keys.google,
+      mesh: !!window.BroadcastChannel,
+      onlybrains: !!(window.kcc && window.kcc.reason),
+      webllm_supported: hasWebGPU(),
+      webllm_status: STATE.webllm.status,
+      webllm_progress: STATE.webllm.progress,
+      webllm_model: STATE.webllm.model
+    };
+  }
+
+  function setKey(provider, key) {
+    STATE.keys[provider] = key;
+    persist();
+    updateUI();
+  }
+
+  function currentTier() {
+    // Highest-priority tier that will ACTUALLY answer (mesh excluded since it's peer-dependent)
+    var prov = providers();
+    if (prov.anthropic || prov.openai || prov.google) return 'T1';
+    if (prov.onlybrains) return 'T3';
+    if (prov.webllm_status === 'ready') return 'T4';
+    return 'T0';
+  }
+
+  // ── Floating cascade-status badge ──
+  var badge = null;
+  function injectBadge(){
+    if (document.getElementById('llm-badge')) return;
+    var el = document.createElement('div');
+    el.id = 'llm-badge';
+    el.style.cssText = 'position:fixed;bottom:12px;left:340px;background:rgba(0,0,0,.65);color:#dbe1ea;padding:5px 10px;border-radius:6px;font-family:monospace;font-size:11px;cursor:pointer;z-index:9999;letter-spacing:.06em;border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px);display:flex;align-items:center;gap:6px';
+    el.title = 'LLM Cascade · click for status';
+    el.onclick = function(){ showCascadeUI(); };
+    document.body.appendChild(el);
+    badge = el;
+    updateUI();
+  }
+  function updateUI(){
+    if (!badge) return;
+    var tier = currentTier();
+    var colour = tier === 'T1' ? '#22c55e' : tier === 'T2' ? '#8b5cf6' : tier === 'T3' ? '#d4af37' : tier === 'T4' ? '#f59e0b' : '#8a8a8a';
+    var label = 'AI · ' + tier;
+    if (STATE.webllm.status === 'downloading') {
+      label = 'WebLLM ' + Math.round((STATE.webllm.progress || 0) * 100) + '%';
+      colour = '#f59e0b';
+    }
+    badge.innerHTML = '<span style="color:' + colour + ';font-weight:700">●</span><span>' + label + '</span>';
+  }
+
+  // ── Settings modal ──
+  function showCascadeUI(){
+    var prov = providers();
+    var tier = currentTier();
+    var keysHtml = ['anthropic','openai','google'].map(function(p){
+      var has = !!STATE.keys[p];
+      var label = p[0].toUpperCase() + p.slice(1);
+      return '<div style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><label style="width:90px;font-size:12px;color:#a8b0bc">' + label + '</label><input type="password" id="llm-key-' + p + '" placeholder="' + (has ? '••• key saved' : 'paste API key') + '" style="flex:1;background:#0c0e12;color:#dbe1ea;border:1px solid #2a2f3a;border-radius:5px;padding:5px 8px;font-family:monospace;font-size:11px"><button data-save="' + p + '" style="background:#5b8def;color:#fff;border:none;padding:4px 10px;border-radius:5px;cursor:pointer;font-size:11px">save</button>' + (has ? '<button data-clear="' + p + '" style="background:transparent;color:#ef4444;border:1px solid #ef4444;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:11px">clear</button>' : '') + '</div>';
+    }).join('');
+    var webllmStatus = STATE.webllm.status;
+    var webllmHtml = '<div style="background:#0c0e12;border:1px solid #2a2f3a;border-radius:6px;padding:10px;margin:10px 0;font-size:12px">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><strong style="color:#f59e0b">⚡ WebLLM (in-browser, offline-capable)</strong><span style="color:#8a8a8a;font-size:11px">' + (STATE.webllm.model || WEBLLM_DEFAULT_MODEL) + '</span></div>' +
+      '<div style="font-size:11px;color:#a8b0bc;margin-bottom:8px">Downloads a 1.7GB model once. After that all AI runs in your browser using WebGPU — no internet needed. Status: <strong style="color:' + (webllmStatus === 'ready' ? '#22c55e' : webllmStatus === 'downloading' ? '#f59e0b' : '#8a8a8a') + '">' + webllmStatus + '</strong>' + (STATE.webllm.message ? ' · ' + STATE.webllm.message : '') + '</div>' +
+      (webllmStatus === 'downloading' ? '<div style="height:6px;background:#1f2937;border-radius:3px;overflow:hidden;margin-bottom:6px"><div style="height:100%;background:#f59e0b;width:' + Math.round((STATE.webllm.progress || 0) * 100) + '%"></div></div>' : '') +
+      '<div style="display:flex;gap:6px"><button id="llm-webllm-download" ' + (webllmStatus === 'downloading' || webllmStatus === 'ready' ? 'disabled' : '') + ' style="background:#f59e0b;color:#000;border:none;padding:6px 12px;border-radius:5px;cursor:' + (webllmStatus === 'downloading' || webllmStatus === 'ready' ? 'not-allowed;opacity:.5' : 'pointer') + ';font-size:11px;font-weight:600">' + (webllmStatus === 'ready' ? '✓ loaded' : webllmStatus === 'downloading' ? 'downloading…' : 'download model (1.7GB)') + '</button>' +
+      (hasWebGPU() ? '<span style="font-size:10px;color:#22c55e;align-self:center">✓ WebGPU supported</span>' : '<span style="font-size:10px;color:#ef4444;align-self:center">✗ WebGPU not available in this browser</span>') +
+      '</div></div>';
+    var logHtml = STATE.log.slice(0, 6).map(function(l){
+      var d = new Date(l.t).toLocaleString();
+      var ok = l.ok ? '✓' : '✗';
+      var colour = l.ok ? '#22c55e' : '#ef4444';
+      return '<div style="font-size:10px;color:#a8b0bc;padding:2px 0"><span style="color:#8a8a8a">' + d + '</span> · <span style="color:' + colour + '">' + ok + '</span> ' + l.provider + ' (' + l.tier + ') · ' + l.ms + 'ms · ' + l.prompt_chars + ' chars in</div>';
+    }).join('') || '<div style="color:#8a8a8a;font-size:11px">no calls yet</div>';
+
+    var modal = document.createElement('div');
+    modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,sans-serif';
+    modal.innerHTML='<div style="background:#161821;border:1px solid #2a2f3a;border-radius:12px;padding:22px;max-width:580px;width:100%;color:#dbe1ea;max-height:90vh;overflow:auto">' +
+      '<h3 style="margin:0 0 4px;color:#e6e8ee">◊·κ LLM Cascade</h3>' +
+      '<p style="margin:0 0 12px;font-size:12px;color:#8a8a8a">Current tier: <strong style="color:' + (tier==='T1'?'#22c55e':tier==='T2'?'#8b5cf6':tier==='T3'?'#d4af37':tier==='T4'?'#f59e0b':'#8a8a8a') + '">' + tier + '</strong> · fallback order: ' + STATE.preferred.join(' → ') + '</p>' +
+      '<h4 style="font-size:11px;color:#8a8a8a;letter-spacing:.08em;text-transform:uppercase;margin:8px 0 6px">T1 · your API keys (browser-only, never leaves device)</h4>' +
+      keysHtml +
+      '<h4 style="font-size:11px;color:#8a8a8a;letter-spacing:.08em;text-transform:uppercase;margin:14px 0 6px">T4 · WebLLM offline</h4>' +
+      webllmHtml +
+      '<h4 style="font-size:11px;color:#8a8a8a;letter-spacing:.08em;text-transform:uppercase;margin:14px 0 6px">recent calls</h4>' +
+      logHtml +
+      '<div style="display:flex;gap:8px;margin-top:14px"><button id="llm-test" style="background:#5b8def;color:#fff;border:none;padding:7px 12px;border-radius:6px;cursor:pointer;font-size:12px">test cascade</button><button id="llm-close" style="background:transparent;color:#8a8a8a;border:1px solid #2a2f3a;padding:7px 12px;border-radius:6px;cursor:pointer;font-size:12px">close</button></div>' +
+      '<div id="llm-test-result" style="margin-top:10px;font-size:11px;color:#a8b0bc;font-family:monospace;display:none;background:#06080c;border:1px solid #1f2937;border-radius:4px;padding:8px;max-height:200px;overflow:auto"></div>' +
+      '</div>';
+    document.body.appendChild(modal);
+    modal.querySelector('#llm-close').onclick = function(){ modal.remove(); };
+    modal.onclick = function(e){ if (e.target === modal) modal.remove(); };
+    modal.querySelectorAll('[data-save]').forEach(function(b){
+      b.onclick = function(){
+        var p = b.getAttribute('data-save');
+        var inp = modal.querySelector('#llm-key-' + p);
+        if (inp.value) { setKey(p, inp.value); modal.remove(); showCascadeUI(); }
+      };
+    });
+    modal.querySelectorAll('[data-clear]').forEach(function(b){
+      b.onclick = function(){ var p = b.getAttribute('data-clear'); delete STATE.keys[p]; persist(); updateUI(); modal.remove(); showCascadeUI(); };
+    });
+    var dl = modal.querySelector('#llm-webllm-download');
+    if (dl) dl.onclick = function(){ loadWebLLM().then(function(){ modal.remove(); showCascadeUI(); }).catch(function(e){ alert('WebLLM load failed: ' + e.message); }); };
+    var test = modal.querySelector('#llm-test');
+    test.onclick = async function(){
+      var res = modal.querySelector('#llm-test-result');
+      res.style.display = 'block';
+      res.textContent = 'testing… asking "Say OK in one word"';
+      var r = await ask('Say OK in one word.', { max_tokens: 32 });
+      res.textContent = r.error ? '✗ ' + r.error + '\nSkipped: ' + JSON.stringify(r.skipped || [], null, 2) : '✓ ' + r.provider + ' (' + r.tier + ') · ' + r.ms + 'ms\n\n' + r.text;
+    };
+  }
+
+  // Boot
+  (function boot(){
+    function ready(){
+      injectBadge();
+      try { console.log('%c◊·κ LLM cascade', 'color:#5b8def;font-weight:bold', 'current tier:', currentTier(), '· providers:', providers()); } catch(_){}
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready, { once:true });
+    else ready();
+  })();
+
+  window.llm = {
+    ask: ask,
+    providers: providers,
+    setKey: setKey,
+    preloadWebLLM: loadWebLLM,
+    tier: currentTier,
+    config: { preferred: STATE.preferred },
+    showSettings: showCascadeUI,
+    _state: STATE
+  };
+})();
+</script>
+<!-- /◊·κ LLM CASCADE -->
 </body>
 </html>`;
 
