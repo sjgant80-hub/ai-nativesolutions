@@ -4,60 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0a">
-<title>AI Native Solutions · Sovereign Tools That Work Offline</title>
-<meta name="description" content="Sovereign tools that run from one HTML file. Work offline. Never send your data to someone else's server. Free to try. Free forever for personal use.">
+<title>AI Native Solutions · The Sovereign Marketplace</title>
+<meta name="description" content="The marketplace for sovereign software. 30+ apps · 10 APIs · 3 SDKs · 11 research publications. Single HTML files. Work offline. Your data on your device.">
 <meta property="og:title" content="AI Native Solutions · The Sovereign Marketplace">
-<meta property="og:description" content="Software that works for you, not the other way around. Sovereign tools. No subscriptions. No cloud. Your data stays on your device.">
+<meta property="og:description" content="Browse 60+ sovereign tools across apps, APIs, SDKs and research. The post-centralised software estate. Free to try.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.ai-nativesolutions.com">
 <link rel="canonical" href="https://www.ai-nativesolutions.com/">
 <link rel="manifest" href='data:application/manifest+json,{"name":"AI Native Solutions","short_name":"AIN","start_url":".","display":"standalone","background_color":"#0a0a0a","theme_color":"#d4a017","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 fill=%22%230a0a0a%22/><text x=%2232%22 y=%2244%22 text-anchor=%22middle%22 font-size=%2236%22 fill=%22%23d4a017%22 font-family=%22serif%22 font-weight=%22bold%22>◊</text></svg>","sizes":"any","type":"image/svg+xml"}]}'>
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "AI Native Solutions",
-  "url": "https://www.ai-nativesolutions.com",
-  "founder": { "@type": "Person", "name": "Simon Gant" },
-  "description": "A company that builds sovereign tools — single HTML files that work offline, never phone home, and cost nothing to run.",
-  "sameAs": ["https://github.com/sjgant80-hub", "https://www.linkedin.com/in/simon-gant-295b56180/"]
-}
+{ "@context": "https://schema.org", "@type": "Organization", "name": "AI Native Solutions", "url": "https://www.ai-nativesolutions.com", "founder": { "@type": "Person", "name": "Simon Gant" }, "description": "The marketplace for sovereign software · single HTML files · no subscriptions · data stays on device", "sameAs": ["https://github.com/sjgant80-hub", "https://www.linkedin.com/in/simon-gant-295b56180/"] }
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 :root {
-  --bg: #0a0a0a;
-  --surface: #141414;
-  --border: #1a1a1a;
-  --text: #e8e6e3;
-  --muted: #888;
-  --gold: #d4a017;
-  --amber: #e8a012;
-  --success: #44aa44;
-  --danger: #cc3333;
-  --max: 1180px;
+  --bg: #0a0a0a; --surface: #141414; --surface-2: #1a1a18; --border: #1a1a1a;
+  --text: #e8e6e3; --muted: #888; --gold: #d4a017; --amber: #e8a012;
+  --success: #44aa44; --danger: #cc3333; --info: #6a9aff;
+  --max: 1280px;
 }
 html, body { background: var(--bg); color: var(--text); font: 16px/1.7 'DM Mono', ui-monospace, monospace; min-height: 100dvh; -webkit-font-smoothing: antialiased; }
-body { overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); }
+body { overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); scroll-behavior: smooth; }
 ::selection { background: var(--gold); color: #0a0a0a; }
 a { color: inherit; text-decoration: none; transition: color 0.2s; }
 a:hover { color: var(--gold); }
-
-.display { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
-.heading { font-family: 'Syne', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.01em; }
-.whisper { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 400; }
-.mono { font-family: 'DM Mono', ui-monospace, monospace; }
 h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; }
 h2 { font-family: 'Syne', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; }
-h3 { font-family: 'Syne', system-ui, sans-serif; font-weight: 700; letter-spacing: 0.01em; }
+h3, h4 { font-family: 'Syne', system-ui, sans-serif; font-weight: 700; }
 
 header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 24px;
+  background: rgba(10, 10, 10, 0.88); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); padding: 14px 24px;
 }
 .nav { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { display: flex; align-items: center; gap: 10px; }
@@ -65,69 +44,83 @@ header {
 .brand-name { font-family: 'Syne'; font-weight: 800; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; }
 .nav-links { display: flex; gap: 22px; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
 .nav-links a { color: var(--text); font-family: 'Syne'; font-weight: 600; }
-.nav-cta { font-family: 'Syne'; font-weight: 700; padding: 9px 16px; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 0; font-size: 12px; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; text-transform: uppercase; text-decoration: none; }
+.nav-cta { font-family: 'Syne'; font-weight: 700; padding: 9px 16px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 12px; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; text-transform: uppercase; text-decoration: none; }
 .nav-cta:hover { background: var(--gold); color: #0a0a0a; }
 @media (max-width: 720px) { .nav-links { display: none; } header { padding: 12px 18px; } .brand-name { font-size: 12px; } }
 
-section { padding: 120px 24px; max-width: var(--max); margin: 0 auto; }
-@media (max-width: 720px) { section { padding: 80px 18px; } }
+section { padding: 110px 24px; max-width: var(--max); margin: 0 auto; }
+@media (max-width: 720px) { section { padding: 70px 18px; } }
 
 .section-label { font-family: 'Syne'; font-weight: 700; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
 .section-line { width: 60px; height: 1px; background: var(--gold); margin-bottom: 18px; }
 
-.hero { padding-top: 200px; padding-bottom: 100px; min-height: 100vh; display: flex; align-items: center; }
+.hero { padding-top: 180px; padding-bottom: 80px; min-height: 100vh; display: flex; align-items: center; }
 .hero-inner { max-width: 920px; }
-.hero h1 { font-size: clamp(48px, 8vw, 88px); margin-bottom: 32px; }
+.hero h1 { font-size: clamp(48px, 8vw, 88px); margin-bottom: 28px; }
 .hero h1 em { font-style: italic; color: var(--gold); }
-.hero p { font-family: 'Cormorant Garamond'; font-size: clamp(20px, 2.4vw, 28px); font-style: italic; color: var(--text); margin-bottom: 40px; max-width: 720px; line-height: 1.45; font-weight: 400; }
-.hero .ctas { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 60px; }
-.btn-primary, .btn-secondary {
-  font-family: 'Syne'; font-weight: 700; padding: 18px 32px; cursor: pointer;
-  font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
-  border-radius: 0; transition: all 0.2s; display: inline-block; text-decoration: none;
-}
-.btn-primary { background: var(--gold); color: #0a0a0a; border: 1px solid var(--gold); }
+.hero p { font-family: 'Cormorant Garamond'; font-size: clamp(20px, 2.4vw, 28px); font-style: italic; color: var(--text); margin-bottom: 36px; max-width: 720px; line-height: 1.45; }
+.hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+.btn-primary, .btn-secondary, .btn-tertiary { font-family: 'Syne'; font-weight: 700; padding: 16px 28px; cursor: pointer; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid var(--gold); transition: all 0.2s; display: inline-block; text-decoration: none; }
+.btn-primary { background: var(--gold); color: #0a0a0a; }
 .btn-primary:hover { background: var(--amber); border-color: var(--amber); color: #0a0a0a; }
-.btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--text); }
+.btn-secondary { background: transparent; color: var(--text); border-color: var(--text); }
 .btn-secondary:hover { color: var(--gold); border-color: var(--gold); }
-.hero-tag { font-family: 'DM Mono'; font-size: 12px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; padding-top: 24px; border-top: 1px solid var(--border); display: inline-block; padding-right: 60px; }
+.btn-tertiary { background: transparent; color: var(--muted); border-color: var(--border); }
+.btn-tertiary:hover { color: var(--gold); border-color: var(--gold); }
+.hero-stats { display: flex; gap: 24px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid var(--border); font-family: 'DM Mono'; font-size: 12px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.hero-stats b { color: var(--gold); font-family: 'Playfair Display'; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-right: 4px; }
 
-.wound h2, .mirror h2, .catalogue h2, .proof h2, .tribe h2, .forge h2, .pricing h2 { font-size: clamp(34px, 5vw, 56px); margin-bottom: 12px; }
+.wound h2, .mirror h2, .marketplace h2, .proof h2, .tribe h2, .forge h2, .pricing h2, .guild h2 { font-size: clamp(34px, 5vw, 56px); margin-bottom: 18px; }
 .wound h2 { margin-bottom: 36px; }
-.mirror h2 { margin-bottom: 36px; max-width: 800px; }
 .mirror h2 em, .gift h2 em { font-style: italic; color: var(--gold); }
-
-.wound .stanza { font-family: 'Playfair Display'; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.55; margin-bottom: 28px; max-width: 760px; color: var(--text); }
+.wound .stanza { font-family: 'Playfair Display'; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.55; margin-bottom: 28px; max-width: 760px; }
 .wound .stanza em { color: var(--gold); font-style: italic; }
 .wound .punchline { font-family: 'Syne'; font-size: clamp(24px, 3vw, 36px); font-weight: 700; color: var(--gold); margin-top: 56px; max-width: 700px; line-height: 1.25; }
-
 .mirror p { font-family: 'Playfair Display'; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.55; margin-bottom: 28px; max-width: 720px; }
-.mirror .cta-row { margin-top: 36px; }
+p.lede { font-family: 'Cormorant Garamond'; font-size: 22px; font-style: italic; color: var(--muted); margin-bottom: 32px; max-width: 760px; }
 
-p.lede { font-family: 'Cormorant Garamond'; font-size: 22px; font-style: italic; color: var(--muted); margin-bottom: 40px; max-width: 700px; }
+/* ═══ MARKETPLACE controls ═══ */
+.controls { background: var(--surface); border: 1px solid var(--border); padding: 20px 22px; margin-bottom: 22px; }
+.controls-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+.controls-row:last-child { margin-bottom: 0; }
+.search-input { flex: 1; min-width: 220px; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; font-family: 'DM Mono'; font-size: 14px; }
+.search-input:focus { outline: 1px solid var(--gold); outline-offset: -1px; }
+.count-pill { font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; padding: 12px 16px; border: 1px solid var(--border); white-space: nowrap; }
+.count-pill .num { color: var(--gold); font-weight: 700; }
 
-.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
-.filter-chip { font-family: 'Syne'; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 16px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; transition: all 0.2s; }
-.filter-chip:hover { color: var(--text); border-color: var(--text); }
-.filter-chip.active { background: var(--gold); border-color: var(--gold); color: #0a0a0a; }
+.kind-tabs { display: flex; gap: 0; margin-bottom: 16px; border: 1px solid var(--border); background: var(--surface); flex-wrap: wrap; }
+.kind-tab { font-family: 'Syne'; font-weight: 700; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 14px 22px; background: transparent; border: none; color: var(--muted); cursor: pointer; transition: all 0.2s; flex: 1; min-width: 110px; border-right: 1px solid var(--border); }
+.kind-tab:last-child { border-right: none; }
+.kind-tab:hover { color: var(--text); }
+.kind-tab.active { background: var(--gold); color: #0a0a0a; }
+.kind-tab .count { opacity: 0.7; margin-left: 8px; font-size: 10px; }
+
+.cat-bar { display: flex; gap: 6px; flex-wrap: wrap; padding-bottom: 6px; }
+.cat-chip { font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.06em; padding: 6px 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; transition: all 0.2s; text-transform: lowercase; }
+.cat-chip:hover { color: var(--text); border-color: var(--text); }
+.cat-chip.active { background: var(--gold); border-color: var(--gold); color: #0a0a0a; }
 
 .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-.tool-card { background: var(--surface); padding: 28px 24px; transition: all 0.25s; position: relative; border-left: 2px solid transparent; }
-.tool-card:hover { background: #1a1a18; border-left-color: var(--gold); transform: translateY(-2px); }
-.tool-card .tc-meta { font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
+.tool-card { background: var(--surface); padding: 26px 22px; transition: all 0.25s; position: relative; border-left: 2px solid transparent; min-height: 220px; display: flex; flex-direction: column; }
+.tool-card:hover { background: var(--surface-2); border-left-color: var(--gold); transform: translateY(-2px); }
+.tool-card .tc-kind { position: absolute; top: 14px; right: 16px; font-family: 'DM Mono'; font-size: 9px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--gold); }
+.tool-card .tc-kind.api { color: var(--info); border-color: var(--info); }
+.tool-card .tc-kind.sdk { color: var(--success); border-color: var(--success); }
+.tool-card .tc-kind.research { color: var(--muted); border-color: var(--muted); }
+.tool-card .tc-kind.infra { color: #d68f8f; border-color: #d68f8f; }
+.tool-card h3 { font-size: 20px; margin-bottom: 6px; font-family: 'Syne'; font-weight: 800; padding-right: 70px; line-height: 1.15; }
+.tool-card .tc-domain { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 15px; color: var(--text); margin-bottom: 12px; line-height: 1.4; padding-right: 70px; }
+.tool-card .tc-purpose { font-size: 12px; line-height: 1.65; color: var(--muted); margin-bottom: 14px; flex: 1; }
+.tool-card .tc-meta { font-family: 'DM Mono'; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
 .tool-card .tc-meta .prime { color: var(--gold); }
-.tool-card h3 { font-size: 22px; margin-bottom: 8px; font-family: 'Syne'; font-weight: 800; }
-.tool-card .tc-domain { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 16px; color: var(--text); margin-bottom: 14px; line-height: 1.4; }
-.tool-card .tc-purpose { font-size: 13px; line-height: 1.65; color: var(--muted); margin-bottom: 18px; min-height: 60px; }
-.tool-card .tc-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.tool-card .tc-actions a { font-family: 'Syne'; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 14px; border: 1px solid var(--border); color: var(--text); transition: all 0.2s; }
+.tool-card .tc-grift { font-family: 'DM Mono'; font-size: 10px; color: var(--danger); margin-bottom: 12px; line-height: 1.5; }
+.tool-card .tc-grift::before { content: 'OBSOLETES · '; color: var(--gold); }
+.tool-card .tc-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; }
+.tool-card .tc-actions a { font-family: 'Syne'; font-weight: 700; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 12px; border: 1px solid var(--border); color: var(--text); transition: all 0.2s; }
 .tool-card .tc-actions a.primary { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
-.tool-card .tc-actions a.primary:hover { background: var(--amber); border-color: var(--amber); color: #0a0a0a; }
+.tool-card .tc-actions a.primary:hover { background: var(--amber); border-color: var(--amber); }
 .tool-card .tc-actions a:hover { color: var(--gold); border-color: var(--gold); }
 .tool-card .tc-actions a.primary:hover { color: #0a0a0a; }
-.tool-card .tc-grift { font-family: 'DM Mono'; font-size: 11px; color: var(--danger); margin-top: 12px; line-height: 1.5; }
-.tool-card .tc-grift::before { content: 'OBSOLETES · '; color: var(--gold); }
-.tool-card .tc-shipped { position: absolute; top: 16px; right: 18px; font-family: 'DM Mono'; font-size: 10px; color: var(--muted); letter-spacing: 0.06em; }
 
 .proof { background: #0c0c0c; }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
@@ -135,28 +128,33 @@ p.lede { font-family: 'Cormorant Garamond'; font-size: 22px; font-style: italic;
 .stat .num { font-family: 'Playfair Display'; font-weight: 700; font-size: 56px; color: var(--gold); line-height: 1; margin-bottom: 8px; letter-spacing: -0.03em; }
 .stat .lbl { font-family: 'Syne'; font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
-.tribe .quotes { display: grid; gap: 36px; margin-bottom: 56px; }
-.quote { padding: 28px 32px; border-left: 2px solid var(--gold); background: var(--surface); }
+.tribe .quotes { display: grid; gap: 28px; margin-bottom: 48px; }
+.quote { padding: 26px 30px; border-left: 2px solid var(--gold); background: var(--surface); }
 .quote .qt { font-family: 'Playfair Display'; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--text); margin-bottom: 14px; }
 .quote .at { font-family: 'Syne'; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
-.users-line { font-family: 'Playfair Display'; font-size: 22px; line-height: 1.6; color: var(--text); margin-bottom: 28px; max-width: 720px; }
+.users-line { font-family: 'Playfair Display'; font-size: 22px; line-height: 1.6; color: var(--text); margin-bottom: 28px; max-width: 760px; }
 .users-line strong { color: var(--gold); font-weight: 700; }
 
 .forge { background: linear-gradient(180deg, var(--bg) 0%, #0c0c0c 100%); }
-.forge-panel { background: var(--surface); border: 1px solid var(--border); padding: 28px; max-width: 820px; }
+.forge .layers { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 32px 0; }
+.layer { background: var(--surface); padding: 22px 18px; transition: all 0.2s; }
+.layer:hover { background: var(--surface-2); }
+.layer .num { font-family: 'Playfair Display'; font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+.layer .name { font-family: 'Syne'; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); margin-bottom: 6px; }
+.layer .desc { font-size: 12px; line-height: 1.6; color: var(--muted); }
+.forge-panel { background: var(--surface); border: 1px solid var(--border); padding: 28px; max-width: 920px; margin-top: 28px; }
 .forge-panel label { font-family: 'Syne'; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
 .forge-panel textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 14px; font-family: 'DM Mono'; font-size: 14px; line-height: 1.6; min-height: 120px; resize: vertical; }
 .forge-panel textarea:focus { outline: 1px solid var(--gold); outline-offset: -1px; }
-.forge-panel .controls { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; align-items: center; }
-.forge-tier { font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.forge-panel .controls-row { margin: 18px 0 0; }
+.forge-tier { font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; padding-left: 8px; }
 .forge-tier.t3 { color: var(--gold); }
 .forge-output { margin-top: 24px; padding: 20px; background: var(--bg); border-left: 2px solid var(--gold); font-family: 'DM Mono'; font-size: 13px; line-height: 1.7; display: none; }
 .forge-output.show { display: block; }
 .forge-output pre { white-space: pre-wrap; word-break: break-word; }
 
-.tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 60px; }
-.tier { background: var(--surface); padding: 36px 28px; position: relative; transition: all 0.2s; }
-.tier:hover { background: #1a1a18; }
+.tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 56px; }
+.tier { background: var(--surface); padding: 36px 28px; position: relative; }
 .tier.featured { border-top: 2px solid var(--gold); }
 .tier-label { font-family: 'Syne'; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 .tier-label.gold { color: var(--gold); }
@@ -169,15 +167,19 @@ p.lede { font-family: 'Cormorant Garamond'; font-size: 22px; font-style: italic;
 .tier-cta { font-family: 'Syne'; font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 22px; border: 1px solid var(--text); color: var(--text); display: inline-block; transition: all 0.2s; cursor: pointer; background: transparent; }
 .tier-cta:hover { color: var(--gold); border-color: var(--gold); }
 .tier.featured .tier-cta { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
-.tier.featured .tier-cta:hover { background: var(--amber); border-color: var(--amber); color: #0a0a0a; }
+.tier.featured .tier-cta:hover { background: var(--amber); border-color: var(--amber); }
 
-.compare { background: var(--surface); border: 1px solid var(--border); padding: 32px; overflow-x: auto; }
-.compare table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.compare th, .compare td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); }
-.compare th { font-family: 'Syne'; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.compare td { color: var(--text); }
-.compare td.bad { color: var(--danger); }
-.compare td.good { color: var(--success); }
+.guild { background: var(--bg); }
+.guild .guild-panel { background: var(--surface); border: 1px solid var(--border); padding: 32px; margin-top: 28px; }
+.guild .field { margin-bottom: 14px; }
+.guild .field label { font-family: 'Syne'; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
+.guild .field input, .guild .field textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; font-family: 'DM Mono'; font-size: 14px; }
+.guild .field input:focus, .guild .field textarea:focus { outline: 1px solid var(--gold); outline-offset: -1px; }
+.guild .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .guild .field-row { grid-template-columns: 1fr; } }
+.guild-bullets { list-style: none; margin: 14px 0 22px; }
+.guild-bullets li { padding: 6px 0; color: var(--text); }
+.guild-bullets li::before { content: '◊  '; color: var(--gold); font-weight: 700; }
 
 .gift { background: #0c0c0c; }
 .gift .label { font-family: 'Syne'; font-weight: 800; font-size: 13px; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 24px; text-transform: uppercase; }
@@ -185,7 +187,7 @@ p.lede { font-family: 'Cormorant Garamond'; font-size: 22px; font-style: italic;
 .gift p { font-family: 'Cormorant Garamond'; font-style: italic; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.5; color: var(--text); max-width: 760px; margin-bottom: 40px; }
 .gift .ctas { display: flex; gap: 16px; flex-wrap: wrap; }
 
-footer { background: #060606; border-top: 1px solid var(--border); padding: 60px 24px 40px; }
+footer { background: #060606; border-top: 1px solid var(--border); padding: 56px 24px 36px; }
 .foot { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
 @media (max-width: 720px) { .foot { grid-template-columns: 1fr 1fr; gap: 28px; } }
 .foot h4 { font-family: 'Syne'; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
@@ -194,16 +196,25 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
 .foot li a { color: var(--text); }
 .foot-brand h3 { font-family: 'Playfair Display'; font-weight: 800; font-size: 22px; color: var(--text); margin-bottom: 12px; }
 .foot-brand p { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 16px; color: var(--muted); line-height: 1.6; max-width: 320px; }
-.foot-bottom { max-width: var(--max); margin: 48px auto 0; padding-top: 28px; border-top: 1px solid var(--border); font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.foot-bottom { max-width: var(--max); margin: 44px auto 0; padding-top: 24px; border-top: 1px solid var(--border); font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+.section-highlight { animation: highlight 1.6s ease; }
+@keyframes highlight {
+  0% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0); }
+  30% { box-shadow: 0 0 60px 0 rgba(212, 160, 23, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0); }
+}
 
 .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #0a0a0a; padding: 12px 22px; font-family: 'Syne'; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; z-index: 200; opacity: 0; transition: opacity 0.2s, transform 0.2s; pointer-events: none; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
 
 .skeleton { background: linear-gradient(90deg, var(--surface) 0%, #1c1c1c 50%, var(--surface) 100%); background-size: 200% 100%; animation: pulse 1.5s ease-in-out infinite; height: 200px; }
 @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+.empty-state { padding: 40px 24px; text-align: center; background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-family: 'Cormorant Garamond'; font-style: italic; font-size: 18px; grid-column: 1 / -1; }
 </style>
 </head>
 <body>
@@ -215,29 +226,37 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
       <div class="brand-name">AI Native Solutions</div>
     </a>
     <div class="nav-links">
-      <a href="#tools">Tools</a>
+      <a href="#marketplace">Marketplace</a>
       <a href="#forge">Forge</a>
-      <a href="#tribe">Mesh</a>
+      <a href="#guild">Guild</a>
       <a href="#pricing">Pricing</a>
     </div>
-    <a href="#tools" class="nav-cta">Browse →</a>
+    <a href="#marketplace" class="nav-cta" id="navBrowse">Browse →</a>
   </div>
 </header>
 
 <main id="top">
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
     <h1 class="reveal">Your software<br>should work <em>for you</em>.<br>Not the other way around.</h1>
-    <p class="reveal">Sovereign tools that run from one HTML file, work offline, and never send your data to someone else's server.</p>
+    <p class="reveal">The marketplace for sovereign software. Single HTML files. Real APIs. Open-source SDKs. Defensive research publications. Nothing rented. Nothing borrowed.</p>
     <div class="ctas reveal">
-      <a href="#tools" class="btn-primary">Browse the catalogue</a>
+      <a href="#marketplace" class="btn-primary" id="heroBrowse">Browse the marketplace</a>
       <a href="#forge" class="btn-secondary">Forge your own</a>
+      <a href="#guild" class="btn-tertiary">Join the guild</a>
     </div>
-    <div class="hero-tag reveal">No subscriptions · No cloud · No dependency · Just HTML that works</div>
+    <div class="hero-stats reveal" id="heroStats">
+      <div><b id="hsApps">—</b>apps</div>
+      <div><b id="hsApis">—</b>apis</div>
+      <div><b id="hsSdks">—</b>sdks</div>
+      <div><b id="hsResearch">—</b>research</div>
+    </div>
   </div>
 </section>
 
+<!-- WOUND -->
 <section class="wound reveal">
   <div class="section-line"></div>
   <div class="section-label">§ I · the problem nobody talks about</div>
@@ -247,31 +266,38 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
   <div class="punchline">You don't own your tools.<br>Your tools own you.</div>
 </section>
 
+<!-- MIRROR -->
 <section class="mirror reveal">
   <div class="section-line"></div>
   <div class="section-label">§ II · the mirror</div>
   <h2>You already <em>know</em> the answer.<br>You just couldn't build it yourself.</h2>
   <p>You know your workflow. You know your edge cases. You know what your team actually needs. You've been waiting for someone to build what you already designed in your head on a Tuesday morning.</p>
   <p>The Forge listens. You describe the workflow. It returns the tool. Single HTML file. Yours forever.</p>
-  <div class="cta-row">
-    <a href="#forge" class="btn-primary">Forge your tool →</a>
-  </div>
 </section>
 
-<section class="catalogue reveal" id="tools">
+<!-- MARKETPLACE -->
+<section class="marketplace reveal" id="marketplace">
   <div class="section-line"></div>
-  <div class="section-label">§ III · the catalogue</div>
-  <h2>Or pick one that's already built.</h2>
-  <p class="lede">Every tool below is a single HTML file. Free to try. Free forever for personal use.</p>
+  <div class="section-label">§ III · the marketplace</div>
+  <h2>The entire estate. In one place.</h2>
+  <p class="lede">Every sovereign tool, API, SDK and defensive publication — filterable by kind and domain. Pulls live from the registry. Updates without redeploy.</p>
 
-  <div class="filter-bar" id="filterBar">
-    <button class="filter-chip active" data-cat="all">All</button>
-    <button class="filter-chip" data-cat="trades">Trades</button>
-    <button class="filter-chip" data-cat="linkedin">LinkedIn</button>
-    <button class="filter-chip" data-cat="consulting">Consulting</button>
-    <button class="filter-chip" data-cat="scheduling">Scheduling</button>
-    <button class="filter-chip" data-cat="forms">Forms</button>
-    <button class="filter-chip" data-cat="newsletter">Newsletter</button>
+  <div class="controls">
+    <div class="controls-row">
+      <input class="search-input" id="searchInput" placeholder="Search by name, domain, purpose, what it obsoletes…" type="search">
+      <span class="count-pill"><span class="num" id="visibleCount">—</span> of <span id="totalCount">—</span> showing</span>
+    </div>
+    <div class="kind-tabs" id="kindTabs">
+      <button class="kind-tab active" data-kind="all">All <span class="count" id="cAll">—</span></button>
+      <button class="kind-tab" data-kind="app">Apps <span class="count" id="cApp">—</span></button>
+      <button class="kind-tab" data-kind="api">APIs <span class="count" id="cApi">—</span></button>
+      <button class="kind-tab" data-kind="sdk">SDKs <span class="count" id="cSdk">—</span></button>
+      <button class="kind-tab" data-kind="research">Research <span class="count" id="cResearch">—</span></button>
+      <button class="kind-tab" data-kind="infra">Infra <span class="count" id="cInfra">—</span></button>
+    </div>
+    <div class="cat-bar" id="catBar">
+      <button class="cat-chip active" data-cat="all">all categories</button>
+    </div>
   </div>
 
   <div class="tool-grid" id="toolGrid">
@@ -279,21 +305,23 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
   </div>
 </section>
 
+<!-- PROOF -->
 <section class="proof reveal">
   <div class="section-line"></div>
   <div class="section-label">§ IV · the numbers</div>
   <h2>Evidence, not promises.</h2>
   <p class="lede">Built. Live. Verified.</p>
   <div class="stats">
-    <div class="stat"><div class="num" id="statApps">—</div><div class="lbl">Sovereign tools shipped</div></div>
-    <div class="stat"><div class="num">~50<span style="font-size:24px;color:var(--muted)">KB</span></div><div class="lbl">Average tool size</div></div>
+    <div class="stat"><div class="num" id="statTotal">—</div><div class="lbl">Items in the estate</div></div>
+    <div class="stat"><div class="num" id="statApps">—</div><div class="lbl">Sovereign apps shipped</div></div>
+    <div class="stat"><div class="num" id="statApis">—</div><div class="lbl">Deployed APIs</div></div>
     <div class="stat"><div class="num">£0</div><div class="lbl">Monthly subscription required</div></div>
     <div class="stat"><div class="num">0</div><div class="lbl">Servers to maintain</div></div>
-    <div class="stat"><div class="num">7</div><div class="lbl">AI agents per tool (avg)</div></div>
     <div class="stat"><div class="num">100<span style="font-size:24px;color:var(--muted)">%</span></div><div class="lbl">Data stays on device</div></div>
   </div>
 </section>
 
+<!-- TRIBE -->
 <section class="tribe reveal" id="tribe">
   <div class="section-line"></div>
   <div class="section-label">§ V · the mesh</div>
@@ -314,20 +342,31 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
     </div>
   </div>
   <p class="users-line"><strong>Michel</strong> runs Rage Fight Academy on GymOS. <strong>Ivan</strong> does his builder accounts with FallAccount Trades. <strong>Mansoor</strong> stress-tested procurement governance. <strong>Thomas</strong> built the audio substrate.</p>
-  <div>
-    <a href="https://github.com/sjgant80-hub" class="btn-secondary" target="_blank">Join the guild</a>
-  </div>
 </section>
 
+<!-- FORGE -->
 <section class="forge reveal" id="forge">
   <div class="section-line"></div>
   <div class="section-label">§ VI · the factory</div>
-  <h2>Describe your workflow.<br>Get your tool back.</h2>
-  <p class="lede">The Forge runs in this browser. No backend. No server. T0 always available · T3 sharpens when you add a key.</p>
+  <h2>The Forge.<br>Workflow in. Sovereign HTML out.</h2>
+  <p class="lede">A 7-layer build engine that converts a plain-English business description into a fully-formed sovereign tool architecture. Runs in your browser. No backend. T0 always works.</p>
+
+  <h3 style="color:var(--gold);font-size:13px;letter-spacing:0.12em;text-transform:uppercase;margin-top:32px">The 7 layers · what gets built</h3>
+  <div class="layers">
+    <div class="layer"><div class="num">L1</div><div class="name">FACE</div><div class="desc">Views and surfaces. Dashboard, lists, forms, modals. The domain-appropriate UI.</div></div>
+    <div class="layer"><div class="num">L2</div><div class="name">SWARM</div><div class="desc">The Ω orchestrator plus 3–8 agents tuned to the workflow's actual verbs.</div></div>
+    <div class="layer"><div class="num">L3</div><div class="name">CASCADE</div><div class="desc">T0 deterministic always works · T1 WebLLM · T2 Ollama local · T3 Claude/GPT/Gemini.</div></div>
+    <div class="layer"><div class="num">L4</div><div class="name">BLOOM</div><div class="desc">Keyword and intent routing. The right agent gets the right input.</div></div>
+    <div class="layer"><div class="num">L5</div><div class="name">PERSIST</div><div class="desc">IndexedDB + localStorage. JSON export. Optional sync endpoint.</div></div>
+    <div class="layer"><div class="num">L6</div><div class="name">SKIN</div><div class="desc">Domain-appropriate aesthetic. Mobile-first. One-thumb operation.</div></div>
+    <div class="layer"><div class="num">L7</div><div class="name">ASS</div><div class="desc">Empty state is the demo. First-run experience drives adoption.</div></div>
+  </div>
+
+  <h3 style="color:var(--gold);font-size:13px;letter-spacing:0.12em;text-transform:uppercase;margin-top:32px">Try it now</h3>
   <div class="forge-panel">
     <label for="forgeInput">Describe what you do</label>
     <textarea id="forgeInput" placeholder='e.g. "I get enquiries by email, qualify the lead, send a quote, follow up, close the deal, onboard the client, invoice on milestones, chase late payment."'></textarea>
-    <div class="controls">
+    <div class="controls-row">
       <button class="btn-primary" id="forgeBtn">⇶ Forge it</button>
       <button class="btn-secondary" id="forgePreset">Use example</button>
       <span class="forge-tier" id="forgeTier">offline · T0</span>
@@ -336,6 +375,7 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
   </div>
 </section>
 
+<!-- PRICING -->
 <section class="pricing reveal" id="pricing">
   <div class="section-line"></div>
   <div class="section-label">§ VII · the model</div>
@@ -362,7 +402,7 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
       <ul class="tier-features">
         <li>Everything in Lite</li>
         <li>Custom agents tuned to your domain</li>
-        <li>Compliance rules baked in (CIS · MTD · GDPR · etc)</li>
+        <li>Compliance rules baked in</li>
         <li>Staff training session</li>
         <li>5-day turnaround</li>
       </ul>
@@ -382,30 +422,45 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
       <a class="tier-cta" href="https://www.linkedin.com/in/simon-gant-295b56180/" target="_blank">Request consultation</a>
     </div>
   </div>
+</section>
 
-  <div class="compare">
-    <table>
-      <thead><tr><th></th><th>Generic SaaS</th><th>Sovereign Tool</th></tr></thead>
-      <tbody>
-        <tr><td>Monthly cost</td><td class="bad">£200 – £500</td><td class="good">£0</td></tr>
-        <tr><td>Year 1 total</td><td class="bad">£2,400 – £6,000</td><td class="good">£0 – £5,000 once</td></tr>
-        <tr><td>Year 3 total</td><td class="bad">£7,200 – £18,000</td><td class="good">£0 – £5,000 once</td></tr>
-        <tr><td>Data ownership</td><td class="bad">Theirs</td><td class="good">Yours</td></tr>
-        <tr><td>Works offline</td><td class="bad">No</td><td class="good">Yes</td></tr>
-        <tr><td>Vendor lock-in</td><td class="bad">Yes</td><td class="good">No</td></tr>
-        <tr><td>Survives vendor outage</td><td class="bad">No</td><td class="good">Yes</td></tr>
-        <tr><td>Exit cost</td><td class="bad">Weeks → months</td><td class="good">USB stick · 0</td></tr>
-      </tbody>
-    </table>
+<!-- GUILD -->
+<section class="guild reveal" id="guild">
+  <div class="section-line"></div>
+  <div class="section-label">§ VIII · the guild</div>
+  <h2>Built one yourself?<br>Join the AI Craftspeople Guild.</h2>
+  <p class="lede">A directory of builders making sovereign tools. Your work on the marketplace. Your GitHub linked. Real distribution.</p>
+
+  <ul class="guild-bullets">
+    <li>One sovereign HTML file or open-source API · single deliverable</li>
+    <li>Works offline at T0 · cascade tier upgrades welcome</li>
+    <li>MIT or compatible · no proprietary lock-in</li>
+    <li>Your data stays on the user's device · no telemetry</li>
+    <li>Passes the ƒ(build) 14-point gate</li>
+  </ul>
+
+  <div class="guild-panel">
+    <div class="field-row">
+      <div class="field"><label>Your name</label><input id="gName" placeholder="How you sign your work"></div>
+      <div class="field"><label>GitHub URL</label><input id="gGithub" type="url" placeholder="https://github.com/your-handle"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Your tool URL</label><input id="gTool" type="url" placeholder="https://your-tool.github.io/"></div>
+      <div class="field"><label>Email (we send back the welcome)</label><input id="gEmail" type="email" placeholder="you@example.com"></div>
+    </div>
+    <div class="field"><label>What does it do? (1-2 sentences)</label><textarea id="gWhat" rows="3" placeholder="One line about the tool. What workflow it replaces. Who it's for."></textarea></div>
+    <button class="btn-primary" id="guildSubmit" style="margin-top:8px">Submit application</button>
+    <p style="color:var(--muted);font-size:11px;margin-top:14px;letter-spacing:0.06em;text-transform:uppercase">Opens your mail client with the application pre-filled. We review within 48h.</p>
   </div>
 </section>
 
+<!-- GIFT -->
 <section class="gift reveal">
   <div class="label">Free</div>
   <h2>The tool that runs your business<br>shouldn't charge you <em>rent</em> to use it.</h2>
   <p>Every tool on this site is free to try. Most are free forever for personal use. If the first step of your AI transformation requires an invoice, the transformation already failed.</p>
   <div class="ctas">
-    <a href="#tools" class="btn-primary">Browse the catalogue</a>
+    <a href="#marketplace" class="btn-primary">Browse the marketplace</a>
     <a href="https://www.linkedin.com/in/simon-gant-295b56180/" class="btn-secondary" target="_blank">Talk to Simon</a>
   </div>
 </section>
@@ -416,23 +471,23 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
   <div class="foot">
     <div class="foot-brand">
       <h3>◊ AI Native Solutions</h3>
-      <p>Sovereign tools that run from one HTML file, work offline, and respect the people who use them.</p>
+      <p>The marketplace for sovereign software. Single HTML files, real APIs, open SDKs, defensive research. No subscriptions. No cloud. Your data your device.</p>
     </div>
     <div>
-      <h4>Tools</h4>
+      <h4>Marketplace</h4>
       <ul>
-        <li><a href="https://sjgant80-hub.github.io/fallaccount-trades/" target="_blank">FallAccount Trades</a></li>
-        <li><a href="https://sjgant80-hub.github.io/fallgravity/" target="_blank">FallGravity</a></li>
-        <li><a href="https://sjgant80-hub.github.io/fallmap/" target="_blank">FallMap</a></li>
-        <li><a href="https://sjgant80-hub.github.io/fallslot/" target="_blank">FallSlot</a></li>
-        <li><a href="https://sjgant80-hub.github.io/fallform/" target="_blank">FallForm</a></li>
-        <li><a href="https://sjgant80-hub.github.io/falllist/" target="_blank">FallList</a></li>
+        <li><a href="#marketplace" onclick="setKind('app')">Apps</a></li>
+        <li><a href="#marketplace" onclick="setKind('api')">APIs</a></li>
+        <li><a href="#marketplace" onclick="setKind('sdk')">SDKs</a></li>
+        <li><a href="#marketplace" onclick="setKind('research')">Research</a></li>
+        <li><a href="#marketplace" onclick="setKind('infra')">Infra</a></li>
       </ul>
     </div>
     <div>
       <h4>Build</h4>
       <ul>
         <li><a href="#forge">The Forge</a></li>
+        <li><a href="#guild">Join the Guild</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="https://github.com/sjgant80-hub" target="_blank">GitHub</a></li>
         <li><a href="https://raw.githubusercontent.com/sjgant80-hub/fall-registry/main/index.json" target="_blank">Registry JSON</a></li>
@@ -458,29 +513,23 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 60px
 <script>
 'use strict';
 
-const VERSION = '2.0.0';
+const VERSION = '3.0.0';
 const REGISTRY_URL = 'https://raw.githubusercontent.com/sjgant80-hub/fall-registry/main/index.json';
 const STORE = 'ain-state';
 const PRIME = 7919;
 
 let state = {
   settings: { anthropicKey: '', openaiKey: '', geminiKey: '', openrouterKey: '' },
-  catalogue: null,
-  catalogueFetchedAt: 0,
+  registry: null,
+  registryFetchedAt: 0,
 };
 
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._to);
-  t._to = setTimeout(() => t.classList.remove('show'), 1800);
-}
+function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._to); t._to = setTimeout(() => t.classList.remove('show'), 1800); }
 function escHTML(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
 try { const raw = localStorage.getItem(STORE); if (raw) state = Object.assign(state, JSON.parse(raw)); } catch (e) {}
 function saveState() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
 
+// ═══ CASCADE ═══
 const Cascade = {
   async detectTier() {
     if (await Cascade._probeLocal()) return 'T2';
@@ -502,29 +551,17 @@ const Cascade = {
   async generate(prompt) {
     const s = state.settings;
     if (s.anthropicKey) try {
-      const r = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': s.anthropicKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-        body: JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 1500, messages: [{ role: 'user', content: prompt }] })
-      });
+      const r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-api-key': s.anthropicKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 1500, messages: [{ role: 'user', content: prompt }] }) });
       const d = await r.json();
       return { tier: 'T3·Claude', text: d?.content?.[0]?.text || '' };
     } catch (e) {}
     if (s.openaiKey) try {
-      const r = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + s.openaiKey },
-        body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }] })
-      });
+      const r = await fetch('https://api.openai.com/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + s.openaiKey }, body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }] }) });
       const d = await r.json();
       return { tier: 'T3·GPT', text: d?.choices?.[0]?.message?.content || '' };
     } catch (e) {}
     if (s.geminiKey) try {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${s.geminiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-      });
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${s.geminiKey}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) });
       const d = await r.json();
       return { tier: 'T3·Gemini', text: d?.candidates?.[0]?.content?.parts?.[0]?.text || '' };
     } catch (e) {}
@@ -532,87 +569,178 @@ const Cascade = {
   },
 };
 
-const CATEGORIES = {
-  trades: ['trades', 'sole trader', 'accounting'],
-  linkedin: ['linkedin'],
-  consulting: ['consulting', 'workflow', 'cost'],
-  scheduling: ['scheduling', 'booking', 'calendar'],
-  forms: ['forms', 'surveys', 'intake'],
-  newsletter: ['newsletter', 'email marketing', 'creator'],
-};
+// ═══ REGISTRY FETCH ═══
+let allItems = [];
+let activeKind = 'all';
+let activeCategory = 'all';
+let searchQuery = '';
 
-function categoryOf(app) {
-  const d = (app.domain || '').toLowerCase();
-  for (const [cat, terms] of Object.entries(CATEGORIES)) {
-    for (const t of terms) if (d.includes(t)) return cat;
-  }
-  return 'other';
+function aggregateRegistry(reg) {
+  const items = [];
+  ['apps', 'apis', 'sdks', 'research', 'infra', 'plugins'].forEach(section => {
+    (reg[section] || []).forEach(it => {
+      items.push({ ...it, _section: section, _kindClass: it.kind || (section === 'plugins' ? 'plugin' : section.replace(/s$/, '')) });
+    });
+  });
+  return items;
 }
 
-async function loadCatalogue() {
-  const grid = document.getElementById('toolGrid');
-  const cacheAge = Date.now() - (state.catalogueFetchedAt || 0);
-  if (state.catalogue && cacheAge < 5 * 60 * 1000) {
-    renderCatalogue();
-    document.getElementById('statApps').textContent = state.catalogue.apps?.length || '—';
+async function loadRegistry() {
+  const cacheAge = Date.now() - (state.registryFetchedAt || 0);
+  if (state.registry && cacheAge < 5 * 60 * 1000) {
+    renderAll();
     return;
   }
   try {
     const r = await fetch(REGISTRY_URL + '?t=' + Date.now());
     const reg = await r.json();
-    state.catalogue = reg;
-    state.catalogueFetchedAt = Date.now();
+    state.registry = reg;
+    state.registryFetchedAt = Date.now();
     saveState();
-    renderCatalogue();
-    document.getElementById('statApps').textContent = reg.apps?.length || '—';
+    renderAll();
   } catch (e) {
-    grid.innerHTML = `<div style="padding:24px;color:var(--muted);font-style:italic">Couldn't reach the registry. <a href="${REGISTRY_URL}" style="color:var(--gold)" target="_blank">View raw JSON</a></div>`;
+    document.getElementById('toolGrid').innerHTML = `<div class="empty-state">Couldn't reach the registry. <a href="${REGISTRY_URL}" style="color:var(--gold)" target="_blank">View raw JSON</a></div>`;
   }
 }
 
-let activeCategory = 'all';
+function renderAll() {
+  if (!state.registry) return;
+  allItems = aggregateRegistry(state.registry);
 
-function renderCatalogue() {
+  // counts
+  const counts = { all: allItems.length, app: 0, api: 0, sdk: 0, research: 0, infra: 0, plugin: 0 };
+  allItems.forEach(i => { const k = i._kindClass; if (counts[k] !== undefined) counts[k]++; });
+
+  document.getElementById('cAll').textContent = counts.all;
+  document.getElementById('cApp').textContent = counts.app;
+  document.getElementById('cApi').textContent = counts.api;
+  document.getElementById('cSdk').textContent = counts.sdk;
+  document.getElementById('cResearch').textContent = counts.research;
+  document.getElementById('cInfra').textContent = counts.infra + counts.plugin;
+
+  // hero stats
+  document.getElementById('hsApps').textContent = counts.app;
+  document.getElementById('hsApis').textContent = counts.api;
+  document.getElementById('hsSdks').textContent = counts.sdk;
+  document.getElementById('hsResearch').textContent = counts.research;
+
+  // proof stats
+  document.getElementById('statTotal').textContent = counts.all;
+  document.getElementById('statApps').textContent = counts.app;
+  document.getElementById('statApis').textContent = counts.api;
+
+  buildCategoryBar();
+  renderGrid();
+}
+
+function buildCategoryBar() {
+  const visible = allItems.filter(it => activeKind === 'all' || it._kindClass === activeKind || (activeKind === 'infra' && (it._kindClass === 'infra' || it._kindClass === 'plugin')));
+  const cats = new Set();
+  visible.forEach(i => { if (i.category) cats.add(i.category); });
+  const bar = document.getElementById('catBar');
+  bar.innerHTML = `<button class="cat-chip active" data-cat="all">all categories</button>` +
+    [...cats].sort().map(c => `<button class="cat-chip" data-cat="${escHTML(c)}">${escHTML(c)}</button>`).join('');
+  bar.querySelectorAll('.cat-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      bar.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeCategory = chip.dataset.cat;
+      renderGrid();
+    });
+  });
+}
+
+function renderGrid() {
   const grid = document.getElementById('toolGrid');
-  if (!state.catalogue || !state.catalogue.apps) {
-    grid.innerHTML = '<div style="padding:24px;color:var(--muted)">No apps in registry.</div>';
-    return;
-  }
-  const apps = state.catalogue.apps.filter(a => activeCategory === 'all' || categoryOf(a) === activeCategory);
-  if (!apps.length) { grid.innerHTML = '<div style="padding:24px;color:var(--muted);font-style:italic">No tools in this category yet. <a href="#forge" style="color:var(--gold)">Forge one →</a></div>'; return; }
-  grid.innerHTML = apps.map(a => {
-    const niceName = a.name.replace(/^fall/i, 'Fall').replace(/-/g, ' ').replace(/(?<=\s)\w/g, c => c.toUpperCase());
-    return `
+  const q = searchQuery.toLowerCase();
+  const filtered = allItems.filter(it => {
+    if (activeKind !== 'all') {
+      if (activeKind === 'infra') { if (it._kindClass !== 'infra' && it._kindClass !== 'plugin') return false; }
+      else if (it._kindClass !== activeKind) return false;
+    }
+    if (activeCategory !== 'all' && it.category !== activeCategory) return false;
+    if (q) {
+      const hay = (it.name + ' ' + (it.purpose || '') + ' ' + (it.domain || '') + ' ' + (it.category || '') + ' ' + ((it.obsoletes || []).join(' ')) + ' ' + (it.grift_exposed || '')).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  document.getElementById('visibleCount').textContent = filtered.length;
+  document.getElementById('totalCount').textContent = allItems.length;
+
+  if (!filtered.length) { grid.innerHTML = '<div class="empty-state">No matches. Try clearing the filters, or <a href="#forge" style="color:var(--gold)">forge a new one →</a></div>'; return; }
+  grid.innerHTML = filtered.map(renderCard).join('');
+}
+
+function niceName(name) { return name.replace(/^(fall|trilogy)/i, m => m.charAt(0).toUpperCase() + m.slice(1)).replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
+
+function renderCard(it) {
+  const kc = it._kindClass;
+  const tryUrl = it.url || it.source;
+  const tryLabel = kc === 'api' ? 'Open API' : kc === 'sdk' ? 'npm' : kc === 'research' ? 'Read' : kc === 'infra' ? 'View' : 'Try free';
+  return `
     <article class="tool-card">
-      <div class="tc-shipped">${escHTML(a.shipped || '')}</div>
+      <div class="tc-kind ${kc}">${kc}</div>
+      <h3>${escHTML(niceName(it.name))}</h3>
+      ${it.domain ? `<div class="tc-domain">${escHTML(it.domain)}</div>` : ''}
+      <div class="tc-purpose">${escHTML((it.purpose || '').slice(0, 200))}${(it.purpose || '').length > 200 ? '…' : ''}</div>
       <div class="tc-meta">
-        <span>${(a.size / 1024).toFixed(0)}KB</span>
-        <span class="prime">prime ${a.prime || '·'}</span>
-        <span>v${escHTML(a.version || '·')}</span>
+        ${it.size ? `<span>${(it.size / 1024).toFixed(0)}KB</span>` : ''}
+        ${it.prime ? `<span class="prime">prime ${it.prime}</span>` : ''}
+        ${it.version ? `<span>v${escHTML(String(it.version))}</span>` : ''}
+        ${it.package ? `<span style="color:var(--success)">${escHTML(it.package)}</span>` : ''}
+        ${it.status ? `<span>${escHTML(it.status)}</span>` : ''}
       </div>
-      <h3>${escHTML(niceName)}</h3>
-      <div class="tc-domain">${escHTML(a.domain || '')}</div>
-      <div class="tc-purpose">${escHTML((a.purpose || '').slice(0, 180))}${(a.purpose || '').length > 180 ? '…' : ''}</div>
-      ${a.grift_exposed ? `<div class="tc-grift">${escHTML(a.grift_exposed.slice(0, 100))}${a.grift_exposed.length > 100 ? '…' : ''}</div>` : ''}
+      ${it.grift_exposed ? `<div class="tc-grift">${escHTML(it.grift_exposed.slice(0, 110))}${it.grift_exposed.length > 110 ? '…' : ''}</div>` : ''}
       <div class="tc-actions">
-        <a class="primary" href="${escHTML(a.url)}" target="_blank">Try free</a>
-        <a href="${escHTML(a.source)}" target="_blank">Source</a>
+        ${tryUrl ? `<a class="primary" href="${escHTML(tryUrl)}" target="_blank">${tryLabel}</a>` : ''}
+        ${it.source ? `<a href="${escHTML(it.source)}" target="_blank">Source</a>` : ''}
+        ${it.openapi ? `<a href="${escHTML(it.openapi)}" target="_blank">OpenAPI</a>` : ''}
       </div>
     </article>`;
-  }).join('');
 }
 
-document.getElementById('filterBar').addEventListener('click', e => {
-  const chip = e.target.closest('.filter-chip');
-  if (!chip) return;
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  activeCategory = chip.dataset.cat;
-  renderCatalogue();
+// ═══ TAB / SEARCH WIRING ═══
+document.getElementById('kindTabs').addEventListener('click', e => {
+  const tab = e.target.closest('.kind-tab');
+  if (!tab) return;
+  setKind(tab.dataset.kind);
 });
 
-const PRESET = 'I get enquiries by email, qualify the lead, send a quote, follow up, close the deal, onboard the client, deliver the work in phases, invoice on milestones, chase late payment.';
+function setKind(kind) {
+  activeKind = kind;
+  document.querySelectorAll('.kind-tab').forEach(t => t.classList.toggle('active', t.dataset.kind === kind));
+  activeCategory = 'all';
+  buildCategoryBar();
+  renderGrid();
+  // scroll to marketplace
+  document.getElementById('marketplace').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+window.setKind = setKind;
 
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQuery = e.target.value.trim();
+  renderGrid();
+});
+
+// ═══ BROWSE CTA · works properly ═══
+function browseClick(e) {
+  e.preventDefault();
+  const target = document.getElementById('marketplace');
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // highlight pulse after a beat
+  setTimeout(() => {
+    target.classList.add('section-highlight');
+    setTimeout(() => target.classList.remove('section-highlight'), 1700);
+  }, 600);
+  // focus search after scroll
+  setTimeout(() => document.getElementById('searchInput').focus(), 900);
+}
+document.getElementById('heroBrowse').addEventListener('click', browseClick);
+document.getElementById('navBrowse').addEventListener('click', browseClick);
+
+// ═══ FORGE ═══
+const PRESET = 'I get enquiries by email, qualify the lead, send a quote, follow up, close the deal, onboard the client, deliver the work in phases, invoice on milestones, chase late payment.';
 document.getElementById('forgePreset').addEventListener('click', () => {
   document.getElementById('forgeInput').value = PRESET;
   document.getElementById('forgeInput').focus();
@@ -621,15 +749,10 @@ document.getElementById('forgePreset').addEventListener('click', () => {
 function forgeTemplate(workflow, tier) {
   const verbs = ['receive', 'qualify', 'send', 'follow', 'close', 'onboard', 'deliver', 'invoice', 'chase'];
   const steps = workflow.toLowerCase().split(/[,.;]|then|and/).map(s => s.trim()).filter(s => s.length > 4).slice(0, 12);
-  const matched = steps.map(s => {
-    const v = verbs.find(v => s.includes(v));
-    return { text: s.slice(0, 80), verb: v || 'process' };
-  });
+  const matched = steps.map(s => { const v = verbs.find(v => s.includes(v)); return { text: s.slice(0, 80), verb: v || 'process' }; });
   const agents = ['Ω orchestrator', 'α intake', 'β qualifier', 'γ quote drafter', 'δ sequencer', 'ε invoicer', 'ζ chaser'].slice(0, Math.min(7, 3 + Math.ceil(matched.length / 2)));
   return [
-    '◊·κ=1 · FORGE OUTPUT · tier ' + tier,
-    '═══════════════════════════════════════',
-    '',
+    '◊·κ=1 · FORGE OUTPUT · tier ' + tier, '═══════════════════════════════════════', '',
     'PARSED WORKFLOW (' + matched.length + ' steps):',
     ...matched.map((m, i) => '  ' + (i + 1) + '. ' + m.text + '  [' + m.verb + ']'),
     '',
@@ -661,7 +784,7 @@ function forgeTemplate(workflow, tier) {
 async function updateForgeTier() {
   const tier = await Cascade.detectTier();
   const el = document.getElementById('forgeTier');
-  el.textContent = tier === 'T0' ? 'offline · T0 · add a key in console for T3' : tier;
+  el.textContent = tier === 'T0' ? 'offline · T0' : tier;
   el.classList.toggle('t3', tier !== 'T0');
 }
 
@@ -685,44 +808,70 @@ document.getElementById('forgeBtn').addEventListener('click', async () => {
       }
     } catch (e) {}
   }
-
   out.innerHTML = '<pre>' + escHTML(forgeTemplate(workflow, tier)) + '</pre>';
 });
 
+// ═══ GUILD SUBMIT ═══
+document.getElementById('guildSubmit').addEventListener('click', () => {
+  const name = document.getElementById('gName').value.trim();
+  const github = document.getElementById('gGithub').value.trim();
+  const tool = document.getElementById('gTool').value.trim();
+  const email = document.getElementById('gEmail').value.trim();
+  const what = document.getElementById('gWhat').value.trim();
+  if (!name || !github || !tool || !email) { toast('Name, GitHub, tool URL, email all required'); return; }
+  const subject = 'AI Craftspeople Guild · application · ' + name;
+  const body = [
+    'AI CRAFTSPEOPLE GUILD APPLICATION',
+    '═══════════════════════════════════════',
+    '',
+    'Name:       ' + name,
+    'GitHub:     ' + github,
+    'Tool URL:   ' + tool,
+    'Email:      ' + email,
+    '',
+    'What it does:',
+    what || '(not specified)',
+    '',
+    '◊·κ=1 · sovereign builder application',
+  ].join('\n');
+  const mailto = 'mailto:simon@ai-nativesolutions.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  window.location.href = mailto;
+  toast('Mail client opening · send to submit');
+  try { new BroadcastChannel('fall-signal').postMessage({ source: 'ai-nativesolutions', type: 'guild_application', name, github, tool, ts: Date.now() }); } catch (e) {}
+  // Save locally for later reference
+  try {
+    const apps = JSON.parse(localStorage.getItem('ain-guild-apps') || '[]');
+    apps.push({ name, github, tool, email, what, ts: Date.now() });
+    localStorage.setItem('ain-guild-apps', JSON.stringify(apps));
+  } catch (e) {}
+});
+
+// ═══ SCROLL REVEAL ═══
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.08, rootMargin: '0px 0px -10% 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// ═══ KONOMI · FALLMESH · postMessage API ═══
 window.KONOMI = { active: true, tier: 'sovereign', check: () => ({ ok: true, tier: 'sovereign' }) };
-
 try {
   const sig = new BroadcastChannel('fall-signal');
   sig.postMessage({ source: 'ai-nativesolutions', type: 'hello', prime: PRIME, version: VERSION, ts: Date.now() });
-  sig.addEventListener('message', e => {
-    const m = e.data;
-    if (m && m.type === 'ping') sig.postMessage({ source: 'ai-nativesolutions', type: 'pong', prime: PRIME });
-  });
+  sig.addEventListener('message', e => { const m = e.data; if (m && m.type === 'ping') sig.postMessage({ source: 'ai-nativesolutions', type: 'pong', prime: PRIME }); });
 } catch (e) {}
-
 window.addEventListener('message', async (e) => {
   const m = e.data;
   if (!m || m.target !== 'ai-nativesolutions' || !m.action) return;
   let resp = null;
   if (m.action === 'ping') resp = { ok: true, prime: PRIME, version: VERSION };
-  else if (m.action === 'catalogue') resp = state.catalogue;
-  else if (m.action === 'set_key' && m.provider && m.key) {
-    state.settings[m.provider + 'Key'] = m.key;
-    saveState();
-    Cascade._localProbed = undefined;
-    await updateForgeTier();
-    resp = { ok: true, provider: m.provider };
-  }
+  else if (m.action === 'registry') resp = state.registry;
+  else if (m.action === 'set_filter' && m.kind) { setKind(m.kind); resp = { ok: true }; }
   e.source?.postMessage({ target: m.source || '*', responseTo: m.action, data: resp }, '*');
 });
 
+// ═══ BOOT ═══
 (async function init() {
-  await loadCatalogue();
+  await loadRegistry();
   await updateForgeTier();
 })();
 </script>
