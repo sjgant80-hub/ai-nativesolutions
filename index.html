@@ -222,6 +222,56 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
 @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
 .empty-state { padding: 40px 24px; text-align: center; background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-family: 'Cormorant Garamond'; font-style: italic; font-size: 18px; grid-column: 1 / -1; }
+
+/* ═══ WHAT'S NEW · changelog feed ═══ */
+.whatsnew { background: #0c0c0c; }
+.whatsnew-feed { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 24px; }
+.feed-item { background: var(--surface); padding: 22px 26px; transition: all 0.2s; display: grid; grid-template-columns: 110px 1fr auto; gap: 22px; align-items: start; }
+.feed-item:hover { background: var(--surface-2); border-left: 2px solid var(--gold); padding-left: 24px; }
+.feed-item .date { font-family: 'DM Mono'; font-size: 11px; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; padding-top: 4px; }
+.feed-item .body { min-width: 0; }
+.feed-item .body h4 { font-family: 'Syne'; font-weight: 800; font-size: 18px; margin-bottom: 4px; }
+.feed-item .body .what { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--text); font-size: 15px; margin-bottom: 6px; }
+.feed-item .body .why { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.feed-item .actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.feed-item .actions a { font-family: 'Syne'; font-weight: 700; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 11px; border: 1px solid var(--border); color: var(--text); transition: all 0.2s; }
+.feed-item .actions a.primary { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
+.feed-item .actions a:hover { color: var(--gold); border-color: var(--gold); }
+.feed-item .actions a.primary:hover { background: var(--amber); border-color: var(--amber); color: #0a0a0a; }
+@media (max-width: 600px) {
+  .feed-item { grid-template-columns: 1fr; gap: 12px; }
+  .feed-item .date { padding-top: 0; }
+}
+
+/* ═══ SIGN-IN MODAL + BUILDER ═══ */
+.builder-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Syne'; font-weight: 700; padding: 9px 14px; background: transparent; border: 1px solid var(--border); color: var(--text); font-size: 12px; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; text-transform: uppercase; text-decoration: none; }
+.builder-btn:hover { border-color: var(--gold); color: var(--gold); }
+.builder-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); display: inline-block; }
+.builder-btn.in .dot { background: var(--success); }
+.builder-btn.in { color: var(--gold); border-color: var(--gold); }
+.builder-avatar { width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: #0a0a0a; display: inline-grid; place-items: center; font-family: 'Playfair Display'; font-weight: 800; font-size: 12px; }
+
+.modal-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); z-index: 300; display: none; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(4px); }
+.modal-bg.open { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border); padding: 32px 36px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; }
+.modal-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; gap: 16px; }
+.modal-hd h2 { font-size: 22px !important; margin: 0 !important; }
+.modal-close { background: none; border: none; color: var(--muted); font-size: 28px; cursor: pointer; padding: 0 8px; line-height: 1; font-family: monospace; }
+.modal-close:hover { color: var(--gold); }
+.modal .field { margin-bottom: 14px; }
+.modal .field label { font-family: 'Syne'; font-weight: 700; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+.modal .field input, .modal .field textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; font-family: 'DM Mono'; font-size: 14px; }
+.modal .field input:focus, .modal .field textarea:focus { outline: 1px solid var(--gold); outline-offset: -1px; }
+.modal p.note { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 14px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+.modal .profile-card { background: var(--bg); border: 1px solid var(--gold); padding: 18px; display: flex; gap: 14px; align-items: center; margin-bottom: 16px; }
+.modal .profile-card .builder-avatar { width: 48px; height: 48px; font-size: 22px; }
+.modal .profile-card .info { flex: 1; min-width: 0; }
+.modal .profile-card .name { font-family: 'Playfair Display'; font-weight: 700; font-size: 18px; }
+.modal .profile-card .handle { font-family: 'DM Mono'; font-size: 12px; color: var(--gold); }
+.modal .profile-card .meta { font-family: 'DM Mono'; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.verify-badge { display: inline-block; padding: 3px 8px; font-family: 'Syne'; font-weight: 700; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; }
+.verify-badge.yes { background: var(--success); color: #0a0a0a; }
+.verify-badge.no { background: transparent; border: 1px solid var(--muted); color: var(--muted); }
 </style>
 </head>
 <body>
@@ -239,6 +289,7 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
       <a href="#pricing">Pricing</a>
     </div>
     <a href="#marketplace" class="nav-cta" id="navBrowse">Browse →</a>
+    <button class="builder-btn" id="navBuilder"><span class="dot"></span><span id="navBuilderLabel">Sign in</span></button>
   </div>
 </header>
 
@@ -309,6 +360,22 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
 
   <div class="tool-grid" id="toolGrid">
     <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+  </div>
+</section>
+
+<!-- WHAT'S NEW -->
+<section class="whatsnew reveal" id="whatsnew">
+  <div class="section-line"></div>
+  <div class="section-label">§ III.5 · what's new</div>
+  <h2>Recent builds.</h2>
+  <p class="lede">The estate ships continuously. Newest first. Auto-updates from the registry · no redeploy needed.</p>
+  <div class="whatsnew-feed" id="newsFeed">
+    <div class="skeleton" style="height:80px"></div>
+    <div class="skeleton" style="height:80px"></div>
+    <div class="skeleton" style="height:80px"></div>
+  </div>
+  <div style="margin-top:20px;text-align:right">
+    <a href="https://github.com/sjgant80-hub" class="btn-tertiary" target="_blank">All repos on GitHub →</a>
   </div>
 </section>
 
@@ -528,6 +595,34 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
   </div>
 </footer>
 
+<!-- SIGN-IN MODAL -->
+<div class="modal-bg" id="signInModal">
+  <div class="modal">
+    <div class="modal-hd">
+      <h2 id="signInTitle">Sign in</h2>
+      <button class="modal-close" onclick="closeSignIn()">×</button>
+    </div>
+    <div id="signInBody">
+      <p class="note">Link your GitHub to claim your builder profile. Two ways · pick yours.</p>
+
+      <div class="field">
+        <label>Your GitHub handle</label>
+        <input id="signInHandle" placeholder="e.g. octocat · without the @" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label>Personal Access Token <span style="opacity:0.6">(optional · stays on this device)</span></label>
+        <input id="signInToken" type="password" placeholder="ghp_… (optional · for verified badge)" autocomplete="off">
+      </div>
+
+      <p class="note">No PAT? You're signed in as <b style="color:var(--gold)">unverified</b>. The Guild still works. Add a token later from <a href="https://github.com/settings/tokens?type=beta" target="_blank" style="color:var(--gold)">github.com/settings/tokens</a> · scope <code>read:user</code> is all that's needed.</p>
+
+      <button class="btn-primary" style="width:100%" onclick="doSignIn()">Sign in</button>
+      <p class="note" style="margin-top:16px;font-size:12px">Profile saved to localStorage on this device only. We have no server. The token (if pasted) never leaves your machine.</p>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast">·</div>
 
 <script>
@@ -542,12 +637,20 @@ let state = {
   settings: { anthropicKey: '', openaiKey: '', geminiKey: '', openrouterKey: '' },
   registry: null,
   registryFetchedAt: 0,
+  builder: null,  // { handle, name, avatar_url, html_url, verified, token (NEVER serialised), signedInAt }
 };
 
 function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._to); t._to = setTimeout(() => t.classList.remove('show'), 1800); }
 function escHTML(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 try { const raw = localStorage.getItem(STORE); if (raw) state = Object.assign(state, JSON.parse(raw)); } catch (e) {}
-function saveState() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
+function saveState() {
+  try {
+    // strip token from persisted state — never write it to localStorage
+    const safe = JSON.parse(JSON.stringify(state));
+    if (safe.builder) delete safe.builder.token;
+    localStorage.setItem(STORE, JSON.stringify(safe));
+  } catch (e) {}
+}
 
 // ═══ CASCADE ═══
 const Cascade = {
@@ -626,6 +729,7 @@ async function loadRegistry() {
 function renderAll() {
   if (!state.registry) return;
   allItems = aggregateRegistry(state.registry);
+  renderWhatsNew();
 
   // counts
   const counts = { all: allItems.length, app: 0, api: 0, sdk: 0, research: 0, infra: 0, plugin: 0 };
@@ -718,6 +822,176 @@ function renderCard(it) {
         ${it.openapi ? `<a href="${escHTML(it.openapi)}" target="_blank">OpenAPI</a>` : ''}
       </div>
     </article>`;
+}
+
+// ═══ WHAT'S NEW · auto changelog from registry ═══
+function renderWhatsNew() {
+  const feed = document.getElementById('newsFeed');
+  if (!feed) return;
+  // collect dated items
+  const dated = allItems.filter(i => i.shipped).map(i => ({ ...i, _date: i.shipped }));
+  // also include items with version === '2.0.0' or similar (recent rev) using last-modified proxy
+  dated.sort((a, b) => (b._date || '').localeCompare(a._date || ''));
+  const top = dated.slice(0, 8);
+  if (!top.length) {
+    // fall back to estate-wide first 6
+    const fb = allItems.filter(i => i._kindClass === 'app').slice(0, 6);
+    feed.innerHTML = fb.map(it => feedItemHTML(it, '')).join('');
+    return;
+  }
+  feed.innerHTML = top.map(it => feedItemHTML(it, it._date)).join('');
+}
+
+function feedItemHTML(it, date) {
+  const display = date ? formatDate(date) : 'recent';
+  const try_url = it.url || it.source;
+  return `
+    <article class="feed-item">
+      <div class="date">${escHTML(display)}</div>
+      <div class="body">
+        <h4>${escHTML(niceName(it.name))}</h4>
+        <div class="what">${escHTML(it.domain || it.purpose || '')}</div>
+        <div class="why">${escHTML((it.grift_exposed ? '◊ obsoletes: ' + it.grift_exposed.slice(0, 130) : (it.purpose || '').slice(0, 180)))}</div>
+      </div>
+      <div class="actions">
+        ${try_url ? `<a class="primary" href="${escHTML(try_url)}" target="_blank">${it._kindClass === 'api' ? 'Open' : it._kindClass === 'research' ? 'Read' : 'Try'}</a>` : ''}
+        ${it.source ? `<a href="${escHTML(it.source)}" target="_blank">Source</a>` : ''}
+      </div>
+    </article>`;
+}
+
+function formatDate(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).toUpperCase();
+  } catch (e) { return iso; }
+}
+
+// ═══ BUILDER SIGN-IN ═══
+function openSignIn() { document.getElementById('signInModal').classList.add('open'); refreshSignInState(); setTimeout(() => document.getElementById('signInHandle').focus(), 100); }
+function closeSignIn() { document.getElementById('signInModal').classList.remove('open'); }
+window.openSignIn = openSignIn;
+window.closeSignIn = closeSignIn;
+
+document.getElementById('navBuilder').addEventListener('click', openSignIn);
+document.getElementById('signInModal').addEventListener('click', e => { if (e.target.id === 'signInModal') closeSignIn(); });
+
+function refreshSignInState() {
+  const body = document.getElementById('signInBody');
+  const title = document.getElementById('signInTitle');
+  if (state.builder) {
+    title.textContent = 'Signed in';
+    const initial = (state.builder.name || state.builder.handle || '?').charAt(0).toUpperCase();
+    body.innerHTML = `
+      <div class="profile-card">
+        ${state.builder.avatar_url ? `<img src="${escHTML(state.builder.avatar_url)}" style="width:48px;height:48px;border-radius:50%" alt="">` : `<div class="builder-avatar">${escHTML(initial)}</div>`}
+        <div class="info">
+          <div class="name">${escHTML(state.builder.name || state.builder.handle)}</div>
+          <div class="handle">@${escHTML(state.builder.handle)}</div>
+          <div class="meta">
+            <span class="verify-badge ${state.builder.verified ? 'yes' : 'no'}">${state.builder.verified ? '◊ verified' : 'unverified'}</span>
+            ${state.builder.signedInAt ? ' · since ' + new Date(state.builder.signedInAt).toLocaleDateString('en-GB') : ''}
+          </div>
+        </div>
+      </div>
+      <p class="note">You're signed in locally. Profile lives in localStorage on this device.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+        <a class="btn-secondary" href="${escHTML(state.builder.html_url || ('https://github.com/' + state.builder.handle))}" target="_blank" style="text-align:center">Open GitHub</a>
+        <a class="btn-secondary" href="#guild" style="text-align:center" onclick="closeSignIn()">Submit a tool</a>
+      </div>
+      <p class="note" style="margin-top:18px;font-size:12px">Want to switch accounts? <a href="#" onclick="signOut(event)" style="color:var(--gold)">Sign out</a></p>
+    `;
+  } else {
+    title.textContent = 'Sign in';
+    body.innerHTML = `
+      <p class="note">Link your GitHub to claim your builder profile. Two ways · pick yours.</p>
+      <div class="field"><label>Your GitHub handle</label><input id="signInHandle" placeholder="e.g. octocat · without the @" autocomplete="off"></div>
+      <div class="field"><label>Personal Access Token <span style="opacity:0.6">(optional · stays on this device)</span></label><input id="signInToken" type="password" placeholder="ghp_… (optional · for verified badge)" autocomplete="off"></div>
+      <p class="note">No PAT? You're signed in as <b style="color:var(--gold)">unverified</b>. The Guild still works. Add a token later from <a href="https://github.com/settings/tokens?type=beta" target="_blank" style="color:var(--gold)">github.com/settings/tokens</a> · scope <code>read:user</code>.</p>
+      <button class="btn-primary" style="width:100%" onclick="doSignIn()">Sign in</button>
+      <p class="note" style="margin-top:16px;font-size:12px">Profile saved to localStorage on this device only. We have no server. The token (if pasted) never leaves your machine.</p>
+    `;
+  }
+}
+
+async function doSignIn() {
+  const handle = document.getElementById('signInHandle').value.trim().replace(/^@/, '');
+  const token = document.getElementById('signInToken').value.trim();
+  if (!handle) { toast('GitHub handle required'); return; }
+
+  let verified = false;
+  let profile = { handle, html_url: 'https://github.com/' + handle };
+
+  if (token) {
+    try {
+      const r = await fetch('https://api.github.com/user', { headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' } });
+      if (r.ok) {
+        const u = await r.json();
+        if (u.login.toLowerCase() === handle.toLowerCase()) {
+          verified = true;
+          profile = { handle: u.login, name: u.name || u.login, avatar_url: u.avatar_url, html_url: u.html_url, bio: u.bio, blog: u.blog, public_repos: u.public_repos };
+        } else {
+          toast('Token belongs to ' + u.login + ' · not ' + handle);
+          return;
+        }
+      } else {
+        toast('Token rejected · signing in unverified');
+      }
+    } catch (e) {
+      toast('GitHub unreachable · signing in unverified');
+    }
+  } else {
+    // no token: try fetching public profile (no auth, public endpoint, rate-limited)
+    try {
+      const r = await fetch('https://api.github.com/users/' + handle);
+      if (r.ok) {
+        const u = await r.json();
+        profile = { handle: u.login, name: u.name || u.login, avatar_url: u.avatar_url, html_url: u.html_url, bio: u.bio, blog: u.blog, public_repos: u.public_repos };
+      }
+    } catch (e) { /* offline · keep minimal profile */ }
+  }
+
+  state.builder = { ...profile, verified, signedInAt: Date.now() };
+  saveState();
+  updateBuilderBadge();
+  refreshSignInState();
+  toast(verified ? '◊ Signed in · verified' : 'Signed in · unverified');
+  // pre-fill the guild form
+  prefillGuildForm();
+
+  // broadcast on fall-signal
+  try { new BroadcastChannel('fall-signal').postMessage({ source: 'ai-nativesolutions', type: 'builder_signin', handle: profile.handle, verified, ts: Date.now() }); } catch (e) {}
+}
+
+function signOut(e) {
+  if (e) e.preventDefault();
+  if (!confirm('Sign out and clear local profile?')) return;
+  state.builder = null;
+  saveState();
+  updateBuilderBadge();
+  refreshSignInState();
+  toast('Signed out');
+}
+window.signOut = signOut;
+
+function updateBuilderBadge() {
+  const btn = document.getElementById('navBuilder');
+  const lbl = document.getElementById('navBuilderLabel');
+  if (state.builder) {
+    btn.classList.add('in');
+    lbl.textContent = '@' + state.builder.handle;
+  } else {
+    btn.classList.remove('in');
+    lbl.textContent = 'Sign in';
+  }
+}
+
+function prefillGuildForm() {
+  if (!state.builder) return;
+  const n = document.getElementById('gName');
+  const g = document.getElementById('gGithub');
+  if (n && !n.value) n.value = state.builder.name || state.builder.handle;
+  if (g && !g.value) g.value = state.builder.html_url;
 }
 
 // ═══ TAB / SEARCH WIRING ═══
@@ -893,6 +1167,8 @@ window.addEventListener('message', async (e) => {
 (async function init() {
   await loadRegistry();
   await updateForgeTier();
+  updateBuilderBadge();
+  prefillGuildForm();
 })();
 </script>
 </body>
