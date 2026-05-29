@@ -13,7 +13,7 @@
 <link rel="canonical" href="https://www.ai-nativesolutions.com/">
 <link rel="manifest" href='data:application/manifest+json,{"name":"AI Native Solutions","short_name":"AIN","start_url":".","display":"standalone","background_color":"#0a0a0a","theme_color":"#d4a017","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 fill=%22%230a0a0a%22/><text x=%2232%22 y=%2244%22 text-anchor=%22middle%22 font-size=%2236%22 fill=%22%23d4a017%22 font-family=%22serif%22 font-weight=%22bold%22>◊</text></svg>","sizes":"any","type":"image/svg+xml"}]}'>
 <script type="application/ld+json">
-{ "@context": "https://schema.org", "@type": "Organization", "name": "AI Native Solutions", "url": "https://www.ai-nativesolutions.com", "founder": { "@type": "Person", "name": "Simon Gant" }, "description": "The marketplace for sovereign software · single HTML files · no subscriptions · data stays on device", "sameAs": ["https://github.com/sjgant80-hub", "https://www.linkedin.com/in/simon-gant-295b56180/"] }
+{ "@context": "https://schema.org", "@type": "Organization", "name": "AI Native Solutions", "url": "https://www.ai-nativesolutions.com", "founder": { "@type": "Person", "name": "Simon Gant" }, "description": "The marketplace for sovereign software · single HTML files · no subscriptions · data stays on device", "sameAs": ["https://github.com/sjgant80-hub", "https://github.com/sjgant80-hub/contact/issues/new/choose"] }
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
@@ -488,7 +488,7 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
         <li>24h turnaround</li>
         <li>Pages-hosted · zero hosting cost</li>
       </ul>
-      <a class="tier-cta" href="https://www.linkedin.com/in/simon-gant-295b56180/" target="_blank">Talk to Simon</a>
+      <a class="tier-cta" href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">Talk to Simon</a>
     </div>
     <div class="tier featured">
       <div class="tier-label gold">Pro · most chosen</div>
@@ -501,7 +501,7 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
         <li>Staff training session</li>
         <li>5-day turnaround</li>
       </ul>
-      <a class="tier-cta" href="https://www.linkedin.com/in/simon-gant-295b56180/" target="_blank">Start a project</a>
+      <a class="tier-cta" href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">Start a project</a>
     </div>
     <div class="tier">
       <div class="tier-label">Enterprise</div>
@@ -514,7 +514,7 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
         <li>Dedicated GitHub organisation</li>
         <li>Ongoing maintenance retainer (optional)</li>
       </ul>
-      <a class="tier-cta" href="https://www.linkedin.com/in/simon-gant-295b56180/" target="_blank">Request consultation</a>
+      <a class="tier-cta" href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">Request consultation</a>
     </div>
   </div>
 </section>
@@ -556,7 +556,7 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
   <p>Every tool on this site is free to try. Most are free forever for personal use. If the first step of your AI transformation requires an invoice, the transformation already failed.</p>
   <div class="ctas">
     <a href="#marketplace" class="btn-primary">Browse the marketplace</a>
-    <a href="https://www.linkedin.com/in/simon-gant-295b56180/" class="btn-secondary" target="_blank">Talk to Simon</a>
+    <a href="https://github.com/sjgant80-hub/contact/issues/new/choose" class="btn-secondary" target="_blank">Talk to Simon</a>
   </div>
 </section>
 
@@ -591,7 +591,7 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
     <div>
       <h4>Reach</h4>
       <ul>
-        <li><a href="https://www.linkedin.com/in/simon-gant-295b56180/" target="_blank">LinkedIn</a></li>
+        <li><a href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">LinkedIn</a></li>
         <li><a href="mailto:simon@ai-nativesolutions.com">Email</a></li>
         <li>Remote-first · worldwide</li>
       </ul>
@@ -834,12 +834,12 @@ function renderCard(it) {
   const pay = it.payment;
   const sellable = pay && pay.useDefault === true && !isOffline;
   // Routing logic:
-  //   - For self-serve Lite tier: PayPal (paypal.me/ainativesolutions)
-  //   - For Pro/Enterprise: route to contact (LinkedIn DM for a quote)
+  //   - 'Get yours' (Lite) → GitHub Issue · 02-lite-tier template (collects email · routes to PayPal)
+  //   - 'Get a quote' (Pro/Enterprise) → GitHub Issue · 01-quote-request template
   //   - Override: per-item pay.url wins
-  const buyUrl = pay?.url || pd.paypal || pd.hub || (HUB_BASE + '/#pricing');
+  const buyUrl = pay?.url || CONTACT.lite;
   const buyLabel = pay?.label || 'Get yours';
-  const quoteUrl = pd.contact_url || 'https://www.linkedin.com/in/simon-gant-295b56180/';
+  const quoteUrl = CONTACT.quote;
 
   return `
     <article class="tool-card ${dimClass}">
@@ -878,6 +878,14 @@ function renderCard(it) {
 }
 
 const HUB_BASE = 'https://www.ai-nativesolutions.com';
+const CONTACT = {
+  quote: 'https://github.com/sjgant80-hub/contact/issues/new?template=01-quote-request.yml',
+  lite:  'https://github.com/sjgant80-hub/contact/issues/new?template=02-lite-tier.yml',
+  guild: 'https://github.com/sjgant80-hub/contact/issues/new?template=03-guild-application.yml',
+  msg:   'https://github.com/sjgant80-hub/contact/issues/new?template=04-general-message.yml',
+  bug:   'https://github.com/sjgant80-hub/contact/issues/new?template=05-bug-report.yml',
+  choose: 'https://github.com/sjgant80-hub/contact/issues/new/choose',
+};
 
 // ═══ WHAT'S NEW · auto changelog from registry ═══
 function renderWhatsNew() {
@@ -1169,26 +1177,21 @@ document.getElementById('guildSubmit').addEventListener('click', () => {
   const email = document.getElementById('gEmail').value.trim();
   const what = document.getElementById('gWhat').value.trim();
   if (!name || !github || !tool || !email) { toast('Name, GitHub, tool URL, email all required'); return; }
-  const subject = 'AI Craftspeople Guild · application · ' + name;
-  const body = [
-    'AI CRAFTSPEOPLE GUILD APPLICATION',
-    '═══════════════════════════════════════',
-    '',
-    'Name:       ' + name,
-    'GitHub:     ' + github,
-    'Tool URL:   ' + tool,
-    'Email:      ' + email,
-    '',
-    'What it does:',
-    what || '(not specified)',
-    '',
-    '◊·κ=1 · sovereign builder application',
-  ].join('\n');
-  const mailto = 'mailto:simon@ai-nativesolutions.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-  window.location.href = mailto;
-  toast('Mail client opening · send to submit');
+  // Route to GitHub Issue Forms · prefill fields
+  // The template's fields (builder_name, email, github_url, tool_url, what) match the IDs
+  const params = new URLSearchParams({
+    template: '03-guild-application.yml',
+    'builder_name': name,
+    'email': email,
+    'github_url': github,
+    'tool_url': tool,
+    'what': what || '',
+    title: '[GUILD] ' + name,
+  });
+  const url = 'https://github.com/sjgant80-hub/contact/issues/new?' + params.toString();
+  window.open(url, '_blank');
+  toast('GitHub opening · sign in + submit');
   try { new BroadcastChannel('fall-signal').postMessage({ source: 'ai-nativesolutions', type: 'guild_application', name, github, tool, ts: Date.now() }); } catch (e) {}
-  // Save locally for later reference
   try {
     const apps = JSON.parse(localStorage.getItem('ain-guild-apps') || '[]');
     apps.push({ name, github, tool, email, what, ts: Date.now() });
