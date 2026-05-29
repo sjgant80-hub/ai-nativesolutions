@@ -1122,8 +1122,9 @@ function forgeTemplate(workflow, tier) {
     'PWA manifest · standalone install',
     '',
     'NEXT:',
-    '  · For a real branded build: $997 (Lite) → 24h delivery',
-    '  · For custom domain logic: $2,500 (Pro) → 5-day delivery',
+    '  · For a real branded build: Lite (Custom from $$$) → 24h delivery',
+    '  · For custom domain logic: Pro (Custom from $$$) → 5-day delivery',
+    '  · For multi-user / white-label: Enterprise (Custom from $$$) → scoped',
     '  · Or: fork an existing tool from the catalogue and adapt',
     '',
     '◊ tool sketch ready · talk to Simon to ship it for real',
@@ -1149,7 +1150,7 @@ document.getElementById('forgeBtn').addEventListener('click', async () => {
 
   if (tier !== 'T0') {
     try {
-      const prompt = 'You are FORGE · sovereign tool sketch generator. Given a business workflow, return a tool architecture brief covering L1-L7 (face/swarm/cascade/bloom/persist/skin/ass), agent list, and three pricing tiers (Lite $997 · Pro $2,500 · Enterprise $10k+).\n\nWorkflow:\n' + workflow + '\n\nOutput plain text · structured · max 400 words · always end with "◊ tool sketch ready · talk to Simon to ship it for real".';
+      const prompt = 'You are FORGE · sovereign tool sketch generator. Given a business workflow, return a tool architecture brief covering L1-L7 (face/swarm/cascade/bloom/persist/skin/ass), agent list, and three pricing tiers (Lite · Pro · Enterprise · all "Custom from $$$" · pricing per scope).\n\nWorkflow:\n' + workflow + '\n\nOutput plain text · structured · max 400 words · always end with "◊ tool sketch ready · talk to Simon for a quote".';
       const r = await Cascade.generate(prompt);
       if (r.text) {
         out.innerHTML = '<pre>' + escHTML('◊·κ=1 · FORGE OUTPUT · ' + r.tier + '\n═══════════════════════════════════════\n\n' + r.text) + '</pre>';
