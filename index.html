@@ -121,6 +121,14 @@ p.lede { font-family: 'Cormorant Garamond'; font-size: 22px; font-style: italic;
 .tool-card .tc-actions a.primary:hover { background: var(--amber); border-color: var(--amber); }
 .tool-card .tc-actions a:hover { color: var(--gold); border-color: var(--gold); }
 .tool-card .tc-actions a.primary:hover { color: #0a0a0a; }
+.tool-card.dim { opacity: 0.55; }
+.tool-card.dim:hover { opacity: 1; }
+.status-badge { font-family: 'Syne'; font-weight: 700; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; margin-left: 6px; display: inline-block; vertical-align: middle; }
+.status-badge.live { background: var(--success); color: #0a0a0a; }
+.status-badge.down { background: var(--amber); color: #0a0a0a; }
+.status-badge.offline { background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
+.status-badge.alpha { background: var(--info); color: #0a0a0a; }
+.status-badge.published { background: transparent; border: 1px solid var(--muted); color: var(--muted); }
 
 .proof { background: #0c0c0c; }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
@@ -800,12 +808,18 @@ function niceName(name) { return name.replace(/^(fall|trilogy)/i, m => m.charAt(
 
 function renderCard(it) {
   const kc = it._kindClass;
+  const status = (it.status || 'live').toLowerCase();
+  const isOffline = status === 'offline';
+  const isDown = status === 'down';
   const tryUrl = it.url || it.source;
   const tryLabel = kc === 'api' ? 'Open API' : kc === 'sdk' ? 'npm' : kc === 'research' ? 'Read' : kc === 'infra' ? 'View' : 'Try free';
+  const dimClass = isOffline ? 'dim' : '';
+  // For offline items only show Source button (no broken Try)
+  const showPrimary = !isOffline && tryUrl;
   return `
-    <article class="tool-card">
+    <article class="tool-card ${dimClass}">
       <div class="tc-kind ${kc}">${kc}</div>
-      <h3>${escHTML(niceName(it.name))}</h3>
+      <h3>${escHTML(niceName(it.name))}${status !== 'live' && status !== 'published' ? ` <span class="status-badge ${status}">${escHTML(status)}</span>` : ''}</h3>
       ${it.domain ? `<div class="tc-domain">${escHTML(it.domain)}</div>` : ''}
       <div class="tc-purpose">${escHTML((it.purpose || '').slice(0, 200))}${(it.purpose || '').length > 200 ? '…' : ''}</div>
       <div class="tc-meta">
@@ -813,13 +827,14 @@ function renderCard(it) {
         ${it.prime ? `<span class="prime">prime ${it.prime}</span>` : ''}
         ${it.version ? `<span>v${escHTML(String(it.version))}</span>` : ''}
         ${it.package ? `<span style="color:var(--success)">${escHTML(it.package)}</span>` : ''}
-        ${it.status ? `<span>${escHTML(it.status)}</span>` : ''}
       </div>
       ${it.grift_exposed ? `<div class="tc-grift">${escHTML(it.grift_exposed.slice(0, 110))}${it.grift_exposed.length > 110 ? '…' : ''}</div>` : ''}
+      ${it.note ? `<div style="font-size:11px;color:var(--amber);margin-bottom:10px;line-height:1.5">↻ ${escHTML(it.note)}</div>` : ''}
       <div class="tc-actions">
-        ${tryUrl ? `<a class="primary" href="${escHTML(tryUrl)}" target="_blank">${tryLabel}</a>` : ''}
+        ${showPrimary ? `<a class="primary" href="${escHTML(tryUrl)}" target="_blank">${tryLabel}</a>` : ''}
         ${it.source ? `<a href="${escHTML(it.source)}" target="_blank">Source</a>` : ''}
         ${it.openapi ? `<a href="${escHTML(it.openapi)}" target="_blank">OpenAPI</a>` : ''}
+        ${isDown && tryUrl ? `<a href="${escHTML(tryUrl)}" target="_blank" style="color:var(--amber);border-color:var(--amber)">Wake it</a>` : ''}
       </div>
     </article>`;
 }
