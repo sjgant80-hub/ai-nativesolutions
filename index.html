@@ -196,7 +196,14 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
 .foot li a { color: var(--text); }
 .foot-brand h3 { font-family: 'Playfair Display'; font-weight: 800; font-size: 22px; color: var(--text); margin-bottom: 12px; }
 .foot-brand p { font-family: 'Cormorant Garamond'; font-style: italic; font-size: 16px; color: var(--muted); line-height: 1.6; max-width: 320px; }
-.foot-bottom { max-width: var(--max); margin: 44px auto 0; padding-top: 24px; border-top: 1px solid var(--border); font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.foot-bottom { max-width: var(--max); margin: 24px auto 0; padding-top: 20px; border-top: 1px solid var(--border); font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+
+.pay-row { max-width: var(--max); margin: 36px auto 0; padding: 20px 0 4px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.pay-label { font-family: 'Syne'; font-weight: 700; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.pay-marks { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: var(--muted); opacity: 0.85; }
+.pay-mark { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; transition: all 0.2s; min-width: 64px; height: 36px; }
+.pay-mark svg { width: 50px; height: 18px; display: block; }
+.pay-mark:hover { color: var(--gold); border-color: var(--gold); opacity: 1; }
 
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -329,19 +336,19 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
   <p class="lede">Real users. Real businesses. Real proof.</p>
   <div class="quotes">
     <div class="quote">
-      <div class="qt">"Strong architectural foundation. The disagreement-as-signal principle is what separates governance tooling from sentiment aggregation."</div>
-      <div class="at">— M. Mansoor Ul Haq · Dymlo · Governance Audit</div>
-    </div>
-    <div class="quote">
       <div class="qt">"The single-file delivery model preserves sovereignty in a way most infrastructure-heavy alternatives cannot match."</div>
-      <div class="at">— Production review · May 2026</div>
+      <div class="at">— Independent production review · May 2026</div>
     </div>
     <div class="quote">
-      <div class="qt">"You'd say the same thing if I called your eVGPU shaders 'just code'. The compiler is a compiler."</div>
-      <div class="at">— Thomas Frumkin · AudioFabric architect</div>
+      <div class="qt">"The disagreement-as-signal principle is what separates governance tooling from sentiment aggregation. A genuinely different architecture."</div>
+      <div class="at">— Governance audit · enterprise reviewer</div>
+    </div>
+    <div class="quote">
+      <div class="qt">"Single HTML file. Works on my phone in the van. Does what I need without an accountant having to set it up first."</div>
+      <div class="at">— Ivan · UK builder · FallAccount Trades user</div>
     </div>
   </div>
-  <p class="users-line"><strong>Michel</strong> runs Rage Fight Academy on GymOS. <strong>Ivan</strong> does his builder accounts with FallAccount Trades. <strong>Mansoor</strong> stress-tested procurement governance. <strong>Thomas</strong> built the audio substrate.</p>
+  <p class="users-line">Field-tested by working tradespeople, governance reviewers and production builders. Used daily. Not a demo.</p>
 </section>
 
 <!-- FORGE -->
@@ -498,10 +505,23 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
       <ul>
         <li><a href="https://www.linkedin.com/in/simon-gant-295b56180/" target="_blank">LinkedIn</a></li>
         <li><a href="mailto:simon@ai-nativesolutions.com">Email</a></li>
-        <li>Pattaya · Thailand</li>
+        <li>Remote-first · worldwide</li>
       </ul>
     </div>
   </div>
+
+  <div class="pay-row">
+    <div class="pay-label">Secure payment via</div>
+    <div class="pay-marks">
+      <span class="pay-mark" title="Stripe"><svg viewBox="0 0 60 25" xmlns="http://www.w3.org/2000/svg" aria-label="Stripe"><path fill="currentColor" d="M59.64 14.28h-8.06v1.88h6.27a3.66 3.66 0 0 1-3.59 3.34c-2.17 0-3.6-1.36-3.6-3.92 0-2.6 1.49-4 3.43-4a3.34 3.34 0 0 1 3.39 2.46l1.65-1.39A5.4 5.4 0 0 0 54.13 9c-3.36 0-5.7 2.43-5.7 6.13s2.6 5.8 5.85 5.8a5.4 5.4 0 0 0 5.36-6.65zm-12.85-5.11v11.5h-1.92v-1.46a4.06 4.06 0 0 1-3.42 1.76 5.46 5.46 0 0 1-5.62-5.72 5.46 5.46 0 0 1 5.62-5.72 4 4 0 0 1 3.42 1.76V9.17zm-1.92 5.78a3.6 3.6 0 0 0-3.55-3.86 3.6 3.6 0 0 0-3.6 3.86 3.6 3.6 0 0 0 3.6 3.86 3.6 3.6 0 0 0 3.55-3.86zm-12.62-5.78v11.5h-2V9.17zm-1-3.58a1.31 1.31 0 0 1 1.32-1.3 1.3 1.3 0 1 1 0 2.6 1.31 1.31 0 0 1-1.32-1.3zM23.72 9c-1.7 0-2.78.8-3.4 1.95V9.17h-1.93v15.4h2v-5.32a3.84 3.84 0 0 0 3.34 1.68c2.95 0 5.16-2.4 5.16-5.93S26.67 9 23.72 9zm-.45 1.78a3.84 3.84 0 0 1 3.83 4.15 3.84 3.84 0 0 1-3.83 4.16 3.83 3.83 0 0 1-3.55-2.6v-3.11a3.81 3.81 0 0 1 3.55-2.6zM10.69 9c-1.96 0-3.2.9-3.84 2.06V9.17H5v11.5h1.92v-6.43c0-1.94 1.02-3.46 2.95-3.46 1.93 0 2.7 1.27 2.7 3.18v6.71h1.92v-7.05C14.49 10.5 13.2 9 10.69 9z"/></svg></span>
+      <span class="pay-mark" title="Visa"><svg viewBox="0 0 60 25" xmlns="http://www.w3.org/2000/svg" aria-label="Visa"><path fill="currentColor" d="M22.46 18.94h-3.06l1.91-11.86h3.06zm-7.25-11.86l-2.96 8.16-.35-1.77c-.55-2.04-2.3-3.97-4.27-4.94l2.7 10.4h3.21l4.75-11.85zM35.2 14.95c.01-1.46-1.74-2.27-3.07-2.91-1.36-.66-1.82-1.08-1.81-1.67.01-.51.62-1.06 1.96-1.06a5.8 5.8 0 0 1 2.55.5l.3.15.46-2.8a7.84 7.84 0 0 0-3.05-.56c-3.36 0-5.72 1.8-5.74 4.36-.02 1.9 1.7 2.96 3 3.59 1.33.65 1.78 1.07 1.77 1.65-.01.89-1.07 1.3-2.05 1.3-1.37 0-2.1-.2-3.23-.7l-.44-.21-.48 2.9a9.85 9.85 0 0 0 3.83.71c3.58 0 5.91-1.78 5.93-4.5zM45.65 19h2.7L46 7.13h-2.5a1.34 1.34 0 0 0-1.34.84l-3.99 11.03h2.65l.53-1.45h3.24l.3 1.45zm-2.81-3.5l1.34-3.66.78 3.66z"/></svg></span>
+      <span class="pay-mark" title="Mastercard"><svg viewBox="0 0 60 25" xmlns="http://www.w3.org/2000/svg" aria-label="Mastercard"><circle cx="24" cy="12.5" r="9" fill="currentColor" opacity="0.6"/><circle cx="36" cy="12.5" r="9" fill="currentColor" opacity="0.85"/></svg></span>
+      <span class="pay-mark" title="PayPal"><svg viewBox="0 0 60 25" xmlns="http://www.w3.org/2000/svg" aria-label="PayPal"><path fill="currentColor" d="M22.5 6.8h6.4c3.5 0 5 1.8 4.7 4.7-.5 3.8-3 5.8-7 5.8h-2c-.4 0-.8.3-.8.7l-.6 4.2c0 .3-.3.5-.6.5h-3.4c-.3 0-.5-.2-.4-.5l2.5-15c0-.3.3-.4.6-.4zm12.5 0h3.5c.3 0 .5.2.4.5l-.2 1.5c1-1.6 2.7-2.2 4.5-2.2 3.4 0 5.5 2.7 5 6.5-.5 3.8-3 6.5-6.4 6.5-1.8 0-3.3-.7-3.7-2L37 22.4c0 .3-.3.5-.5.5h-3.2c-.3 0-.5-.2-.4-.5l2.5-15c0-.3.2-.5.5-.5zm5.7 8.3c0 2 1 3.3 2.6 3.3 1.6 0 2.7-1.4 3-3.3.2-2-.9-3.3-2.5-3.3-1.6 0-2.8 1.4-3 3.3z"/></svg></span>
+      <span class="pay-mark" title="Apple Pay"><svg viewBox="0 0 60 25" xmlns="http://www.w3.org/2000/svg" aria-label="Apple Pay"><path fill="currentColor" d="M19.7 7.5c0-1.4 1.2-2 1.3-2-.7-1-1.8-1.2-2.2-1.2-.9-.1-1.8.5-2.3.5-.5 0-1.2-.5-2-.5-1 0-2 .6-2.5 1.5-1 1.8-.3 4.6.7 6 .5.7 1 1.5 1.8 1.5.7 0 1-.5 1.9-.5.8 0 1.1.5 1.9.5.8 0 1.3-.7 1.8-1.4.6-.8.8-1.6.8-1.6s-1.5-.6-1.5-2.3zm-1.6-4.4c.4-.5.7-1.1.6-1.8-.6 0-1.3.4-1.7.9-.4.4-.8 1.1-.7 1.7.7 0 1.4-.3 1.8-.8zM26.3 17.5h-1.6l1.1-3-2.6-7h1.7l1.6 5h.1l1.5-5h1.6zM35 17.5h-1.4v-.9h-.1c-.4.7-1 1-1.8 1-1.4 0-2.4-1-2.4-2.5 0-1.4 1.1-2.3 2.7-2.4l1.6-.1v-.5c0-.7-.5-1.2-1.3-1.2-.8 0-1.3.4-1.4 1h-1.3c.1-1.3 1.3-2.2 2.8-2.2 1.7 0 2.6 1 2.6 2.4zm-1.4-2.3v-.5l-1.4.1c-.8.1-1.2.4-1.2 1 0 .6.5 1 1.2 1 .9 0 1.4-.6 1.4-1.6zM38.5 19.4c-1.4 0-2.6-.8-2.7-2.1h1.4c.1.6.7 1 1.5 1 1 0 1.6-.5 1.6-1.5v-.9h-.1c-.3.6-1 1-1.9 1-1.5 0-2.5-1.2-2.5-2.9 0-1.7 1-2.9 2.5-2.9.8 0 1.6.4 1.9 1h.1v-.9h1.4v5.6c0 1.6-1.2 2.6-3.2 2.6zm0-3.4c.9 0 1.4-.7 1.4-1.8 0-1-.6-1.7-1.4-1.7-.9 0-1.5.8-1.5 1.7 0 1 .6 1.8 1.5 1.8z"/></svg></span>
+      <span class="pay-mark" title="GitHub Sponsors"><svg viewBox="0 0 60 25" xmlns="http://www.w3.org/2000/svg" aria-label="GitHub Sponsors"><path fill="currentColor" d="M30 21l-1.5-1.4C23.6 15.2 20 12 20 8.2c0-3 2.4-5.4 5.4-5.4 1.7 0 3.3.8 4.3 2 1-1.2 2.6-2 4.3-2 3 0 5.4 2.4 5.4 5.4 0 3.8-3.6 7-8.5 11.4z"/></svg></span>
+    </div>
+  </div>
+
   <div class="foot-bottom">
     <div>◊·κ=1 · v19 field seed · 7 rings · single HTML · sovereign</div>
     <div>Built sovereign · runs offline · your data your device</div>
