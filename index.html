@@ -138,6 +138,10 @@ p.lede { font-family: 'Cormorant Garamond'; font-size: 22px; font-style: italic;
 .tc-pay-mark.gh { color: var(--gold); }
 .tc-actions a.buy { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
 .tc-actions a.buy:hover { background: var(--amber); border-color: var(--amber); color: #0a0a0a; }
+.tc-actions a.buy-quote { background: transparent; color: var(--gold); border-color: var(--gold); }
+.tc-actions a.buy-quote:hover { background: var(--gold); color: #0a0a0a; }
+a.tc-pay-mark { text-decoration: none; cursor: pointer; }
+a.tc-pay-mark:hover { opacity: 1; border-color: var(--gold); color: var(--gold); }
 
 .proof { background: #0c0c0c; }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
@@ -829,7 +833,13 @@ function renderCard(it) {
   const pd = state.registry?.paymentDefaults || {};
   const pay = it.payment;
   const sellable = pay && pay.useDefault === true && !isOffline;
-  const buyUrl = pay?.url || pd.hub || (HUB_BASE + '/#pricing');
+  // Routing logic:
+  //   - For self-serve Lite tier: PayPal (paypal.me/ainativesolutions)
+  //   - For Pro/Enterprise: route to contact (LinkedIn DM for a quote)
+  //   - Override: per-item pay.url wins
+  const buyUrl = pay?.url || pd.paypal || pd.hub || (HUB_BASE + '/#pricing');
+  const buyLabel = pay?.label || 'Get yours';
+  const quoteUrl = pd.contact_url || 'https://www.linkedin.com/in/simon-gant-295b56180/';
 
   return `
     <article class="tool-card ${dimClass}">
@@ -847,7 +857,8 @@ function renderCard(it) {
       ${it.note ? `<div style="font-size:11px;color:var(--amber);margin-bottom:10px;line-height:1.5">↻ ${escHTML(it.note)}</div>` : ''}
       <div class="tc-actions">
         ${showPrimary ? `<a class="primary" href="${escHTML(tryUrl)}" target="_blank">${tryLabel}</a>` : ''}
-        ${sellable ? `<a class="buy" href="${escHTML(buyUrl)}" target="_blank">Get yours</a>` : ''}
+        ${sellable ? `<a class="buy" href="${escHTML(buyUrl)}" target="_blank" title="PayPal · self-serve Lite">${escHTML(buyLabel)}</a>` : ''}
+        ${sellable ? `<a class="buy-quote" href="${escHTML(quoteUrl)}" target="_blank" title="Get a tailored quote · Pro / Enterprise · invoiced via Stripe">Get a quote</a>` : ''}
         ${it.source ? `<a href="${escHTML(it.source)}" target="_blank">Source</a>` : ''}
         ${it.openapi ? `<a href="${escHTML(it.openapi)}" target="_blank">OpenAPI</a>` : ''}
         ${isDown && tryUrl ? `<a href="${escHTML(tryUrl)}" target="_blank" style="color:var(--amber);border-color:var(--amber)">Wake it</a>` : ''}
@@ -855,12 +866,12 @@ function renderCard(it) {
       ${sellable ? `<div class="tc-pay-row">
         <span class="label">Pay</span>
         <div class="tc-pay-marks">
-          <span class="tc-pay-mark stripe" title="Stripe">Stripe</span>
+          <a class="tc-pay-mark paypal" href="${escHTML(pd.paypal || '#')}" target="_blank" title="PayPal · self-serve · ${escHTML(pd.paypal_email || 'ainativesolutions.com')}">PayPal</a>
           <span class="tc-pay-mark" title="Visa">Visa</span>
           <span class="tc-pay-mark" title="Mastercard">MC</span>
-          <span class="tc-pay-mark paypal" title="PayPal">PayPal</span>
           <span class="tc-pay-mark" title="Apple Pay">Apple Pay</span>
-          <span class="tc-pay-mark gh" title="GitHub Sponsors">GH ◊</span>
+          <span class="tc-pay-mark stripe" title="Stripe · tailored invoices for Pro/Enterprise · contact for quote">Stripe</span>
+          <a class="tc-pay-mark gh" href="https://github.com/sponsors/sjgant80-hub" target="_blank" title="GitHub Sponsors">GH ◊</a>
         </div>
       </div>` : ''}
     </article>`;
