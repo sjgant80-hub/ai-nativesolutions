@@ -578,15 +578,20 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
   <div class="guild-panel">
     <div class="field-row">
       <div class="field"><label>Your name</label><input id="gName" placeholder="How you sign your work"></div>
-      <div class="field"><label>GitHub URL</label><input id="gGithub" type="url" placeholder="https://github.com/your-handle"></div>
+      <div class="field"><label>LinkedIn URL (preferred)</label><input id="gLinkedIn" type="url" placeholder="https://linkedin.com/in/your-handle"></div>
     </div>
     <div class="field-row">
-      <div class="field"><label>Your tool URL</label><input id="gTool" type="url" placeholder="https://your-tool.github.io/"></div>
+      <div class="field"><label>GitHub URL (fallback)</label><input id="gGithub" type="url" placeholder="https://github.com/your-handle"></div>
+      <div class="field"><label>Your tool URL (fallback)</label><input id="gTool" type="url" placeholder="https://your-tool.github.io/"></div>
+    </div>
+    <div class="field-row">
       <div class="field"><label>Email (we send back the welcome)</label><input id="gEmail" type="email" placeholder="you@example.com"></div>
+      <div class="field"></div>
     </div>
     <div class="field"><label>What does it do? (1-2 sentences)</label><textarea id="gWhat" rows="3" placeholder="One line about the tool. What workflow it replaces. Who it's for."></textarea></div>
     <button class="btn-primary" id="guildSubmit" style="margin-top:8px">Submit application</button>
-    <p style="color:var(--muted);font-size:11px;margin-top:14px;letter-spacing:0.06em;text-transform:uppercase">Opens your mail client with the application pre-filled. We review within 48h.</p>
+    <p style="color:var(--muted);font-size:11px;margin-top:14px;letter-spacing:0.06em;text-transform:uppercase">Pre-vetted by <a href="https://sjgant80-hub.github.io/fall-vetter/" style="color:var(--gold)" target="_blank">fall-vetter</a> · opens GitHub Issue with your details pre-filled · we review within 48h.</p>
+    <div id="gVetMsg" style="margin-top:10px;font-family:'DM Mono';font-size:11.5px;line-height:1.6;display:none"></div>
   </div>
 </section>
 
@@ -686,6 +691,9 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
 </div>
 
 <div class="toast" id="toast">·</div>
+
+<!-- ◊ fall-vetter · R2 ┃ validate · guild signup gate · prime 347 -->
+<script src="https://sjgant80-hub.github.io/fall-vetter/fall-vetter.js"></script>
 
 <script>
 'use strict';
@@ -1243,32 +1251,61 @@ document.getElementById('forgeBtn').addEventListener('click', async () => {
   out.innerHTML = '<pre>' + escHTML(forgeTemplate(workflow, tier)) + '</pre>';
 });
 
-// ═══ GUILD SUBMIT ═══
+// ═══ GUILD SUBMIT (with fall-vetter pre-block) ═══
+function _renderVetMsg(result) {
+  const box = document.getElementById('gVetMsg');
+  if (!box) return;
+  box.style.display = 'block';
+  const colour = result.decision === 'block' ? '#c8371a' : result.decision === 'review' ? '#c87e3a' : '#4a8a4a';
+  const reasons = result.reasons.map(r => '• [' + r.field + '] ' + r.msg).join('<br>');
+  const title = result.decision === 'block' ? 'Cannot submit — please fix:'
+              : result.decision === 'review' ? 'Submitting for human review (borderline signals):'
+              : 'Looks good · opening GitHub…';
+  box.innerHTML = '<div style="color:' + colour + ';font-weight:700;text-transform:uppercase;letter-spacing:0.08em;font-size:11px;margin-bottom:4px">' + title + '</div>' +
+                  (reasons ? '<div style="color:var(--muted)">' + reasons + '</div>' : '');
+}
 document.getElementById('guildSubmit').addEventListener('click', () => {
   const name = document.getElementById('gName').value.trim();
+  const linkedin = (document.getElementById('gLinkedIn') && document.getElementById('gLinkedIn').value.trim()) || '';
   const github = document.getElementById('gGithub').value.trim();
   const tool = document.getElementById('gTool').value.trim();
   const email = document.getElementById('gEmail').value.trim();
   const what = document.getElementById('gWhat').value.trim();
-  if (!name || !github || !tool || !email) { toast('Name, GitHub, tool URL, email all required'); return; }
+
+  // fall-vetter pre-block (R2 ┃ validate)
+  if (window.FallVetter && window.FallVetter.vet) {
+    const v = window.FallVetter.vet({ name, email, linkedin, github, tool, message: what });
+    _renderVetMsg(v);
+    if (v.decision === 'block') { toast('Signup blocked · see details'); return; }
+    if (v.decision === 'review') {
+      // Allow but warn — the human queue will review
+      toast('Submitting for human review · opening GitHub…');
+    }
+  }
+
+  if (!name || !email || (!linkedin && !github && !tool)) {
+    toast('Name, email, and one of LinkedIn/GitHub/tool URL required');
+    return;
+  }
   // Route to GitHub Issue Forms · prefill fields
   // The template's fields (builder_name, email, github_url, tool_url, what) match the IDs
   const params = new URLSearchParams({
     template: '03-guild-application.yml',
     'builder_name': name,
     'email': email,
-    'github_url': github,
-    'tool_url': tool,
+    'linkedin_url': linkedin || '',
+    'github_url': github || '',
+    'tool_url': tool || '',
     'what': what || '',
     title: '[GUILD] ' + name,
   });
   const url = 'https://github.com/sjgant80-hub/contact/issues/new?' + params.toString();
   window.open(url, '_blank');
   toast('GitHub opening · sign in + submit');
-  try { new BroadcastChannel('fall-signal').postMessage({ source: 'ai-nativesolutions', type: 'guild_application', name, github, tool, ts: Date.now() }); } catch (e) {}
+  try { new BroadcastChannel('fall-signal').postMessage({ source: 'ai-nativesolutions', type: 'guild_application', name, linkedin, github, tool, ts: Date.now() }); } catch (e) {}
   try {
     const apps = JSON.parse(localStorage.getItem('ain-guild-apps') || '[]');
-    apps.push({ name, github, tool, email, what, ts: Date.now() });
+    apps.push({ name, linkedin, github, tool, email, what, ts: Date.now() });
     localStorage.setItem('ain-guild-apps', JSON.stringify(apps));
   } catch (e) {}
 });
