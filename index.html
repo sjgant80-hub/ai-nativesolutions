@@ -96,6 +96,22 @@ p.lede { font-family: 'Cormorant Garamond'; font-size: 22px; font-style: italic;
 .kind-tab .count { opacity: 0.7; margin-left: 8px; font-size: 10px; }
 
 .cat-bar { display: flex; gap: 6px; flex-wrap: wrap; padding-bottom: 6px; }
+
+/* ◊ Cognitive Substrate · featured pin */
+.substrate-pin { background: linear-gradient(135deg, rgba(139,26,26,0.12) 0%, rgba(184,151,74,0.08) 100%); border: 1px solid var(--gold); padding: 26px 28px; margin: 0 0 28px 0; position: relative; overflow: hidden; }
+.substrate-pin::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gold); }
+.substrate-pin .sp-tag { font-family: 'DM Mono'; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.substrate-pin .sp-h { font-family: 'Libre Baskerville', serif; font-size: clamp(22px, 3vw, 30px); line-height: 1.25; margin: 0 0 10px 0; color: var(--cream); }
+.substrate-pin .sp-body { color: var(--cream); font-size: 14.5px; line-height: 1.6; margin: 0 0 18px 0; opacity: 0.9; }
+.substrate-pin .sp-products { display: flex; gap: 10px; flex-wrap: wrap; }
+.substrate-pin .sp-product { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--border); color: var(--cream); text-decoration: none; transition: border-color 0.15s, background 0.15s; }
+.substrate-pin .sp-product:hover { border-color: var(--gold); background: rgba(212,168,83,0.06); }
+.substrate-pin .sp-product.sp-flagship { border-color: var(--gold); background: rgba(212,168,83,0.05); }
+.substrate-pin .sp-prime { font-family: 'DM Mono'; font-size: 11px; color: var(--brass); }
+.substrate-pin .sp-name { font-family: 'Syne'; font-weight: 700; font-size: 14px; color: var(--cream); letter-spacing: 0.02em; }
+.substrate-pin .sp-tag2 { font-family: 'DM Mono'; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.substrate-pin .sp-flagship .sp-tag2 { color: var(--gold); }
+@media (max-width: 600px) { .substrate-pin .sp-products { flex-direction: column; } .substrate-pin .sp-product { width: 100%; } }
 .cat-chip { font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.06em; padding: 6px 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; transition: all 0.2s; text-transform: lowercase; }
 .cat-chip:hover { color: var(--text); border-color: var(--text); }
 .cat-chip.active { background: var(--gold); border-color: var(--gold); color: #0a0a0a; }
@@ -386,6 +402,26 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
   <div class="section-label">§ III · the marketplace</div>
   <h2>The entire estate. In one place.</h2>
   <p class="lede">Every sovereign tool, API, SDK and defensive publication — filterable by kind and domain. Pulls live from the registry. Updates without redeploy.</p>
+
+  <!-- ◊ FRONTIER · Cognitive Substrate · v1.0 flagship pin (auto-rendered from registry.cognitive_substrate) -->
+  <div id="substratePin" class="substrate-pin" style="display:none">
+    <div class="sp-left">
+      <div class="sp-tag">◊ FRONTIER · cognitive substrate v1.0</div>
+      <h3 class="sp-h">Research → Spec → Tool → Ship · in one pipeline</h3>
+      <p class="sp-body">Adversarially verified · Konomi-signed audit chain · the apex of the estate. <a href="https://sjgant80-hub.github.io/fall-substrate/SOVEREIGN-COGNITIVE-SUBSTRATE.md" target="_blank" rel="noopener" style="color:var(--gold)">read the architecture doc →</a></p>
+      <div class="sp-products">
+        <a class="sp-product sp-flagship" href="https://sjgant80-hub.github.io/fall-substrate/" target="_blank" rel="noopener">
+          <span class="sp-prime">389</span><span class="sp-name">fall-substrate</span><span class="sp-tag2">★ flagship</span>
+        </a>
+        <a class="sp-product" href="https://sjgant80-hub.github.io/fall-raas/" target="_blank" rel="noopener">
+          <span class="sp-prime">397</span><span class="sp-name">fall-raas</span><span class="sp-tag2">research-as-a-service</span>
+        </a>
+        <a class="sp-product" href="https://sjgant80-hub.github.io/fall-verify/" target="_blank" rel="noopener">
+          <span class="sp-prime">401</span><span class="sp-name">fall-verify</span><span class="sp-tag2">adversarial verify</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <div class="controls">
     <div class="controls-row">
@@ -811,6 +847,12 @@ function renderAll() {
   allItems = aggregateRegistry(state.registry);
   renderWhatsNew();
   renderGuildMesh(state.registry.guild_members || []);
+
+  // ◊ Cognitive Substrate · reveal pin if registry includes the manifest
+  try {
+    const sp = document.getElementById('substratePin');
+    if (sp && state.registry.cognitive_substrate) sp.style.display = 'block';
+  } catch (e) {}
 
   // counts
   const counts = { all: allItems.length, app: 0, api: 0, sdk: 0, research: 0, infra: 0, plugin: 0 };
