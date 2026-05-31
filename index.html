@@ -780,8 +780,18 @@ function aggregateRegistry(reg) {
 
 async function loadRegistry() {
   const cacheAge = Date.now() - (state.registryFetchedAt || 0);
-  if (state.registry && cacheAge < 5 * 60 * 1000) {
+  // Tighter cache: 60s only · always re-check version against remote
+  if (state.registry && cacheAge < 60 * 1000) {
     renderAll();
+    // Background revalidate so users don't sit on stale entries
+    fetch(REGISTRY_URL + '?t=' + Date.now()).then(r => r.json()).then(reg => {
+      if (reg && reg.registryVersion !== state.registry.registryVersion) {
+        state.registry = reg;
+        state.registryFetchedAt = Date.now();
+        saveState();
+        renderAll();
+      }
+    }).catch(() => {});
     return;
   }
   try {
@@ -831,7 +841,11 @@ function renderAll() {
 function renderGuildMesh(members) {
   const root = document.getElementById('guildMembers');
   if (!root) return;
-  if (!members.length) { root.innerHTML = '<div class="empty-state">No guild members listed yet.</div>'; return; }
+  if (!members.length) { root.innerHTML = '<div class="empty-state">The guild is forming. <a href="#guild" style="color:var(--gold)">Be the first to apply →</a></div>'; return; }
+  if (members.length === 1) {
+    // Pad the empty state · invite second member explicitly
+    root.insertAdjacentHTML('beforeend', '');
+  }
   root.innerHTML = members.map(m => {
     const tools = (m.tools || []).map(t => `
       <a class="gm-tool" href="${escHTML(t.url || t.source || '#')}" target="_blank" rel="noopener">
