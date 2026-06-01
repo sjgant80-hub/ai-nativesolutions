@@ -1328,10 +1328,23 @@ document.getElementById('guildSubmit').addEventListener('click', () => {
   const email = document.getElementById('gEmail').value.trim();
   const what = document.getElementById('gWhat').value.trim();
 
-  // fall-vetter pre-block (R2 ┃ validate)
+  // fall-vetter pre-block (R2 ┃ validate · v1 fast gate)
   if (window.FallVetter && window.FallVetter.vet) {
     const v = window.FallVetter.vet({ name, email, linkedin, github, tool, message: what });
     _renderVetMsg(v);
+    // v2.0 · Cassandra read · surface the archetype as polite UX honey
+    try {
+      if (window.FallVetter.read && what && what.length > 20) {
+        const r = window.FallVetter.read({ name, email, linkedin, github, tool, message: what });
+        const box = document.getElementById('gVetMsg');
+        if (box && r && r.archetype) {
+          const cassieNote = document.createElement('div');
+          cassieNote.style.cssText = 'margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Cormorant Garamond,serif;font-style:italic;color:var(--muted);font-size:13px;line-height:1.5';
+          cassieNote.innerHTML = '◊ <span style="color:var(--gold)">We read your application as a <b>' + r.archetype + '</b></span> · stance ' + r.lenses.sales101.stance.toLowerCase().replace(/_/g,'-') + '. If that doesn\'t sound right, please rephrase.';
+          box.appendChild(cassieNote);
+        }
+      }
+    } catch (_) {}
     if (v.decision === 'block') { toast('Signup blocked · see details'); return; }
     if (v.decision === 'review') {
       // Allow but warn — the human queue will review
