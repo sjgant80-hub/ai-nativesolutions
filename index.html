@@ -334,9 +334,25 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
 .verify-badge { display: inline-block; padding: 3px 8px; font-family: 'Syne'; font-weight: 700; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; }
 .verify-badge.yes { background: var(--success); color: #0a0a0a; }
 .verify-badge.no { background: transparent; border: 1px solid var(--muted); color: var(--muted); }
+/* ◊ NAS · fork-aware marketplace · L9 window manager */
+body[data-nas-vertical] .nas-priority { order: -1; outline: 1px solid rgba(184,151,74,.4); outline-offset: 4px; }
+.nas-fork-banner {
+  display: none; padding: 16px 20px;
+  background: linear-gradient(90deg, rgba(184,151,74,.08), rgba(11,10,15,.4));
+  border-top: 1px solid rgba(184,151,74,.35); border-bottom: 1px solid rgba(184,151,74,.35);
+  font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px;
+  color: #b8974a; letter-spacing: .05em; text-align: center;
+}
+body[data-nas-vertical] .nas-fork-banner { display: block; }
+.nas-fork-banner b { color: #e6e1d3; }
+.nas-fork-banner a { color: #b8974a; text-decoration: underline; }
 </style>
+<script src="https://sjgant80-hub.github.io/fall-euaiact/cdn/nas-shim.js" data-tool="ai-nativesolutions" data-organ="L9.window-manager"></script>
 </head>
 <body>
+<div class="nas-fork-banner" id="nas-fork-banner">
+  <b>◊ welcome back, <span id="nas-handle">friend</span></b> · your <span id="nas-vertical">fork</span> hub · surfacing <span id="nas-organ-count">your</span> organs first · <a href="https://sjgant80-hub.github.io/niceassos-seed/seed.html">re-probe →</a>
+</div>
 
 <header>
   <div class="nav">
@@ -1410,5 +1426,36 @@ window.addEventListener('message', async (e) => {
   prefillGuildForm();
 })();
 </script>
+
+<script>
+// ◊·κ=φ⁴ · NAS hub mode · L9 ← L2 seed hand-off
+document.addEventListener('nas:ready', () => {
+  if (!window.nas || !window.nas.isForkPresent()) return;
+  const fork = window.nas.fork;
+  const banner = document.getElementById('nas-fork-banner');
+  if (banner) {
+    document.getElementById('nas-handle').textContent = fork.handle || ('fork-' + fork.konomi_pub.slice(0,8));
+    document.getElementById('nas-vertical').textContent = (fork.verdict && fork.verdict.vertical) || 'fork';
+    document.getElementById('nas-organ-count').textContent = (fork.organs && fork.organs.length) ? fork.organs.length : 'your';
+  }
+  const priorityIds = new Set(fork.organs || []);
+  document.querySelectorAll('[data-tool], [data-tool-id], [data-organ]').forEach(el => {
+    const id = el.dataset.tool || el.dataset.toolId || el.dataset.organ;
+    if (priorityIds.has(id)) el.classList.add('nas-priority');
+  });
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href') || '';
+    for (const id of priorityIds) {
+      if (href.includes('/' + id) || href.includes(id + '.html') || href.includes(id + '/')) {
+        const card = a.closest('.tool-card, .card, article, section, li');
+        if (card) card.classList.add('nas-priority');
+        break;
+      }
+    }
+  });
+  console.log('%c◊·κ=φ⁴ AIN hub grafted onto fork · ' + (fork.handle || fork.konomi_pub.slice(0,12)) + ' · ' + priorityIds.size + ' organs prioritized', 'color:#b8974a;font-weight:bold');
+});
+</script>
+
 </body>
 </html>
