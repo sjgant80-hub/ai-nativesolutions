@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ainative",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "8901", "C:/Users/sjgan/Downloads/ai-nativesolutions-repo"],
+      "port": 8901
+    }
+  ]
+}
