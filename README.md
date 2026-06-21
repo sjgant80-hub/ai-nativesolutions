@@ -1,16 +1,23 @@
 # AI Native Solutions
 
-### The company that runs itself for £0/month.
+### The sovereign marketplace + workstation. 152 apps. One launcher. £0/month.
 
-**[→ Live Site](https://sjgant80-hub.github.io/ai-nativesolutions/)** · **[→ Architecture Document](https://sjgant80-hub.github.io/ai-nativesolutions/architecture.html)**
+**[→ Live Site](https://www.ai-nativesolutions.com/)** · **[→ Open FallDesk Workstation](https://www.ai-nativesolutions.com/fallos.html)** · **[→ Architecture Document](https://sjgant80-hub.github.io/ai-nativesolutions/architecture.html)**
 
 ---
 
 ## What This Is
 
-An AI-native company where every product is a single HTML file, every tool is sovereign, every product feeds every other product, and 254 AI agents handle operations while the founder reads one email per day.
+An AI-native sovereign software estate where every product is a single HTML file, every tool installs forever, every product feeds every other product, and a 152-app federation runs through one workstation launcher while the founder ships continuously.
 
 Not a startup. Not a SaaS. A self-reinforcing recursive mesh running on free infrastructure forever.
+
+**Current state (June 2026):**
+- **152 sovereign apps** in [fall-registry](https://github.com/sjgant80-hub/fall-registry) across 11 UK regulated industries
+- **11 vertical wedges** shipped — IFA · law · accountancy · claims · insurance · mortgage · estate · clinic · vet · recruit · HR (each = 4 tools: anchor · onboard · paper · practice)
+- **FallSeed** — generative substrate: a PWA that ships with 4 base tools plus a build engine. Fork into any vertical in 5 minutes
+- **FallDesk** — sovereign workstation launcher: one HTML file, mirror of the entire registry, install-any-app via fetch+cache, build new tools through 8-provider LLM cascade (WebLLM · ollama · LM Studio · Groq · OpenRouter free · Google AI Studio · Cerebras · Anthropic)
+- **Cosmology seed v20.4** sealed with Socket VI · KONOMIGAMI fold algebra
 
 ---
 
