@@ -1455,8 +1455,8 @@ function browseClick(e) {
   // focus search after scroll
   setTimeout(() => document.getElementById('searchInput').focus(), 900);
 }
-document.getElementById('heroBrowse').addEventListener('click', browseClick);
-document.getElementById('navBrowse').addEventListener('click', browseClick);
+document.getElementById('heroBrowse')?.addEventListener('click', browseClick);
+document.getElementById('navBrowse')?.addEventListener('click', browseClick);
 
 // ═══ FORGE ═══
 const PRESET = 'I get enquiries by email, qualify the lead, send a quote, follow up, close the deal, onboard the client, deliver the work in phases, invoice on milestones, chase late payment.';
