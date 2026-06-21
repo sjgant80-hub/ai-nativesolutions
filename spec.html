@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>Fork Seed · spec · a replication mechanism for the open web · AI Native Solutions</title>
+<meta name="description" content="Fork Seed is a generalised replication mechanism. Spec for developers and researchers: the four invariants, the peer group (DNA / git / Docker / Smalltalk image), what's actually new, the SEED schema, the fork protocol, and reference implementations.">
+<meta property="og:title" content="Fork Seed · a replication mechanism for the open web">
+<meta property="og:description" content="Spec page. Audience: developers, researchers, system thinkers. The seeds at sjgant80-hub are instances; Fork Seed is the primitive.">
+<link rel="canonical" href="https://www.ai-nativesolutions.com/spec.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0a0a0a; --surface: #141414; --surface-2: #1a1a18; --border: #1a1a1a;
+  --text: #e8e6e3; --muted: #888; --gold: #d4a017; --amber: #e8a012;
+  --success: #44aa44; --danger: #cc3333; --info: #6a9aff;
+  --max: 1100px;
+}
+html, body { background: var(--bg); color: var(--text); font: 16px/1.7 'DM Mono', ui-monospace, monospace; min-height: 100dvh; -webkit-font-smoothing: antialiased; }
+body { overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); scroll-behavior: smooth; }
+::selection { background: var(--gold); color: #0a0a0a; }
+a { color: inherit; text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--gold); }
+.gold { color: var(--gold); }
+.muted { color: var(--muted); }
+
+nav.top { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 14px 24px; }
+nav.top .inner { max-width: var(--max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+nav.top .brand { display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display'; font-weight: 700; font-size: 17px; }
+nav.top .brand .mark { color: var(--gold); font-size: 22px; }
+nav.top ul { list-style: none; display: flex; gap: 18px; font-size: 13px; flex-wrap: wrap; }
+nav.top ul li a { color: var(--muted); }
+nav.top ul li a:hover, nav.top ul li a.active { color: var(--gold); }
+
+main { max-width: var(--max); margin: 0 auto; padding: 56px 24px 80px; }
+@media (max-width: 720px) { main { padding: 40px 20px 60px; } }
+
+.eyebrow { font-size: 11px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Playfair Display'; font-weight: 800; font-size: 44px; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 18px; }
+h1 em { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; color: var(--gold); }
+.lede { font-family: 'Cormorant Garamond'; font-size: 21px; line-height: 1.55; color: var(--text); max-width: 800px; margin-bottom: 24px; }
+.lede em { color: var(--gold); }
+
+section { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+section h2 { font-family: 'Syne'; font-weight: 800; font-size: 26px; letter-spacing: -0.01em; margin-bottom: 14px; }
+section h2 .roman { color: var(--gold); margin-right: 14px; font-family: 'Cormorant Garamond'; font-weight: 500; font-style: italic; font-size: 22px; vertical-align: 1px; }
+section h3 { font-family: 'Playfair Display'; font-weight: 700; font-size: 18px; margin-top: 26px; margin-bottom: 8px; color: var(--text); }
+section p { color: var(--text); font-size: 15px; line-height: 1.75; max-width: 800px; margin-bottom: 14px; }
+section p strong { color: var(--gold); font-weight: 700; }
+
+.invariant { padding: 18px 22px; border: 1px solid var(--border); border-left: 3px solid var(--gold); background: var(--surface); border-radius: 4px; margin-bottom: 14px; }
+.invariant .num { font-family: 'Cormorant Garamond'; font-style: italic; color: var(--gold); font-size: 20px; margin-right: 8px; }
+.invariant .label { font-family: 'Playfair Display'; font-weight: 700; font-size: 16px; }
+.invariant .body { font-size: 14px; line-height: 1.7; color: var(--muted); margin-top: 6px; }
+
+table.peers { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+table.peers th, table.peers td { padding: 11px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+table.peers th { background: #0e0e0e; color: var(--muted); font-family: 'DM Mono'; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+table.peers tr:last-child td { border-bottom: none; }
+table.peers tr.us { background: rgba(212,160,23,0.08); }
+table.peers tr.us td { color: var(--gold); }
+table.peers .yr { color: var(--muted); white-space: nowrap; font-family: 'DM Mono'; font-size: 12px; }
+
+pre.code { background: #0d0d0d; border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; overflow-x: auto; font-size: 12px; line-height: 1.55; color: #c8c6c2; margin: 16px 0; font-family: 'DM Mono'; }
+pre.code .kw { color: var(--gold); }
+pre.code .cm { color: var(--muted); font-style: italic; }
+pre.code .st { color: #b5d99c; }
+code.inline { background: #0d0d0d; padding: 1px 7px; border-radius: 3px; font-size: 13px; color: var(--gold); border: 1px solid var(--border); }
+
+.steps { counter-reset: step; margin: 14px 0; }
+.steps .step { counter-increment: step; position: relative; padding: 12px 14px 12px 50px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); margin-bottom: 8px; font-size: 14px; line-height: 1.6; }
+.steps .step::before { content: counter(step); position: absolute; left: 14px; top: 12px; width: 26px; height: 26px; border: 1px solid var(--gold); border-radius: 50%; display: grid; place-items: center; font-size: 12px; color: var(--gold); font-family: 'Cormorant Garamond'; font-weight: 500; }
+.steps .step b { color: var(--gold); }
+
+.refs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 18px; }
+.refs a { display: block; padding: 16px 18px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); transition: border-color 0.2s, background 0.2s; }
+.refs a:hover { border-color: var(--gold); background: #161614; }
+.refs a .h { font-family: 'Playfair Display'; font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 4px; }
+.refs a:hover .h { color: var(--gold); }
+.refs a .d { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.refs a .m { font-family: 'DM Mono'; font-size: 10px; color: var(--gold); letter-spacing: 0.08em; margin-top: 8px; }
+
+.callout { padding: 22px 26px; border: 1px solid var(--gold); border-radius: 4px; background: linear-gradient(135deg, rgba(212,160,23,0.06), rgba(212,160,23,0.02)); margin: 28px 0 14px; }
+.callout .lbl { font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.16em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+.callout .body { font-family: 'Cormorant Garamond'; font-size: 19px; line-height: 1.55; color: var(--text); }
+
+ul.bullets { list-style: none; margin: 12px 0; }
+ul.bullets li { position: relative; padding-left: 22px; margin-bottom: 8px; font-size: 14px; line-height: 1.7; color: var(--text); }
+ul.bullets li::before { content: '◇'; position: absolute; left: 0; top: 0; color: var(--gold); }
+
+footer { max-width: var(--max); margin: 80px auto 30px; padding: 24px; border-top: 1px solid var(--border); text-align: center; font-size: 12px; color: var(--muted); }
+footer .gold-line { color: var(--gold); font-family: 'DM Mono'; letter-spacing: 0.14em; text-transform: uppercase; font-size: 10px; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <a class="brand" href="/"><span class="mark">◊</span> AI Native Solutions</a>
+    <ul>
+      <li><a href="/">Estate</a></li>
+      <li><a href="/spec.html" class="active">Spec</a></li>
+      <li><a href="/fallos.html">Workstation</a></li>
+      <li><a href="https://github.com/sjgant80-hub" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="eyebrow">§ spec · for developers, researchers, system thinkers</div>
+  <h1>Fork Seed is a <em>generalised replication mechanism</em>.</h1>
+  <p class="lede">
+    The seeds shipped at <code class="inline">sjgant80-hub</code> are instances. <em>Fork Seed</em> is the primitive. This page specifies what the primitive is, what category it belongs to, what it can and cannot do, and how to implement a conforming seed of your own.
+  </p>
+  <p class="lede">
+    The honest claim: Fork Seed is the <em>Smalltalk image</em> rendered in the substrate that won — the open web. Same idea (self-contained system that carries its own development machinery and can spawn new images). Different substrate (browser + IDB + open standards rather than a Xerox PARC VM). The substrate is the difference that makes it travel.
+  </p>
+
+  <section>
+    <h2><span class="roman">I</span> Definition · four invariants</h2>
+    <p>A pattern is a <strong>replication mechanism</strong> when it satisfies all four:</p>
+
+    <div class="invariant">
+      <div><span class="num">1</span><span class="label">Self-containment</span></div>
+      <div class="body">The offspring carries the complete machinery to replicate again. No phone-home to the parent. After the fork, there is no umbilical cord.</div>
+    </div>
+    <div class="invariant">
+      <div><span class="num">2</span><span class="label">Faithful copy with permitted variation</span></div>
+      <div class="body">Mutation is allowed at the source level — the SEED constant is editable before forking — but the structural envelope (the four other invariants) is preserved through the copy.</div>
+    </div>
+    <div class="invariant">
+      <div><span class="num">3</span><span class="label">External selection</span></div>
+      <div class="body">Variants that fail some gate are culled. The gates available to a Fork Seed: a 14-point structural check; field deployment; market adoption; peer review. The gate is not optional; without it, drift dominates.</div>
+    </div>
+    <div class="invariant">
+      <div><span class="num">4</span><span class="label">Substrate independence at the pattern level, substrate dependence at the instance level</span></div>
+      <div class="body">The <em>rules</em> of the pattern do not care about the medium. Any given <em>instance</em> does. DNA does not care whether it sits inside a bacterium or a redwood, but every actual strand needs water and amino acids. A seed does not care whether it is opened on Chrome or Safari or saved to disk and opened from <code class="inline">file://</code>; any given session needs IndexedDB and a JS engine.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="roman">II</span> The peer group</h2>
+    <p>The honest company a replication mechanism keeps. The list is not exhaustive; Fork Seed belongs in it because it satisfies the four invariants — not because it is grand.</p>
+
+    <table class="peers">
+      <thead><tr><th>Pattern</th><th>Substrate</th><th>First</th><th>Replicates</th></tr></thead>
+      <tbody>
+        <tr><td>Genetic code</td><td>aqueous chemistry</td><td class="yr">~3.5 Gya</td><td>living organisms</td></tr>
+        <tr><td>Spoken language</td><td>air · ears · brains</td><td class="yr">~70 kya</td><td>concepts, instructions, identity</td></tr>
+        <tr><td>Written script</td><td>clay → paper → screens</td><td class="yr">~5 kya</td><td>knowledge across time</td></tr>
+        <tr><td>Printing press</td><td>movable type</td><td class="yr">1440</td><td>books at scale</td></tr>
+        <tr><td>Scientific publication</td><td>journals + replication protocol</td><td class="yr">1665</td><td>verified findings</td></tr>
+        <tr><td>Smalltalk image</td><td>Xerox PARC VM</td><td class="yr">1976</td><td>complete dev environments</td></tr>
+        <tr><td>Open-source code</td><td>text + compilers</td><td class="yr">~1983</td><td>software</td></tr>
+        <tr><td>git commit</td><td>hash-chained DAG</td><td class="yr">2005</td><td>versioned source-of-truth across nodes</td></tr>
+        <tr><td>Docker image</td><td>OCI + layered FS</td><td class="yr">2013</td><td>reproducible environments</td></tr>
+        <tr class="us"><td><strong>Fork Seed</strong></td><td>browser + IDB + MIT + cascade</td><td class="yr">2026</td><td>complete institutions in one file</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="roman">III</span> What's actually new</h2>
+    <p>Three of those invariants have overlapping prior art. The fourth difference is where Fork Seed does something the others do not.</p>
+
+    <p>git replicates source. Docker replicates environments. PDF replicates documents. <strong>None of them replicate the build engine inside the artifact.</strong> A git clone gives you the code but not the compiler. A Docker pull gives you the running environment but not the Dockerfile + registry + CI that produced it. A PDF gives you the document but not the typesetter.</p>
+
+    <p>Fork Seed ships <strong>substrate + instance + the machinery to produce more instances</strong> in one file. The closest prior art is the <strong>Smalltalk image</strong> (Xerox PARC, 1976-80): a memory snapshot containing the running system, the dev tools, and the ability to fork into a new image. Smalltalk needed a VM. Fork Seed treats the open web as the VM. That is the only meaningful difference, and it is the difference that makes it travel.</p>
+
+    <p>So the precise claim is not "Fork Seed is unprecedented." It is: <strong>Fork Seed is the Smalltalk image rendered in the substrate that won</strong> (the browser). The substrate that is already installed on every device on Earth.</p>
+  </section>
+
+  <section>
+    <h2><span class="roman">IV</span> The SEED schema</h2>
+    <p>A conforming seed exports a single top-level constant. Minimum shape:</p>
+
+    <pre class="code"><span class="kw">const</span> SEED_DEFAULT = {
+  manifest: {
+    name: <span class="st">'hr-firm'</span>,                <span class="cm">// kebab-case identity</span>
+    vertical: <span class="st">'HR · payroll · employment'</span>,
+    version: <span class="st">'2.0.0'</span>,
+    prime: 1049,                  <span class="cm">// spine-clean mod 127 (constraints private)</span>
+    level: 0,                     <span class="cm">// 0 = vertical, 1 = domain, 2 = behaviour…</span>
+    meshChannel: <span class="st">'fall-hr'</span>,        <span class="cm">// BroadcastChannel name</span>
+    bundleRoles: [<span class="st">'anchor'</span>, <span class="st">'onboard'</span>, <span class="st">'paper'</span>, <span class="st">'practice'</span>],
+    licence: <span class="st">'MIT'</span>,
+    seal: <span class="st">'◊·κ=1'</span>
+  },
+  baseTools: [...],               <span class="cm">// the wedge contents (level 0) or frameworks (level 1+)</span>
+  buildPromptSystem: <span class="st">`...`</span>          <span class="cm">// system prompt for the cascade</span>
+};</pre>
+
+    <p>Adjacent invariants the seed file must also contain (not part of SEED_DEFAULT itself, but mandatory for the seed to satisfy the four invariants):</p>
+    <ul class="bullets">
+      <li><strong>The build engine</strong> — an 8-provider cascade (WebLLM → ollama / LM Studio → Groq / OpenRouter / Google / Cerebras → Anthropic) that turns a plain-English description into a working tool</li>
+      <li><strong>The Fork Seed packager</strong> — a <code class="inline">jsLiteral</code> serializer that rewrites SEED_DEFAULT in place and downloads the mutated child as a new HTML file</li>
+      <li><strong>The audit chain</strong> — <code class="inline">prevHash</code> + SHA-256 on every state mutation, head persisted in IDB</li>
+      <li><strong>The mesh layer</strong> — a per-vertical BroadcastChannel for local sync plus a global <code class="inline">fall-signal</code> channel for hello-broadcast on boot</li>
+      <li><strong>The sovereignty contract</strong> — one HTML file, IDB primary, MIT, no telemetry, no external dependencies (the WebLLM ESM import is the one allowed exception)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="roman">V</span> The fork protocol</h2>
+    <p>How a parent seed produces a child seed. The protocol is six steps and runs entirely in the browser, no server.</p>
+
+    <div class="steps">
+      <div class="step">The user opens the <b>Fork Seed</b> tab. The current SEED is shown as JSON in a textarea, pre-populated with the running state.</div>
+      <div class="step">The user mutates the JSON — change the manifest name, swap the baseTools, edit the build prompt, add a framework. Any source-level edit is allowed.</div>
+      <div class="step">On <b>Fork into HTML</b>, the packager fetches the current document's own source (<code class="inline">fetch(location.href)</code>).</div>
+      <div class="step">The packager scans the source for the literal string <code class="inline">const SEED_DEFAULT = {</code>, then walks balanced braces forward until it has captured the full object literal.</div>
+      <div class="step">The packager replaces that span with <code class="inline">const SEED_DEFAULT = </code> + a fresh <code class="inline">jsLiteral(mutatedSeed)</code> serialisation, preserving JS syntax (backtick template literals for long strings, escaped <code class="inline">&lt;\/script&gt;</code>).</div>
+      <div class="step">The packager wraps the mutated source in a Blob and triggers a download. The child file is fully self-contained: it carries its own copy of the build engine and the packager, so it is itself forkable.</div>
+    </div>
+
+    <div class="callout">
+      <div class="lbl">consequence</div>
+      <div class="body">The child seed has no dependency on the parent. There is no central registry. There is no kill switch. Lineage is traceable through the audit chain hash if both parent and child want to prove ancestry, but neither is required to.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="roman">VI</span> Five consequences of being a replication mechanism</h2>
+
+    <h3>1 · The estate is a population, not a portfolio</h3>
+    <p>A portfolio has products. A population has <em>frequencies</em>. The 11 verticals shipped today are the first generation. What gets forked the most over the next 12 months is what survives. The metric stops being "did I ship X" and becomes "what is the distribution of forks across the lineage". That is biology, not retail.</p>
+
+    <h3>2 · Derivatives are not owned</h3>
+    <p>MIT + self-contained + no phone-home means anyone with a browser can fork a seed for their local context and ship it as theirs. That is not a flaw — it is the property that makes it a replication mechanism rather than a license-controlled product. Wealth accrues to the <em>fitness</em> of the substrate to keep being forked, not to the lineage's root.</p>
+
+    <h3>3 · Mutation is at the source, not the binary</h3>
+    <p>A binary-only replicator (Docker image, compiled exe) can be re-distributed but not edited. A source-level replicator (git repo, your seed) can be mutated. Mutation is what lets a pattern adapt to substrates it was never designed for. Compliance Seed → Education Seed → Civic Seed is the natural drift any source-level replicator undergoes once released.</p>
+
+    <h3>4 · The audit chain is mitochondrial DNA</h3>
+    <p>Every mutation hashes its predecessor. Lineage is verifiable without a central authority. Two forks that claim common ancestry can prove it cryptographically. Small property, structurally important: traceable lineage in a system with no central registry.</p>
+
+    <h3>5 · The build engine + cascade is the ribosome</h3>
+    <p>A genome is inert without the machinery that transcribes it into proteins. A seed is inert without the cascade that turns "build me a tool that does X" into a working HTML file. Both genome and seed are declarative; both ribosome and cascade are mechanical; both organisms and seeds carry both inside the daughter after replication.</p>
+  </section>
+
+  <section>
+    <h2><span class="roman">VII</span> Reference implementations</h2>
+    <p>The seeds below conform to this spec. Each is a single HTML file containing SEED_DEFAULT + the four adjacent invariants. Save any of them; you have the spec running in your hand.</p>
+
+    <div class="refs">
+      <a href="https://sjgant80-hub.github.io/fallseed-hr/" target="_blank" rel="noopener">
+        <div class="h">fallseed-hr</div>
+        <div class="d">Level-0 vertical seed · UK HR firm · ERA 1996, ACAS, WTR, RTI</div>
+        <div class="m">prime 1049 · ~80KB</div>
+      </a>
+      <a href="https://sjgant80-hub.github.io/fallseed-compliance/" target="_blank" rel="noopener">
+        <div class="h">fallseed-compliance</div>
+        <div class="d">Level-1 domain seed · ISO27001 + CE + SOC 2 full + PCI / NIS2 / DORA stubs</div>
+        <div class="m">prime 1193 · ~120KB · level 1</div>
+      </a>
+      <a href="https://sjgant80-hub.github.io/fallseed-clinic/" target="_blank" rel="noopener">
+        <div class="h">fallseed-clinic</div>
+        <div class="d">Level-0 vertical seed · UK private clinic · CQC, GMC, MCA, Caldicott</div>
+        <div class="m">prime 1153 · ~80KB</div>
+      </a>
+      <a href="https://sjgant80-hub.github.io/fallseed-law/" target="_blank" rel="noopener">
+        <div class="h">fallseed-law</div>
+        <div class="d">Level-0 vertical seed · UK solicitor firm · SRA Code, CDD, Accounts Rules</div>
+        <div class="m">prime 1033 · ~80KB</div>
+      </a>
+    </div>
+    <p style="margin-top:14px"><a href="/" class="gold">See all 11 vertical seeds + 1 level-1 seed on the estate →</a></p>
+  </section>
+
+  <section>
+    <h2><span class="roman">VIII</span> What this is not</h2>
+    <ul class="bullets">
+      <li><strong>Not a framework.</strong> Frameworks demand you write code in their idioms. A seed is a single HTML file; you can read every line.</li>
+      <li><strong>Not a platform.</strong> Platforms own the substrate. The substrate Fork Seed runs on is the open web; no one owns that.</li>
+      <li><strong>Not a no-code tool.</strong> The build engine generates code that is itself the deliverable. The cascade is a code-writer, not a code-hider.</li>
+      <li><strong>Not a SaaS.</strong> There is no server. There is no subscription. There is no remote state. Save the file; you have it forever.</li>
+      <li><strong>Not a portfolio.</strong> A portfolio has products. The estate has a population — see Consequence 1.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="roman">IX</span> What is intentionally out of scope</h2>
+    <p>The four invariants impose a hard envelope. Within it, the mechanism is sufficient. Beyond it, a different mechanism is required.</p>
+    <ul class="bullets">
+      <li><strong>Multi-actor governance</strong> — voting between owners requires P2P, not same-origin BroadcastChannel. This is the level-4 frontier (a Village seed, a DAO seed). It needs a mesh-beyond-origin substrate, which the existing primitive does not provide.</li>
+      <li><strong>Asset custody</strong> — wallets are a security boundary the IDB envelope does not cross.</li>
+      <li><strong>Stateful long-running agents</strong> — context windows longer than a tab can hold need WebWorkers + IDB transcript stores. The pattern admits this extension but does not force it.</li>
+      <li><strong>Real-time multi-party coordination</strong> — sub-second cross-party sync needs WebRTC. Same envelope-break as governance.</li>
+    </ul>
+    <p>The honest map: levels 0-3 (vertical → domain → behaviour → agent) ship inside this spec. Levels 4-5 (institution → civilisation) require an additional spec layer above this one. That layer exists in adjacent work and is not specified here.</p>
+  </section>
+
+  <section>
+    <h2><span class="roman">X</span> How to write a conforming seed</h2>
+    <p>The shortest path:</p>
+    <div class="steps">
+      <div class="step"><b>Fork an existing seed.</b> Save <a href="https://sjgant80-hub.github.io/fallseed-hr/" target="_blank" rel="noopener" class="gold">fallseed-hr</a> as a starting point. Replace the SEED_DEFAULT block with your manifest + content.</div>
+      <div class="step"><b>Pick a prime.</b> Any prime not already in the lineage whose mod 127 factors into the spine primes {2,3,5,7,11,13,17}. The full prime-selection rules and constraint set are private — contact the maintainer for guidance.</div>
+      <div class="step"><b>Pick a mesh channel.</b> A BroadcastChannel name unique to your wedge — e.g. <code class="inline">fall-yourthing</code>. Other instances of your seed on the same origin will sync via this channel.</div>
+      <div class="step"><b>Test the four invariants.</b> Open in Chrome, walk the Fork Seed tab, fork, open the child, fork it again. The chain must hold without phone-home.</div>
+      <div class="step"><b>Ship as MIT.</b> Put it on a static host (GitHub Pages, Netlify, your own server, anywhere with HTTPS). The seed is now a peer of the existing seeds; the lineage admits it.</div>
+    </div>
+
+    <div class="callout">
+      <div class="lbl">closing observation</div>
+      <div class="body">A 14-year-old in Manila with a Chromebook can run the entire fork protocol. That property is the whole point. Replication mechanisms work in proportion to how cheap they are to host on the substrate they were designed for. Fork Seed costs nothing to host because the substrate is already installed everywhere.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>Spec is MIT · the seeds are MIT · the substrate (the open web) is no-one's</div>
+  <div class="gold-line">◊ AI Native Solutions · sjgant80-hub · 2026</div>
+</footer>
+
+</body>
+</html>
