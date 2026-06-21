@@ -775,8 +775,11 @@ function tileHtml(a, isPinned) {
  const installed = !!state.installed[a.name || a.id];
  const status = isPinned ? 'pinned' : installed ? (a.source==='generated'?'generated':'installed') : 'market';
  const initials = (a.name || a.id).replace(/^fall/,'').slice(0,2).toUpperCase();
- return `<div class="app-tile" onclick="launchApp('${a.name||a.id}')">
+ const isSeed = /^fallseed/.test(a.name || a.id) || a.category === 'seed' || a.bundleRole === 'seed';
+ const levelBadge = isSeed ? `<span style="position:absolute;top:8px;right:8px;background:var(--brass);color:var(--void);font-family:var(--mono);font-size:8px;letter-spacing:.12em;padding:2px 6px;border-radius:9px;font-weight:700">L${a.level??0}</span>` : '';
+ return `<div class="app-tile" onclick="launchApp('${a.name||a.id}')" style="position:relative">
  <span class="status ${status}" title="${status}"></span>
+ ${levelBadge}
  <div class="icon">${esc(initials)}</div>
  <div class="nm">${esc(a.name||a.id)}</div>
  <div class="purpose">${esc((a.purpose||'').slice(0,100))}${(a.purpose||'').length>100?'…':''}</div>
@@ -875,21 +878,50 @@ function renderMarketplace(v) {
 }
 
 function renderSeeds(v) {
- const seedApps = state.catalog.filter(a => /fallseed/.test(a.name));
+ const seedApps = state.catalog.filter(a => /^fallseed/.test(a.name) || a.category === 'seed' || a.bundleRole === 'seed');
+ // Group by level
+ const byLevel = {};
+ for (const s of seedApps) {
+   const lv = s.level ?? 0;
+   (byLevel[lv] = byLevel[lv] || []).push(s);
+ }
+ const levelLabels = {
+   0: { title: 'Level 0 · vertical seeds', sub: 'one industry per seed · 4 tools per wedge' },
+   1: { title: 'Level 1 · domain seeds',   sub: 'one class of verticals per seed (e.g. compliance frameworks across industries)' },
+   2: { title: 'Level 2 · behaviour seeds', sub: 'one class of decisions per seed (e.g. Creator OS · Investor OS · Researcher OS)' },
+   3: { title: 'Level 3 · agent seeds',     sub: 'one class of actors per seed (Sales agent · Research agent · Ops agent)' }
+ };
+
+ // Fork graph: nodes = seeds, edges = parent→child
+ const nodes = seedApps.map(s => ({ id: s.name, name: s.name, level: s.level ?? 0, parent: s.parent || null, prime: s.prime }));
+ const roots = nodes.filter(n => !n.parent);
+ const childrenOf = (pname) => nodes.filter(n => n.parent === pname);
+ function renderNode(n, depth) {
+   const kids = childrenOf(n.name);
+   return `<div style="padding:6px 0;border-left:${depth?'1px solid var(--line)':'none'};margin-left:${depth*16}px;padding-left:${depth?12:0}px">
+     <span style="font-family:var(--mono);font-size:12px;color:var(--brass);font-weight:600">${esc(n.name)}</span>
+     <span style="font-family:var(--mono);font-size:10px;color:var(--cream-muted);margin-left:8px">L${n.level} · prime ${n.prime||'—'}</span>
+   </div>${kids.map(k => renderNode(k, depth+1)).join('')}`;
+ }
+
  v.innerHTML = `
- <div class="section-h"><h2>🌱 Seeds</h2><div class="sub">forkable PWA templates for whole verticals</div></div>
+ <div class="section-h"><h2>🌱 Seeds</h2><div class="sub">${seedApps.length} seeds across ${Object.keys(byLevel).length} level${Object.keys(byLevel).length===1?'':'s'} · forkable replication mechanism</div></div>
 
  <div class="card" style="font-size:13px;line-height:1.7;color:var(--cream-dim)">
- <strong style="color:var(--brass)">What's a seed?</strong> A seed is a Progressive Web App that ships with a complete vertical wedge (anchor/onboard/paper/practice — four tools) plus a build engine that generates new tools on demand. You install a seed, get the four tools, then extend it with whatever your firm needs. Forkable into any vertical via the Fork Seed mechanic inside each seed.
+   <strong style="color:var(--brass)">What's a seed?</strong> A self-contained single-HTML PWA that ships with the substrate it operates on (tools for vertical seeds, frameworks for domain seeds, personas for behaviour seeds) <em>plus</em> a build engine that generates new tools on demand <em>plus</em> a Fork Seed packager that lets you mutate and re-serialise the whole thing. Every seed satisfies the four invariants of replication — see the <a href="/spec.html" target="_blank" style="color:var(--brass)">public spec</a>.
  </div>
 
- ${seedApps.length ? `<div class="app-grid">${seedApps.map(a => tileHtml(a)).join('')}</div>` : `
- <div class="card" style="text-align:center;padding:30px">
- <div style="font-size:42px;margin-bottom:10px">🌱</div>
- <p style="font-size:13px;color:var(--cream-dim);margin-bottom:14px">First seed shipped: <strong>fallseed-hr</strong> — Progressive Web App for UK HR firms with a build engine and Fork Seed packager. Open it to see the mechanic, then fork it into clinic, vet, recruit, or any other vertical.</p>
- <button class="btn brass" onclick="window.open('https://sjgant80-hub.github.io/fallseed-hr/','_blank')">Open fallseed-hr ↗</button>
- </div>
- `}`;
+ ${Object.keys(byLevel).sort().map(lv => {
+   const meta = levelLabels[lv] || { title: 'Level ' + lv, sub: '' };
+   return `<div class="section-h" style="margin-top:24px"><h2 style="font-size:15px">${esc(meta.title)}</h2><div class="sub">${esc(meta.sub)}</div></div>
+   <div class="app-grid">${byLevel[lv].map(a => tileHtml(a)).join('')}</div>`;
+ }).join('')}
+
+ ${seedApps.length > 1 ? `<div class="section-h" style="margin-top:24px"><h2 style="font-size:15px">Family tree</h2><div class="sub">parent → child fork graph</div></div>
+ <div class="card" style="font-family:var(--mono);font-size:12px">
+   ${roots.length ? roots.map(r => renderNode(r, 0)).join('') : '<div style="color:var(--cream-muted)">no root seeds — every seed has a parent</div>'}
+ </div>` : ''}
+ `;
 }
 
 function renderBuild(v) {
