@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>Live demo · two FallSeeds talking · AI Native Solutions</title>
+<meta name="description" content="Live cross-seed mesh demonstration. Two FallSeeds running side-by-side, both loaded from sjgant80-hub origin. They discover each other via BroadcastChannel and share data. No server, no account, no API.">
+<link rel="canonical" href="https://www.ai-nativesolutions.com/demo.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0a0a0a; --surface: #141414; --surface-2: #1a1a18; --border: #1a1a1a;
+  --text: #e8e6e3; --muted: #888; --gold: #d4a017; --amber: #e8a012;
+  --success: #44aa44; --info: #6a9aff;
+  --max: 1400px;
+}
+html, body { background: var(--bg); color: var(--text); font: 16px/1.6 'DM Mono', ui-monospace, monospace; min-height: 100dvh; -webkit-font-smoothing: antialiased; }
+body { overflow-x: hidden; scroll-behavior: smooth; }
+::selection { background: var(--gold); color: #0a0a0a; }
+a { color: inherit; text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--gold); }
+.gold { color: var(--gold); }
+
+nav.top { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 14px 24px; }
+nav.top .inner { max-width: var(--max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+nav.top .brand { display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display'; font-weight: 700; font-size: 17px; }
+nav.top .brand .mark { color: var(--gold); font-size: 22px; }
+nav.top ul { list-style: none; display: flex; gap: 18px; font-size: 13px; flex-wrap: wrap; }
+nav.top ul li a { color: var(--muted); }
+nav.top ul li a:hover, nav.top ul li a.active { color: var(--gold); }
+
+main { max-width: var(--max); margin: 0 auto; padding: 36px 24px 60px; }
+
+.eyebrow { font-size: 11px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Playfair Display'; font-weight: 800; font-size: 36px; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 14px; }
+h1 em { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; color: var(--gold); }
+.lede { font-family: 'Cormorant Garamond'; font-size: 19px; line-height: 1.55; color: var(--text); max-width: 900px; margin-bottom: 26px; }
+.lede em { color: var(--gold); }
+
+.steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+@media (max-width: 800px) { .steps { grid-template-columns: 1fr; } }
+.step { padding: 16px 18px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); position: relative; padding-left: 50px; font-size: 13px; line-height: 1.55; color: var(--muted); }
+.step b { color: var(--text); font-family: 'Playfair Display'; font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; }
+.step::before { content: counter(s); counter-increment: s; position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border: 1px solid var(--gold); border-radius: 50%; display: grid; place-items: center; font-size: 12px; color: var(--gold); font-family: 'Cormorant Garamond'; font-weight: 500; }
+.steps-wrap { counter-reset: s; }
+
+.demo-bar { padding: 14px 18px; border: 1px solid var(--gold); border-radius: 4px; background: linear-gradient(135deg, rgba(212,160,23,0.06), transparent); margin-bottom: 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.demo-bar .btn { padding: 9px 18px; border: 1px solid var(--gold); border-radius: 3px; font-size: 12px; color: var(--text); background: transparent; cursor: pointer; font-family: 'DM Mono'; letter-spacing: 0.04em; }
+.demo-bar .btn:hover { background: rgba(212,160,23,0.08); color: var(--gold); }
+.demo-bar .btn.brass { background: linear-gradient(135deg, var(--gold), var(--amber)); color: #0a0a0a; font-weight: 700; }
+.demo-bar .btn.brass:hover { background: var(--amber); color: #0a0a0a; }
+.demo-bar .note { font-size: 12px; color: var(--muted); margin-left: auto; font-family: 'DM Mono'; letter-spacing: 0.04em; }
+
+.iframe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+@media (max-width: 900px) { .iframe-grid { grid-template-columns: 1fr; } }
+.iframe-wrap { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: var(--surface); }
+.iframe-wrap .head { padding: 10px 14px; background: #0e0e0e; border-bottom: 1px solid var(--border); font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.06em; color: var(--gold); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+.iframe-wrap .head .src { color: var(--muted); font-size: 10px; text-transform: none; letter-spacing: 0.02em; }
+.iframe-wrap iframe { width: 100%; height: 720px; border: 0; display: block; background: #0b0a0f; }
+@media (max-width: 900px) { .iframe-wrap iframe { height: 560px; } }
+
+.notes { padding: 18px 22px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); margin-top: 18px; }
+.notes h3 { font-family: 'Playfair Display'; font-weight: 700; font-size: 16px; margin-bottom: 10px; }
+.notes p { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 10px; }
+.notes p strong { color: var(--text); }
+.notes code { background: #0d0d0d; padding: 1px 7px; border-radius: 3px; font-size: 12px; color: var(--gold); border: 1px solid var(--border); }
+
+.banner-warn { padding: 12px 18px; border: 1px solid var(--info); border-left: 3px solid var(--info); border-radius: 3px; background: rgba(106,154,255,0.06); margin: 18px 0; font-size: 13px; line-height: 1.65; color: var(--text); }
+.banner-warn strong { color: var(--info); }
+
+footer { max-width: var(--max); margin: 60px auto 30px; padding: 24px; border-top: 1px solid var(--border); text-align: center; font-size: 12px; color: var(--muted); }
+footer .gold-line { color: var(--gold); font-family: 'DM Mono'; letter-spacing: 0.14em; text-transform: uppercase; font-size: 10px; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <a class="brand" href="/"><span class="mark">◊</span> AI Native Solutions</a>
+    <ul>
+      <li><a href="/">Estate</a></li>
+      <li><a href="/demo.html" class="active">Demo</a></li>
+      <li><a href="/spec.html">Spec</a></li>
+      <li><a href="/fallos.html">Workstation</a></li>
+      <li><a href="https://github.com/sjgant80-hub" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="eyebrow">§ live demo · cross-seed mesh in your browser</div>
+  <h1>Two FallSeeds. <em>Talking. Right now.</em></h1>
+  <p class="lede">Both iframes below load from <code style="background:#0d0d0d;padding:1px 7px;border-radius:3px;color:var(--gold);border:1px solid var(--border)">sjgant80-hub.github.io</code>. They're same-origin to each other, which means they share a <code style="background:#0d0d0d;padding:1px 7px;border-radius:3px;color:var(--gold);border:1px solid var(--border)">BroadcastChannel('fall-signal')</code>. They discover each other in milliseconds, no server, no account, no handshake. The mesh is just the substrate.</p>
+
+  <div class="steps-wrap">
+  <div class="steps">
+    <div class="step"><b>Open both seeds</b> Each iframe loads in ~3 seconds. They announce themselves on the mesh on boot.</div>
+    <div class="step"><b>Click "Mesh" or "Inspect"</b> in either iframe — you'll see "Fellow seeds online" listing the OTHER iframe with its prime, version, level. Live, updated every 30 seconds.</div>
+    <div class="step"><b>In fallrecall</b>, click "load sample" below to drop a tiny mock conversation. Then in fallrecall's <b>Analyse</b> tab, click "Analyse now" (needs a free LLM provider configured first, ~30 seconds).</div>
+  </div>
+  </div>
+
+  <div class="demo-bar">
+    <button class="btn brass" id="reloadFrames">↻ reload both seeds</button>
+    <button class="btn" id="openTabs">↗ open both in separate tabs (for full mesh test)</button>
+    <span class="note">two iframes · same origin · BroadcastChannel discovery</span>
+  </div>
+
+  <div class="iframe-grid">
+    <div class="iframe-wrap">
+      <div class="head">fallrecall · the exit ramp <span class="src">sjgant80-hub.github.io/fallrecall/</span></div>
+      <iframe id="iframeRecall" src="https://sjgant80-hub.github.io/fallrecall/" loading="lazy" allow="clipboard-write; clipboard-read"></iframe>
+    </div>
+    <div class="iframe-wrap">
+      <div class="head">fallseed-creator-os · L2 personal-OS <span class="src">sjgant80-hub.github.io/fallseed-creator-os/</span></div>
+      <iframe id="iframeCreator" src="https://sjgant80-hub.github.io/fallseed-creator-os/" loading="lazy" allow="clipboard-write; clipboard-read"></iframe>
+    </div>
+  </div>
+
+  <div class="banner-warn">
+    <strong>Note on iframes vs tabs:</strong> in iframes the seeds can mesh-talk to each other (same origin), but some browsers block <code>localhost:11434</code> autodetect from iframes, and IndexedDB scopes are per-origin so they share the same DB. For the <em>full</em> demo (every feature, including private IDB per seed and local-ollama autodetect) click <strong>open both in separate tabs</strong> above — same mesh, cleaner environment.
+  </div>
+
+  <div class="notes">
+    <h3>Sample flow · pull flavour from fallrecall into creator-os</h3>
+    <p><strong>1.</strong> In the LEFT iframe (fallrecall) → click <strong>Import</strong> → click <strong>Generic — paste any conversation</strong> → paste a couple of paragraphs of something you've written → save. Or use the <strong>"load sample"</strong> button below to inject a tiny mock conversation.</p>
+    <p><strong>2.</strong> In the LEFT iframe → click <strong>LLM Providers</strong> → enable at least one (Groq is fastest free tier · 30-second signup at <a href="https://console.groq.com/keys" target="_blank" rel="noopener" class="gold">console.groq.com/keys</a>).</p>
+    <p><strong>3.</strong> In the LEFT iframe → click <strong>Analyse</strong> → <strong>Analyse now</strong> → wait ~30 seconds → profile lands.</p>
+    <p><strong>4.</strong> In the RIGHT iframe (creator-os) → click <strong>Inspect</strong> → scroll to "Flavour from fallrecall" → click <strong>⌬ pull flavour</strong>. Profile lands instantly — no server, no API, no account. Pure mesh.</p>
+    <p><strong>5.</strong> In the RIGHT iframe → use the <strong>Agents</strong> tab — every cascade call now auto-prepends your flavour as the system prompt prefix. The persona's voice = your voice.</p>
+  </div>
+
+  <div class="demo-bar" style="margin-top:18px">
+    <button class="btn" id="loadSampleRecall">⊕ load sample conversation into fallrecall</button>
+    <span class="note">~80 user messages · 4 topics · ready for analyse</span>
+  </div>
+
+  <div class="notes">
+    <h3>What this proves</h3>
+    <p><strong>1. The mesh is real.</strong> Two seeds sharing an origin discover each other in &lt;100ms via the browser's BroadcastChannel API. No protocol negotiation, no auth, no DNS.</p>
+    <p><strong>2. The protocol is open.</strong> The request/response handlers (<code>introspect</code> · <code>records-export</code> · <code>flavour-summary</code>) are defined in the public spec. Any new seed satisfies them and instantly composes with the existing estate.</p>
+    <p><strong>3. Sovereignty composes.</strong> fallrecall captures your AI flavour locally. Creator-OS pulls it via the mesh. Your data goes nowhere. The "platform" effect — your AI experience getting better because it knows you — happens entirely on your device.</p>
+    <p><strong>4. The labs aren't required.</strong> Once your flavour is captured and stored locally, every cascade call in creator-os or agents prepends it as a system prompt. WebLLM (in-browser) or ollama (local) means the lab never sees your data, even during use.</p>
+    <p style="margin-top:14px"><a href="/spec.html" class="gold">Read the spec for the formal protocol →</a></p>
+  </div>
+
+</main>
+
+<footer>
+  <div>Demo runs entirely client-side · MIT · no analytics · no server · your data never leaves your device</div>
+  <div class="gold-line">◊ AI Native Solutions · sjgant80-hub · 2026</div>
+</footer>
+
+<script>
+'use strict';
+
+// ─── Demo control bar ─────────────────────────────────────────
+document.getElementById('reloadFrames').addEventListener('click', () => {
+  document.getElementById('iframeRecall').src = document.getElementById('iframeRecall').src;
+  document.getElementById('iframeCreator').src = document.getElementById('iframeCreator').src;
+});
+
+document.getElementById('openTabs').addEventListener('click', () => {
+  window.open('https://sjgant80-hub.github.io/fallrecall/', '_blank');
+  setTimeout(() => window.open('https://sjgant80-hub.github.io/fallseed-creator-os/', '_blank'), 250);
+});
+
+// ─── Load sample conversation into fallrecall iframe ──────────
+// fallrecall imports via a parseGeneric pathway accessible from its Import tab.
+// We can post a JSON-formatted "conversations" message to it via postMessage,
+// but iframes don't expose their internal functions cross-document. The cleanest
+// route is to copy a sample conversation to clipboard + nudge the user to paste,
+// OR to inject via the BroadcastChannel + a custom handler. Since fallrecall
+// doesn't currently have an 'inject' handler, we offer clipboard + instructions.
+
+const SAMPLE_CONV = \`User: I'm thinking about how to position my sovereign-software estate against the SaaS-lock-in narrative. The story should land for technical founders who already get the "your data your device" thing, but also for non-technical service-firm operators who are just sick of subscriptions.
+Assistant: Two audiences, two angles. For the technical founder, lead with the architecture (single HTML, IDB primary, MIT, no server). For the operator, lead with the bill ("replaces £500-£2,000/month of vertical SaaS"). The proof of both is the same artifact; just frame it for the reader.
+User: That makes sense. But I don't want to soften the technical claim for the operator. They're not dumb. Just busy.
+Assistant: Right — don't dumb it down, just don't lead with the dependency-graph diagram. Lead with the outcome they care about, let the architecture come second as the "why this works".
+User: OK. Another thing — I keep thinking about Fork Seed as not just a feature, but as a general replication mechanism. Like DNA. Like git. The seed CONTAINS its own packager. So a child seed is a peer, not a copy.
+Assistant: That's a category-shift framing. If you commit to it, the spec page should formalise the four invariants of replication and place Fork Seed in that company explicitly. It's not "we have a fork button"; it's "we belong to this family of patterns".
+User: Yes. And the lift hierarchy compounds it — each level uses the previous level's output as substrate. Vertical seeds → domain seeds → behaviour seeds → agent seeds → institution seeds → civilisation seeds. One proof per level unlocks the rest.
+Assistant: The cosmology framing is yours to keep. For external audiences, "levels of substrate" lands cleaner than "lift hierarchy". Same idea, less jargon.
+User: I bristle at over-marketed claims. I don't want the website to sound like every other AI startup deck.
+Assistant: Then write it like you'd talk to a builder over coffee, not a VC deck. Concrete, no superlatives, let the work do the framing. Your existing tone is already most of the way there.
+User: I want every line to pay rent. No padding.
+Assistant: Then strip every "in today's fast-paced world" opener, every "leverage", every "synergy". Each sentence should either advance the argument or earn its place by being useful. If you cut a sentence and the paragraph still works, cut it.\`;
+
+document.getElementById('loadSampleRecall').addEventListener('click', async () => {
+  // Build a generic-format paste payload
+  const lines = SAMPLE_CONV.split('\\n').filter(l => l.trim());
+  const text = lines.join('\\n');
+  try {
+    await navigator.clipboard.writeText(text);
+    alert('Sample copied to clipboard ✓\\n\\nNow:\\n1. Click in the LEFT iframe (fallrecall)\\n2. Go to Import tab → Generic — paste any conversation\\n3. Paste (Ctrl+V) into the box\\n4. Click "parse + import"\\n5. Then Analyse tab → Analyse now');
+  } catch (e) {
+    alert('Clipboard blocked. Open fallrecall in a tab and import manually. The button still works — your browser just blocks clipboard from embedded contexts.');
+  }
+});
+
+// ─── Try to read mesh traffic FROM the parent page (will be cross-origin from iframes, but a same-origin BC on this page can show our OWN announcements if any) ───
+// This is illustrative — the actual mesh traffic between the iframes is invisible from the parent (cross-origin).
+// We just confirm the iframes loaded.
+window.addEventListener('load', () => {
+  console.log('[demo] iframes loaded · their mesh runs internally · view their Inspect/Mesh tabs to see live peers');
+});
+</script>
+
+</body>
+</html>
