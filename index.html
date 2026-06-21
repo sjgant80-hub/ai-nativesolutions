@@ -48,8 +48,12 @@ header {
 .nav-cta:hover { background: var(--gold); color: #0a0a0a; }
 @media (max-width: 720px) { .nav-links { display: none; } header { padding: 12px 18px; } .brand-name { font-size: 12px; } }
 
-section { padding: 110px 24px; max-width: var(--max); margin: 0 auto; }
-@media (max-width: 720px) { section { padding: 70px 18px; } }
+/* Tightened from 110px → 56px to remove massive black empty space when nav anchors land at short sections (elite-SaaS pattern) */
+section { padding: 56px 24px; max-width: var(--max); margin: 0 auto; }
+@media (max-width: 720px) { section { padding: 40px 18px; } }
+section:first-of-type { padding-top: 80px; }
+/* Compensate for fixed header on anchor jumps so content doesn't slip under the bar */
+section[id] { scroll-margin-top: 80px; }
 
 .section-label { font-family: 'Syne'; font-weight: 700; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
 .section-line { width: 60px; height: 1px; background: var(--gold); margin-bottom: 18px; }
@@ -219,7 +223,7 @@ a.tc-pay-mark:hover { opacity: 1; border-color: var(--gold); color: var(--gold);
 .guild-bullets li::before { content: '◊  '; color: var(--gold); font-weight: 700; }
 
 /* ───── ACG Guild Mesh ───── */
-.guild-mesh { background: var(--bg); padding-block: 80px; }
+.guild-mesh { background: var(--bg); }
 .guild-mesh-grid { display: grid; grid-template-columns: 1fr; gap: 28px; margin-top: 32px; }
 .gm-card { background: var(--surface); border: 1px solid var(--border); padding: 36px; position: relative; }
 .gm-card::before { content: '◊'; position: absolute; top: 22px; right: 28px; font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); opacity: 0.45; }
@@ -267,7 +271,11 @@ footer { background: #060606; border-top: 1px solid var(--border); padding: 56px
 .pay-mark svg { width: 50px; height: 18px; display: block; }
 .pay-mark:hover { color: var(--gold); border-color: var(--gold); opacity: 1; }
 
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+/* Reveal animation: tightened — content always visible (no empty black space), only animates on first scroll */
+.reveal { opacity: 1; transform: translateY(0); transition: opacity 0.4s ease, transform 0.4s ease; }
+@media (prefers-reduced-motion: no-preference) {
+  .reveal:not(.visible):not(:first-child) { opacity: 0.92; }
+}
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 .section-highlight { animation: highlight 1.6s ease; }
@@ -379,12 +387,12 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <h1 class="reveal">Your software<br>should work <em>for you</em>.<br>Not the other way around.</h1>
-    <p class="reveal">The marketplace for sovereign software. Single HTML files. Real APIs. Open-source SDKs. Defensive research publications. Nothing rented. Nothing borrowed.</p>
+    <h1 class="reveal">Free <em>from SaaS</em>.<br>Your software, your device,<br>your one-time payment.</h1>
+    <p class="reveal">Buy the <strong style="color:var(--gold)">seed</strong> for your industry. One HTML file. Four working tools live on day one. Browser-native. Installs to desktop. Builds new tools when you ask. Yours forever — no subscription, no cloud, no lock-in. Pay only when you want upgrades.</p>
     <div class="ctas reveal">
-      <a href="./fallos.html" class="btn-primary" style="background:linear-gradient(135deg,var(--gold),var(--amber));color:#0a0a0a">↗ Open FallDesk · the workstation</a>
-      <a href="#marketplace" class="btn-secondary" id="heroBrowse">Browse 152 apps</a>
-      <a href="#compare" class="btn-tertiary">See the comparison</a>
+      <a href="#killers" class="btn-primary" style="background:linear-gradient(135deg,var(--gold),var(--amber));color:#0a0a0a">⊕ Browse the seeds</a>
+      <a href="./fallos.html" class="btn-secondary">↗ Open FallDesk</a>
+      <a href="#compare" class="btn-tertiary">See vs SaaS</a>
     </div>
     <div class="hero-stats reveal" id="heroStats">
       <div><b id="hsApps">—</b>apps</div>
@@ -760,49 +768,54 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
 <!-- PRICING -->
 <section class="pricing reveal" id="pricing">
   <div class="section-line"></div>
-  <div class="section-label">§ IX · custom builds</div>
-  <h2>Free.<br>And when you want it customised.</h2>
-  <p class="lede">Every tool is free to try. Free forever for personal use. When you need it branded, configured for your domain, and tuned to your compliance rules — that's when we talk.</p>
+  <div class="section-label">§ IX · the model</div>
+  <h2>The seed is the product.<br><em>One-time.</em> Yours forever.</h2>
+  <p class="lede">Buy a seed for your industry. Get four working tools, a build engine, and a Fork Seed packager. <strong style="color:var(--gold)">No subscription, ever.</strong> If you want upgrades when new regulations land, buy the upgrade. If you don't, your seed keeps working the way you bought it. If you need a fully bespoke build — personal OS, business OS, white-labelled vertical, custom integration — that's a separate one-time engagement.</p>
 
   <div class="tiers">
     <div class="tier">
-      <div class="tier-label">Lite</div>
-      <div class="tier-price">Custom</div>
-      <div class="tier-cycle">from $$$ · one-time · yours forever</div>
+      <div class="tier-label">Seed</div>
+      <div class="tier-price" style="color:var(--gold)">From $$$</div>
+      <div class="tier-cycle">one-time · yours forever · MIT</div>
       <ul class="tier-features">
-        <li>Your brand · your repo · your domain</li>
-        <li>Basic agent configuration</li>
-        <li>24h turnaround</li>
-        <li>Pages-hosted · zero hosting cost</li>
+        <li>4 working tools (anchor · onboard · paper · practice)</li>
+        <li>LLM-agnostic build engine (WebLLM · ollama · free cloud · BYOK)</li>
+        <li>Fork Seed packager — clone into any sub-vertical</li>
+        <li>Installable PWA · works offline · data on your device</li>
+        <li>Free upgrades for v1.x patches · pay only for v2 major versions</li>
       </ul>
-      <a class="tier-cta" href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">Talk to Simon</a>
+      <a class="tier-cta" href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">Buy a seed</a>
     </div>
     <div class="tier featured">
-      <div class="tier-label gold">Pro · most chosen</div>
-      <div class="tier-price">Custom</div>
-      <div class="tier-cycle">from $$$ · one-time · turnkey</div>
+      <div class="tier-label gold">Custom build · most chosen</div>
+      <div class="tier-price" style="color:var(--gold)">From $$$</div>
+      <div class="tier-cycle">one-time · tailored · 5–10 days</div>
       <ul class="tier-features">
-        <li>Everything in Lite</li>
-        <li>Custom agents tuned to your domain</li>
-        <li>Compliance rules baked in</li>
-        <li>Staff training session</li>
-        <li>5-day turnaround</li>
+        <li>Bespoke seed forked for your exact compliance rules</li>
+        <li>Your brand · your repo · your domain · your logo</li>
+        <li>Agents tuned to your firm's actual workflow</li>
+        <li>Installed on your team's laptops + training session</li>
+        <li>Source MIT · you own the code · no lock-in</li>
       </ul>
-      <a class="tier-cta" href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">Start a project</a>
+      <a class="tier-cta" href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">Commission a build</a>
     </div>
     <div class="tier">
-      <div class="tier-label">Enterprise</div>
-      <div class="tier-price">Custom</div>
-      <div class="tier-cycle">from $$$ · scoped · ongoing</div>
+      <div class="tier-label">Personal OS / Biz OS</div>
+      <div class="tier-price" style="color:var(--gold)">From $$$</div>
+      <div class="tier-cycle">one-time · full-monty · scoped</div>
       <ul class="tier-features">
-        <li>Everything in Pro</li>
-        <li>Multi-user · optional sync endpoint</li>
-        <li>White-label deployment</li>
-        <li>Dedicated GitHub organisation</li>
-        <li>Ongoing maintenance retainer (optional)</li>
+        <li>Tailored FallDesk for you — personal + business in one launcher</li>
+        <li>All your seeds pre-installed and pre-configured</li>
+        <li>Cross-seed workflows wired (your law firm ↔ your personal books)</li>
+        <li>Dedicated repo · branded · multi-device install</li>
+        <li>Optional upgrade retainer (only if you want it)</li>
       </ul>
-      <a class="tier-cta" href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">Request consultation</a>
+      <a class="tier-cta" href="https://github.com/sjgant80-hub/contact/issues/new/choose" target="_blank">Request the full monty</a>
     </div>
+  </div>
+
+  <div style="margin-top:30px;padding:20px 24px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:13px;color:var(--muted);line-height:1.7">
+    <strong style="color:var(--gold)">The contract.</strong> Everything is MIT. Every payment is one-time. Upgrades exist if you want them — you're never required to take one. Your installed seed keeps working the version you bought, forever, regardless of what we do next. If we shut down tomorrow, your seed and your data carry on. <strong style="color:var(--text)">Free FROM SaaS</strong> — that's the freedom we sell.
   </div>
 </section>
 
