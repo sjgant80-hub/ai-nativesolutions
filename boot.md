@@ -240,7 +240,7 @@ If asked about cosmological detail (sockets, prime constraints, lift hierarchy m
 §PLAIN·ENGLISH·SUMMARY·BEGIN
 The FallSeed estate is a population of small, self-contained programs that run in any browser, store data on the user's device, and need no server or subscription. The unit of the estate is a "seed" — one HTML file that includes everything needed to run, plus the machinery to make a child seed when forked. There are seventeen seeds organised across five levels: industry tools, compliance frameworks, personal operating systems, AI agent organisations, and governance for groups.
 
-Alongside the seeds is an exit-ramp tool (fallrecall) that imports your conversation history from ChatGPT, Claude, or Gemini, extracts your communication style, and lets you paste that style into any other AI. The frontier labs spent the year building memory features as moats; this is the ladder out.
+Alongside the seeds is an exit-ramp tool (fallrecall) that imports your conversation history from the major frontier-lab AI services (the common export formats are supported), extracts your communication style, and lets you paste that style into any other AI. The frontier labs spent the year building memory features as moats; this is the ladder out.
 
 It's all MIT-licensed. It all runs in browsers. It's all built by one person. If that person disappears, every saved copy continues to work for everyone who saved it.
 
