@@ -395,12 +395,36 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
       <a href="./fallos.html" class="btn-secondary">↗ Open FallDesk</a>
       <a href="#compare" class="btn-tertiary">See vs SaaS</a>
     </div>
+    <div class="reveal" style="margin-top:18px;padding:12px 16px;border:1px solid var(--border);border-radius:5px;background:rgba(212,160,23,0.04);display:flex;gap:12px;align-items:center;flex-wrap:wrap;max-width:760px">
+      <div style="font-size:18px;line-height:1">🤖</div>
+      <div style="flex:1;min-width:240px;font-size:13px;color:var(--muted);line-height:1.55"><strong style="color:var(--gold)">Using an AI?</strong> Drop our boot file into ChatGPT, Claude, Gemini — your AI orients itself and walks you through the estate in your own voice.</div>
+      <button id="bootCopyBtn" onclick="copyBootFile()" style="padding:8px 14px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:inherit;font-size:12px;border-radius:3px;cursor:pointer;letter-spacing:.04em">📋 copy boot file</button>
+      <a href="./boot.md" target="_blank" style="padding:8px 14px;border:1px solid var(--border);color:var(--muted);font-size:12px;border-radius:3px;letter-spacing:.04em">view raw ↗</a>
+    </div>
     <div class="hero-stats reveal" id="heroStats">
       <div><b id="hsApps">—</b>apps</div>
       <div><b id="hsApis">—</b>apis</div>
       <div><b id="hsSdks">—</b>sdks</div>
       <div><b id="hsResearch">—</b>research</div>
     </div>
+    <script>
+    async function copyBootFile() {
+      const btn = document.getElementById('bootCopyBtn');
+      const orig = btn.textContent;
+      try {
+        const r = await fetch('./boot.md', { cache: 'reload' });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const text = await r.text();
+        await navigator.clipboard.writeText(text);
+        btn.textContent = '✓ copied · paste into any AI';
+        btn.style.background = 'rgba(68,170,68,0.12)';
+        setTimeout(() => { btn.textContent = orig; btn.style.background = 'transparent'; }, 3000);
+      } catch (e) {
+        btn.textContent = '✗ ' + e.message + ' · click "view raw" instead';
+        setTimeout(() => { btn.textContent = orig; }, 3000);
+      }
+    }
+    </script>
   </div>
 </section>
 
