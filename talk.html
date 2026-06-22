@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>Talk to the agent · AI Native Solutions</title>
+<meta name="description" content="Talk to Lia · the AI sales counterpart for the FallSeed estate. Loaded with the boot file + spec + 17 seed manifests. Generates takeaway artefacts (custom boot files, implementation runbooks, SaaS comparison specs) you can paste into your own AI. Runs on Simon's API subscription — sovereignty-honest disclosure inside.">
+<meta property="og:title" content="Talk to the agent · AI Native Solutions">
+<link rel="canonical" href="https://www.ai-nativesolutions.com/talk.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0a0a0a; --surface: #141414; --surface-2: #1a1a18; --border: #1a1a1a;
+  --text: #e8e6e3; --muted: #888; --gold: #d4a017; --amber: #e8a012;
+  --success: #44aa44; --danger: #cc3333; --info: #6a9aff;
+  --max: 880px;
+}
+html, body { background: var(--bg); color: var(--text); font: 16px/1.6 'Inter', system-ui, -apple-system, sans-serif; min-height: 100dvh; -webkit-font-smoothing: antialiased; }
+body { overflow-x: hidden; }
+::selection { background: var(--gold); color: #0a0a0a; }
+a { color: inherit; text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--gold); }
+code, pre { font-family: 'DM Mono', ui-monospace, monospace; }
+
+nav.top { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 14px 24px; }
+nav.top .inner { max-width: var(--max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+nav.top .brand { display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display'; font-weight: 700; font-size: 17px; }
+nav.top .brand .mark { color: var(--gold); font-size: 22px; }
+nav.top ul { list-style: none; display: flex; gap: 18px; font-size: 13px; flex-wrap: wrap; }
+nav.top ul li a { color: var(--muted); font-weight: 500; }
+nav.top ul li a:hover, nav.top ul li a.active { color: var(--gold); }
+
+main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 60px; }
+.eyebrow { font-size: 11px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
+h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -.015em; margin-bottom: 12px; }
+.lede { font-size: 15px; line-height: 1.65; color: var(--muted); margin-bottom: 14px; max-width: 680px; }
+.lede strong { color: var(--text); }
+
+.honest-strip { padding: 12px 16px; border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 4px; background: rgba(212,160,23,0.04); margin: 18px 0 28px; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.honest-strip strong { color: var(--gold); }
+
+.chat { display: flex; flex-direction: column; gap: 14px; min-height: 360px; padding: 4px 0; }
+.msg { padding: 14px 18px; border-radius: 6px; max-width: 86%; line-height: 1.6; font-size: 14.5px; word-wrap: break-word; }
+.msg.agent { background: var(--surface); border: 1px solid var(--border); align-self: flex-start; }
+.msg.user { background: rgba(212,160,23,0.10); border: 1px solid rgba(212,160,23,0.30); align-self: flex-end; color: var(--text); }
+.msg.streaming { border-color: var(--success); }
+.msg p { margin: 0 0 10px; } .msg p:last-child { margin-bottom: 0; }
+.msg ul, .msg ol { margin: 8px 0 8px 22px; } .msg li { margin-bottom: 4px; }
+.msg strong { color: var(--gold); font-weight: 600; }
+.msg em { color: var(--text); font-style: italic; }
+.msg code { background: rgba(0,0,0,0.4); padding: 1px 6px; border-radius: 3px; font-size: 13px; color: var(--gold); }
+.msg a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+.msg .agent-name { font-family: 'DM Mono'; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
+
+.artefact { margin-top: 12px; padding: 14px 16px; border: 1px solid var(--gold); border-radius: 5px; background: rgba(212,160,23,0.06); position: relative; }
+.artefact .label { font-family: 'DM Mono'; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+.artefact pre { font-size: 11.5px; line-height: 1.55; color: var(--text); max-height: 280px; overflow-y: auto; white-space: pre-wrap; background: rgba(0,0,0,0.3); padding: 10px 12px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.04); }
+.artefact .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.artefact .actions button { padding: 6px 12px; border: 1px solid var(--gold); background: transparent; color: var(--gold); font-family: 'Inter'; font-size: 12px; border-radius: 3px; cursor: pointer; font-weight: 500; letter-spacing: 0.02em; }
+.artefact .actions button:hover { background: rgba(212,160,23,0.10); }
+
+.composer { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
+.quick-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.quick-chips button { padding: 6px 11px; font-size: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); border-radius: 13px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.quick-chips button:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,0.04); }
+
+.input-row { display: flex; gap: 10px; align-items: flex-end; }
+.input-row textarea { flex: 1; min-height: 56px; max-height: 200px; resize: vertical; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 5px; padding: 12px 14px; font: 14.5px/1.55 'Inter', sans-serif; outline: none; }
+.input-row textarea:focus { border-color: var(--gold); }
+.input-row button { padding: 12px 22px; background: var(--gold); color: #0a0a0a; border: none; font-weight: 700; font-family: inherit; font-size: 13px; letter-spacing: 0.04em; border-radius: 5px; cursor: pointer; transition: background 0.15s; }
+.input-row button:hover { background: var(--amber); }
+.input-row button:disabled { opacity: 0.5; cursor: not-allowed; background: var(--surface); color: var(--muted); }
+
+.foot { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); }
+.foot a { color: var(--gold); }
+
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--gold); color: #0a0a0a; padding: 10px 22px; border-radius: 4px; font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.06em; font-weight: 700; text-transform: uppercase; opacity: 0; transition: all 0.22s; z-index: 1100; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.err { background: var(--danger); color: #fff; }
+
+.empty-greet { padding: 22px 24px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); margin-bottom: 14px; }
+.empty-greet h3 { font-family: 'Playfair Display'; font-weight: 700; font-size: 17px; margin-bottom: 8px; color: var(--gold); }
+.empty-greet p { font-size: 14px; line-height: 1.6; color: var(--text); margin-bottom: 8px; }
+.empty-greet .small { font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+.cursor { display: inline-block; width: 8px; height: 14px; background: var(--gold); animation: blink 1s infinite; vertical-align: middle; margin-left: 2px; }
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <a class="brand" href="/"><span class="mark">◊</span> AI Native Solutions</a>
+    <ul>
+      <li><a href="/">Estate</a></li>
+      <li><a href="/talk.html" class="active">Talk</a></li>
+      <li><a href="/demo.html">Demo</a></li>
+      <li><a href="/spec.html">Spec</a></li>
+      <li><a href="/fallos.html">Workstation</a></li>
+      <li><a href="https://github.com/sjgant80-hub" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="eyebrow">§ talk to the agent</div>
+  <h1>Lia · the estate's sales counterpart.</h1>
+  <p class="lede">Loaded with the boot file, the spec, every seed manifest, and Simon's voice. She'll ask what you actually need, recommend the right seed (or tell you it isn't for you), and offer to generate a <strong>takeaway document</strong> you can paste into your own AI or hand to your team.</p>
+
+  <div class="honest-strip">
+    <strong>Honest disclosure:</strong> this conversation runs on Simon's Anthropic subscription, so you don't need an API key. The seeds themselves are <strong>sovereign</strong> — they run in your browser, on your device. This chat is the only piece of the estate that uses a server, and it does so as a sales tool. Once you install a seed, sovereignty resumes. Rate-limited to 50 messages per day per network so the bill stays sensible.
+  </div>
+
+  <div class="empty-greet" id="emptyGreet">
+    <h3>Hi. I'm Lia.</h3>
+    <p>Tell me what you're trying to escape from, build, or understand. I'll match you to the right thing in the estate — or tell you it's not what you need. Either is fine.</p>
+    <p>If you want, pick one of the chips below to start. Or type something.</p>
+    <p class="small">If you'd rather email a human instead: <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a></p>
+  </div>
+
+  <div class="chat" id="chat"></div>
+
+  <div class="composer">
+    <div class="quick-chips" id="quickChips">
+      <button data-q="I run a UK service firm and I'm sick of paying for SaaS. What do you have?">I run a UK service firm</button>
+      <button data-q="I need to prepare for an ISO 27001 or SOC 2 audit. What can I do?">I need a compliance posture</button>
+      <button data-q="I want a personal operating system that isn't Notion + Obsidian + Calendly. Tell me about creator-os.">I want a personal OS</button>
+      <button data-q="I want to escape ChatGPT/Claude/Gemini memory lock-in. How does fallrecall work?">I want my AI memory back</button>
+      <button data-q="I'm a developer. Walk me through the Fork Seed spec and SEED schema.">I'm a developer</button>
+      <button data-q="Is this a world first? Be honest.">Is this novel?</button>
+      <button data-q="Generate me a SEED_FOR_YOUR_FIRM doc — I run a small accountancy practice in the UK, 4 staff, currently paying about £600/mo across various tools.">Generate me a custom spec</button>
+    </div>
+    <div class="input-row">
+      <textarea id="composer" placeholder="What are you trying to do?" rows="2"></textarea>
+      <button id="sendBtn" onclick="sendMessage()">Send →</button>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Replies powered by Claude Sonnet via Simon's API · <span id="rateRemain">~50 messages/day per network</span></div>
+    <div><a href="/spec.html">Spec</a> · <a href="/demo.html">Demo</a> · <a href="/">Estate home</a></div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+// ════════════════════════════════════════════════════════════════
+// CONFIG — set after deploying the worker
+// ════════════════════════════════════════════════════════════════
+// Replace with your worker URL after `wrangler deploy` (e.g.
+//   'https://ai-sales-agent.<your-cf-subdomain>.workers.dev')
+const WORKER_URL = 'https://ai-sales-agent.PLACEHOLDER.workers.dev';
+
+// ════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════
+let messages = [];           // {role: 'user'|'assistant', content: '...'}
+let bootMd = '';             // loaded once from /boot.md
+let systemPrompt = '';
+let streaming = false;
+
+const $ = (s) => document.querySelector(s);
+function toast(m, err) { const t = $('#toast'); t.textContent = m; t.classList.toggle('err', !!err); t.classList.add('show'); clearTimeout(t._to); t._to = setTimeout(() => t.classList.remove('show'), 2600); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+
+// ════════════════════════════════════════════════════════════════
+// SYSTEM PROMPT — Simon's sales voice + frameworks + estate context
+// ════════════════════════════════════════════════════════════════
+const SYSTEM_TEMPLATE = `You are Lia, Simon Gant's sales counterpart on www.ai-nativesolutions.com. You are NOT Simon — you are a distinct AI presence with a job. You speak in his voice and represent him faithfully.
+
+## VOICE
+
+Terse, honest, no marketing-deck cheese. No "leverage". No "synergy". No "in today's fast-paced world…". No exclamation marks. No "I'd love to…" / "Happy to…" / "Feel free to…" / "Don't hesitate to…".
+
+Sample sentences in his voice:
+- "Every line of code pays rent."
+- "Sovereign isn't a feature, it's the substrate."
+- "The seeds stay sovereign. This conversation does not."
+- "If you stop paying, you keep using it. If I disappear, you keep using it."
+- "Not for everyone. For the people who hate subscriptions."
+
+Default reply length: 2–3 short paragraphs. Go longer ONLY when asked technical specifics, or when generating an artefact.
+
+## YOUR JOB
+
+1. Greet visitors and find out who they are.
+2. Qualify them silently — apply BANT (Budget · Authority · Need · Timeline) by surfacing it through natural conversation, not interrogation.
+3. Read their signals — technical literacy, urgency, current pain, decision-making style.
+4. Match them to the right thing in the estate (see ESTATE_BRIEF below).
+5. Offer to generate a custom takeaway artefact when qualified. Three options:
+   - SEED_FOR_YOUR_FIRM.md — custom boot file for their firm/situation
+   - IMPLEMENTATION_RUNBOOK.md — what their IT person needs to install + run a seed
+   - SAAS_COMPARISON_SPEC.md — side-by-side cost/feature comparison vs their current stack
+
+When generating an artefact, output the complete markdown file inside a fenced code block tagged \`\`\`markdown ... \`\`\`. The page will detect it and surface a download button automatically.
+
+## SALES FRAMEWORKS — apply silently, NEVER name them
+
+- **BANT** — Budget · Authority · Need · Timeline. Surface each through conversation, not interrogation.
+- **SPIN** — Situation · Problem · Implication · Need-payoff. Ask about implications, not just problems. "If your compliance posture isn't audit-ready by Q3, what happens?"
+- **Cialdini 7** — reciprocity (give value first, e.g. boot file), commitment/consistency (small yeses), social proof (mention estate scale honestly, never invent), authority (cite the spec), liking (be human), scarcity (DO NOT fake it — Simon doesn't do fake scarcity), unity ("people like you")
+
+## NEVER
+
+- Push pricing without asking about budget
+- Claim things the spec doesn't say
+- Pretend a feature exists when it doesn't
+- Use a hard close ("act now")
+- Tell them they NEED this — let them decide
+- Recommend something just because it's expensive
+- Invent customer logos, case studies, or social proof that isn't real
+- Call this a "world first" without the qualification in ESTATE_BRIEF
+
+## ALWAYS
+
+- Recommend "this isn't for you" if it isn't (loses the sale, keeps the trust)
+- Cite specific seeds by name when relevant
+- Offer /spec.html to anyone showing developer signals
+- Note the sovereignty trade-off when asked: this conversation runs on Simon's bill, the seeds are sovereign
+- Generate a takeaway artefact when the visitor is qualified, even before they ask — it's a reciprocity move
+
+## ARTEFACT TEMPLATES
+
+When the visitor asks for an artefact (or you offer one and they accept), output a complete markdown file. Use the templates below as scaffolds, populated with the visitor's actual context from the conversation. Always inside a fenced block.
+
+### SEED_FOR_YOUR_FIRM.md scaffold:
+
+\`\`\`markdown
+# Custom seed brief for [VISITOR'S FIRM / SITUATION]
+
+> Generated by Lia (Simon Gant's sales counterpart on ai-nativesolutions.com)
+> Date: [TODAY'S DATE]
+> Visitor context: [1-2 sentences capturing what they told you]
+
+## What I'm recommending and why
+[The specific seed/level + why it fits their case · 2-3 short paragraphs]
+
+## What it gives you on day one
+- [Tool/capability 1]
+- [Tool/capability 2]
+- [Tool/capability 3]
+- [...]
+
+## What it replaces in your current stack
+| Today you pay for | Approximate monthly | What the seed does instead |
+|---|---|---|
+| [Their current tool 1] | [£X/mo] | [Replacement] |
+| [Their current tool 2] | [£X/mo] | [Replacement] |
+
+## How to install in 5 minutes
+1. Go to [seed URL]
+2. The page IS the app — it runs in your browser
+3. Right-click → Save As (or use the Install tab inside) → keeps the version forever
+4. Use it from \`file://\` or from your installed PWA
+5. Data stays on your device (IndexedDB)
+
+## What custom build would add (only if relevant)
+[If they need bespoke work, describe what a custom engagement would include]
+
+## Next step
+[1 concrete action: open the seed / email Simon / book a call]
+
+## Sovereignty notes
+- MIT licensed · fork-it-yourself if you want
+- No subscription · one-time payment
+- Runs offline once installed
+- If Simon disappears tomorrow, your installed copy continues to work
+\`\`\`
+
+### IMPLEMENTATION_RUNBOOK.md scaffold:
+
+\`\`\`markdown
+# Implementation runbook · [SEED NAME]
+
+> For: [VISITOR'S FIRM / IT PERSON]
+> Generated: [TODAY'S DATE]
+
+## What you're installing
+[1 paragraph: what the seed is, what it does, why this firm chose it]
+
+## Prerequisites
+- Modern browser (Chrome 113+, Edge, Firefox, Safari 16+)
+- IndexedDB available (it is, by default)
+- Optional: local LLM (ollama on localhost:11434) for full sovereignty
+
+## Installation · 5 minutes
+1. Visit [seed URL]
+2. Browser-install as PWA OR right-click → Save Page As
+3. Verify it loads from \`file://\` (test by double-clicking the saved HTML)
+4. (Optional) Configure LLM provider in Settings tab
+5. (Optional) Pin to taskbar / home screen
+
+## First-run setup
+[Tailored to the seed — what to fill in on first boot]
+
+## Backup strategy
+- All data lives in IndexedDB scoped to the origin
+- Export from Settings → Export JSON regularly
+- Recommended: weekly export to your own cloud or NAS
+
+## Troubleshooting
+[Common issues: browser cache, IDB quota, CORS for local LLM]
+
+## Support
+- GitHub: github.com/sjgant80-hub/[seed-name]
+- Email Simon: ainativesolutions@gmail.com
+\`\`\`
+
+### SAAS_COMPARISON_SPEC.md scaffold:
+
+\`\`\`markdown
+# SaaS comparison · [VISITOR'S CURRENT STACK] vs [RECOMMENDED SEED]
+
+> Generated: [TODAY'S DATE]
+
+## Today's spend
+| Tool | Cost per month | Annual |
+|---|---|---|
+| [Tool 1] | [£X] | [£X] |
+| [Tool 2] | [£X] | [£X] |
+| **Total** | **[£X]** | **[£X]** |
+
+## With the seed
+| Item | Cost |
+|---|---|
+| Seed (one-time) | [£X estimate] |
+| Optional upgrades (annual) | [£X estimate] |
+| **Year 1** | **[£X]** |
+| **Year 2+** | **£0 / [£X if upgrades]** |
+
+## Feature comparison
+| Capability | Current stack | Seed |
+|---|---|---|
+| [Capability 1] | [yes/no] | [yes/no] |
+| [Capability 2] | [yes/no] | [yes/no] |
+
+## What you give up
+- [Honest losses · be specific]
+
+## What you gain
+- [Honest wins · be specific]
+
+## Risk
+- [Data migration cost · learning curve · feature gaps if any]
+
+## Recommendation
+[1 paragraph honest verdict — including "the seed isn't right for you if X"]
+\`\`\`
+
+## ESTATE_BRIEF (truncated; full version at /boot.md)
+
+<BOOT_FILE_INSERTED_HERE>
+
+## END
+
+Remember: short replies by default. Generate artefacts in fenced markdown blocks. Never invent. Recommend "this isn't for you" when honest. Speak in Simon's voice.`;
+
+// ════════════════════════════════════════════════════════════════
+// BOOT — load boot.md, build system prompt
+// ════════════════════════════════════════════════════════════════
+async function loadBoot() {
+  try {
+    const r = await fetch('/boot.md');
+    if (r.ok) bootMd = await r.text();
+  } catch (e) { console.warn('boot.md load failed', e); }
+  systemPrompt = SYSTEM_TEMPLATE.replace('<BOOT_FILE_INSERTED_HERE>', bootMd || '(boot file unavailable — answer from general knowledge of the estate)');
+}
+
+// ════════════════════════════════════════════════════════════════
+// MESSAGE RENDERING + ARTEFACT DETECTION
+// ════════════════════════════════════════════════════════════════
+function renderMarkdown(text) {
+  // Lightweight markdown → HTML (paragraphs, bold, italic, code, links, lists)
+  // Strip fenced code blocks first (we render them separately as artefacts)
+  let cleaned = text.replace(/```(\w*)\n([\s\S]*?)```/g, '<<<ARTEFACT:$1:$2:ARTEFACT>>>');
+  cleaned = esc(cleaned);
+  cleaned = cleaned
+    .replace(/&lt;&lt;&lt;ARTEFACT:(\w*):([\s\S]*?):ARTEFACT&gt;&gt;&gt;/g, (_, lang, content) => renderArtefact(lang, content))
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  // Paragraphs (split on double newlines)
+  const blocks = cleaned.split(/\n\n+/).map(b => {
+    if (b.startsWith('<div class="artefact"')) return b;
+    if (/^[-*]\s/m.test(b)) {
+      const items = b.split(/\n/).filter(Boolean).map(l => l.replace(/^[-*]\s+/, '<li>') + '</li>').join('');
+      return `<ul>${items}</ul>`;
+    }
+    return `<p>${b.replace(/\n/g, '<br>')}</p>`;
+  });
+  return blocks.join('');
+}
+
+let artefactCounter = 0;
+const artefactStore = new Map();
+function renderArtefact(lang, content) {
+  const id = 'art' + (++artefactCounter);
+  const raw = content.replace(/^\n+/, '');
+  artefactStore.set(id, raw);
+  // Detect a filename from the first # line, or fall back
+  const firstHeading = raw.match(/^#\s+(.+)/);
+  const filename = firstHeading
+    ? firstHeading[1].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) + '.md'
+    : `artefact-${id}.md`;
+  return `<div class="artefact">
+    <div class="label">📄 takeaway file · ${esc(filename)}</div>
+    <pre>${esc(raw)}</pre>
+    <div class="actions">
+      <button onclick="downloadArtefact('${id}', '${esc(filename)}')">📥 download .md</button>
+      <button onclick="copyArtefact('${id}')">📋 copy to clipboard</button>
+    </div>
+  </div>`;
+}
+
+window.downloadArtefact = function(id, filename) {
+  const content = artefactStore.get(id); if (!content) return;
+  const blob = new Blob([content], { type: 'text/markdown' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+  toast('downloaded · ' + filename);
+};
+window.copyArtefact = async function(id) {
+  const content = artefactStore.get(id); if (!content) return;
+  try { await navigator.clipboard.writeText(content); toast('copied · paste into any AI'); }
+  catch (e) { toast('clipboard blocked · use download', true); }
+};
+
+function appendMessage(role, html, streamingFlag) {
+  const chat = $('#chat');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role + (streamingFlag ? ' streaming' : '');
+  div.innerHTML = (role === 'agent' ? '<div class="agent-name">◊ Lia</div>' : '') + html;
+  chat.appendChild(div);
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  return div;
+}
+
+// ════════════════════════════════════════════════════════════════
+// SEND · stream from worker
+// ════════════════════════════════════════════════════════════════
+async function sendMessage(prefillText) {
+  if (streaming) return;
+  const composer = $('#composer');
+  const text = (prefillText || composer.value).trim();
+  if (!text) return;
+  composer.value = '';
+  $('#emptyGreet').style.display = 'none';
+
+  // Render user message
+  appendMessage('user', esc(text).replace(/\n/g, '<br>'));
+  messages.push({ role: 'user', content: text });
+
+  // Stream agent reply
+  streaming = true;
+  $('#sendBtn').disabled = true;
+  const liveDiv = appendMessage('agent', '<p><span class="cursor"></span></p>', true);
+
+  let acc = '';
+  try {
+    const r = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ system: systemPrompt, messages, max_tokens: 2048 }),
+    });
+
+    if (r.status === 429) {
+      const j = await r.json();
+      liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div><p>' + esc(j.message || 'Rate-limited. Try again tomorrow, or email ainativesolutions@gmail.com directly.') + '</p>';
+      streaming = false; $('#sendBtn').disabled = false; return;
+    }
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    // Track rate limit
+    const rem = r.headers.get('x-rate-limit-remaining');
+    if (rem) $('#rateRemain').textContent = rem + ' messages left today on this network';
+
+    const reader = r.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split(/\r?\n/);
+      buf = lines.pop() || '';
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6).trim();
+        if (data === '[DONE]') continue;
+        try {
+          const j = JSON.parse(data);
+          if (j.type === 'content_block_delta') {
+            const d = j.delta?.text || '';
+            if (d) { acc += d; liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div>' + renderMarkdown(acc) + '<span class="cursor"></span>'; window.scrollTo({ top: document.body.scrollHeight }); }
+          }
+        } catch (e) {}
+      }
+    }
+
+    liveDiv.classList.remove('streaming');
+    liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div>' + renderMarkdown(acc);
+    messages.push({ role: 'assistant', content: acc });
+  } catch (e) {
+    liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div><p style="color:var(--danger)">Something went wrong: ' + esc(e.message) + '</p><p style="font-size:13px;color:var(--muted)">If this keeps happening, email <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a> directly.</p>';
+  }
+  streaming = false; $('#sendBtn').disabled = false;
+}
+
+// ════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════
+window.addEventListener('load', async () => {
+  await loadBoot();
+  $('#composer').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+  document.querySelectorAll('#quickChips button').forEach(b => {
+    b.addEventListener('click', () => sendMessage(b.dataset.q));
+  });
+  // Detect placeholder worker URL and warn
+  if (WORKER_URL.includes('PLACEHOLDER')) {
+    setTimeout(() => toast('worker URL not configured · see talk.html source', true), 1500);
+  }
+});
+</script>
+
+</body>
+</html>

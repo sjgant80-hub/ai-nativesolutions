@@ -371,12 +371,12 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
       <div class="brand-name">AI Native Solutions</div>
     </a>
     <div class="nav-links">
+      <a href="./talk.html" style="color:var(--gold)">💬 Talk to Lia</a>
       <a href="#marketplace">Marketplace</a>
       <a href="#killers">Seeds</a>
       <a href="./demo.html">Live demo</a>
       <a href="https://sjgant80-hub.github.io/fallseed-meta/" target="_blank" rel="noopener">Monitor</a>
       <a href="./spec.html">Spec</a>
-      <a href="#compare">Compare</a>
       <a href="#pricing">Pricing</a>
     </div>
     <a href="./fallos.html" class="nav-cta" id="navBrowse" style="background:linear-gradient(135deg,var(--gold),var(--amber));color:#0a0a0a">↗ Workstation</a>
@@ -1860,5 +1860,18 @@ document.addEventListener('nas:ready', () => {
 });
 </script>
 
+<!-- ◊ Lia · floating-bubble entry to /talk.html -->
+<a href="./talk.html" id="liaBubble" title="Talk to Lia · the estate's AI sales agent" style="position:fixed;bottom:22px;right:22px;z-index:9000;display:flex;align-items:center;gap:10px;padding:12px 18px 12px 14px;background:linear-gradient(135deg,#d4a017,#e8a012);color:#0a0a0a;border-radius:30px;font-family:'Inter',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.02em;text-decoration:none;box-shadow:0 10px 30px rgba(212,160,23,0.35),0 4px 8px rgba(0,0,0,0.4);transition:transform 0.2s,box-shadow 0.2s">
+  <span style="font-size:18px;line-height:1">💬</span>
+  <span>Talk to Lia</span>
+  <span style="font-family:'DM Mono';font-size:9px;letter-spacing:0.1em;opacity:0.65;text-transform:uppercase;padding-left:6px;border-left:1px solid rgba(0,0,0,0.25);margin-left:2px">on the site</span>
+</a>
+<style>
+  #liaBubble:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(212,160,23,0.45), 0 6px 12px rgba(0,0,0,0.5); }
+  @media (max-width: 480px) {
+    #liaBubble { bottom: 14px; right: 14px; padding: 10px 14px 10px 12px; font-size: 12px; }
+    #liaBubble span:last-child { display: none; }
+  }
+</style>
 </body>
 </html>
