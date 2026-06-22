@@ -108,35 +108,34 @@ h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4
 <main>
   <div class="eyebrow">§ talk to the agent</div>
   <h1>Lia · the estate's sales counterpart.</h1>
-  <p class="lede">Loaded with the boot file, the spec, every seed manifest, and Simon's voice. She'll ask what you actually need, recommend the right seed (or tell you it isn't for you), and offer to generate a <strong>takeaway document</strong> you can paste into your own AI or hand to your team.</p>
-
-  <div class="honest-strip">
-    <strong>Honest disclosure:</strong> this conversation runs on Simon's Anthropic subscription, so you don't need an API key. The seeds themselves are <strong>sovereign</strong> — they run in your browser, on your device. This chat is the only piece of the estate that uses a server, and it does so as a sales tool. Once you install a seed, sovereignty resumes. Rate-limited to 50 messages per day per network so the bill stays sensible.
-  </div>
+  <p class="lede">Pick a chip or type below. Lia reads what you actually need and matches you to the right thing — or tells you nothing in the estate fits. Either is fine.</p>
 
   <div class="empty-greet" id="emptyGreet">
     <h3>Hi. I'm Lia.</h3>
-    <p>Tell me what you're trying to escape from, build, or understand. I'll match you to the right thing in the estate — or tell you it's not what you need. Either is fine.</p>
-    <p>If you want, pick one of the chips below to start. Or type something.</p>
-    <p class="small">If you'd rather email a human instead: <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a></p>
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:14px;">I run on Simon's accounts so you don't need an API key. <a href="#" id="disclosureMore" style="color:var(--gold);font-weight:500;">Sovereignty details ↓</a></p>
+    <div class="quick-chips" id="quickChips">
+      <button data-q="I run a UK service firm and I'm sick of paying for SaaS. What do you have?">I run a UK service firm</button>
+      <button data-q="I'm a creator / content operator and I want a personal OS that isn't Notion + Obsidian + Calendly. Tell me about creator-os.">I'm a creator</button>
+      <button data-q="I need to prepare for an ISO 27001 or SOC 2 audit. What can I do?">I need a compliance posture</button>
+      <button data-q="I want to escape ChatGPT/Claude/Gemini memory lock-in. How does fallrecall work?">I want my AI memory back</button>
+      <button data-q="I'm a developer. Walk me through the Fork Seed spec and SEED schema.">I'm a developer</button>
+      <button data-q="I'm building or running AI agents. What does fallseed-agents give me?">I build AI agents</button>
+      <button data-q="My situation doesn't fit a standard category. Can you do custom builds?">I need a custom build</button>
+      <button data-q="Generate me a SEED_FOR_YOUR_FIRM doc — describe my situation first and I'll fill in detail.">Generate me a custom spec</button>
+    </div>
   </div>
 
   <div class="chat" id="chat"></div>
 
   <div class="composer">
-    <div class="quick-chips" id="quickChips">
-      <button data-q="I run a UK service firm and I'm sick of paying for SaaS. What do you have?">I run a UK service firm</button>
-      <button data-q="I need to prepare for an ISO 27001 or SOC 2 audit. What can I do?">I need a compliance posture</button>
-      <button data-q="I want a personal operating system that isn't Notion + Obsidian + Calendly. Tell me about creator-os.">I want a personal OS</button>
-      <button data-q="I want to escape ChatGPT/Claude/Gemini memory lock-in. How does fallrecall work?">I want my AI memory back</button>
-      <button data-q="I'm a developer. Walk me through the Fork Seed spec and SEED schema.">I'm a developer</button>
-      <button data-q="Is this a world first? Be honest.">Is this novel?</button>
-      <button data-q="Generate me a SEED_FOR_YOUR_FIRM doc — I run a small accountancy practice in the UK, 4 staff, currently paying about £600/mo across various tools.">Generate me a custom spec</button>
-    </div>
     <div class="input-row">
-      <textarea id="composer" placeholder="What are you trying to do?" rows="2"></textarea>
+      <textarea id="composer" placeholder="Tell me what you're trying to do, build, or escape from..." rows="2"></textarea>
       <button id="sendBtn" onclick="sendMessage()">Send →</button>
     </div>
+  </div>
+
+  <div class="honest-strip" id="disclosureBox" style="display:none;margin-top:24px;">
+    <strong>Honest disclosure:</strong> this conversation runs on Simon's Groq + Anthropic accounts so you don't need an API key. The seeds themselves are <strong>sovereign</strong> — they run in your browser, on your device. This chat is the only piece of the estate that uses a server, and it does so as a sales tool. Once you install a seed, sovereignty resumes. Rate-limited to 50 messages per day per network so the bill stays sensible. Prefer email? <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a>.
   </div>
 
   <div class="foot">
@@ -521,6 +520,16 @@ window.addEventListener('load', async () => {
   });
   document.querySelectorAll('#quickChips button').forEach(b => {
     b.addEventListener('click', () => sendMessage(b.dataset.q));
+  });
+  // Disclosure expander
+  const dm = document.getElementById('disclosureMore');
+  if (dm) dm.addEventListener('click', e => {
+    e.preventDefault();
+    const box = document.getElementById('disclosureBox');
+    const showing = box.style.display !== 'none';
+    box.style.display = showing ? 'none' : 'block';
+    dm.textContent = showing ? 'Sovereignty details ↓' : 'Hide details ↑';
+    if (!showing) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
   // Detect placeholder worker URL and warn
   if (WORKER_URL.includes('PLACEHOLDER')) {
