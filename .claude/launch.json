@@ -4,8 +4,9 @@
     {
       "name": "ainative",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "8901", "C:/Users/sjgan/Downloads/ai-nativesolutions-repo"],
-      "port": 8901
+      "runtimeArgs": ["serve", "-l", "8901", "C:/Users/sjgan/Downloads/ai-nativesolutions"],
+      "port": 8901,
+      "autoPort": true
     }
   ]
 }
