@@ -1,0 +1,76 @@
+# robots.txt for ai-nativesolutions.com
+# Sovereign software estate · 243 seeds · MIT · client-side
+# We OPT IN to AI crawlers. Discovery > obscurity.
+
+User-agent: *
+Allow: /
+
+# === AI / LLM crawlers · explicitly allowed ===
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: cohere-training-data-crawler
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: ImagesiftBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: omgili
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
+# === LLM-friendly resources ===
+# Quick overview for LLMs: /llms.txt
+# Full content dump for LLMs: /llms-full.txt
+# Dossier page for AI agents: /ai.html
+# Machine-readable registry: https://sjgant80-hub.github.io/fall-registry/index.json
+# MCP server (for live tool access): https://kcc-bridge.sjgant80.workers.dev/
+
+Sitemap: https://www.ai-nativesolutions.com/sitemap.xml

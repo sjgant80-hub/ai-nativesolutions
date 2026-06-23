@@ -13,8 +13,100 @@
 <link rel="canonical" href="https://www.ai-nativesolutions.com/">
 <link rel="manifest" href='data:application/manifest+json,{"name":"AI Native Solutions","short_name":"AIN","start_url":".","display":"standalone","background_color":"#0a0a0a","theme_color":"#d4a017","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 fill=%22%230a0a0a%22/><text x=%2232%22 y=%2244%22 text-anchor=%22middle%22 font-size=%2236%22 fill=%22%23d4a017%22 font-family=%22serif%22 font-weight=%22bold%22>◊</text></svg>","sizes":"any","type":"image/svg+xml"}]}'>
 <script type="application/ld+json">
-{ "@context": "https://schema.org", "@type": "Organization", "name": "AI Native Solutions", "url": "https://www.ai-nativesolutions.com", "founder": { "@type": "Person", "name": "Simon Gant" }, "description": "The marketplace for sovereign software · single HTML files · no subscriptions · data stays on device", "sameAs": ["https://github.com/sjgant80-hub", "https://github.com/sjgant80-hub/contact/issues/new/choose"] }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.ai-nativesolutions.com/#organization",
+      "name": "AI Native Solutions",
+      "url": "https://www.ai-nativesolutions.com",
+      "logo": "https://www.ai-nativesolutions.com/favicon.ico",
+      "founder": { "@id": "https://www.ai-nativesolutions.com/#person" },
+      "description": "The sovereign software estate · 243 single-HTML PWAs · MIT licensed · client-side · IndexedDB primary · MCP-callable · no SaaS dependencies",
+      "email": "ainativesolutions@gmail.com",
+      "sameAs": ["https://github.com/sjgant80-hub"],
+      "knowsAbout": ["Sovereign software", "Single-file PWAs", "WebLLM", "Model Context Protocol", "Provenance economics", "Client-side cryptography", "Ed25519 signing", "MCP servers", "IndexedDB", "WebRTC mesh"]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.ai-nativesolutions.com/#person",
+      "name": "Simon Gant",
+      "url": "https://www.ai-nativesolutions.com",
+      "jobTitle": "Sovereign Software Operator",
+      "worksFor": { "@id": "https://www.ai-nativesolutions.com/#organization" },
+      "sameAs": ["https://github.com/sjgant80-hub"],
+      "knowsAbout": ["Sovereign software architecture", "Single-file PWAs", "WebLLM in-browser inference", "WebRTC peer mesh", "Ed25519 signing", "Model Context Protocol (MCP)", "Provenance economics", "KCC-MINT-001 specification", "Konomi cube cosmology", "Client-side cryptography"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.ai-nativesolutions.com/#website",
+      "url": "https://www.ai-nativesolutions.com",
+      "name": "AI Native Solutions",
+      "publisher": { "@id": "https://www.ai-nativesolutions.com/#organization" },
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "kcc-bridge",
+      "url": "https://sjgant80-hub.github.io/kcc-bridge/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Cross-platform · Cloudflare Worker",
+      "description": "MCP-over-HTTP server exposing the entire AI Native Solutions estate (243 seeds) as 12 callable tools for Claude Desktop, OpenAI Custom GPTs, n8n, LangChain, AutoGen, CrewAI, raw curl",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "fall-kit",
+      "url": "https://sjgant80-hub.github.io/fall-kit/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Browser",
+      "description": "Shared cascade library (T0/T2/T3 + WebRTC mesh + Ed25519 signing) ported across all 243 estate seeds",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "kcc-mint",
+      "url": "https://sjgant80-hub.github.io/kcc-mint/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Browser",
+      "description": "Provenance protocol substrate · KCC-MINT-001 spec · sovereign Ed25519 minting · royalty propagation up fork chains",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "kcc-jobs",
+      "url": "https://sjgant80-hub.github.io/kcc-jobs/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Browser",
+      "description": "Sovereign agent marketplace · 5 bundle types · reputation engine · 7 tabs · IndexedDB local",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "offgridcommunitiessystem",
+      "url": "https://sjgant80-hub.github.io/offgridcommunitiessystem/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Browser · Raspberry Pi · USB",
+      "description": "Level-4 institution seed · 7 modules · members + mutual-credit ledger + governance + calendar + resources + skills + settings · for off-grid intentional communities",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    }
+  ]
+}
 </script>
+<link rel="alternate" type="text/markdown" title="llms.txt" href="/llms.txt">
+<link rel="alternate" type="text/markdown" title="llms-full.txt" href="/llms-full.txt">
+<link rel="me" href="https://github.com/sjgant80-hub">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
