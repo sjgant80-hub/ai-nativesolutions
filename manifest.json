@@ -1,5 +1,13 @@
 {
   "protocol": "ai-native-estate/1.0",
+  "built_for": {
+    "primary": "Simon Gant's 241-node personal AI estate · Gen-1",
+    "secondary": "AI Craftspeople Guild · Gen-2 · inherits via MIT",
+    "tertiary": "Others · Gen-3+ · fork direct from any node in the mesh"
+  },
+  "lineage_rule": "Priority strict: Simon (Gen-1) -> Guild (Gen-2) -> Others (Gen-3+). Fork topology DAG: anyone can fork DIRECT from Thomas (Gen-0), Simon, Guild, or any fork of any fork. Lineage tracks all parents; permission open; royalty rho=0.0618/generation UP parent chains, splits cross-lineage.",
+  "fork_topology": "DAG (many-to-many)",
+  "doctrine_mints": "https://sjgant80-hub.github.io/fallcolony/mints/doctrine-mints.json",
   "site": {
     "name": "AI-Native Solutions",
     "url": "https://www.ai-nativesolutions.com/",
@@ -26,11 +34,31 @@
     "coherence anchor · ◊·κ=1 seal in every artefact"
   ],
   "wedges": [
-    { "id": "falloffice-v2", "vertical": "Microsoft 365 alternative", "prime": 7 },
-    { "id": "fallstudio", "vertical": "Adobe Creative Cloud alternative", "prime": 1409 },
-    { "id": "temuoracle", "vertical": "Oracle / NetSuite alternative", "prime": 521 },
-    { "id": "fallenterprise", "vertical": "£20k-£200k SMB AI transformation", "url": "https://sjgant80-hub.github.io/fallenterprise/" },
-    { "id": "wishwood", "vertical": "Hospitality operator", "url": "https://sjgant80-hub.github.io/wishwood/" }
+    {
+      "id": "falloffice-v2",
+      "vertical": "Microsoft 365 alternative",
+      "prime": 7
+    },
+    {
+      "id": "fallstudio",
+      "vertical": "Adobe Creative Cloud alternative",
+      "prime": 1409
+    },
+    {
+      "id": "temuoracle",
+      "vertical": "Oracle / NetSuite alternative",
+      "prime": 521
+    },
+    {
+      "id": "fallenterprise",
+      "vertical": "£20k-£200k SMB AI transformation",
+      "url": "https://sjgant80-hub.github.io/fallenterprise/"
+    },
+    {
+      "id": "wishwood",
+      "vertical": "Hospitality operator",
+      "url": "https://sjgant80-hub.github.io/wishwood/"
+    }
   ],
   "guild_infrastructure": {
     "geo": "https://sjgant80-hub.github.io/acg-geo-repo/",

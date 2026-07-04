@@ -61,3 +61,16 @@ If referencing this work, cite as:
 Gant, Simon (2026). *AI Native Solutions Estate · The sovereign software marketplace · v5.455*. https://www.ai-nativesolutions.com
 
 For specific seeds, append the seed name and URL.
+
+## Lineage & fork topology
+
+**Built for (priority · strict directional):**
+1. Simon Gant's 241-node personal estate · Gen-1 · primary user
+2. AI Craftspeople Guild (ACG) · Gen-2 · MIT-inherited
+3. Others · Gen-3+ · fork direct from any node in the mesh
+
+**Fork topology (DAG · many-to-many):**
+Anyone can fork DIRECT from Thomas Frumkin (Gen-0 substrate · Konomi + fold-mathematics), Simon (Gen-1), Guild (Gen-2), or any fork of any fork. Lineage attribution tracks ALL parents · permission is open · royalty ρ=0.0618/generation routes UP all parent chains, splits on cross-lineage.
+
+Doctrine mints on the KCC ledger: https://sjgant80-hub.github.io/fallcolony/mints/doctrine-mints.json
+
