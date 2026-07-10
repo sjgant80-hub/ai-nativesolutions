@@ -470,31 +470,195 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
   </div>
 </header>
 
-<!-- ═══════════════════ HERO ═══════════════════ -->
-<section class="hero" id="top">
-  <div class="hero-inner">
-    <div style="font-family:'DM Mono';font-size:11px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:24px">◊ Publisher of the sovereign estate</div>
-    <h1>One sovereign estate.<br><em>Owned by you.</em><br>Runs on your device.</h1>
-    <p>
-      <strong style="color:var(--gold);font-style:normal">1224 agent-callable listings.</strong>
-      A nine-chamber agent settlement. Sovereign applications for eleven UK regulated industries.
-      All MIT-licensed. All Ed25519-signed. Runs offline. No SaaS lock-in. Your data never leaves your device.
-    </p>
-    <div class="ctas">
+<!-- ═══════════════════ HERO · nested-cube fractal ═══════════════════ -->
+<section class="hero" id="top" style="padding-top:60px;padding-bottom:40px">
+  <div class="hero-inner" style="text-align:center;max-width:1200px">
+    <div style="font-family:'DM Mono';font-size:11px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:16px">◊ The whole estate · on one URL · in one cube</div>
+    <h1 style="margin-bottom:8px">The whole estate.<br><em style="color:var(--gold);font-style:italic"><span id="hs-listings-hero">1330</span> tools.</em><br>Composed into itself.</h1>
+    <p style="font-family:'Inter';font-size:16px;color:var(--muted);max-width:640px;margin:14px auto 22px;font-style:normal">Every tool we ship, nested. Click any face to descend. Three clicks reaches any leaf. Every leaf is a whole tool. Every leaf holds the tree.</p>
+
+    <!-- Breadcrumb + controls -->
+    <div id="cube-crumbs" style="font-family:'DM Mono';font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;min-height:16px"></div>
+
+    <!-- Cube stage -->
+    <div id="cube-stage" style="position:relative;width:100%;max-width:820px;height:min(560px,60vh);margin:0 auto;perspective:1800px;perspective-origin:50% 45%;background:radial-gradient(ellipse at center,rgba(212,160,23,0.06),transparent 70%);border-radius:14px;overflow:hidden;border:1px solid var(--border)">
+      <div id="cube-scene" style="width:340px;height:340px;position:absolute;top:50%;left:50%;margin:-170px 0 0 -170px;transform-style:preserve-3d;animation:cube-spin 42s linear infinite;transition:transform 0.6s ease">
+        <!-- 6 faces injected by script -->
+      </div>
+      <div style="position:absolute;bottom:16px;left:16px;display:flex;gap:6px;z-index:10;flex-wrap:wrap">
+        <button id="cube-back" style="padding:7px 12px;background:rgba(20,19,25,0.9);border:1px solid var(--border);color:var(--text);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;display:none">← Back</button>
+        <button onclick="cubeShuffle()" style="padding:7px 12px;background:rgba(20,19,25,0.9);border:1px solid var(--border);color:var(--text);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer">↻ Shuffle</button>
+        <button onclick="cubeTogglePause()" id="cube-pause" style="padding:7px 12px;background:rgba(20,19,25,0.9);border:1px solid var(--border);color:var(--text);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer">◼ Pause</button>
+      </div>
+      <div id="cube-info" style="position:absolute;top:16px;right:16px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:right;line-height:1.6;max-width:230px;background:rgba(11,10,15,0.85);padding:8px 12px;border-radius:4px;z-index:10">click a face to descend<br><span id="cube-depth">depth 0 · 1330 tools reachable</span></div>
+    </div>
+
+    <div class="ctas" style="margin-top:24px">
       <a href="https://sjgant80-hub.github.io/fallmarket/" class="btn-primary">Enter FallMarket →</a>
       <a href="#architecture" class="btn-secondary">Read the architecture</a>
       <a href="/ai.html" class="btn-tertiary">For AI agents</a>
     </div>
-    <div class="hero-stats">
-      <div><b id="hs-listings">1224</b>listings</div>
+
+    <div class="hero-stats" style="justify-content:center;margin-top:22px">
+      <div><b id="hs-listings">1330</b>tools</div>
       <div><b>4</b>kinds</div>
       <div><b>9</b>chambers</div>
-      <div><b>11</b>industries</div>
+      <div><b>46</b>autopilots</div>
       <div><b>100%</b>MIT</div>
       <div><b>100%</b>Ed25519</div>
     </div>
   </div>
 </section>
+
+<style>
+@keyframes cube-spin {
+  0%   { transform: rotate3d(1, 1, 0.4, 0deg); }
+  100% { transform: rotate3d(1, 1, 0.4, 360deg); }
+}
+#cube-stage.paused #cube-scene { animation-play-state: paused; }
+.cube-face { position: absolute; width: 340px; height: 340px; background: rgba(20,19,25,0.92); border: 1px solid var(--gold); border-radius: 8px; box-shadow: 0 0 24px rgba(212,160,23,0.18), inset 0 0 20px rgba(0,0,0,0.55); overflow: hidden; backdrop-filter: blur(2px); cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
+.cube-face:hover { border-color: var(--amber); transform: scale(1.02); }
+.cube-face iframe { width: 100%; height: 100%; border: none; background: var(--void); pointer-events: none; }
+.cube-face .cf-label { position: absolute; top: 12px; left: 12px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase; background: rgba(11,10,15,0.85); padding: 5px 10px; border-radius: 3px; z-index: 2; }
+.cube-face .cf-kind { position: absolute; top: 12px; right: 12px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; background: rgba(11,10,15,0.85); padding: 4px 8px; border-radius: 3px; z-index: 2; }
+.cube-face .cf-cta { position: absolute; bottom: 12px; right: 12px; background: var(--gold); color: var(--void); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 3px; font-weight: 700; z-index: 2; }
+#cube-crumbs .crumb { color: var(--gold); cursor: pointer; }
+#cube-crumbs .crumb:hover { color: var(--text); text-decoration: underline; }
+#cube-crumbs .sep { color: var(--dim); margin: 0 8px; }
+</style>
+
+<script>
+(function() {
+  const FLAGSHIP_ROOT = [
+    { id: 'fallmarket',        title: 'FallMarket',    kind: 'surface' },
+    { id: 'fallcolony',        title: 'FallColony',    kind: 'surface' },
+    { id: 'fall-cube',         title: 'FallCube',      kind: 'surface' },
+    { id: 'fall-autopilot-kit',title: 'Autopilot Kit', kind: 'surface' },
+    { id: 'fallmirror',        title: 'FallMirror',    kind: 'wellness' },
+    { id: 'shadowcompass',     title: 'ShadowCompass', kind: 'wellness' }
+  ];
+
+  let CATALOG = null;
+  let stack = []; // navigation history · each entry = { title, faces[] }
+  let paused = false;
+
+  async function loadCatalog() {
+    try {
+      const r = await fetch('https://sjgant80-hub.github.io/fallmarket/listings.json', { cache: 'no-store' });
+      CATALOG = await r.json();
+      const n = CATALOG.total;
+      document.getElementById('hs-listings').textContent = n;
+      document.getElementById('hs-listings-hero').textContent = n;
+      document.getElementById('cube-depth').textContent = 'depth 0 · ' + n + ' tools reachable';
+    } catch (e) {
+      console.warn('catalog fetch failed', e);
+    }
+    stack = [{ title: 'root', faces: FLAGSHIP_ROOT.slice() }];
+    renderCube();
+    renderCrumbs();
+  }
+
+  function pickCompanions(centerId) {
+    if (!CATALOG) return FLAGSHIP_ROOT.slice(0, 6);
+    // Prefer same kind, then same first-name prefix, then random
+    const all = CATALOG.listings;
+    const center = all.find(l => l.id === centerId);
+    let pool = [];
+    if (center) {
+      const prefix = (center.id.match(/^([a-z]+)/) || [])[1] || '';
+      pool = all
+        .filter(l => l.id !== centerId)
+        .map(l => {
+          let score = 0;
+          if (l.kind === center.kind) score += 3;
+          if ((l.id.match(/^([a-z]+)/) || [])[1] === prefix) score += 2;
+          if ((l.tags || []).some(t => (center.tags || []).includes(t))) score += 2;
+          return { l, score };
+        })
+        .sort((a, b) => b.score - a.score || Math.random() - 0.5);
+    } else {
+      pool = all.map(l => ({ l, score: 0 })).sort(() => Math.random() - 0.5);
+    }
+    return pool.slice(0, 6).map(x => ({ id: x.l.id, title: x.l.title || x.l.id, kind: x.l.kind }));
+  }
+
+  function renderCube() {
+    const scene = document.getElementById('cube-scene');
+    const cur = stack[stack.length - 1];
+    const faces = cur.faces;
+    const rotations = [
+      { name: 'front',  t: 'rotateY(0deg) translateZ(170px)' },
+      { name: 'back',   t: 'rotateY(180deg) translateZ(170px)' },
+      { name: 'right',  t: 'rotateY(90deg) translateZ(170px)' },
+      { name: 'left',   t: 'rotateY(-90deg) translateZ(170px)' },
+      { name: 'top',    t: 'rotateX(90deg) translateZ(170px)' },
+      { name: 'bottom', t: 'rotateX(-90deg) translateZ(170px)' }
+    ];
+    scene.innerHTML = faces.slice(0, 6).map((f, i) => `
+      <div class="cube-face" style="transform:${rotations[i].t}" data-slug="${f.id}" onclick="cubeDescend('${f.id}','${(f.title || '').replace(/'/g, '')}')">
+        <div class="cf-label">${(i + 1)} · ${f.title || f.id}</div>
+        <div class="cf-kind">${f.kind || ''}</div>
+        <iframe src="https://sjgant80-hub.github.io/${f.id}/" title="${f.title || f.id}" loading="lazy"></iframe>
+        <div class="cf-cta">descend →</div>
+      </div>
+    `).join('');
+  }
+
+  function renderCrumbs() {
+    const crumbs = document.getElementById('cube-crumbs');
+    const back = document.getElementById('cube-back');
+    const depth = stack.length - 1;
+    document.getElementById('cube-depth').textContent = 'depth ' + depth + (depth === 0 ? ' · ' + (CATALOG?.total || 1330) + ' tools reachable' : '');
+    back.style.display = depth > 0 ? 'inline-block' : 'none';
+    if (depth === 0) {
+      crumbs.innerHTML = '<span class="crumb" onclick="cubeReset()">◊ root</span>';
+    } else {
+      crumbs.innerHTML = stack.map((s, i) => {
+        if (i === stack.length - 1) return '<span style="color:var(--text)">' + s.title + '</span>';
+        return '<span class="crumb" onclick="cubeGoTo(' + i + ')">' + s.title + '</span><span class="sep">▸</span>';
+      }).join('');
+    }
+  }
+
+  window.cubeDescend = function(slug, title) {
+    if (stack.length >= 4) { window.open('https://sjgant80-hub.github.io/' + slug + '/', '_blank'); return; }
+    const faces = pickCompanions(slug);
+    stack.push({ title: title || slug, faces });
+    renderCube();
+    renderCrumbs();
+  };
+  window.cubeGoTo = function(idx) {
+    stack = stack.slice(0, idx + 1);
+    renderCube();
+    renderCrumbs();
+  };
+  window.cubeReset = function() {
+    stack = [{ title: 'root', faces: FLAGSHIP_ROOT.slice() }];
+    renderCube();
+    renderCrumbs();
+  };
+  document.getElementById('cube-back').onclick = function() {
+    if (stack.length > 1) { stack.pop(); renderCube(); renderCrumbs(); }
+  };
+  window.cubeShuffle = function() {
+    const cur = stack[stack.length - 1];
+    if (stack.length === 1) {
+      cur.faces = FLAGSHIP_ROOT.slice().sort(() => Math.random() - 0.5);
+    } else {
+      const centerId = stack[stack.length - 2].faces.find(f => f.title === cur.title)?.id || cur.faces[0].id;
+      cur.faces = pickCompanions(centerId);
+    }
+    renderCube();
+  };
+  window.cubeTogglePause = function() {
+    paused = !paused;
+    document.getElementById('cube-stage').classList.toggle('paused', paused);
+    document.getElementById('cube-pause').textContent = paused ? '► Play' : '◼ Pause';
+  };
+
+  loadCatalog();
+})();
+</script>
 
 <!-- ═══════════════════ HOW IT FITS · three surfaces ═══════════════════ -->
 <section id="architecture" style="border-top:1px solid var(--border)">
