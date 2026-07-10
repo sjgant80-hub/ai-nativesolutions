@@ -1131,5 +1131,22 @@ function onSearchEnter() {
  }
 })();
 </script>
+
+<!-- ═══════════════════════ AUTOPILOT · fall-autopilot-kit · fallos cross-tool orchestrator ═══════════════════════ -->
+<script type="module">
+  try {
+    const { installAutopilot } = await import('https://sjgant80-hub.github.io/fall-autopilot-kit/src/autopilot.js');
+    const manifestRes = await fetch('https://sjgant80-hub.github.io/fall-autopilot-kit/manifests/fallos.json');
+    const manifest = await manifestRes.json();
+    manifest.actions = manifest.actions.map(a => ({ ...a, run: async (params) => {
+      const fn = window._app?.[a.id];
+      if (typeof fn === 'function') return fn(params);
+      alert('FallOS autopilot proposes: ' + a.name + ' · params: ' + JSON.stringify(params) + '\n\nThis orchestrator action has not yet implemented the ' + a.id + ' handler. Proposal logged to audit.');
+      return { stub: true, action: a.id, params };
+    }}));
+    manifest.state = () => ({ ...(window._app || {}), openTools: Array.from(document.querySelectorAll('iframe')).map(i => i.src || i.dataset.tool).filter(Boolean), now: new Date().toISOString() });
+    installAutopilot(manifest);
+  } catch (e) { console.warn('[autopilot] init failed:', e); }
+</script>
 </body>
 </html>
