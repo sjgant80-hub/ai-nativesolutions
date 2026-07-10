@@ -475,17 +475,23 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
     <!-- Breadcrumb + controls -->
     <div id="cube-crumbs" style="font-family:'DM Mono';font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;min-height:16px"></div>
 
-    <!-- Cube stage -->
-    <div id="cube-stage" style="position:relative;width:100%;max-width:820px;height:min(560px,60vh);margin:0 auto;perspective:1800px;perspective-origin:50% 45%;background:radial-gradient(ellipse at center,rgba(212,160,23,0.06),transparent 70%);border-radius:14px;overflow:hidden;border:1px solid var(--border)">
-      <div id="cube-scene" style="width:340px;height:340px;position:absolute;top:50%;left:50%;margin:-170px 0 0 -170px;transform-style:preserve-3d;animation:cube-spin 42s linear infinite;transition:transform 0.6s ease">
-        <!-- 6 faces injected by script -->
+    <!-- Tesseract stage · cube-in-cube · 4D projection -->
+    <div id="cube-stage" style="position:relative;width:100%;max-width:820px;height:min(620px,66vh);margin:0 auto;perspective:2000px;perspective-origin:50% 45%;background:radial-gradient(ellipse at center,rgba(212,160,23,0.08),transparent 70%);border-radius:14px;overflow:hidden;border:1px solid var(--border)">
+      <!-- Outer cube · 6 flagship faces -->
+      <div id="cube-scene" style="width:340px;height:340px;position:absolute;top:50%;left:50%;margin:-170px 0 0 -170px;transform-style:preserve-3d;animation:cube-spin 42s linear infinite;transition:transform 0.6s ease;z-index:2">
+        <!-- 6 outer faces injected -->
+      </div>
+      <!-- Inner cube · same rotation axis, opposite direction · 4D shadow projection -->
+      <div id="cube-scene-inner" style="width:130px;height:130px;position:absolute;top:50%;left:50%;margin:-65px 0 0 -65px;transform-style:preserve-3d;animation:cube-spin-inner 34s linear infinite;transition:transform 0.6s ease;z-index:3;opacity:0.85">
+        <!-- 6 inner faces injected · smaller · rotate reverse -->
       </div>
       <div style="position:absolute;bottom:16px;left:16px;display:flex;gap:6px;z-index:10;flex-wrap:wrap">
         <button id="cube-back" style="padding:7px 12px;background:rgba(20,19,25,0.9);border:1px solid var(--border);color:var(--text);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;display:none">← Back</button>
         <button onclick="cubeShuffle()" style="padding:7px 12px;background:rgba(20,19,25,0.9);border:1px solid var(--border);color:var(--text);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer">↻ Shuffle</button>
+        <button onclick="cubeFold()" id="cube-fold-btn" style="padding:7px 12px;background:rgba(20,19,25,0.9);border:1px solid var(--gold);color:var(--gold);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer">◈ Fold</button>
         <button onclick="cubeTogglePause()" id="cube-pause" style="padding:7px 12px;background:rgba(20,19,25,0.9);border:1px solid var(--border);color:var(--text);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer">◼ Pause</button>
       </div>
-      <div id="cube-info" style="position:absolute;top:16px;right:16px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:right;line-height:1.6;max-width:230px;background:rgba(11,10,15,0.85);padding:8px 12px;border-radius:4px;z-index:10">click a face to descend<br><span id="cube-depth">depth 0 · 1330 tools reachable</span></div>
+      <div id="cube-info" style="position:absolute;top:16px;right:16px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:right;line-height:1.6;max-width:230px;background:rgba(11,10,15,0.85);padding:8px 12px;border-radius:4px;z-index:10">click any face to descend<br><span id="cube-depth">depth 0 · 1330 tools reachable</span><br><span style="color:var(--dim)">outer 6 · inner 6 · 4D shadow</span></div>
     </div>
 
     <div class="ctas" style="margin-top:24px">
@@ -510,8 +516,33 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
   0%   { transform: rotate3d(1, 1, 0.4, 0deg); }
   100% { transform: rotate3d(1, 1, 0.4, 360deg); }
 }
-#cube-stage.paused #cube-scene { animation-play-state: paused; }
+@keyframes cube-spin-inner {
+  0%   { transform: rotate3d(1, -1, 0.6, 0deg); }
+  100% { transform: rotate3d(1, -1, 0.6, -360deg); }
+}
+@keyframes cube-fold-out {
+  0%   { transform: rotate3d(1, 1, 0.4, 0deg) scale(1); }
+  25%  { transform: rotate3d(1, 1, 0.4, 180deg) scale(0.6); opacity: 0.6; }
+  50%  { transform: rotate3d(1, 1, 0.4, 360deg) scale(0.1); opacity: 0.15; }
+  75%  { transform: rotate3d(1, 1, 0.4, 540deg) scale(0.6); opacity: 0.7; }
+  100% { transform: rotate3d(1, 1, 0.4, 720deg) scale(1); opacity: 1; }
+}
+@keyframes cube-fold-in {
+  0%   { transform: rotate3d(1, -1, 0.6, 0deg) scale(1); opacity: 0.85; }
+  25%  { transform: rotate3d(1, -1, 0.6, -180deg) scale(1.8); opacity: 1; }
+  50%  { transform: rotate3d(1, -1, 0.6, -360deg) scale(2.6); opacity: 0.9; }
+  75%  { transform: rotate3d(1, -1, 0.6, -540deg) scale(1.8); opacity: 1; }
+  100% { transform: rotate3d(1, -1, 0.6, -720deg) scale(1); opacity: 0.85; }
+}
+#cube-stage.paused #cube-scene,
+#cube-stage.paused #cube-scene-inner { animation-play-state: paused; }
+#cube-stage.folding #cube-scene { animation: cube-fold-out 2.6s cubic-bezier(0.7, 0, 0.3, 1); }
+#cube-stage.folding #cube-scene-inner { animation: cube-fold-in 2.6s cubic-bezier(0.7, 0, 0.3, 1); }
 .cube-face { position: absolute; width: 340px; height: 340px; background: rgba(20,19,25,0.92); border: 1px solid var(--gold); border-radius: 8px; box-shadow: 0 0 24px rgba(212,160,23,0.18), inset 0 0 20px rgba(0,0,0,0.55); overflow: hidden; backdrop-filter: blur(2px); cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
+.cube-face-inner { position: absolute; width: 130px; height: 130px; background: rgba(20,19,25,0.94); border: 1px solid var(--amber); border-radius: 5px; box-shadow: 0 0 12px rgba(232,168,58,0.35), inset 0 0 10px rgba(0,0,0,0.6); overflow: hidden; cursor: pointer; transition: transform 0.15s, border-color 0.15s; }
+.cube-face-inner:hover { border-color: var(--gold); transform: scale(1.05); }
+.cube-face-inner iframe { width: 100%; height: 100%; border: none; background: var(--void); pointer-events: none; }
+.cube-face-inner .cfi-label { position: absolute; top: 4px; left: 4px; right: 4px; font-family: 'DM Mono', monospace; font-size: 8px; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; background: rgba(11,10,15,0.9); padding: 3px 5px; border-radius: 2px; z-index: 2; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cube-face:hover { border-color: var(--amber); transform: scale(1.02); }
 .cube-face iframe { width: 100%; height: 100%; border: none; background: var(--void); pointer-events: none; }
 .cube-face .cf-label { position: absolute; top: 12px; left: 12px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase; background: rgba(11,10,15,0.85); padding: 5px 10px; border-radius: 3px; z-index: 2; }
@@ -553,16 +584,20 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
     renderCrumbs();
   }
 
+  // Hard blocklist · private substrate repos never surface on the public cube
+  const PRIVATE_BLOCKLIST = /^(konomi|konomilang|konomi-signer|konomi-swarm|konomioke|konomistandard|konception|master-seed|acg|acgp2p|acgeden|acg-|acg_|symb-fer|bloomcad|hummingbird|kp2p|eden|metajung|si-didy|si-didy-|mesh-89-tracker|regulus|falltopo|fall-topo|topo-registry|fall-euaiact|niceassos|nas-|lightbringer|thomas-|-tesla|teslasolar)/i;
+  const isPublicSafe = (id) => !PRIVATE_BLOCKLIST.test(id);
+
   function pickCompanions(centerId) {
     if (!CATALOG) return FLAGSHIP_ROOT.slice(0, 6);
     // Prefer same kind, then same first-name prefix, then random
-    const all = CATALOG.listings;
-    const center = all.find(l => l.id === centerId);
+    const all = CATALOG.listings.filter(l => isPublicSafe(l.id));
+    const center = all.find(l => l.id === centerId) || CATALOG.listings.find(l => l.id === centerId);
     let pool = [];
     if (center) {
       const prefix = (center.id.match(/^([a-z]+)/) || [])[1] || '';
       pool = all
-        .filter(l => l.id !== centerId)
+        .filter(l => l.id !== centerId && isPublicSafe(l.id))
         .map(l => {
           let score = 0;
           if (l.kind === center.kind) score += 3;
@@ -577,24 +612,52 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
     return pool.slice(0, 6).map(x => ({ id: x.l.id, title: x.l.title || x.l.id, kind: x.l.kind }));
   }
 
+  function pickInnerFaces(outerFaces) {
+    // For the inner cube, pick 6 tools that would BE the next level down from
+    // a representative outer face. This creates a live 4D projection: outer
+    // shows current layer, inner shows what's one descent away.
+    if (!CATALOG) return outerFaces.slice(0, 6);
+    // Use the first outer face's companions as the inner faces
+    const seed = outerFaces[0]?.id || (CATALOG.listings[0].id);
+    return pickCompanions(seed);
+  }
+
   function renderCube() {
     const scene = document.getElementById('cube-scene');
+    const inner = document.getElementById('cube-scene-inner');
     const cur = stack[stack.length - 1];
     const faces = cur.faces;
-    const rotations = [
-      { name: 'front',  t: 'rotateY(0deg) translateZ(170px)' },
-      { name: 'back',   t: 'rotateY(180deg) translateZ(170px)' },
-      { name: 'right',  t: 'rotateY(90deg) translateZ(170px)' },
-      { name: 'left',   t: 'rotateY(-90deg) translateZ(170px)' },
-      { name: 'top',    t: 'rotateX(90deg) translateZ(170px)' },
-      { name: 'bottom', t: 'rotateX(-90deg) translateZ(170px)' }
+    const outerRotations = [
+      'rotateY(0deg) translateZ(170px)',
+      'rotateY(180deg) translateZ(170px)',
+      'rotateY(90deg) translateZ(170px)',
+      'rotateY(-90deg) translateZ(170px)',
+      'rotateX(90deg) translateZ(170px)',
+      'rotateX(-90deg) translateZ(170px)'
     ];
     scene.innerHTML = faces.slice(0, 6).map((f, i) => `
-      <div class="cube-face" style="transform:${rotations[i].t}" data-slug="${f.id}" onclick="cubeDescend('${f.id}','${(f.title || '').replace(/'/g, '')}')">
+      <div class="cube-face" style="transform:${outerRotations[i]}" data-slug="${f.id}" onclick="cubeDescend('${f.id}','${(f.title || '').replace(/'/g, '')}')">
         <div class="cf-label">${(i + 1)} · ${f.title || f.id}</div>
         <div class="cf-kind">${f.kind || ''}</div>
         <iframe src="https://sjgant80-hub.github.io/${f.id}/" title="${f.title || f.id}" loading="lazy"></iframe>
         <div class="cf-cta">descend →</div>
+      </div>
+    `).join('');
+
+    // Inner cube (tesseract projection) · shows next-layer companions
+    const innerFaces = pickInnerFaces(faces);
+    const innerRotations = [
+      'rotateY(0deg) translateZ(65px)',
+      'rotateY(180deg) translateZ(65px)',
+      'rotateY(90deg) translateZ(65px)',
+      'rotateY(-90deg) translateZ(65px)',
+      'rotateX(90deg) translateZ(65px)',
+      'rotateX(-90deg) translateZ(65px)'
+    ];
+    inner.innerHTML = innerFaces.slice(0, 6).map((f, i) => `
+      <div class="cube-face-inner" style="transform:${innerRotations[i]}" onclick="event.stopPropagation();cubeDescend('${f.id}','${(f.title || '').replace(/'/g, '')}')">
+        <div class="cfi-label">${(f.title || f.id).slice(0, 14)}</div>
+        <iframe src="https://sjgant80-hub.github.io/${f.id}/" title="${f.title || f.id}" loading="lazy"></iframe>
       </div>
     `).join('');
   }
@@ -649,6 +712,25 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
     paused = !paused;
     document.getElementById('cube-stage').classList.toggle('paused', paused);
     document.getElementById('cube-pause').textContent = paused ? '► Play' : '◼ Pause';
+  };
+  window.cubeFold = function() {
+    const stage = document.getElementById('cube-stage');
+    if (stage.classList.contains('folding')) return;
+    stage.classList.add('folding');
+    // After the fold animation, swap outer ↔ inner faces so it feels like the
+    // structure has folded through itself and returned inverted.
+    setTimeout(() => {
+      const cur = stack[stack.length - 1];
+      // If we're at depth 0, shuffle the flagship set; otherwise re-pick companions
+      if (stack.length === 1) {
+        cur.faces = FLAGSHIP_ROOT.slice().sort(() => Math.random() - 0.5);
+      } else {
+        const centerId = cur.faces[0].id;
+        cur.faces = pickCompanions(centerId);
+      }
+      renderCube();
+    }, 1300);
+    setTimeout(() => stage.classList.remove('folding'), 2650);
   };
 
   loadCatalog();
