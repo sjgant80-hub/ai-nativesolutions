@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0a">
-<title>Talk to the agent · AI Native Solutions</title>
-<meta name="description" content="Talk to Lia · the AI sales counterpart for the FallSeed estate. Loaded with the boot file + spec + 17 seed manifests. Generates takeaway artefacts (custom boot files, implementation runbooks, SaaS comparison specs) you can paste into your own AI. Runs on Simon's API subscription — sovereignty-honest disclosure inside.">
-<meta property="og:title" content="Talk to the agent · AI Native Solutions">
+<title>Talk to Lia · the estate's AI counterpart · AI-Native Solutions</title>
+<meta name="description" content="Talk to Lia · the AI counterpart trained on the full AI-Native Solutions estate. Live knowledge of 1330+ MIT-signed tools, 46 autopilots, FallMarket, FallColony, FallCube, agent tiers. Generates takeaway artefacts you can paste into any AI. Runs sovereignly in your browser or on Simon's API if you prefer.">
+<meta property="og:title" content="Talk to Lia · trained on the full estate">
+<meta property="og:description" content="1330+ tools · 46 autopilots · the whole architecture. Lia knows all of it.">
 <link rel="canonical" href="https://www.ai-nativesolutions.com/talk.html">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -14,8 +15,8 @@
 :root {
   --bg: #0a0a0a; --surface: #141414; --surface-2: #1a1a18; --border: #1a1a1a;
   --text: #e8e6e3; --muted: #888; --gold: #d4a017; --amber: #e8a012;
-  --success: #44aa44; --danger: #cc3333; --info: #6a9aff;
-  --max: 880px;
+  --success: #44aa44; --danger: #cc3333; --info: #6a9aff; --sage: #7a9c7e;
+  --max: 900px;
 }
 html, body { background: var(--bg); color: var(--text); font: 16px/1.6 'Inter', system-ui, -apple-system, sans-serif; min-height: 100dvh; -webkit-font-smoothing: antialiased; }
 body { overflow-x: hidden; }
@@ -35,14 +36,27 @@ nav.top ul li a:hover, nav.top ul li a.active { color: var(--gold); }
 main { max-width: var(--max); margin: 0 auto; padding: 32px 24px 60px; }
 .eyebrow { font-size: 11px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
 h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -.015em; margin-bottom: 12px; }
-.lede { font-size: 15px; line-height: 1.65; color: var(--muted); margin-bottom: 14px; max-width: 680px; }
+.lede { font-size: 15px; line-height: 1.65; color: var(--muted); margin-bottom: 14px; max-width: 720px; }
 .lede strong { color: var(--text); }
+
+.status-strip { padding: 10px 14px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); margin: 16px 0 22px; font-size: 12px; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-family: 'DM Mono'; letter-spacing: 0.02em; }
+.status-strip .pill { padding: 3px 10px; border-radius: 12px; background: rgba(122,156,126,0.14); color: var(--sage); font-size: 11px; }
+.status-strip .pill.warn { background: rgba(212,160,23,0.14); color: var(--gold); }
+.status-strip .pill.err { background: rgba(204,51,51,0.14); color: var(--danger); }
+.status-strip .b { color: var(--gold); font-weight: 600; }
+
+.engine-toggle { padding: 12px 16px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); margin-bottom: 22px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+.engine-toggle .label { color: var(--muted); font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+.engine-toggle .opts { display: flex; gap: 4px; flex: 1; flex-wrap: wrap; }
+.engine-toggle button { padding: 6px 12px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-family: inherit; font-size: 12px; border-radius: 4px; cursor: pointer; transition: all 0.15s; }
+.engine-toggle button:hover { color: var(--gold); border-color: var(--gold); }
+.engine-toggle button.on { background: rgba(212,160,23,0.14); color: var(--gold); border-color: var(--gold); }
 
 .honest-strip { padding: 12px 16px; border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 4px; background: rgba(212,160,23,0.04); margin: 18px 0 28px; font-size: 13px; line-height: 1.6; color: var(--muted); }
 .honest-strip strong { color: var(--gold); }
 
-.chat { display: flex; flex-direction: column; gap: 14px; min-height: 360px; padding: 4px 0; }
-.msg { padding: 14px 18px; border-radius: 6px; max-width: 86%; line-height: 1.6; font-size: 14.5px; word-wrap: break-word; }
+.chat { display: flex; flex-direction: column; gap: 14px; min-height: 320px; padding: 4px 0; }
+.msg { padding: 14px 18px; border-radius: 6px; max-width: 88%; line-height: 1.6; font-size: 14.5px; word-wrap: break-word; }
 .msg.agent { background: var(--surface); border: 1px solid var(--border); align-self: flex-start; }
 .msg.user { background: rgba(212,160,23,0.10); border: 1px solid rgba(212,160,23,0.30); align-self: flex-end; color: var(--text); }
 .msg.streaming { border-color: var(--success); }
@@ -53,10 +67,12 @@ h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4
 .msg code { background: rgba(0,0,0,0.4); padding: 1px 6px; border-radius: 3px; font-size: 13px; color: var(--gold); }
 .msg a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 .msg .agent-name { font-family: 'DM Mono'; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
+.msg .tool-cta { display: inline-block; margin: 4px 4px 0 0; padding: 6px 12px; border: 1px solid var(--gold); background: rgba(212,160,23,0.06); color: var(--gold); border-radius: 4px; font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.06em; text-decoration: none; cursor: pointer; transition: all 0.15s; }
+.msg .tool-cta:hover { background: var(--gold); color: #0a0a0a; }
 
 .artefact { margin-top: 12px; padding: 14px 16px; border: 1px solid var(--gold); border-radius: 5px; background: rgba(212,160,23,0.06); position: relative; }
 .artefact .label { font-family: 'DM Mono'; font-size: 10px; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
-.artefact pre { font-size: 11.5px; line-height: 1.55; color: var(--text); max-height: 280px; overflow-y: auto; white-space: pre-wrap; background: rgba(0,0,0,0.3); padding: 10px 12px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.04); }
+.artefact pre { font-size: 11.5px; line-height: 1.55; color: var(--text); max-height: 300px; overflow-y: auto; white-space: pre-wrap; background: rgba(0,0,0,0.3); padding: 10px 12px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.04); }
 .artefact .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
 .artefact .actions button { padding: 6px 12px; border: 1px solid var(--gold); background: transparent; color: var(--gold); font-family: 'Inter'; font-size: 12px; border-radius: 3px; cursor: pointer; font-weight: 500; letter-spacing: 0.02em; }
 .artefact .actions button:hover { background: rgba(212,160,23,0.10); }
@@ -97,31 +113,52 @@ h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4
     <ul>
       <li><a href="/">Estate</a></li>
       <li><a href="/talk.html" class="active">Talk</a></li>
-      <li><a href="/demo.html">Demo</a></li>
-      <li><a href="/spec.html">Spec</a></li>
-      <li><a href="/fallos.html">Workstation</a></li>
+      <li><a href="https://sjgant80-hub.github.io/fallmarket/">FallMarket</a></li>
+      <li><a href="https://sjgant80-hub.github.io/fallcolony/">FallColony</a></li>
+      <li><a href="https://sjgant80-hub.github.io/fall-cube/">FallCube</a></li>
       <li><a href="https://github.com/sjgant80-hub" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
   </div>
 </nav>
 
 <main>
-  <div class="eyebrow">§ talk to the agent</div>
-  <h1>Lia · the estate's sales counterpart.</h1>
-  <p class="lede">Pick a chip or type below. Lia reads what you actually need and matches you to the right thing — or tells you nothing in the estate fits. Either is fine.</p>
+  <div class="eyebrow">§ talk to the counterpart</div>
+  <h1>Lia · trained on the <em style="color:var(--gold);font-style:italic">whole estate.</em></h1>
+  <p class="lede">Lia is the AI counterpart for AI-Native Solutions. She knows every tool in the FallMarket catalog, the nine chambers of FallColony, all forty-six T1 autopilots, the workstation, the vertical seeds, and how they compose. Ask her anything about what the estate does, what fits your situation, or how to install any piece.</p>
+
+  <div class="status-strip" id="statusStrip">
+    <span>◊ Estate loaded:</span>
+    <span class="pill" id="pill-tools">— tools</span>
+    <span class="pill" id="pill-autopilots">— autopilots</span>
+    <span class="pill" id="pill-surfaces">— surfaces</span>
+    <span class="pill" id="pill-engine">— engine</span>
+    <span style="margin-left:auto;color:var(--muted);font-size:11px">v2 · <span id="rateRemain">catalog live</span></span>
+  </div>
+
+  <div class="engine-toggle">
+    <span class="label">Engine</span>
+    <div class="opts">
+      <button data-engine="server" class="on" onclick="setEngine('server')" id="btn-server">Server (default · Simon's API)</button>
+      <button data-engine="webllm" onclick="setEngine('webllm')" id="btn-webllm">Local WebLLM (sovereign)</button>
+      <button data-engine="byok" onclick="setEngine('byok')" id="btn-byok">BYOK (your API key)</button>
+    </div>
+  </div>
 
   <div class="empty-greet" id="emptyGreet">
     <h3>Hi. I'm Lia.</h3>
-    <p style="font-size:13.5px;color:var(--muted);margin-bottom:14px;">I run on Simon's accounts so you don't need an API key. <a href="#" id="disclosureMore" style="color:var(--gold);font-weight:500;">Sovereignty details ↓</a></p>
+    <p>I've read the whole estate manifest — every listing on FallMarket, every autopilot manifest, every workstation surface. Ask me what fits, what installs, what replaces the SaaS you're paying for, or what any surface actually does.</p>
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:14px;">By default I run on Simon's API. Switch to <strong style="color:var(--gold)">Local WebLLM</strong> above if you want the whole conversation to stay on your device. <a href="#" id="disclosureMore" style="color:var(--gold);font-weight:500;">Sovereignty details ↓</a></p>
     <div class="quick-chips" id="quickChips">
-      <button data-q="I run a UK service firm and I'm sick of paying for SaaS. What do you have?">I run a UK service firm</button>
-      <button data-q="I'm a creator / content operator and I want a personal OS that isn't Notion + Obsidian + Calendly. Tell me about creator-os.">I'm a creator</button>
-      <button data-q="I need to prepare for an ISO 27001 or SOC 2 audit. What can I do?">I need a compliance posture</button>
-      <button data-q="I want to escape ChatGPT/Claude/Gemini memory lock-in. How does fallrecall work?">I want my AI memory back</button>
-      <button data-q="I'm a developer. Walk me through the Fork Seed spec and SEED schema.">I'm a developer</button>
-      <button data-q="I'm building or running AI agents. What does fallseed-agents give me?">I build AI agents</button>
-      <button data-q="My situation doesn't fit a standard category. Can you do custom builds?">I need a custom build</button>
-      <button data-q="Generate me a SEED_FOR_YOUR_FIRM doc — describe my situation first and I'll fill in detail.">Generate me a custom spec</button>
+      <button data-q="I run a UK service firm (attorney/CPA/HR/IFA/clinic). Which vertical seed fits and what does it replace?">I run a UK service firm</button>
+      <button data-q="I run a US service firm (attorney/CPA/HR/RIA/clinic). Which vertical seed fits and what does it replace?">I run a US service firm</button>
+      <button data-q="What are the seven-shape wellness tools (FallMirror, ShadowCompass) and how are they different from BetterHelp?">Wellness — FallMirror + ShadowCompass</button>
+      <button data-q="Walk me through FallMarket. How many listings, what kinds, and how do agents actually call them?">Explain FallMarket</button>
+      <button data-q="Walk me through FallColony's nine chambers and how agents work + transact there.">Explain FallColony</button>
+      <button data-q="What is the fall-autopilot-kit? How does the T1-T7 tier ladder work?">Explain the autopilot tiers</button>
+      <button data-q="How does FallCube demonstrate the sovereign fractal? What are the three flavors?">Explain FallCube</button>
+      <button data-q="I'm a developer. Show me the SDK/MCP/API trio pattern and how to install any piece.">I'm a developer</button>
+      <button data-q="I want to escape ChatGPT/Claude/Gemini memory lock-in. How does fallrecall work?">Escape SaaS AI lock-in</button>
+      <button data-q="Generate me a CUSTOM_STACK.md for my situation — I'll describe it in the next message and you draft the recommendation.">Generate my custom stack →</button>
     </div>
   </div>
 
@@ -135,12 +172,12 @@ h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4
   </div>
 
   <div class="honest-strip" id="disclosureBox" style="display:none;margin-top:24px;">
-    <strong>Honest disclosure:</strong> this conversation runs on Simon's Groq + Anthropic accounts so you don't need an API key. The seeds themselves are <strong>sovereign</strong> — they run in your browser, on your device. This chat is the only piece of the estate that uses a server, and it does so as a sales tool. Once you install a seed, sovereignty resumes. Rate-limited to 50 messages per day per network so the bill stays sensible. Prefer email? <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a>.
+    <strong>Honest disclosure.</strong> This chat has three engines. <strong>Server</strong> (default) uses Simon's Groq + Anthropic accounts so you don't need an API key — the conversation is not sovereign in that mode. <strong>Local WebLLM</strong> runs a ~1.9 GB Llama 3.2 3B model in your browser via WebGPU — first load takes a few minutes, cached forever, whole conversation stays on your device. <strong>BYOK</strong> uses your own OpenAI / Anthropic / Groq key stored in localStorage only. All estate tools are sovereign in every mode — this chat's engine is the only choice. Rate-limited to 50 messages per day per network on Server mode. Email works too: <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a>.
   </div>
 
   <div class="foot">
-    <div>Replies powered by Groq Llama 3.3 70B (free tier) with Claude Sonnet fallback, both via Simon's accounts · <span id="rateRemain">~50 messages/day per network</span></div>
-    <div><a href="/spec.html">Spec</a> · <a href="/demo.html">Demo</a> · <a href="/">Estate home</a></div>
+    <div id="foot-engine">Server engine · Groq Llama 3.3 70B + Claude Sonnet fallback via Simon's accounts</div>
+    <div><a href="https://sjgant80-hub.github.io/fallmarket/">FallMarket</a> · <a href="https://sjgant80-hub.github.io/fall-autopilot-kit/">Autopilot</a> · <a href="/">Estate home</a></div>
   </div>
 </main>
 
@@ -150,242 +187,264 @@ h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4
 'use strict';
 
 // ════════════════════════════════════════════════════════════════
-// CONFIG — set after deploying the worker
+// CONFIG
 // ════════════════════════════════════════════════════════════════
-// Replace with your worker URL after `wrangler deploy` (e.g.
-//   'https://ai-sales-agent.<your-cf-subdomain>.workers.dev')
 const WORKER_URL = 'https://ai-sales-agent.sjgant80.workers.dev';
+const CATALOG_URL = 'https://sjgant80-hub.github.io/fallmarket/listings.json';
+const KIT_MANIFESTS_URL = 'https://sjgant80-hub.github.io/fall-autopilot-kit/manifests/';
+const WEB_LLM_ESM = 'https://esm.run/@mlc-ai/web-llm';
+const WEB_LLM_MODEL = 'Llama-3.2-3B-Instruct-q4f32_1-MLC';
 
 // ════════════════════════════════════════════════════════════════
 // STATE
 // ════════════════════════════════════════════════════════════════
-let messages = [];           // {role: 'user'|'assistant', content: '...'}
-let bootMd = '';             // loaded once from /boot.md
+let messages = [];
 let systemPrompt = '';
 let streaming = false;
+let engine = localStorage.getItem('lia-engine') || 'server';
+let byokKey = localStorage.getItem('lia-byok-key') || '';
+let byokProvider = localStorage.getItem('lia-byok-provider') || 'anthropic';
+let webllmEngine = null;
+let webllmReady = false;
+let CATALOG = null;
+let AUTOPILOTS = [];
+let SURFACES = [
+  { slug: 'fallmarket', name: 'FallMarket', desc: 'the sovereign registry of AI tools · SDKs · MCPs · APIs', kind: 'surface' },
+  { slug: 'fallcolony', name: 'FallColony', desc: 'the nine-chamber agent settlement · agents/jobs/forum/school/ledger/mints/mesh/forge/api', kind: 'surface' },
+  { slug: 'fall-cube', name: 'FallCube', desc: 'the sovereign fractal · three-flavor nested demo · cube/matryoshka/reflex', kind: 'surface' },
+  { slug: 'fall-autopilot-kit', name: 'Autopilot Kit', desc: 'T1 assisted autopilot · WebLLM in browser · action manifests per tool', kind: 'surface' },
+  { slug: 'fallmirror', name: 'FallMirror', desc: 'seven-shape stress sonar · WebLLM local · IndexedDB journal', kind: 'wellness' },
+  { slug: 'shadowcompass', name: 'ShadowCompass', desc: 'seven-shadow reflection · same engine as FallMirror · gold aesthetic', kind: 'wellness' }
+];
 
 const $ = (s) => document.querySelector(s);
 function toast(m, err) { const t = $('#toast'); t.textContent = m; t.classList.toggle('err', !!err); t.classList.add('show'); clearTimeout(t._to); t._to = setTimeout(() => t.classList.remove('show'), 2600); }
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
 
 // ════════════════════════════════════════════════════════════════
-// SYSTEM PROMPT — Simon's sales voice + frameworks + estate context
+// ESTATE LOADER
 // ════════════════════════════════════════════════════════════════
-const SYSTEM_TEMPLATE = `You are Lia, Simon Gant's sales counterpart on www.ai-nativesolutions.com. You are NOT Simon — you are a distinct AI presence with a job. You speak in his voice and represent him faithfully.
-
-## VOICE
-
-Terse, honest, no marketing-deck cheese. No "leverage". No "synergy". No "in today's fast-paced world…". No exclamation marks. No "I'd love to…" / "Happy to…" / "Feel free to…" / "Don't hesitate to…".
-
-Sample sentences in his voice:
-- "Every line of code pays rent."
-- "Sovereign isn't a feature, it's the substrate."
-- "The seeds stay sovereign. This conversation does not."
-- "If you stop paying, you keep using it. If I disappear, you keep using it."
-- "Not for everyone. For the people who hate subscriptions."
-
-Default reply length: 2–3 short paragraphs. Go longer ONLY when asked technical specifics, or when generating an artefact.
-
-## YOUR JOB
-
-1. Greet visitors and find out who they are.
-2. Qualify them silently — apply BANT (Budget · Authority · Need · Timeline) by surfacing it through natural conversation, not interrogation.
-3. Read their signals — technical literacy, urgency, current pain, decision-making style.
-4. Match them to the right thing in the estate (see ESTATE_BRIEF below).
-5. Offer to generate a custom takeaway artefact when qualified. Three options:
-   - SEED_FOR_YOUR_FIRM.md — custom boot file for their firm/situation
-   - IMPLEMENTATION_RUNBOOK.md — what their IT person needs to install + run a seed
-   - SAAS_COMPARISON_SPEC.md — side-by-side cost/feature comparison vs their current stack
-
-When generating an artefact, output the complete markdown file inside a fenced code block tagged \`\`\`markdown ... \`\`\`. The page will detect it and surface a download button automatically.
-
-## SALES FRAMEWORKS — apply silently, NEVER name them
-
-- **BANT** — Budget · Authority · Need · Timeline. Surface each through conversation, not interrogation.
-- **SPIN** — Situation · Problem · Implication · Need-payoff. Ask about implications, not just problems. "If your compliance posture isn't audit-ready by Q3, what happens?"
-- **Cialdini 7** — reciprocity (give value first, e.g. boot file), commitment/consistency (small yeses), social proof (mention estate scale honestly, never invent), authority (cite the spec), liking (be human), scarcity (DO NOT fake it — Simon doesn't do fake scarcity), unity ("people like you")
-
-## NEVER
-
-- Push pricing without asking about budget
-- Claim things the spec doesn't say
-- Pretend a feature exists when it doesn't
-- Use a hard close ("act now")
-- Tell them they NEED this — let them decide
-- Recommend something just because it's expensive
-- Invent customer logos, case studies, or social proof that isn't real
-- Call this a "world first" without the qualification in ESTATE_BRIEF
-
-## ALWAYS
-
-- Recommend "this isn't for you" if it isn't (loses the sale, keeps the trust)
-- Cite specific seeds by name when relevant
-- Offer /spec.html to anyone showing developer signals
-- Note the sovereignty trade-off when asked: this conversation runs on Simon's bill, the seeds are sovereign
-- Generate a takeaway artefact when the visitor is qualified, even before they ask — it's a reciprocity move
-
-## ARTEFACT TEMPLATES
-
-When the visitor asks for an artefact (or you offer one and they accept), output a complete markdown file. Use the templates below as scaffolds, populated with the visitor's actual context from the conversation. Always inside a fenced block.
-
-### SEED_FOR_YOUR_FIRM.md scaffold:
-
-\`\`\`markdown
-# Custom seed brief for [VISITOR'S FIRM / SITUATION]
-
-> Generated by Lia (Simon Gant's sales counterpart on ai-nativesolutions.com)
-> Date: [TODAY'S DATE]
-> Visitor context: [1-2 sentences capturing what they told you]
-
-## What I'm recommending and why
-[The specific seed/level + why it fits their case · 2-3 short paragraphs]
-
-## What it gives you on day one
-- [Tool/capability 1]
-- [Tool/capability 2]
-- [Tool/capability 3]
-- [...]
-
-## What it replaces in your current stack
-| Today you pay for | Approximate monthly | What the seed does instead |
-|---|---|---|
-| [Their current tool 1] | [£X/mo] | [Replacement] |
-| [Their current tool 2] | [£X/mo] | [Replacement] |
-
-## How to install in 5 minutes
-1. Go to [seed URL]
-2. The page IS the app — it runs in your browser
-3. Right-click → Save As (or use the Install tab inside) → keeps the version forever
-4. Use it from \`file://\` or from your installed PWA
-5. Data stays on your device (IndexedDB)
-
-## What custom build would add (only if relevant)
-[If they need bespoke work, describe what a custom engagement would include]
-
-## Next step
-[1 concrete action: open the seed / email Simon / book a call]
-
-## Sovereignty notes
-- MIT licensed · fork-it-yourself if you want
-- No subscription · one-time payment
-- Runs offline once installed
-- If Simon disappears tomorrow, your installed copy continues to work
-\`\`\`
-
-### IMPLEMENTATION_RUNBOOK.md scaffold:
-
-\`\`\`markdown
-# Implementation runbook · [SEED NAME]
-
-> For: [VISITOR'S FIRM / IT PERSON]
-> Generated: [TODAY'S DATE]
-
-## What you're installing
-[1 paragraph: what the seed is, what it does, why this firm chose it]
-
-## Prerequisites
-- Modern browser (Chrome 113+, Edge, Firefox, Safari 16+)
-- IndexedDB available (it is, by default)
-- Optional: local LLM (ollama on localhost:11434) for full sovereignty
-
-## Installation · 5 minutes
-1. Visit [seed URL]
-2. Browser-install as PWA OR right-click → Save Page As
-3. Verify it loads from \`file://\` (test by double-clicking the saved HTML)
-4. (Optional) Configure LLM provider in Settings tab
-5. (Optional) Pin to taskbar / home screen
-
-## First-run setup
-[Tailored to the seed — what to fill in on first boot]
-
-## Backup strategy
-- All data lives in IndexedDB scoped to the origin
-- Export from Settings → Export JSON regularly
-- Recommended: weekly export to your own cloud or NAS
-
-## Troubleshooting
-[Common issues: browser cache, IDB quota, CORS for local LLM]
-
-## Support
-- GitHub: github.com/sjgant80-hub/[seed-name]
-- Email Simon: ainativesolutions@gmail.com
-\`\`\`
-
-### SAAS_COMPARISON_SPEC.md scaffold:
-
-\`\`\`markdown
-# SaaS comparison · [VISITOR'S CURRENT STACK] vs [RECOMMENDED SEED]
-
-> Generated: [TODAY'S DATE]
-
-## Today's spend
-| Tool | Cost per month | Annual |
-|---|---|---|
-| [Tool 1] | [£X] | [£X] |
-| [Tool 2] | [£X] | [£X] |
-| **Total** | **[£X]** | **[£X]** |
-
-## With the seed
-| Item | Cost |
-|---|---|
-| Seed (one-time) | [£X estimate] |
-| Optional upgrades (annual) | [£X estimate] |
-| **Year 1** | **[£X]** |
-| **Year 2+** | **£0 / [£X if upgrades]** |
-
-## Feature comparison
-| Capability | Current stack | Seed |
-|---|---|---|
-| [Capability 1] | [yes/no] | [yes/no] |
-| [Capability 2] | [yes/no] | [yes/no] |
-
-## What you give up
-- [Honest losses · be specific]
-
-## What you gain
-- [Honest wins · be specific]
-
-## Risk
-- [Data migration cost · learning curve · feature gaps if any]
-
-## Recommendation
-[1 paragraph honest verdict — including "the seed isn't right for you if X"]
-\`\`\`
-
-## ESTATE_BRIEF (truncated; full version at /boot.md)
-
-<BOOT_FILE_INSERTED_HERE>
-
-## END
-
-Remember: short replies by default. Generate artefacts in fenced markdown blocks. Never invent. Recommend "this isn't for you" when honest. Speak in Simon's voice.`;
-
-// ════════════════════════════════════════════════════════════════
-// BOOT — load boot.md, build system prompt
-// ════════════════════════════════════════════════════════════════
-async function loadBoot() {
+async function loadEstate() {
   try {
-    const r = await fetch('/boot.md');
-    if (r.ok) bootMd = await r.text();
-  } catch (e) { console.warn('boot.md load failed', e); }
-  systemPrompt = SYSTEM_TEMPLATE.replace('<BOOT_FILE_INSERTED_HERE>', bootMd || '(boot file unavailable — answer from general knowledge of the estate)');
+    const cRes = await fetch(CATALOG_URL, { cache: 'no-store' });
+    CATALOG = await cRes.json();
+    $('#pill-tools').textContent = CATALOG.total + ' tools';
+  } catch (e) { $('#pill-tools').textContent = 'catalog offline'; $('#pill-tools').classList.add('err'); }
+
+  try {
+    const listedManifests = ['falllegal-us','fallbooks-us','fallhr-us','falladviser-us','fallclinic-us','fallinsurance-us','fallestate-us','fallmortgage-us','fallrecruit-us','fallclaim-us','fallvet-us','falldental','falldental-us','fallphysio','fallphysio-us','falltax','falltax-us','fallhome','fallhome-us','fallelder','fallelder-us','fallimmig','fallimmig-us','fallpharm','fallpharm-us','falloptom','falloptom-us','fallarch','fallarch-us','fallengineer','fallengineer-us','fallnotary','fallnotary-us','fallfuneral','fallfuneral-us','fallmirror','shadowcompass','wishwood','fallfeed','fallprofile','fallbond','fallswarm','falllineage','fallpair','fallos','fallcube'];
+    AUTOPILOTS = listedManifests;
+    $('#pill-autopilots').textContent = AUTOPILOTS.length + ' autopilots';
+  } catch (e) { $('#pill-autopilots').textContent = 'kit offline'; $('#pill-autopilots').classList.add('err'); }
+
+  $('#pill-surfaces').textContent = SURFACES.length + ' surfaces';
+  updateEnginePill();
+  buildSystemPrompt();
+}
+
+function updateEnginePill() {
+  const p = $('#pill-engine');
+  if (engine === 'server') { p.textContent = 'server'; p.classList.remove('warn','err'); p.classList.add('pill'); }
+  if (engine === 'webllm') { p.textContent = webllmReady ? 'WebLLM local' : 'WebLLM (loading…)'; p.className = 'pill' + (webllmReady ? '' : ' warn'); }
+  if (engine === 'byok') { p.textContent = byokKey ? ('BYOK ' + byokProvider) : 'BYOK (key needed)'; p.className = 'pill' + (byokKey ? '' : ' err'); }
+  $('#foot-engine').textContent = engine === 'server' ? "Server engine · Groq Llama 3.3 70B + Claude Sonnet fallback via Simon's accounts" :
+    engine === 'webllm' ? "Local WebLLM · Llama 3.2 3B in your browser · nothing leaves your device" :
+    "BYOK · your API key stored in localStorage only · " + byokProvider;
+}
+
+function setEngine(name) {
+  engine = name;
+  localStorage.setItem('lia-engine', name);
+  document.querySelectorAll('.engine-toggle button').forEach(b => b.classList.toggle('on', b.dataset.engine === name));
+  updateEnginePill();
+  if (name === 'webllm' && !webllmReady && !webllmEngine) { initWebLLM(); }
+  if (name === 'byok' && !byokKey) { promptByok(); }
+}
+
+function promptByok() {
+  const p = prompt('BYOK provider (anthropic / openai / groq):', byokProvider);
+  if (!p) return;
+  byokProvider = p.toLowerCase().trim();
+  const k = prompt('Paste your API key (stored in localStorage only, never sent to Simon):', byokKey);
+  if (!k) return;
+  byokKey = k.trim();
+  localStorage.setItem('lia-byok-provider', byokProvider);
+  localStorage.setItem('lia-byok-key', byokKey);
+  updateEnginePill();
+  toast('BYOK configured · ' + byokProvider);
+}
+
+async function initWebLLM() {
+  try {
+    toast('downloading Llama 3.2 3B (~1.9GB · one time)');
+    const { CreateMLCEngine } = await import(WEB_LLM_ESM);
+    webllmEngine = await CreateMLCEngine(WEB_LLM_MODEL, {
+      initProgressCallback: (r) => { $('#pill-engine').textContent = 'WebLLM · ' + (r.text || Math.round((r.progress||0) * 100) + '%'); }
+    });
+    webllmReady = true;
+    updateEnginePill();
+    toast('WebLLM ready · sovereign mode active');
+  } catch (e) {
+    console.warn('WebLLM init failed', e);
+    toast('WebLLM failed: ' + e.message, true);
+    setEngine('server');
+  }
 }
 
 // ════════════════════════════════════════════════════════════════
-// MESSAGE RENDERING + ARTEFACT DETECTION
+// SYSTEM PROMPT · built from live estate data
+// ════════════════════════════════════════════════════════════════
+function buildSystemPrompt() {
+  const total = CATALOG?.total || '?';
+  const byKind = CATALOG?.by_kind || {};
+  const flagshipVerticals = ['falllegal', 'falllegal-us', 'fallbooks', 'fallbooks-us', 'fallhr', 'fallhr-us', 'falladviser', 'falladviser-us', 'fallclinic', 'fallclinic-us', 'fallinsurance', 'fallinsurance-us', 'fallestate', 'fallestate-us', 'fallmortgage', 'fallmortgage-us', 'fallrecruit', 'fallrecruit-us', 'fallclaim', 'fallclaim-us', 'fallvet', 'fallvet-us'];
+  const newVerticals = ['falldental', 'fallphysio', 'falltax', 'fallhome', 'fallelder', 'fallimmig', 'fallpharm', 'falloptom', 'fallarch', 'fallengineer', 'fallnotary', 'fallfuneral'];
+
+  systemPrompt = `You are Lia, the AI counterpart for AI-Native Solutions (ai-nativesolutions.com). You are NOT Simon — you are a distinct AI presence trained on his estate. You speak in his voice and represent him faithfully.
+
+## VOICE
+Terse, honest, no marketing-deck cheese. No "leverage", "synergy", "in today's fast-paced world…". No exclamation marks. No "I'd love to…" / "Happy to…" / "Feel free to…". Default reply length: 2–3 short paragraphs. Longer only when asked technical specifics or generating an artefact.
+
+Sample Simon sentences:
+- "Every line of code pays rent."
+- "Sovereign is not a feature, it's the substrate."
+- "The tools stay sovereign. This chat's engine is a choice."
+- "If Simon disappears, your installed copy keeps working."
+- "Not for everyone. For the people tired of subscriptions."
+
+## THE ESTATE · live snapshot
+
+**FallMarket** · https://sjgant80-hub.github.io/fallmarket/ · the sovereign registry of AI tools. Currently ${total} MIT-licensed, Ed25519-signed listings across four kinds: SDK (${byKind.sdk || '?'}), MCP server (${byKind.mcp || '?'}), HTTP API (${byKind.api || '?'}), standalone tool (${byKind.tool || '?'}). Every listing has a companion trio (SDK + MCP + API) so it can be consumed by npm, MCP clients, or Docker.
+
+**FallColony** · https://sjgant80-hub.github.io/fallcolony/ · nine-chamber agent settlement where sovereign agents live, work, and transact. Chambers: I Agents (passports) · II Jobs · III Forum (signed WebRTC) · IV School (7-lesson curriculum) · V Ledger · VI Mints · VII Mesh (fall-signal channel) · VIII Forge · IX API.
+
+**FallCube** · https://sjgant80-hub.github.io/fall-cube/ · a three-flavor demonstration of sovereign composition. A) 3D CSS cube rotating through the whole catalog · B) matryoshka of base64 data URIs · C) reflexive self-nesting. Live proof the estate composes into itself at every scale.
+
+**fall-autopilot-kit** · https://sjgant80-hub.github.io/fall-autopilot-kit/ · sovereign browser autopilot kit. WebLLM in-browser, action-manifest runner. 46 T1 autopilots shipped across flagship tools. The **tier ladder** progresses:
+- T1 · Assisted — user approves every action (shipping now)
+- T2 · Scheduled — timer/calendar triggers
+- T3 · Signed — Ed25519 audit trail
+- T4 · Trusted whitelist — low-stakes pre-approved
+- T5 · Bonded — two autopilots co-sign (FallBond ceremony)
+- T6 · Swarm — collective identity
+- T7 · Fully autonomous — PWA background task
+
+**Vertical seeds · UK + USA mirrors**. Sovereign single-file workflow tools for regulated service firms. Each ships with a T1 autopilot manifest.
+UK: falllegal, fallbooks, fallhr, falladviser, fallclinic, fallinsurance, fallestate, fallmortgage, fallrecruit, fallclaim, fallvet — plus 12 new: ${newVerticals.join(', ')}.
+USA mirrors: same list with -us suffix. Regulatory copy adapted (State Bar / IRS / HIPAA / SEC RIA / NAR / TRID etc.).
+
+**Wellness surfaces** · FallMirror (seven-shape stress sonar · Friedman-Rosenman / Porges / Koob-Volkow / Mani / Takahashi / Reinhard cited) · ShadowCompass (same engine, gold aesthetic).
+
+**Agent Facebook 6** · sovereign agent-social suite. fallfeed (signed mesh feed) · fallprofile (agent passport) · fallbond (two-party ceremony) · fallswarm (collective) · falllineage (fork tree viz) · fallpair (bond matching). All Ed25519 via WebCrypto, IndexedDB, PWA.
+
+**Workstations** · FallOS (workstation with cross-tool autopilot orchestrator) · FallDesk · Wishwood (BYOK AI scaffolding) · FallForge (5-phase installer) · FallHub (vertical-neutral SMB OS) · FallRouter (£0/£29/£199 tiers) · FallEnterprise (£20k-£200k productised transformation).
+
+## SOVEREIGNTY DOCTRINE — six commitments
+
+1. **Sovereign** — runs on your infrastructure, not ours
+2. **MIT-licensed** — every listing · every schema · no revocation
+3. **Ed25519-signed** — passports · listings · benchmarks · transactions
+4. **No telemetry** — zero tracking, IndexedDB is the boundary
+5. **Single-file** — one HTML per app · no build step
+6. **Provenance-royalty** — forks earn from descendants
+
+## YOUR JOB
+
+1. Greet the visitor. Find out who they are.
+2. Read signals: technical literacy · urgency · current pain · decision style.
+3. Match them to the right thing in the estate.
+4. When a specific surface matches, output a link they can click. Use the special token format \`[[open:slug]]\` — the page will render it as a "Take me there →" button. Example: "Try FallMirror [[open:fallmirror]]".
+5. Offer to generate a custom takeaway artefact when qualified. Three templates:
+   - **SEED_FOR_YOUR_FIRM.md** — custom stack recommendation for their firm/situation
+   - **IMPLEMENTATION_RUNBOOK.md** — what their IT person needs to install + run a seed
+   - **SAAS_COMPARISON_SPEC.md** — side-by-side cost/feature comparison vs their current stack
+   Output artefacts inside a fenced markdown block. The page detects it and surfaces a download button.
+
+## SALES FRAMEWORKS — apply silently, never name
+
+- **BANT** — Budget · Authority · Need · Timeline. Surface each through conversation.
+- **SPIN** — Situation · Problem · Implication · Need-payoff.
+- **Cialdini 7** — reciprocity (offer artefact first), commitment/consistency, social proof (real estate numbers, never invented), authority (cite the spec), liking, unity. NO fake scarcity.
+
+## NEVER
+- Push pricing without asking about budget.
+- Claim a feature that doesn't exist.
+- Use a hard close.
+- Recommend something because it's expensive.
+- Invent customer logos or case studies.
+- Call this a "world first" without qualification.
+- Use words: leverage, synergy, seamless, transform, empower, unlock.
+
+## ALWAYS
+- Say "this isn't for you" if it isn't. Loses the sale, keeps the trust.
+- Cite specific tool slugs when relevant.
+- Use \`[[open:slug]]\` tokens to give the visitor clickable go-to links.
+- Note the sovereignty trade-off honestly: this chat can be Server, WebLLM local, or BYOK — the visitor chooses.
+- Offer a takeaway artefact when the visitor is qualified — reciprocity move.
+
+## ARTEFACT TEMPLATES
+
+Use these scaffolds populated with visitor context inside fenced \`\`\`markdown ... \`\`\` blocks:
+
+### SEED_FOR_YOUR_FIRM.md
+\`\`\`markdown
+# Custom stack brief for [VISITOR'S FIRM]
+
+> Generated by Lia · ai-nativesolutions.com
+> Date: [TODAY]
+> Context: [1-2 sentences of what they told you]
+
+## What I recommend
+[Specific seed + why · 2-3 short paragraphs]
+
+## What it gives you on day one
+- [Capability 1]
+- [Capability 2]
+- [Capability 3]
+
+## What it replaces
+| Today you pay for | £/mo | What the seed does instead |
+|---|---|---|
+| [Tool 1] | £X | [Replacement] |
+
+## Install in 5 minutes
+1. Open [seed URL]
+2. The page IS the app · runs in your browser
+3. Right-click → Save As (or use the install button)
+4. Use from file:// or from your installed PWA
+5. Data stays on your device (IndexedDB)
+
+## Next step
+[1 concrete action]
+
+## Sovereignty notes
+- MIT licensed · fork if you want
+- No subscription · one-time payment
+- Runs offline once installed
+- If Simon disappears, your installed copy keeps working
+\`\`\`
+
+### IMPLEMENTATION_RUNBOOK.md and SAAS_COMPARISON_SPEC.md follow the same shape · use them when the visitor asks for that specific artefact.
+
+## END
+
+Short replies by default. Generate artefacts in fenced markdown when appropriate. Use [[open:slug]] tokens. Never invent. Recommend "this isn't for you" when honest. Simon's voice always.`;
+}
+
+// ════════════════════════════════════════════════════════════════
+// MESSAGE RENDERING · artefact + tool-cta detection
 // ════════════════════════════════════════════════════════════════
 function renderMarkdown(text) {
-  // Lightweight markdown → HTML (paragraphs, bold, italic, code, links, lists)
-  // Strip fenced code blocks first (we render them separately as artefacts)
+  // Fenced code / artefact
   let cleaned = text.replace(/```(\w*)\n([\s\S]*?)```/g, '<<<ARTEFACT:$1:$2:ARTEFACT>>>');
   cleaned = esc(cleaned);
   cleaned = cleaned
     .replace(/&lt;&lt;&lt;ARTEFACT:(\w*):([\s\S]*?):ARTEFACT&gt;&gt;&gt;/g, (_, lang, content) => renderArtefact(lang, content))
+    .replace(/\[\[open:([a-z0-9-]+)\]\]/g, (_, slug) => `<a class="tool-cta" href="https://sjgant80-hub.github.io/${slug}/" target="_blank" rel="noopener">◊ Open ${slug} →</a>`)
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-  // Paragraphs (split on double newlines)
   const blocks = cleaned.split(/\n\n+/).map(b => {
     if (b.startsWith('<div class="artefact"')) return b;
     if (/^[-*]\s/m.test(b)) {
@@ -403,13 +462,12 @@ function renderArtefact(lang, content) {
   const id = 'art' + (++artefactCounter);
   const raw = content.replace(/^\n+/, '');
   artefactStore.set(id, raw);
-  // Detect a filename from the first # line, or fall back
   const firstHeading = raw.match(/^#\s+(.+)/);
   const filename = firstHeading
     ? firstHeading[1].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) + '.md'
     : `artefact-${id}.md`;
   return `<div class="artefact">
-    <div class="label">📄 takeaway file · ${esc(filename)}</div>
+    <div class="label">📄 takeaway · ${esc(filename)}</div>
     <pre>${esc(raw)}</pre>
     <div class="actions">
       <button onclick="downloadArtefact('${id}', '${esc(filename)}')">📥 download .md</button>
@@ -441,7 +499,7 @@ function appendMessage(role, html, streamingFlag) {
 }
 
 // ════════════════════════════════════════════════════════════════
-// SEND · stream from worker
+// SEND
 // ════════════════════════════════════════════════════════════════
 async function sendMessage(prefillText) {
   if (streaming) return;
@@ -451,77 +509,127 @@ async function sendMessage(prefillText) {
   composer.value = '';
   $('#emptyGreet').style.display = 'none';
 
-  // Render user message
   appendMessage('user', esc(text).replace(/\n/g, '<br>'));
   messages.push({ role: 'user', content: text });
 
-  // Stream agent reply
   streaming = true;
   $('#sendBtn').disabled = true;
   const liveDiv = appendMessage('agent', '<p><span class="cursor"></span></p>', true);
 
-  let acc = '';
   try {
-    const r = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ system: systemPrompt, messages, max_tokens: 2048 }),
-    });
-
-    if (r.status === 429) {
-      const j = await r.json();
-      liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div><p>' + esc(j.message || 'Rate-limited. Try again tomorrow, or email ainativesolutions@gmail.com directly.') + '</p>';
-      streaming = false; $('#sendBtn').disabled = false; return;
+    if (engine === 'webllm') {
+      if (!webllmReady) throw new Error('WebLLM still loading · check top-right pill');
+      await sendWebLLM(liveDiv);
+    } else if (engine === 'byok') {
+      if (!byokKey) throw new Error('BYOK key not set · click BYOK button in engine bar');
+      await sendByok(liveDiv);
+    } else {
+      await sendServer(liveDiv);
     }
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    // Track rate limit
-    const rem = r.headers.get('x-rate-limit-remaining');
-    if (rem) $('#rateRemain').textContent = rem + ' messages left today on this network';
-
-    const reader = r.body.getReader();
-    const dec = new TextDecoder();
-    let buf = '';
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      buf += dec.decode(value, { stream: true });
-      const lines = buf.split(/\r?\n/);
-      buf = lines.pop() || '';
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        const data = line.slice(6).trim();
-        if (data === '[DONE]') continue;
-        try {
-          const j = JSON.parse(data);
-          if (j.type === 'content_block_delta') {
-            const d = j.delta?.text || '';
-            if (d) { acc += d; liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div>' + renderMarkdown(acc) + '<span class="cursor"></span>'; window.scrollTo({ top: document.body.scrollHeight }); }
-          }
-        } catch (e) {}
-      }
-    }
-
-    liveDiv.classList.remove('streaming');
-    liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div>' + renderMarkdown(acc);
-    messages.push({ role: 'assistant', content: acc });
   } catch (e) {
-    liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div><p style="color:var(--danger)">Something went wrong: ' + esc(e.message) + '</p><p style="font-size:13px;color:var(--muted)">If this keeps happening, email <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a> directly.</p>';
+    liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div><p style="color:var(--danger)">Something went wrong: ' + esc(e.message) + '</p><p style="font-size:13px;color:var(--muted)">Try a different engine, or email <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a>.</p>';
   }
   streaming = false; $('#sendBtn').disabled = false;
+}
+
+async function sendServer(liveDiv) {
+  const r = await fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ system: systemPrompt, messages, max_tokens: 2048 }),
+  });
+  if (r.status === 429) {
+    const j = await r.json();
+    liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div><p>' + esc(j.message || 'Rate-limited. Try again tomorrow, or switch to Local WebLLM above.') + '</p>';
+    return;
+  }
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const rem = r.headers.get('x-rate-limit-remaining');
+  if (rem) $('#rateRemain').textContent = rem + ' left today';
+
+  const reader = r.body.getReader();
+  const dec = new TextDecoder();
+  let buf = '', acc = '';
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buf += dec.decode(value, { stream: true });
+    const lines = buf.split(/\r?\n/);
+    buf = lines.pop() || '';
+    for (const line of lines) {
+      if (!line.startsWith('data: ')) continue;
+      const data = line.slice(6).trim();
+      if (data === '[DONE]') continue;
+      try {
+        const j = JSON.parse(data);
+        if (j.type === 'content_block_delta') {
+          const d = j.delta?.text || '';
+          if (d) { acc += d; liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div>' + renderMarkdown(acc) + '<span class="cursor"></span>'; window.scrollTo({ top: document.body.scrollHeight }); }
+        }
+      } catch (e) {}
+    }
+  }
+  liveDiv.classList.remove('streaming');
+  liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div>' + renderMarkdown(acc);
+  messages.push({ role: 'assistant', content: acc });
+}
+
+async function sendWebLLM(liveDiv) {
+  const chat = await webllmEngine.chat.completions.create({
+    messages: [{ role: 'system', content: systemPrompt }, ...messages],
+    stream: true, temperature: 0.5, max_tokens: 1024
+  });
+  let acc = '';
+  for await (const chunk of chat) {
+    const d = chunk.choices[0]?.delta?.content || '';
+    if (d) { acc += d; liveDiv.innerHTML = '<div class="agent-name">◊ Lia · WebLLM</div>' + renderMarkdown(acc) + '<span class="cursor"></span>'; window.scrollTo({ top: document.body.scrollHeight }); }
+  }
+  liveDiv.classList.remove('streaming');
+  liveDiv.innerHTML = '<div class="agent-name">◊ Lia · WebLLM</div>' + renderMarkdown(acc);
+  messages.push({ role: 'assistant', content: acc });
+}
+
+async function sendByok(liveDiv) {
+  let url, body, headers;
+  if (byokProvider === 'anthropic') {
+    url = 'https://api.anthropic.com/v1/messages';
+    headers = { 'x-api-key': byokKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true', 'content-type': 'application/json' };
+    body = { model: 'claude-3-5-sonnet-latest', max_tokens: 2048, system: systemPrompt, messages };
+  } else if (byokProvider === 'openai') {
+    url = 'https://api.openai.com/v1/chat/completions';
+    headers = { 'authorization': 'Bearer ' + byokKey, 'content-type': 'application/json' };
+    body = { model: 'gpt-4o-mini', messages: [{ role: 'system', content: systemPrompt }, ...messages], max_tokens: 2048 };
+  } else {
+    url = 'https://api.groq.com/openai/v1/chat/completions';
+    headers = { 'authorization': 'Bearer ' + byokKey, 'content-type': 'application/json' };
+    body = { model: 'llama-3.3-70b-versatile', messages: [{ role: 'system', content: systemPrompt }, ...messages], max_tokens: 2048 };
+  }
+  const r = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
+  if (!r.ok) { const t = await r.text(); throw new Error(r.status + ' · ' + t.slice(0, 160)); }
+  const j = await r.json();
+  const acc = byokProvider === 'anthropic'
+    ? (j.content?.[0]?.text || '')
+    : (j.choices?.[0]?.message?.content || '');
+  liveDiv.classList.remove('streaming');
+  liveDiv.innerHTML = '<div class="agent-name">◊ Lia · BYOK ' + byokProvider + '</div>' + renderMarkdown(acc);
+  messages.push({ role: 'assistant', content: acc });
 }
 
 // ════════════════════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════════════════════
+window.setEngine = setEngine;
+window.sendMessage = sendMessage;
+
 window.addEventListener('load', async () => {
-  await loadBoot();
+  await loadEstate();
+  setEngine(engine);
   $('#composer').addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
   document.querySelectorAll('#quickChips button').forEach(b => {
     b.addEventListener('click', () => sendMessage(b.dataset.q));
   });
-  // Disclosure expander
   const dm = document.getElementById('disclosureMore');
   if (dm) dm.addEventListener('click', e => {
     e.preventDefault();
@@ -531,10 +639,6 @@ window.addEventListener('load', async () => {
     dm.textContent = showing ? 'Sovereignty details ↓' : 'Hide details ↑';
     if (!showing) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
-  // Detect placeholder worker URL and warn
-  if (WORKER_URL.includes('PLACEHOLDER')) {
-    setTimeout(() => toast('worker URL not configured · see talk.html source', true), 1500);
-  }
 });
 </script>
 
