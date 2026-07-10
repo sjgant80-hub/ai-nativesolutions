@@ -1301,8 +1301,7 @@ function processFiles(fileList) {
             thumbBg: getThumbBg(ext),
             extColor: getExtColor(ext),
             data: ev.target.result, // base64 data URL for download
-            mimeType: file.type,
-          };
+            mimeType: file.type};
           files.unshift(f);
           saveFiles();
           if(i === fileList.length-1) {
@@ -1709,8 +1708,7 @@ async function sendAI() {
         {role:'system', content: context},
         {role:'user', content: msg}
       ],
-      stream: false,
-    });
+      stream: false});
     addAIMsg('ai', reply.choices[0].message.content);
   } catch(e) {
     addAIMsg('ai', 'Error: '+e.message);
@@ -1870,8 +1868,7 @@ function generateFallbackResults(q) {
     {source:'Gmail', title:`Re: ${q} project update`, type:'Email', snippet:`Connect your Gmail account to search emails containing "${q}".`, relevance:88, icon:'📧', url:'#'},
     {source:'Slack', title:`#general — ${q}`, type:'Message', snippet:`Connect Slack to search messages and threads mentioning "${q}".`, relevance:82, icon:'💬', url:'#'},
     {source:'Notion', title:`${q} notes`, type:'Page', snippet:`Connect Notion to search your workspace for "${q}".`, relevance:76, icon:'📝', url:'#'},
-    {source:'Google Drive', title:`${q} spreadsheet`, type:'Sheet', snippet:`Connect Google Drive to find files related to "${q}".`, relevance:71, icon:'📊', url:'#'},
-  ];
+    {source:'Google Drive', title:`${q} spreadsheet`, type:'Sheet', snippet:`Connect Google Drive to find files related to "${q}".`, relevance:71, icon:'📊', url:'#'}];
 }
 
 function renderSearchResults(results, q) {

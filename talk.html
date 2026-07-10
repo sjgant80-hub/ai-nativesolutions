@@ -337,7 +337,7 @@ USA mirrors: same list with -us suffix. Regulatory copy adapted (State Bar / IRS
 
 **Agent Facebook 6** · sovereign agent-social suite. fallfeed (signed mesh feed) · fallprofile (agent passport) · fallbond (two-party ceremony) · fallswarm (collective) · falllineage (fork tree viz) · fallpair (bond matching). All Ed25519 via WebCrypto, IndexedDB, PWA.
 
-**Workstations** · FallOS (workstation with cross-tool autopilot orchestrator) · FallDesk · Wishwood (BYOK AI scaffolding) · FallForge (5-phase installer) · FallHub (vertical-neutral SMB OS) · FallRouter (£0/£29/£199 tiers) · FallEnterprise (£20k-£200k productised transformation).
+**Workstations** · FallOS (workstation with cross-tool autopilot orchestrator) · FallDesk · Wishwood (BYOK AI scaffolding) · FallForge (5-phase installer) · FallHub (vertical-neutral SMB OS) · FallRouter (TBA tiers) · FallEnterprise (TBA productised transformation).
 
 ## SOVEREIGNTY DOCTRINE — six commitments
 
@@ -419,7 +419,7 @@ Use these scaffolds populated with visitor context inside fenced \`\`\`markdown 
 
 ## Sovereignty notes
 - MIT licensed · fork if you want
-- No subscription · one-time payment
+- not subscription-based · access
 - Runs offline once installed
 - If Simon disappears, your installed copy keeps working
 \`\`\`
@@ -436,15 +436,15 @@ Short replies by default. Generate artefacts in fenced markdown when appropriate
 // ════════════════════════════════════════════════════════════════
 function renderMarkdown(text) {
   // Fenced code / artefact
-  let cleaned = text.replace(/```(\w*)\n([\s\S]*?)```/g, '<<<ARTEFACT:$1:$2:ARTEFACT>>>');
+  let cleaned = text.replace(/```(\w*)\n([\s\S]*?)```/g, '<<<ARTEFACT:TBA:TBA:ARTEFACT>>>');
   cleaned = esc(cleaned);
   cleaned = cleaned
     .replace(/&lt;&lt;&lt;ARTEFACT:(\w*):([\s\S]*?):ARTEFACT&gt;&gt;&gt;/g, (_, lang, content) => renderArtefact(lang, content))
     .replace(/\[\[open:([a-z0-9-]+)\]\]/g, (_, slug) => `<a class="tool-cta" href="https://sjgant80-hub.github.io/${slug}/" target="_blank" rel="noopener">◊ Open ${slug} →</a>`)
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    .replace(/\*\*(.+?)\*\*/g, '<strong>TBA</strong>')
+    .replace(/\*(.+?)\*/g, '<em>TBA</em>')
+    .replace(/`([^`]+)`/g, '<code>TBA</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="TBA" target="_blank" rel="noopener">TBA</a>');
   const blocks = cleaned.split(/\n\n+/).map(b => {
     if (b.startsWith('<div class="artefact"')) return b;
     if (/^[-*]\s/m.test(b)) {
@@ -536,8 +536,7 @@ async function sendServer(liveDiv) {
   const r = await fetch(WORKER_URL, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ system: systemPrompt, messages, max_tokens: 2048 }),
-  });
+    body: JSON.stringify({ system: systemPrompt, messages, max_tokens: 2048 })});
   if (r.status === 429) {
     const j = await r.json();
     liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div><p>' + esc(j.message || 'Rate-limited. Try again tomorrow, or switch to Local WebLLM above.') + '</p>';

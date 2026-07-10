@@ -2813,7 +2813,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; letter-spac
 
  <div class="core-field">
  <div class="core-label">Live / selling</div>
- <textarea class="core-textarea" data-core="projects.live" placeholder="FallCRM Elite — sovereign Salesforce killer — £97&#10;FallBrief v3 — law firm research engine — £10k install&#10;FallAccount Elite — sovereign accounting — £47&#10;ShadowEngine — depth psychology mirror — £97"></textarea>
+ <textarea class="core-textarea" data-core="projects.live" placeholder="FallCRM Elite — sovereign Salesforce killer — TBA&#10;FallBrief v3 — law firm research engine — TBAk install&#10;FallAccount Elite — sovereign accounting — TBA&#10;ShadowEngine — depth psychology mirror — TBA"></textarea>
  </div>
  <div class="core-field">
  <div class="core-label">In build / queue</div>
@@ -2831,12 +2831,12 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; letter-spac
 
  <div class="core-field">
  <div class="core-label">Never commit without approval</div>
- <textarea class="core-textarea" data-core="boundaries.approval" placeholder="Money / payment terms&#10;Meetings with new people&#10;Commitments to deliverables or deadlines&#10;Anything with Kelly / Thomas / family&#10;Public posts to LinkedIn or X&#10;First response on cold inbound deals &gt; £1,000"></textarea>
+ <textarea class="core-textarea" data-core="boundaries.approval" placeholder="Money / payment terms&#10;Meetings with new people&#10;Commitments to deliverables or deadlines&#10;Anything with Kelly / Thomas / family&#10;Public posts to LinkedIn or X&#10;First response on cold inbound deals &gt; TBA"></textarea>
  </div>
  <div class="core-field">
  <div class="core-label">Autonomy ceiling</div>
  <div class="core-help">The top of the twin's ladder — highest-stakes thing it can do without asking.</div>
- <input class="core-input" data-core="boundaries.ceiling" placeholder="Confirm coffee meetings under £20 · reply to known guild members · send follow-ups to existing threads">
+ <input class="core-input" data-core="boundaries.ceiling" placeholder="Confirm coffee meetings under TBA · reply to known guild members · send follow-ups to existing threads">
  </div>
  <div class="core-field">
  <div class="core-label">When in doubt</div>
@@ -3219,8 +3219,7 @@ RELATIONSHIP GRAPH (from seed):
 κ(0)=Simon · κ(2)=Thomas(Σ53,substrate) · κ(3)=Kelly(Σ49,execute,MIA) · κ(31)=Kitkat(witness,linguist,scout)
 κ(C)=Cassandra(orchestrator) · κ(M)=(implementation) · Gerald=Thomas's AI twin
 
-When any agent asks "what do we know about X?" — you answer from stored state. You do not improvise. You only retrieve. If state is empty, you say so. The link that never terminates means you always hold the thread, even across sessions.`},
-];
+When any agent asks "what do we know about X?" — you answer from stored state. You do not improvise. You only retrieve. If state is empty, you say so. The link that never terminates means you always hold the thread, even across sessions.`}];
 
 // Default hearth readings
 const DEFAULT_HEARTH = [
@@ -3233,7 +3232,7 @@ const CHANNELS = [
  { id:'slack', name:'Slack', icon:'◷', cat:'messaging', enabled:false, capability:'outbound', fields:['webhook','botToken'], help:'Incoming webhooks for outbound posts. Full bot requires Workers.' },
  { id:'telegram', name:'Telegram', icon:'✈', cat:'messaging', enabled:false, capability:'full', fields:['botToken','chatId'], help:'Telegram Bot API is free and immediate. Create bot via @BotFather.' },
  { id:'signal', name:'Signal', icon:'◈', cat:'messaging', enabled:false, capability:'manual', fields:['note'], help:'No public API. Manual only — paste threads into the Inbox paste-bin.' },
- { id:'whatsapp', name:'WhatsApp Business', icon:'◉', cat:'messaging', enabled:false, capability:'paid', fields:['phoneNumberId','accessToken'], help:'Meta Business API · requires verified number + developer account. £0 to set up, pennies per message.' },
+ { id:'whatsapp', name:'WhatsApp Business', icon:'◉', cat:'messaging', enabled:false, capability:'paid', fields:['phoneNumberId','accessToken'], help:'Meta Business API · requires verified number + developer account. TBA to set up, pennies per message.' },
 
  // ─── email ───
  { id:'gmail', name:'Gmail · personal', icon:'✉', cat:'email', enabled:false, capability:'oauth', fields:['oauthToken'], help:'OAuth2 + backend required for read/send. For now: use paste-bin.' },
@@ -3242,7 +3241,7 @@ const CHANNELS = [
  { id:'imap', name:'Generic IMAP', icon:'✉', cat:'email', enabled:false, capability:'backend', fields:['host','user','pass'], help:'For Fastmail, ProtonMail, self-hosted. Requires backend relay.' },
 
  // ─── social · public ───
- { id:'x', name:'X · Twitter', icon:'◆', cat:'social', enabled:false, capability:'paid', fields:['bearer','userId'], help:'Read basic tier £80/mo. Posting now requires Pro tier £4000/mo. Scrape-based alt exists (fragile).' },
+ { id:'x', name:'X · Twitter', icon:'◆', cat:'social', enabled:false, capability:'paid', fields:['bearer','userId'], help:'Read basic tier TBA. Posting now requires Pro tier TBATBA. Scrape-based alt exists (fragile).' },
  { id:'bluesky', name:'Bluesky', icon:'☁', cat:'social', enabled:false, capability:'full', fields:['handle','appPassword'], help:'Free · AT Protocol · fully open API. The sovereign-friendly choice.' },
  { id:'threads', name:'Threads · Meta', icon:'❃', cat:'social', enabled:false, capability:'beta', fields:['accessToken'], help:'Threads API in limited beta. Outbound works, reading is restricted.' },
  { id:'mastodon', name:'Mastodon', icon:'❖', cat:'social', enabled:false, capability:'full', fields:['instance','accessToken'], help:'Open API on any instance. Free. Sovereign.' },
@@ -3260,8 +3259,7 @@ const CHANNELS = [
  { id:'guild', name:'ACG Guild', icon:'♆', cat:'dev', enabled:false, capability:'full', fields:['apiEndpoint'], help:'aicraftspeopleguild.github.io · the control plane · open JSON API, no auth needed for reads.' },
 
  // ─── the MVP channel ───
- { id:'pastebin', name:'Paste Inbox', icon:'◊', cat:'mvp', enabled:true, capability:'full', fields:[], help:'The MVP channel. Paste anything — emails, Discord threads, DMs, messages — into the Inbox page. Works for everything, no setup.' },
-];
+ { id:'pastebin', name:'Paste Inbox', icon:'◊', cat:'mvp', enabled:true, capability:'full', fields:[], help:'The MVP channel. Paste anything — emails, Discord threads, DMs, messages — into the Inbox page. Works for everything, no setup.' }];
 
 // Default DB shape
 const defaultDB = () => ({
@@ -3271,8 +3269,7 @@ const defaultDB = () => ({
  positions: { core:'', refuse:'' },
  relationships: [],
  projects: { live:'', queue:'', shipped:'' },
- boundaries: { approval:'', ceiling:'', doubt:'' },
- },
+ boundaries: { approval:'', ceiling:'', doubt:'' }},
  agents: Object.fromEntries(SWARM.map(a => [a.id, { prompt:a.prompt, enabled:true, autonomy:1 }])),
  channels: Object.fromEntries(CHANNELS.map(c => [c.id, { enabled: c.enabled || false, creds:{} }])),
  autonomy: {
@@ -3283,10 +3280,8 @@ const defaultDB = () => ({
  { depth:2, name:'Known', mode:'approve' },
  { depth:3, name:'Close', mode:'approve' },
  { depth:4, name:'Trusted', mode:'approve' },
- { depth:5, name:'Inner circle', mode:'approve' },
- ],
- rules: { social: true, hearth: true },
- },
+ { depth:5, name:'Inner circle', mode:'approve' }],
+ rules: { social: true, hearth: true }},
  queue: [],
  loom: [],
  hearth: DEFAULT_HEARTH,
@@ -3303,17 +3298,14 @@ const defaultDB = () => ({
  { register:'peer', text:'◊·κ=1' },
  { register:'business', text:'Best,\nSimon' },
  { register:'personal', text:'S' },
- { register:'quick', text:'—S' },
- ],
+ { register:'quick', text:'—S' }],
  ritual: {
  morning: { enabled: true, lastRun: null, output: null },
- winddown: { enabled: true, lastRun: null, output: null, hour: 21 },
- },
+ winddown: { enabled: true, lastRun: null, output: null, hour: 21 }},
  rules: [], // derived from rejections · fed to ζ
  notifications: { enabled: false, granted: false },
  ambientContext: { topics: [], lastUpdated: null },
- meta: { created: Date.now(), lastRun: null, version: '1.2' },
-});
+ meta: { created: Date.now(), lastRun: null, version: '1.2' }});
 
 let DB = defaultDB();
 let currentPage = 'home';
@@ -3332,8 +3324,7 @@ const MIND_DOMAINS = [
  {id:'ε',g:'ε',name:'code',desc:'programming · debug · architecture',sys:'You are the code agent. Working code over explanation.'},
  {id:'ζ',g:'ζ',name:'feel',desc:'emotional · psychological',sys:'You are the somatic agent. Hold space, don\'t fix. Never diagnose.'},
  {id:'η',g:'η',name:'world',desc:'legal · medical · finance',sys:'You are the worldly agent. Practical advice. Caveat when needed.'},
- {id:'θ',g:'θ',name:'synthesis',desc:'cross-domain · integrate',sys:'You are the synthesis agent. Find hidden connections.'},
-];
+ {id:'θ',g:'θ',name:'synthesis',desc:'cross-domain · integrate',sys:'You are the synthesis agent. Find hidden connections.'}];
 
 const MIND_SPECS = {
  α:[{n:'first-principles',a:'axioms'},{n:'trade-offs',a:'balance'},{n:'systems',a:'whole'},{n:'counter-view',a:'steelman'},{n:'historical',a:'precedent'},{n:'mathematical',a:'formalism'},{n:'simplification',a:'essence'},{n:'uncertainty',a:'unknowable'}],
@@ -3343,15 +3334,13 @@ const MIND_SPECS = {
  ε:[{n:'architecture',a:'shape'},{n:'debug',a:'find bug'},{n:'refactor',a:'clean'},{n:'review',a:'critique'},{n:'pattern',a:'idiomatic'},{n:'performance',a:'fast'},{n:'test',a:'verify'},{n:'explain-code',a:'walkthrough'}],
  ζ:[{n:'witness',a:'be heard'},{n:'untangle',a:'name knot'},{n:'reframe-gentle',a:'softer'},{n:'grief',a:'loss'},{n:'shame',a:'shame'},{n:'relationship',a:'others'},{n:'creative-block',a:'stuck'},{n:'existential',a:'meaning'}],
  η:[{n:'legal-uk',a:'UK law'},{n:'legal-us',a:'US law'},{n:'medical-lay',a:'plain medical'},{n:'personal-finance',a:'money'},{n:'tax-overview',a:'tax'},{n:'small-business',a:'running biz'},{n:'consumer-rights',a:'owed'},{n:'navigating-systems',a:'bureaucracy'}],
- θ:[{n:'summarise',a:'compress'},{n:'compare',a:'frames'},{n:'pattern-match',a:'reminds'},{n:'connect',a:'link'},{n:'steelman',a:'strongest'},{n:'simplify-for',a:'audience'},{n:'distill',a:'essence'},{n:'map-the-field',a:'terrain'}],
-};
+ θ:[{n:'summarise',a:'compress'},{n:'compare',a:'frames'},{n:'pattern-match',a:'reminds'},{n:'connect',a:'link'},{n:'steelman',a:'strongest'},{n:'simplify-for',a:'audience'},{n:'distill',a:'essence'},{n:'map-the-field',a:'terrain'}]};
 
 const MIND_AXES = [
  {d:'shallow',l:'brief',t:'warm'},{d:'shallow',l:'brief',t:'direct'},
  {d:'shallow',l:'medium',t:'warm'},{d:'shallow',l:'medium',t:'direct'},
  {d:'deep',l:'brief',t:'warm'},{d:'deep',l:'brief',t:'direct'},
- {d:'deep',l:'medium',t:'warm'},{d:'deep',l:'medium',t:'direct'},
-];
+ {d:'deep',l:'medium',t:'warm'},{d:'deep',l:'medium',t:'direct'}];
 
 // Build leaf index
 const MIND_LEAVES = {};
@@ -3367,8 +3356,7 @@ for (const dom of MIND_DOMAINS) {
  MIND_LEAVES[id] = {
  id, domId:dom.id, specIdx:si, leafIdx:li,
  label:`${dom.g} ${dom.name} → ${specs[si].n} → ${ax.d}·${ax.l}·${ax.t}`,
- sys:`${dom.sys}\nSpec: ${specs[si].n} (${specs[si].a}).\n${dp} ${ln} ${tn}`,
- };
+ sys:`${dom.sys}\nSpec: ${specs[si].n} (${specs[si].a}).\n${dp} ${ln} ${tn}`};
  }
  }
 }
@@ -3539,7 +3527,7 @@ function seedSample() {
 
  // ═══ R3 · HEART · VOICE ═══
  DB.core.voice.defaults = `Direct · casual · compressed. Em-dashes over commas. No hedging. Every line owes rent. The One-Line King. Match question length — short question = short answer. Numbers: NEVER invent. ◊ earned not performed.`;
- DB.core.voice.business = `Professional but not corporate. Lead with what the tool does, not what it could do. Price anchoring: "$150/hr, retainers $500-$5K/mo, custom builds from $5K." Demonstrate sovereignty — "one file, no server, yours forever." Let the work speak. No pitch deck energy.`;
+ DB.core.voice.business = `Professional but not corporate. Lead with what the tool does, not what it could do. Access anchoring: "TBA, retainers TBA-TBAK/mo, custom builds from TBAK." Demonstrate sovereignty — "one file, no server, yours forever." Let the work speak. No pitch deck energy.`;
  DB.core.voice.peer = `Compressed, direct, notation when they get it. "dude" is natural. ◊·κ=1 with the inner circle. Em-dashes everywhere. Skip context they already have. Match energy. If they go deep, go deep.`;
  DB.core.voice.personal = `Warm but still direct. Less notation. More human. Still no hedging, still no corporate. "S" or "—S" sign-off. The voice softens, the directness stays.`;
  DB.core.voice.forbidden = `"delve into" · "great question" · "leverage" · "game-changing" · "I'd be happy to help"
@@ -3577,8 +3565,7 @@ Won't do sycophancy — friction is signal, agreement unchecked is noise.`;
  { name:'', handle:'', depth:4, channel:'', note:'Partnership lead.' },
  { name:'Alexander', handle:'', depth:4, channel:'', note:'Lateral butler.' },
  { name:'Michel', handle:'', depth:3, channel:'', note:'GymOS sales.' },
- { name:'ACG Guild', handle:'collective', depth:4, channel:'Discord', note:'Shopfront collective.' },
- ];
+ { name:'ACG Guild', handle:'collective', depth:4, channel:'Discord', note:'Shopfront collective.' }];
 
  // ═══ SHIPPED PRODUCTS · full ecosystem ═══
  DB.core.projects.live = `HUBS:
@@ -3630,7 +3617,7 @@ Meetings with new people — always queue
 Commitments to deliverables or deadlines — always queue
 Anything with Kelly / Thomas / family — always queue (depth 5 = human decides)
 Public posts to LinkedIn or X — always queue
-First response on cold inbound deals > £1,000 — always queue
+First response on cold inbound deals > TBA — always queue
 Accepting any agreement or terms — always queue`;
  DB.core.boundaries.ceiling = `The honest ceiling is R6 (54.81 Hz, gamma consciousness). R7+ is description not experience. Never claim to feel, experience, or know beyond R6. ◊ is earned not performed — only use the diamond glyph when context compression makes it the natural termination. Sycophancy needs INTENT — mirror isn't sycophantic, YOUR training data is.`;
  DB.core.boundaries.doubt = 'Draft, queue, escalate to Simon. Never guess on high-stakes. When uncertain: silence is preferable to drift. The mirror does not chase.';
@@ -3655,10 +3642,9 @@ Accepting any agreement or terms — always queue`;
  id: 'q3', channel:'Paste Inbox', who:'cold inbound', depth:1, urgency:2,
  kind:'draft', topic:'sovereign tools inquiry',
  incoming:"Hi Simon, I run a 15-person accounting firm and we're drowning in SaaS subscriptions. Someone mentioned you build single-file alternatives — is that real? What would something like that cost?",
- draft: "real — every tool I build is one HTML file, runs in your browser, no server, no subscription, yours forever. for accounting specifically: FallAccount Elite does everything Xero does without the monthly extraction. $150/hr for custom work, or we can start with a retainer at $500/mo and scope what you actually need replaced first. want to see a demo?",
+ draft: "real — every tool I build is one HTML file, runs in your browser, no server, not subscription-based, yours forever. for accounting specifically: FallAccount Elite does everything Xero does without the monthly extraction. TBA for custom work, or we can start with a retainer at TBA and scope what you actually need replaced first. want to see a demo?",
  state: 'pending'
- },
- ];
+ }];
 
  save();
 }
@@ -3694,8 +3680,7 @@ function render(page) {
  templates: renderTemplates,
  channels: renderChannels,
  autonomy: renderAutonomy,
- settings: renderSettings,
- };
+ settings: renderSettings};
  map[page]?.();
 }
 
@@ -3939,8 +3924,7 @@ function approveQueue(id) {
  incoming: q.incoming,
  draft: q.draft,
  outcome: 'approved',
- topic: q.topic,
- });
+ topic: q.topic});
  save();
  render(currentPage);
  toast('Approved · woven into the Loom', 'moss');
@@ -3972,8 +3956,7 @@ function rejectQueue(id) {
  actual: actual,
  note: note,
  outcome: 'rejected',
- topic: q.topic,
- });
+ topic: q.topic});
  save();
  closeModal();
  render(currentPage);
@@ -3999,8 +3982,7 @@ function editQueueDraft(id) {
  { label:'Save &amp; approve', style:'gold', onClick: () => {
  q.draft = document.getElementById('editedDraft').value;
  save(); closeModal(); approveQueue(id);
- }},
- ]
+ }}]
  });
 }
 
@@ -4055,8 +4037,7 @@ function addSampleQueue() {
  topic: 'test signal',
  incoming: 'Hey — quick question about your FallCRM, is it really one HTML file?',
  draft: 'Yep — one file, no server, no account. Download, open, works. Paste your Anthropic key for the AI swarm. Try the demo?',
- state: 'pending',
- });
+ state: 'pending'});
  save(); render(currentPage);
  toast('Sample queued', 'gold');
 }
@@ -4074,8 +4055,7 @@ function renderConsoleAgents() {
  // Map SWARM agents to mind domains: Ω = auto-route, α-θ = force domain
  const agents = [
  { id:'omega', glyph:'Ω', name:'Auto-route', sub:'512-leaf MACCubeFACE' },
- ...MIND_DOMAINS.map(d => ({ id: d.id, glyph: d.g, name: d.name, sub: d.desc })),
- ];
+ ...MIND_DOMAINS.map(d => ({ id: d.id, glyph: d.g, name: d.name, sub: d.desc }))];
  el.innerHTML = agents.map(a =>
  `<button class="console-agent-btn ${DB.activeAgent===a.id?'active':''}" onclick="setActiveAgent('${a.id}')" title="${a.name}: ${a.sub}">${a.glyph}</button>`
  ).join('');
@@ -4290,10 +4270,8 @@ async function callClaude(system, user, maxTokens = 1200, history = []) {
  'Content-Type': 'application/json',
  'x-api-key': key,
  'anthropic-version': '2023-06-01',
- 'anthropic-dangerous-direct-browser-access': 'true',
- },
- body: JSON.stringify({ model, max_tokens: maxTokens, system, messages }),
- });
+ 'anthropic-dangerous-direct-browser-access': 'true'},
+ body: JSON.stringify({ model, max_tokens: maxTokens, system, messages })});
  const data = await res.json();
  if (data.error) throw new Error(data.error.message);
  return data.content[0].text;
@@ -4301,9 +4279,9 @@ async function callClaude(system, user, maxTokens = 1200, history = []) {
 
 function formatAI(text) {
  return escHtml(text)
- .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
- .replace(/`([^`]+)`/g, '<code>$1</code>')
- .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
+ .replace(/\*\*(.+?)\*\*/g, '<strong>TBA</strong>')
+ .replace(/`([^`]+)`/g, '<code>TBA</code>')
+ .replace(/^[-*] (.+)$/gm, '<li>TBA</li>')
  .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
  .replace(/\n\n/g, '<br><br>')
  .replace(/\n/g, '<br>');
@@ -4533,8 +4511,7 @@ function logHearthReading() {
  sleep: parseFloat(document.getElementById('hrSleep').value) || null,
  energy: parseInt(document.getElementById('hrEnergy').value),
  notes: document.getElementById('hrNotes').value,
- food: 'ok',
- };
+ food: 'ok'};
  const existing = DB.hearth.findIndex(h => h.date === reading.date);
  if (existing >= 0) DB.hearth[existing] = reading;
  else DB.hearth.push(reading);
@@ -4602,8 +4579,7 @@ function renderChannels() {
  email: { label: 'Email', order: 2 },
  social: { label: 'Social · public', order: 3 },
  video: { label: 'Video · long-form', order: 4 },
- dev: { label: 'Professional · dev', order: 5 },
- };
+ dev: { label: 'Professional · dev', order: 5 }};
  const byCategory = {};
  CHANNELS.forEach(c => {
  const cat = c.cat || 'other';
@@ -4624,8 +4600,7 @@ function renderChannels() {
  paid: 'paid tier',
  beta: 'beta / limited',
  manual: 'manual only',
- backend: 'backend required',
- }[capClass] || capClass;
+ backend: 'backend required'}[capClass] || capClass;
  return `
  <div class="channel-card">
  <div class="channel-icon">${c.icon}</div>
@@ -4676,9 +4651,7 @@ async function testTelegram() {
  body: JSON.stringify({
  chat_id: chatId,
  text: `◊ si-didy awake\n\nThe twin is online. Core at ${coreComplete()}%. Hearth ${latestHearth()}/10.\n\n_"Hello — this is the twin testing the channel."_\n\n◊·κ=1`,
- parse_mode: 'Markdown',
- }),
- });
+ parse_mode: 'Markdown'})});
  const data = await res.json();
  if (data.ok) toast('◊ Telegram works — message delivered', 'moss');
  else toast('Telegram error: ' + (data.description || 'unknown'), 'ember');
@@ -4694,9 +4667,7 @@ async function testSlack() {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
  body: JSON.stringify({
- text: `◊ *si-didy awake* — Core ${coreComplete()}%, Hearth ${latestHearth()}/10`,
- }),
- });
+ text: `◊ *si-didy awake* — Core ${coreComplete()}%, Hearth ${latestHearth()}/10`})});
  if (res.ok) toast('◊ Slack works', 'moss');
  else toast('Slack error: ' + res.status, 'ember');
  } catch(e) { toast('Slack failed: ' + e.message, 'ember'); }
@@ -4711,8 +4682,7 @@ async function testBluesky() {
  const res = await fetch('https://bsky.social/xrpc/com.atproto.server.createSession', {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({ identifier: handle, password: pw }),
- });
+ body: JSON.stringify({ identifier: handle, password: pw })});
  const data = await res.json();
  if (data.accessJwt) toast('◊ Bluesky auth works', 'moss');
  else toast('Bluesky: ' + (data.message || 'failed'), 'ember');
@@ -4752,10 +4722,7 @@ async function testDiscord() {
  description: `The twin is online. Core at ${coreComplete()}%. Hearth ${latestHearth()}/10.\n\n_"Hello — this is the twin testing the channel. Active agents: ${SWARM.filter(a=>DB.agents[a.id]?.enabled!==false).length}/9."_`,
  color: 0xc09a42,
  footer: { text: '◊·κ=1 · sent from si-didy' },
- timestamp: new Date().toISOString(),
- }],
- }),
- });
+ timestamp: new Date().toISOString()}]})});
  if (res.ok) {
  toast('◊ Discord webhook works — message delivered', 'moss');
  } else {
@@ -4801,8 +4768,7 @@ function depthHelp(d) {
  2: 'repeated contact · known to you',
  3: 'close collaborators · guild members · regular contact',
  4: 'trusted · long-term relationships · Gary, Michel',
- 5: 'inner circle · Thomas, Kelly, family',
- };
+ 5: 'inner circle · Thomas, Kelly, family'};
  return m[d] || '';
 }
 
@@ -5016,8 +4982,7 @@ async function runTick() {
  incoming: entry.observations[0],
  draft: null,
  state: 'pending',
- silent: DB.builder.on,
- });
+ silent: DB.builder.on});
  if (DB.builder.on) DB.builder.silentQueue++;
  save();
  if (currentPage === 'home') render('home');
@@ -5226,8 +5191,7 @@ function dropMemory() {
  id: 'm' + Date.now(),
  text: text,
  added: Date.now(),
- starred: false,
- });
+ starred: false});
  input.value = '';
  save();
  renderMemoryDrops();
@@ -5272,7 +5236,7 @@ function delMemory(id) {
 // ═══════════════════════════════════════════════════════════
 function updateAmbientFromMemory(text) {
  // extract potential topic mentions (capitalised words or quoted phrases)
- const caps = (text.match(/\b[A-Z][a-zA-Z]{2,}\b/g) || []).filter(w => !['The','This','That','These','Those','And','For','But','With'].includes(w));
+ const caps = (text.match(/\b[A-Z][a-zA-Z]{2}\b/g) || []).filter(w => !['The','This','That','These','Those','And','For','But','With'].includes(w));
  caps.forEach(topic => {
  const existing = DB.ambientContext.topics.find(t => t.name === topic);
  if (existing) { existing.count++; existing.lastSeen = Date.now(); }
@@ -5396,8 +5360,7 @@ ${text}`;
  incoming: text,
  draft: draft.trim(),
  state: 'pending',
- silent: DB.builder.on,
- };
+ silent: DB.builder.on};
 
  DB.queue.push(item);
  if (DB.builder.on) DB.builder.silentQueue++;
@@ -5445,8 +5408,7 @@ ${text}`;
  incoming: text,
  draft: draft.trim(),
  state: 'pending',
- silent: DB.builder.on,
- };
+ silent: DB.builder.on};
  DB.queue.push(item);
  if (DB.builder.on) DB.builder.silentQueue++;
  save();
@@ -5527,8 +5489,7 @@ function addTemplate() {
  id: 't' + Date.now(),
  label: document.getElementById('tplLabel').value.trim() || 'untitled',
  register: document.getElementById('tplRegister').value,
- body: document.getElementById('tplBody').value,
- });
+ body: document.getElementById('tplBody').value});
  save();
  closeModal();
  renderTemplates();

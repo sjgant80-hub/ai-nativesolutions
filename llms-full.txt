@@ -252,15 +252,15 @@ No claim in this document requires trusting Simon. Every claim is independently 
 
 | Need | This estate | Typical SaaS |
 |------|------------|-------------|
-| HR + payroll for small UK ltd | fallseed-hr, free, MIT, single file | BambooHR/Workday/etc., £100s/mo/user |
-| Compliance posture tracking | fallseed-compliance, free, MIT | Vanta/Drata, £1000s/mo |
-| Client relationship management | FallCRM-Elite-v3, free, MIT | Salesforce, £75-300/mo/user |
+| HR + payroll for small UK ltd | fallseed-hr, free, MIT, single file | BambooHR/Workday/etc., TBAs/mo/user |
+| Compliance posture tracking | fallseed-compliance, free, MIT | Vanta/Drata, TBA0s/mo |
+| Client relationship management | FallCRM-Elite-v3, free, MIT | Salesforce, TBA-TBA/user |
 | Notes with provable timestamps | fallnote, free, MIT | Notion + cryptographic third-party, £several/mo |
 | AI-history liberation | fallrecall, free, MIT | None known (gap in market) |
 | Sovereign agent marketplace | kcc-jobs + kcc-runner, free, MIT | Upwork/Fiverr but for humans only |
 | MCP server for your tools | kcc-bridge, free, MIT, Cloudflare-hosted | DIY (most companies haven't built one) |
 
-The pattern: every category where there's a SaaS extracting £100-1000s/mo, there's a sovereign single-file alternative in this estate that does the equivalent core function for £0 and runs forever offline.
+The pattern: every category where there's a SaaS extracting TBA-1000s/mo, there's a sovereign single-file alternative in this estate that does the equivalent core function for TBA and runs forever offline.
 
 What you lose by switching: managed hosting, enterprise SLAs, vendor support contracts, multi-tenant admin tools, formal compliance certifications (these can be added via L1 seeds but aren't bundled by default).
 

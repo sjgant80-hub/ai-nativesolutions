@@ -754,9 +754,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Syne',sans-serif;min-hei
 <aside class="sidebar">
   <div class="pipeline-val" onclick="showPage('pipeline')">
     <div class="pv-label">Pipeline</div>
-    <div class="pv-amount" id="pipelineTotal">£0</div>
+    <div class="pv-amount" id="pipelineTotal">TBA</div>
     <div class="pv-sub" id="pipelineCount">0 active deals</div>
-    <div class="pv-delta" id="pipelineDelta">▲ weighted: £0</div>
+    <div class="pv-delta" id="pipelineDelta">▲ weighted: TBA</div>
   </div>
 
   <div class="nav-section">
@@ -809,9 +809,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Syne',sans-serif;min-hei
   </div>
 
   <div class="kpi-grid">
-    <div class="kpi"><div class="kpi-label">Pipeline Value</div><div class="kpi-value" id="kpi-pipeline">£0</div><div class="kpi-sub">Active deals</div><div class="kpi-delta up" id="kpi-pipeline-delta">▲ —</div></div>
-    <div class="kpi"><div class="kpi-label">Weighted Forecast</div><div class="kpi-value" id="kpi-forecast">£0</div><div class="kpi-sub">Probability-adjusted</div></div>
-    <div class="kpi"><div class="kpi-label">Won (MTD)</div><div class="kpi-value" id="kpi-won">£0</div><div class="kpi-sub" id="kpi-won-sub">0 deals closed</div><div class="kpi-delta up" id="kpi-won-delta">▲ on target</div></div>
+    <div class="kpi"><div class="kpi-label">Pipeline Value</div><div class="kpi-value" id="kpi-pipeline">TBA</div><div class="kpi-sub">Active deals</div><div class="kpi-delta up" id="kpi-pipeline-delta">▲ —</div></div>
+    <div class="kpi"><div class="kpi-label">Weighted Forecast</div><div class="kpi-value" id="kpi-forecast">TBA</div><div class="kpi-sub">Probability-adjusted</div></div>
+    <div class="kpi"><div class="kpi-label">Won (MTD)</div><div class="kpi-value" id="kpi-won">TBA</div><div class="kpi-sub" id="kpi-won-sub">0 deals closed</div><div class="kpi-delta up" id="kpi-won-delta">▲ on target</div></div>
     <div class="kpi"><div class="kpi-label">Pending Tasks</div><div class="kpi-value" id="kpi-tasks">0</div><div class="kpi-sub" id="kpi-overdue-sub">0 overdue</div><div class="kpi-delta down" id="kpi-tasks-delta" style="display:none">▼ overdue items</div></div>
   </div>
 
@@ -1237,16 +1237,14 @@ function seedDemo() {
     {id:'c3',name:'Priya Sharma',email:'priya@nexusgroup.com',phone:'+44 7700 900789',company:'Nexus Group',status:'hot',value:72000,lastContact:'2026-04-12',notes:'Legal review in progress. CTO wants tech demo.',avatar:colors[2],tags:['legal','enterprise']},
     {id:'c4',name:'David Chen',email:'d.chen@alphatech.co',phone:'+44 7700 900321',company:'AlphaTech',status:'cold',value:8500,lastContact:'2026-03-20',notes:'Check back Q2. Currently evaluating budget.',avatar:colors[3],tags:['q2']},
     {id:'c5',name:'Emma Williams',email:'emma@brightpath.co.uk',phone:'+44 7700 900654',company:'BrightPath',status:'warm',value:25000,lastContact:'2026-04-08',notes:'Evaluating competitors. Strong use case fit.',avatar:colors[4],tags:['competitive']},
-    {id:'c6',name:'Marcus Osei',email:'m.osei@deltafinance.com',phone:'+44 7700 900987',company:'Delta Finance',status:'hot',value:95000,lastContact:'2026-04-15',notes:'Director-level. Major enterprise opportunity. Fast mover.',avatar:colors[5],tags:['enterprise','fast-close']},
-  ];
+    {id:'c6',name:'Marcus Osei',email:'m.osei@deltafinance.com',phone:'+44 7700 900987',company:'Delta Finance',status:'hot',value:95000,lastContact:'2026-04-15',notes:'Director-level. Major enterprise opportunity. Fast mover.',avatar:colors[5],tags:['enterprise','fast-close']}];
   DB.companies = [
     {id:'co1',name:'TechVision Ltd',industry:'Technology',size:'50-200',contacts:1,value:45000,status:'active',website:'techvision.com'},
     {id:'co2',name:'ScaleWorks',industry:'SaaS',size:'10-50',contacts:1,value:18000,status:'active',website:'scaleworks.io'},
     {id:'co3',name:'Nexus Group',industry:'Finance',size:'200-1000',contacts:1,value:72000,status:'active',website:'nexusgroup.com'},
     {id:'co4',name:'AlphaTech',industry:'Technology',size:'10-50',contacts:1,value:8500,status:'nurture',website:'alphatech.co'},
     {id:'co5',name:'BrightPath',industry:'Consulting',size:'50-200',contacts:1,value:25000,status:'active',website:'brightpath.co.uk'},
-    {id:'co6',name:'Delta Finance',industry:'Finance',size:'1000+',contacts:1,value:95000,status:'active',website:'deltafinance.com'},
-  ];
+    {id:'co6',name:'Delta Finance',industry:'Finance',size:'1000+',contacts:1,value:95000,status:'active',website:'deltafinance.com'}];
   DB.deals = [
     {id:'d1',name:'TechVision Enterprise Plan',contact:'c1',company:'TechVision Ltd',value:45000,stage:'Proposal',probability:65,closeDate:'2026-04-30',status:'hot',notes:'Proposal sent. Awaiting review.'},
     {id:'d2',name:"ScaleWorks Growth Package",contact:'c2',company:'ScaleWorks',value:18000,stage:'Negotiation',probability:80,closeDate:'2026-04-25',status:'warm',notes:'Board approval pending.'},
@@ -1254,8 +1252,7 @@ function seedDemo() {
     {id:'d4',name:'AlphaTech Starter',contact:'c4',company:'AlphaTech',value:8500,stage:'Lead',probability:20,closeDate:'2026-06-01',status:'cold',notes:'Q2 budget review.'},
     {id:'d5',name:'BrightPath Team Plan',contact:'c5',company:'BrightPath',value:25000,stage:'Proposal',probability:55,closeDate:'2026-05-01',status:'warm',notes:'Competing with 2 others.'},
     {id:'d6',name:'Delta Finance Platform',contact:'c6',company:'Delta Finance',value:95000,stage:'Qualified',probability:50,closeDate:'2026-05-31',status:'hot',notes:'Enterprise deal. Major opp.'},
-    {id:'d7',name:'TechVision Add-on',contact:'c1',company:'TechVision Ltd',value:12000,stage:'Closed Won',probability:100,closeDate:'2026-04-01',status:'won',notes:'Closed successfully.'},
-  ];
+    {id:'d7',name:'TechVision Add-on',contact:'c1',company:'TechVision Ltd',value:12000,stage:'Closed Won',probability:100,closeDate:'2026-04-01',status:'won',notes:'Closed successfully.'}];
   DB.activities = [
     {id:'a1',type:'call',title:'Follow-up call with Sarah',contact:'c1',due:'2026-04-24',completed:false,notes:'Discuss proposal questions'},
     {id:'a2',type:'email',title:'Send proposal to Priya',contact:'c3',due:'2026-04-24',completed:false,notes:''},
@@ -1263,18 +1260,15 @@ function seedDemo() {
     {id:'a4',type:'task',title:'Update Nexus Group proposal',contact:'c3',due:'2026-04-23',completed:false,notes:'Add tech specs section'},
     {id:'a5',type:'call',title:'Check in with Emma Williams',contact:'c5',due:'2026-04-26',completed:false,notes:'Competitive positioning'},
     {id:'a6',type:'meeting',title:'Discovery call — Marcus Osei',contact:'c6',due:'2026-04-25',completed:false,notes:'First meeting. Big opportunity.'},
-    {id:'a7',type:'task',title:'Prepare Q2 pipeline review',contact:'',due:'2026-04-28',completed:false,notes:''},
-  ];
+    {id:'a7',type:'task',title:'Prepare Q2 pipeline review',contact:'',due:'2026-04-28',completed:false,notes:''}];
   DB.emails = [
     {id:'e1',from:'Sarah Mitchell',subject:'Re: Enterprise Proposal',preview:'Thank you for the detailed proposal...',time:'10:34 AM',body:'Thank you for the detailed proposal. Our team has reviewed and we have a few questions about the enterprise tier pricing and SLA guarantees.',unread:true,contactId:'c1'},
     {id:'e2',from:"James O'Brien",subject:'Board approval update',preview:'Good news! The board met...',time:'Yesterday',body:"Good news! The board met yesterday and gave preliminary approval. Legal review ongoing — expect answer by end of week. Can we schedule a call?",unread:false,contactId:'c2'},
     {id:'e3',from:'Priya Sharma',subject:'Nexus Platform next steps',preview:'Following our discussion...',time:'Apr 12',body:'Following our discussion — legal are reviewing, CTO wants a technical deep-dive next week. Can we arrange that? Also, can you send the security questionnaire?',unread:true,contactId:'c3'},
-    {id:'e4',from:'Marcus Osei',subject:'Interest in your platform',preview:'Hi, I came across your company...',time:'Apr 15',body:'Hi, I came across FallCRM and think it could be a great fit for Delta Finance. We have a complex sales operation that needs proper tooling. Happy to have a call this week?',unread:true,contactId:'c6'},
-  ];
+    {id:'e4',from:'Marcus Osei',subject:'Interest in your platform',preview:'Hi, I came across your company...',time:'Apr 15',body:'Hi, I came across FallCRM and think it could be a great fit for Delta Finance. We have a complex sales operation that needs proper tooling. Happy to have a call this week?',unread:true,contactId:'c6'}];
   DB.sequences = [
     {id:'sq1',name:'Enterprise Onboarding',contactId:'c1',steps:['Initial outreach','Send case study','Product demo','Proposal','Follow-up','Close'],currentStep:3,startDate:'2026-04-01',active:true},
-    {id:'sq2',name:'Warm Lead Nurture',contactId:'c5',steps:['Check-in email','Share relevant content','Offer call','Demo invite','Proposal'],currentStep:1,startDate:'2026-04-08',active:true},
-  ];
+    {id:'sq2',name:'Warm Lead Nurture',contactId:'c5',steps:['Check-in email','Share relevant content','Offer call','Demo invite','Proposal'],currentStep:1,startDate:'2026-04-08',active:true}];
   DB.notes = {
     c1: [{text:'Called — very positive. Wants enterprise tier. Decision Q2.', date:'2026-04-10'},{text:'Sent proposal v2 with custom SLA terms.', date:'2026-04-14'}],
     c3: [{text:'Legal engaged. CTO flagged security as key concern.',date:'2026-04-12'}],
@@ -2060,8 +2054,7 @@ function renderGoals() {
     {name:'Revenue MTD', current: wonVal, target: DB.goals.revenue, format: v => cur+Math.round(v/1000)+'k', color:'#c8371a'},
     {name:'Deals Won', current: wonDeals, target: DB.goals.deals, format: v => v.toString(), color:'#166534'},
     {name:'Calls Made', current: calls, target: DB.goals.calls, format: v => v.toString(), color:'#1d4ed8'},
-    {name:'Win Rate', current: winRate, target: DB.goals.winrate, format: v => v+'%', color:'#b08a3e'},
-  ];
+    {name:'Win Rate', current: winRate, target: DB.goals.winrate, format: v => v+'%', color:'#b08a3e'}];
 
   document.getElementById('goalsGrid').innerHTML = goals.map(g => {
     const pct = Math.min(Math.round((g.current/(g.target||1))*100), 100);
@@ -2134,8 +2127,7 @@ function renderReports() {
           {label:'Deals Won',val:won.length,color:'var(--green)'},
           {label:'Deals Lost',val:lost.length,color:'var(--accent)'},
           {label:'Active Pipeline',val:cur+active.reduce((s,d)=>s+d.value,0).toLocaleString(),color:'var(--gold)'},
-          {label:'Total Contacts',val:DB.contacts.length,color:'var(--purple)'},
-        ].map(s=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
+          {label:'Total Contacts',val:DB.contacts.length,color:'var(--purple)'}].map(s=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
           <span style="font-size:12px;color:var(--muted)">${s.label}</span>
           <span style="font-size:14px;font-weight:700;font-family:'Fraunces',serif;color:${s.color}">${s.val}</span>
         </div>`).join('')}
@@ -2212,8 +2204,7 @@ const SWARM_AGENTS = [
   {id:'epsilon',icon:'ε',label:'Forecaster',desc:'Revenue predictions',tag:'ε FORECASTER',prompt:'You are the ε forecast agent. Provide probability-weighted revenue forecasts, pipeline health scores, win likelihood predictions. Use actual deal data with probabilities and close dates.'},
   {id:'zeta',icon:'ζ',label:'Objection Handler',desc:'Turn no into yes',tag:'ζ OBJECTION',prompt:'You are the ζ objection handling agent. Provide specific, researched responses to sales objections. Draw on the contact and company context. Be direct and tactical.'},
   {id:'eta',icon:'η',label:'Next Best Action',desc:'What to do right now',tag:'η NEXT ACTION',prompt:'You are the η next-best-action agent. Analyse the full CRM state and recommend the single most impactful action the user should take right now. Be specific: which contact, what action, why now.'},
-  {id:'theta',icon:'θ',label:'Pipeline Analyst',desc:'Deep pipeline intelligence',tag:'θ PIPELINE',prompt:'You are the θ pipeline analyst. Provide deep analysis of pipeline composition, velocity, stage conversion rates, deal health scores, and strategic recommendations for pipeline improvement.'},
-];
+  {id:'theta',icon:'θ',label:'Pipeline Analyst',desc:'Deep pipeline intelligence',tag:'θ PIPELINE',prompt:'You are the θ pipeline analyst. Provide deep analysis of pipeline composition, velocity, stage conversion rates, deal health scores, and strategic recommendations for pipeline improvement.'}];
 
 let activeAgent = 'omega';
 
@@ -2232,8 +2223,7 @@ function renderAI() {
     {text:'Next Action',prompt:'What is the single most important action I should take right now to drive revenue?'},
     {text:'Win Rate',prompt:'Analyse my win rate and pipeline health. What should I do to improve close rate?'},
     {text:'Email Draft',prompt:'Draft a follow-up email for my hottest open deal.'},
-    {text:'Forecast',prompt:'Give me a 30-day revenue forecast based on my current pipeline.'},
-  ].map(q=>`<button class="ai-chip" onclick="aiQuick('${q.prompt}')">${q.text}</button>`).join('');
+    {text:'Forecast',prompt:'Give me a 30-day revenue forecast based on my current pipeline.'}].map(q=>`<button class="ai-chip" onclick="aiQuick('${q.prompt}')">${q.text}</button>`).join('');
 }
 
 function setAgent(id) {
@@ -2337,10 +2327,10 @@ async function callClaude(msg, key, agentTag='AI') {
 
 function formatAI(t) {
   return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-    .replace(/`([^`]+)`/g,'<code>$1</code>')
-    .replace(/^#+\s+(.+)$/gm,'<strong>$1</strong>')
-    .replace(/^[*-] (.+)$/gm,'<li>$1</li>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>TBA</strong>')
+    .replace(/`([^`]+)`/g,'<code>TBA</code>')
+    .replace(/^#+\s+(.+)$/gm,'<strong>TBA</strong>')
+    .replace(/^[*-] (.+)$/gm,'<li>TBA</li>')
     .replace(/(<li>.*<\/li>\n?)+/g,m=>`<ul>${m}</ul>`)
     .replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
 }
@@ -2430,7 +2420,7 @@ function updateLicenceUI() {
   const tier = DB.licence.tier || 'free';
   document.getElementById('licenceTier').textContent = tier.charAt(0).toUpperCase()+tier.slice(1)+' Tier';
   document.getElementById('licenceStatusName').textContent = tier === 'free' ? 'Free Tier' : `◊ ${tier.toUpperCase()} Licence Active`;
-  document.getElementById('licenceStatusSub').textContent = DB.licence.email ? `Licensed to: ${DB.licence.email}` : tier === 'free' ? 'Enter licence key to unlock Elite features' : 'Sovereign · No cloud · No subscription';
+  document.getElementById('licenceStatusSub').textContent = DB.licence.email ? `Licensed to: ${DB.licence.email}` : tier === 'free' ? 'Enter licence key to unlock Elite features' : 'Sovereign · No cloud · not subscription-based';
   const box = document.getElementById('licenceStatusBox');
   box.className = `licence-status ${tier==='free'?'free':'elite'}`;
   box.querySelector('.licence-status-icon').textContent = tier==='free'?'🔓':'◊';
@@ -2555,8 +2545,7 @@ function showModal(type, prefill, prefillContent, prefillContact) {
         <div class="form-field"><label class="form-label">Size</label><select class="form-select" id="f-co-size"><option>1-10</option><option>10-50</option><option>50-200</option><option>200-1000</option><option>1000+</option></select></div>
         <div class="form-field span2"><label class="form-label">Website</label><input class="form-input" id="f-co-website" placeholder="company.com"></div>
       </div></div>
-      <div class="modal-footer"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveCompany()">Add Company</button></div>`,
-  };
+      <div class="modal-footer"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveCompany()">Add Company</button></div>`};
 
   el.innerHTML = (tpls[type] || (() => ''))();
   document.getElementById('modalOverlay').classList.add('open');
