@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>◊ FallDesk · Sovereign Workstation</title>
-<meta name="description" content="FallDesk · one HTML file. A sovereign workstation that contains your whole estate — personal, business, every vertical — installable apps, an LLM-agnostic build engine for new tools, and a marketplace browsing 150+ Fall apps. Progressive Web App. Works offline.">
+<title>◊ FallOS · Build your own sovereign OS</title>
+<meta name="description" content="FallOS · build your own sovereign OS in one HTML file — personal, business, every vertical. Installable apps, an LLM-agnostic build engine, a 150+ app marketplace. Offline-first, your data stays on your machine. Built on assos (architecture by Thomas Frumkin). Hire me to build yours.">
 <meta name="prime" content="1061">
 <meta name="theme-color" content="#0b0a0f">
-<link rel="manifest" href='data:application/manifest+json,{"name":"FallDesk","short_name":"FallDesk","start_url":"./","display":"standalone","background_color":"%230b0a0f","theme_color":"%23b8974a","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 192 192%27><rect width=%27192%27 height=%27192%27 fill=%27%230b0a0f%27 rx=%2728%27/><text x=%2796%27 y=%27140%27 font-family=%27Georgia, serif%27 font-size=%27122%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23b8974a%27>%E2%97%8A</text></svg>","sizes":"192x192","type":"image/svg+xml"}]}'>
+<link rel="manifest" href='data:application/manifest+json,{"name":"FallOS","short_name":"FallOS","start_url":"./","display":"standalone","background_color":"%230b0a0f","theme_color":"%23b8974a","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 192 192%27><rect width=%27192%27 height=%27192%27 fill=%27%230b0a0f%27 rx=%2728%27/><text x=%2796%27 y=%27140%27 font-family=%27Georgia, serif%27 font-size=%27122%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23b8974a%27>%E2%97%8A</text></svg>","sizes":"192x192","type":"image/svg+xml"}]}'>
 <style>
 :root{--void:#0b0a0f;--void-2:#13121a;--ink:#1a1922;--line:#2a2934;--line-soft:#1f1e28;--cream:#e6e1d6;--cream-dim:#a8a395;--cream-muted:#6e6a5e;--brass:#b8974a;--amber:#ff8c00;--ox:#8b1a1a;--green:#4ade80;--red:#ef4444;--blue:#60a5fa;--yellow:#fbbf24;--violet:#a855f7;--serif:Georgia,'Libre Baskerville',ui-serif,serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--mono:'IBM Plex Mono','SF Mono',ui-monospace,Menlo,monospace}
 *{margin:0;padding:0;box-sizing:border-box}html,body{background:var(--void);color:var(--cream);font:14px/1.55 var(--sans);min-height:100dvh;-webkit-font-smoothing:antialiased;overflow:hidden}
@@ -131,8 +131,8 @@ main{overflow-y:auto;padding:24px 30px 80px}
  <div class="brand">
  <div class="mark">◊</div>
  <div>
- <div class="name">FallDesk</div>
- <div class="seal">sovereign workstation · prime 1061</div>
+ <div class="name">FallOS</div>
+ <div class="seal">sovereign OS · prime 1061 · built on assos</div>
  </div>
  </div>
  <div class="searchbar"><input id="searchInput" placeholder="Search 152 apps · or describe a tool you need (Enter to build)" oninput="onSearch(this.value)" onkeydown="if(event.key==='Enter')onSearchEnter()"></div>
@@ -144,7 +144,7 @@ main{overflow-y:auto;padding:24px 30px 80px}
  </div>
 </div>
 <div class="iframe-shell" id="iframeShell" style="display:none">
- <button class="iframe-back" onclick="closeAppFrame()">← Back to FallDesk (Esc)</button>
+ <button class="iframe-back" onclick="closeAppFrame()">← Back to FallOS (Esc)</button>
  <iframe id="appFrame"></iframe>
 </div>
 <div class="modal-bg" id="modal"><div class="modal"><div id="modalBody"></div></div></div>
@@ -403,7 +403,7 @@ async function readSSE(reader, onLine) {
 async function callOpenAICompatStream(p, key, model, system, user, maxTokens, onToken) {
  const headers = { 'Content-Type': 'application/json', 'Accept': 'text/event-stream' };
  if (key) headers['Authorization'] = 'Bearer ' + key;
- if (p.id === 'openrouter-free') { headers['HTTP-Referer'] = 'https://sjgant80-hub.github.io/falldesk/'; headers['X-Title'] = 'FallDesk'; }
+ if (p.id === 'openrouter-free') { headers['HTTP-Referer'] = 'https://sjgant80-hub.github.io/falldesk/'; headers['X-Title'] = 'FallOS'; }
  const resp = await fetch(p.endpoint, { method: 'POST', headers, body: JSON.stringify({ model, stream: true, messages: [{ role:'system', content:system }, { role:'user', content:user }], max_tokens: maxTokens, temperature: 0.3 }) });
  if (resp.status === 429) { state.rateLimits[p.id] = { until: now() + 60000 }; throw new Error('rate-limited'); }
  if (!resp.ok) { const t = await resp.text(); throw new Error(p.name + ' ' + resp.status + ': ' + t.slice(0,150)); }
@@ -561,11 +561,11 @@ async function togglePin(name) {
 // ═══════════════════════════════════════════════════════════════
 // BUILD ENGINE (cascade-driven · context-aware)
 // ═══════════════════════════════════════════════════════════════
-const BUILD_SYSTEM = `You are FallDesk-Build, the generative engine of the FallDesk sovereign workstation.
+const BUILD_SYSTEM = `You are FallOS-Build, the generative engine of the FallOS sovereign workstation.
 
 You generate sovereign single-HTML applications. Every tool you produce MUST:
 1. Be a COMPLETE single HTML file starting with <!DOCTYPE html> and ending with <\/html>.
-2. Inline all CSS using the FallDesk dark palette: --void #0b0a0f, --brass #b8974a, --amber #ff8c00, --cream #e6e1d6, --line #2a2934.
+2. Inline all CSS using the FallOS dark palette: --void #0b0a0f, --brass #b8974a, --amber #ff8c00, --cream #e6e1d6, --line #2a2934.
 3. Inline all JavaScript. Use 'use strict'. Any literal close-script tag in a string MUST be written as <\/script>.
 4. Store data in IndexedDB keyed by the tool name. Use auto-increment integer ids.
 5. Open a BroadcastChannel matching the tool's category (e.g. 'fall-hr', 'fall-personal', 'fall-life'). Broadcast 'hello' to 'fall-signal' channel on boot.
@@ -573,7 +573,7 @@ You generate sovereign single-HTML applications. Every tool you produce MUST:
 7. Include a seedDemo() function with 2-3 sample records (isDemo:true flag) populated on first boot.
 8. Have at least 3 tabs in the nav: a main list view, a settings panel with Export/Import/Wipe, and a Q&A panel.
 9. Include a modal pattern for add/edit forms.
-10. Use the same CSS class names as the rest of the FallDesk estate: nav.tabs, .card, .btn, .btn.brass, .toast, .modal-bg, .modal, .field, .row.
+10. Use the same CSS class names as the rest of the FallOS estate: nav.tabs, .card, .btn, .btn.brass, .toast, .modal-bg, .modal, .field, .row.
 11. Include a regulatory or domain disclaimer at the top of the main view.
 12. Include a manifest data: URL for PWA installability.
 13. Set <meta name="prime" content="XXXX"> using a prime from: 1063, 1069, 1087, 1091, 1093, 1097, 1103, 1109, 1117, 1123.
@@ -597,7 +597,7 @@ async function runBuild(prompt) {
  if (iframe) { iframe.style.display = 'block'; iframe.srcdoc = '<html><body style="font:14px Inter;padding:20px;color:#666">awaiting first token...</body></html>'; }
  if (placeholder) placeholder.style.display = 'none';
 
- const contextHint = buildContextCategory ? `\n\nCONTEXT: this tool extends the "${buildContextCategory}" category of the user's FallDesk. It should use the BroadcastChannel 'fall-${buildContextCategory}' for mesh sync with other ${buildContextCategory} tools.` : '';
+ const contextHint = buildContextCategory ? `\n\nCONTEXT: this tool extends the "${buildContextCategory}" category of the user's FallOS. It should use the BroadcastChannel 'fall-${buildContextCategory}' for mesh sync with other ${buildContextCategory} tools.` : '';
  const userMsg = `Build a complete sovereign HTML tool for this need:\n\n"${prompt}"${contextHint}\n\nOUTPUT: complete single HTML file. Start with <!DOCTYPE html>. End with </html>. No preamble. No code fences.`;
 
  try {
@@ -723,7 +723,7 @@ function renderSidebar() {
  for (const cs of COMING_SOON) {
  html += `<div class="side-item soon" title="${esc(cs.note)}"><span>${cs.icon}</span><span>${cs.label}</span><span class="badge">soon</span></div>`;
  }
- html += `<div style="padding:16px 14px;font-family:var(--mono);font-size:9px;color:var(--cream-muted);letter-spacing:0.1em;border-top:1px solid var(--line);margin-top:14px">◊·κ=1 · prime 1061 · v${VERSION}</div>`;
+ html += `<div style="padding:16px 14px;font-family:var(--mono);font-size:9px;color:var(--cream-muted);letter-spacing:0.1em;border-top:1px solid var(--line);margin-top:14px">◊·κ=1 · FallOS · prime 1061 · built on assos · v${VERSION}</div>`;
  $('#sidebar').innerHTML = html;
 }
 
@@ -733,8 +733,8 @@ function renderDesk(v) {
  const recentApps = Object.values(state.installed).sort((a,b) => (b.lastLaunched||0) - (a.lastLaunched||0)).slice(0, 8);
  v.innerHTML = `
  <div class="hero">
- <h1>Welcome to your FallDesk</h1>
- <div class="lede">One Progressive Web App. ${state.catalog.length} sovereign apps in the marketplace. ${installedCount} installed on this device. The build engine writes new tools on demand using any LLM. All data stays on your machine. <span style="color:var(--brass)">Install FallDesk to your desktop (Chrome menu → Install) for the full workstation feel.</span></div>
+ <h1>Build your own sovereign OS</h1>
+ <div class="lede">A whole estate in one HTML file — ${state.catalog.length} sovereign apps in the marketplace, ${installedCount} installed here, and an LLM-agnostic build engine that writes new tools on demand. All data stays on your machine. This is a working proof of what you can build on the <a href="https://github.com/teslasolar/ASSOSIGNITION" target="_blank" rel="noopener" style="color:var(--brass)">assos</a> architecture by Thomas Frumkin. <span style="color:var(--brass)">Want one shaped to your business? <a href="mailto:ainativesolutions@gmail.com?subject=Build%20my%20OS" style="color:var(--amber)">Hire me to build yours →</a></span></div>
  </div>
 
  <div class="kpi-grid">
@@ -868,7 +868,7 @@ function renderMarketplace(v) {
  <div class="actions"><button class="btn sm" onclick="loadCatalog(true).then(()=>render())">↻ Refresh from registry</button></div>
  </div>
 
- <div class="disclaimer"><strong>Sovereign install:</strong> click any app → Install. FallDesk fetches the HTML from GitHub Pages once, stores it in your browser's IndexedDB, and runs it locally from then on. If sjgant80-hub.github.io goes offline tomorrow, your installed apps still work. <strong>Your data stays on your device</strong> — each app uses its own IDB scope.</div>
+ <div class="disclaimer"><strong>Sovereign install:</strong> click any app → Install. FallOS fetches the HTML from GitHub Pages once, stores it in your browser's IndexedDB, and runs it locally from then on. If sjgant80-hub.github.io goes offline tomorrow, your installed apps still work. <strong>Your data stays on your device</strong> — each app uses its own IDB scope.</div>
 
  <div class="filter-bar">
  ${cats.map(c => `<button class="filter-chip ${state.marketCategory===c?'active':''}" onclick="state.marketCategory='${c}';render()">${c==='all'?'All':c.charAt(0).toUpperCase()+c.slice(1)}</button>`).join('')}
@@ -1006,8 +1006,9 @@ function renderSettings(v) {
 
  <div class="section-h"><h2 style="font-size:15px">About</h2></div>
  <div class="card" style="font-size:12px;color:var(--cream-dim);line-height:1.7">
- <strong style="color:var(--brass)">FallDesk v${VERSION}</strong> · prime 1061 · MIT · Simon Gant · ◊·κ=1<br>
- A sovereign workstation in one HTML file. Mirror of <a href="https://sjgant80-hub.github.io/fall-registry/" target="_blank">fall-registry</a>. Install any app → fetched from its GitHub Pages URL → stored in your browser → runs locally from then on. Build engine generates new tools via the LLM cascade.<br><br>
+ <strong style="color:var(--brass)">FallOS v${VERSION}</strong> · prime 1061 · ◊·κ=1 · MIT · Simon Gant · built on <a href="https://github.com/teslasolar/ASSOSIGNITION" target="_blank" rel="noopener">assos</a> · architecture by <strong>Thomas Frumkin</strong><br>
+ A sovereign OS in one HTML file, built on the <a href="https://github.com/teslasolar/ASSOSIGNITION" target="_blank" rel="noopener">assos</a> architecture by Thomas Frumkin (<a href="https://github.com/teslasolar" target="_blank" rel="noopener">teslasolar</a>). Install any app → fetched from its GitHub Pages URL → stored in your browser → runs locally from then on. Build engine generates new tools via the LLM cascade.<br><br>
+ <strong style="color:var(--brass)">Want your own?</strong> This is a working proof of what you can build on assos. <a href="mailto:ainativesolutions@gmail.com?subject=Build%20my%20OS" style="color:var(--amber)">Hire me to build yours →</a><br><br>
  <strong style="color:var(--brass)">Coming in v2:</strong> sovereign chat (WebRTC + relay), sovereign media (P2P video), sovereign social (ATproto-style), productivity suite (notes/calendar/tasks). All same architecture: single HTML, BroadcastChannel mesh, IDB storage, no server.
  </div>`;
 }
@@ -1044,7 +1045,7 @@ function showWizardIfNeeded() {
  if (state.prefs.completed) return;
  const audience = state.prefs.audience || null;
  openModal(`
- <h2>Welcome to FallDesk</h2>
+ <h2>Welcome to FallOS</h2>
  <div class="lede">Your sovereign workstation. One PWA. Hundreds of apps. Builds new ones on demand. <strong>Three questions and you're set up.</strong></div>
 
  <h3 style="margin-top:14px;font-size:14px;color:var(--brass)">1. Who is this for?</h3>
@@ -1094,7 +1095,7 @@ async function wizComplete() {
  }
  await persistProvider();
  closeModal();
- toast('Welcome to FallDesk');
+ toast('Welcome to FallOS');
  switchCat('desk');
 }
 async function wizSkip() { state.prefs.completed = true; await persistPrefs(); closeModal(); }
