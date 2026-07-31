@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0a">
 <title>AI Native Solutions · The Sovereign Marketplace</title>
-<meta name="description" content="The sovereign estate. 1211 agent-callable listings in FallMarket · 9-chamber agent settlement FallColony · single-HTML PWAs for 11 UK regulated industries · all MIT · all Ed25519-signed. Free, forever.">
-<meta property="og:title" content="AI Native Solutions · The Sovereign Marketplace">
-<meta property="og:description" content="FallMarket · 1211 sovereign agent-callable listings · FallColony · 9-chamber agent settlement · MIT · Ed25519-signed · the post-SaaS estate.">
+<meta name="description" content="A sovereign software estate you can click. Live products today — legal &amp; redress tools, sovereign infrastructure, applied client builds — each shipped through a proof-of-play trust rail (witness · acg-assessor). Plus 1,200+ agent-callable listings in FallMarket. MIT · Ed25519-signed.">
+<meta property="og:title" content="AI Native Solutions · Live sovereign software, proven not promised">
+<meta property="og:description" content="Click any tool — it's live. Legal &amp; redress, sovereign infra, and a proof-of-play trust rail (witness · acg-assessor). Plus 1,200+ agent-callable listings in FallMarket. MIT · Ed25519-signed.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.ai-nativesolutions.com">
 <link rel="canonical" href="https://www.ai-nativesolutions.com/">
@@ -95,6 +95,56 @@
       "description": "Level-4 institution seed · 7 modules · members + mutual-credit ledger + governance + calendar + resources + skills + settings · for off-grid intentional communities",
       "license": "https://opensource.org/licenses/MIT",
       "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "witness",
+      "url": "https://sjgant80-hub.github.io/witness/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Node.js · GitHub Action",
+      "description": "A deterministic build gate: mutation + fuzz. A tool's own tests must catch a broken version or it does not ship. The trust rail — proof-of-play.",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "acg-assessor",
+      "url": "https://sjgant80-hub.github.io/acg-assessor/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Cross-platform",
+      "description": "A deterministic code-quality rubric for AI-assisted codebases. Same repository, same verdict, same hash.",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Redress Engine",
+      "url": "https://sjgant80-hub.github.io/redress-engine/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Browser",
+      "description": "A plain-English legal-process navigator: the real statutory lever for each situation, cited letters, statutory deadlines, and free human help. Flags what it can't verify rather than bluff.",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "divorcerbot",
+      "url": "https://sjgant80-hub.github.io/divorcerbot/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Browser",
+      "description": "UK divorce self-help (England & Wales, Scotland, Northern Ireland): verified law, a child-maintenance calculator, and a cited strategy engine. Not legal advice.",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "The Toll",
+      "url": "https://sjgant80-hub.github.io/the-toll/",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Browser",
+      "description": "A proof-of-work edge-wall: content unlocks only when a client solves a hash puzzle — invisible to a human, crushing to a mass scraper.",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
     }
   ]
 }
@@ -109,6 +159,7 @@
   --bg: #0a0a0a; --surface: #141414; --surface-2: #1a1a18; --border: #1a1a1a;
   --text: #e8e6e3; --muted: #888; --gold: #d4a017; --amber: #e8a012;
   --success: #44aa44; --danger: #cc3333; --info: #6a9aff;
+  --cream: #e6e1d3; --brass: #b8974a; --dim: #666; --void: #060606;
   --max: 1280px;
 }
 html, body { background: var(--bg); color: var(--text); font: 17px/1.65 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; min-height: 100dvh; -webkit-font-smoothing: antialiased; }
@@ -454,6 +505,7 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
       <div class="brand-name">AI Native Solutions</div>
     </a>
     <div class="nav-links">
+      <a href="#flagship">Live tools</a>
       <a href="#architecture">Architecture</a>
       <a href="#fallmarket">FallMarket</a>
       <a href="#fallcolony">FallColony</a>
@@ -528,8 +580,8 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
     </div>
 
     <div class="ctas" style="margin-top:24px">
-      <a href="https://sjgant80-hub.github.io/fallmarket/" class="btn-primary">Enter FallMarket →</a>
-      <a href="#architecture" class="btn-secondary">Read the architecture</a>
+      <a href="#flagship" class="btn-primary">See what's live →</a>
+      <a href="https://sjgant80-hub.github.io/fallmarket/" class="btn-secondary">Enter FallMarket</a>
       <a href="/ai.html" class="btn-tertiary">For AI agents</a>
     </div>
 
@@ -884,6 +936,137 @@ body[data-nas-vertical] .nas-fork-banner { display: block; }
   loadCatalog();
 })();
 </script>
+
+<!-- ═══════════════════ FLAGSHIP · what actually ships, live now ═══════════════════ -->
+<style>
+  #flagship .flag-rail { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1px; background:var(--border); border:1px solid var(--gold); margin:36px 0 12px; }
+  #flagship .flag-pillar { background:linear-gradient(135deg,rgba(212,160,23,0.07),transparent); padding:26px 24px; }
+  #flagship .flag-pillar .fp-k { font-family:'DM Mono'; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+  #flagship .flag-pillar h3 { font-family:'Playfair Display', Georgia, serif; font-weight:700; font-size:24px; margin-bottom:8px; }
+  #flagship .flag-pillar p { font-size:13px; line-height:1.62; color:var(--muted); margin-bottom:14px; }
+  #flagship .flag-pillar a { font-family:'DM Mono'; font-size:11px; color:var(--gold); letter-spacing:0.06em; text-transform:uppercase; }
+  #flagship .flag-pillar a:hover { color:var(--amber); }
+  #flagship .rail-note { font-family:'Inter'; font-style:italic; font-size:14px; color:var(--dim); margin-bottom:8px; }
+  #flagship .flag-group-label { font-family:'Inter'; font-weight:700; font-size:12px; letter-spacing:0.13em; text-transform:uppercase; color:var(--gold); margin:40px 0 14px; }
+  #flagship .flag-group-label span { color:var(--dim); font-weight:500; letter-spacing:0.04em; text-transform:none; font-style:italic; }
+  #flagship .flag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); }
+  #flagship .flag-card { background:var(--surface); padding:24px 22px; display:flex; flex-direction:column; border-left:2px solid transparent; transition:background 0.2s, border-color 0.2s, transform 0.2s; color:var(--text); }
+  #flagship .flag-card:hover { background:var(--surface-2); border-left-color:var(--gold); transform:translateY(-2px); }
+  #flagship .flag-card .fc-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:8px; }
+  #flagship .flag-card h4 { font-family:'Inter'; font-weight:800; font-size:18px; letter-spacing:-0.01em; }
+  #flagship .flag-card .fc-live { font-family:'DM Mono'; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--success); border:1px solid var(--success); padding:2px 7px; white-space:nowrap; }
+  #flagship .flag-card p { font-size:13px; line-height:1.6; color:var(--muted); flex:1; margin-bottom:14px; }
+  #flagship .flag-card .fc-open { font-family:'DM Mono'; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); }
+</style>
+<section id="flagship" style="border-top:1px solid var(--border)">
+  <div class="section-label">§ 0 · Live right now</div>
+  <div class="section-line"></div>
+  <h2 style="font-size:clamp(34px,5vw,56px);margin-bottom:18px">Not a promise. <em style="font-style:italic;color:var(--gold)">A live link.</em></h2>
+  <p class="lede">Every product below is running right now — click a card and the working tool opens. And every one passed a reproducible gate before it shipped. That gate is the whole point.</p>
+
+  <!-- THE TRUST RAIL -->
+  <div class="flag-rail">
+    <div class="flag-pillar">
+      <div class="fp-k">The trust rail · 01</div>
+      <h3>witness</h3>
+      <p>A deterministic build gate — mutation + fuzz. A tool's own tests must actually catch a broken version, or it does not ship. Green is earned, not claimed.</p>
+      <a href="https://sjgant80-hub.github.io/witness/" target="_blank" rel="noopener">Open witness →</a>
+    </div>
+    <div class="flag-pillar">
+      <div class="fp-k">The trust rail · 02</div>
+      <h3>acg-assessor</h3>
+      <p>A deterministic quality rubric for AI-assisted code. Same repository, same verdict, same hash — no vibes, no self-marking.</p>
+      <a href="https://sjgant80-hub.github.io/acg-assessor/" target="_blank" rel="noopener">Open the Assessor →</a>
+    </div>
+    <div class="flag-pillar">
+      <div class="fp-k">The trust rail · 03</div>
+      <h3>Proof-of-play</h3>
+      <p>The rule that binds the estate: nothing goes live without a reproducible pass. Trust here is empirical, not marketed.</p>
+      <a href="#doctrine">Read the doctrine →</a>
+    </div>
+  </div>
+  <p class="rail-note">The trust rail is the point of difference: below it, everything shipped through it.</p>
+
+  <!-- LAW & REDRESS -->
+  <div class="flag-group-label">◊ Law &amp; redress <span>— for people, not just firms</span></div>
+  <div class="flag-grid">
+    <a class="flag-card" href="https://sjgant80-hub.github.io/redress-engine/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>Redress Engine</h4><span class="fc-live">● live</span></div>
+      <p>Use the rights you already have. The real statutory lever for each situation, calm cited letters, statutory deadlines, and non-skippable free human help — it flags what it can't verify rather than bluff.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+    <a class="flag-card" href="https://sjgant80-hub.github.io/divorcerbot/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>divorcerbot</h4><span class="fc-live">● live</span></div>
+      <p>UK divorce self-help across England &amp; Wales, Scotland and Northern Ireland — verified law, a CMS calculator, and a cited strategy engine. Not legal advice.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+    <a class="flag-card" href="https://sjgant80-hub.github.io/falljustice/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>FallJustice</h4><span class="fc-live">● live</span></div>
+      <p>A Clause-40 Letter Before Action and DSAR engine built on verified UK case-law — every citation sourced, with a sovereign-citizen guardrail.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+  </div>
+
+  <!-- SOVEREIGN INFRASTRUCTURE -->
+  <div class="flag-group-label">◊ Sovereign infrastructure <span>— runs on your side of the wire</span></div>
+  <div class="flag-grid">
+    <a class="flag-card" href="https://sjgant80-hub.github.io/the-toll/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>The Toll</h4><span class="fc-live">● live</span></div>
+      <p>A proof-of-work edge-wall: content unlocks only when the visitor's browser solves a hash puzzle. Invisible to a human (~30ms), crushing to a mass scraper. Force execution, not storage.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+    <a class="flag-card" href="https://sjgant80-hub.github.io/konomium-vault/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>Konomium Vault</h4><span class="fc-live">● live</span></div>
+      <p>Sovereign encrypted accounting — an AES-GCM vault with encryption at rest, MTD-ready. Your books stay yours, on your machine.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+    <a class="flag-card" href="https://sjgant80-hub.github.io/niceassos/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>niceassos</h4><span class="fc-live">● live</span></div>
+      <p>The OG sovereign OS — a desktop shell that runs signed apps from your browser, offline-first, no install.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+    <a class="flag-card" href="https://sjgant80-hub.github.io/offramp-v2/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>OFFRAMP</h4><span class="fc-live">● live</span></div>
+      <p>A dead ChatGPT or Claude export becomes a searchable, pattern-surfacing sovereign memory. Content-addressed, cross-vendor, yours to keep.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+  </div>
+
+  <!-- THE LAB -->
+  <div class="flag-group-label">◊ The lab <span>— the estate, made legible</span></div>
+  <div class="flag-grid">
+    <a class="flag-card" href="https://sjgant80-hub.github.io/estate-nest/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>Estate Nest</h4><span class="fc-live">● live</span></div>
+      <p>The whole ~1,500-repo estate poured into a memory you can walk: signed by content, placed by golden angle, wired by kinship — duplication made visible.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+    <a class="flag-card" href="https://sjgant80-hub.github.io/geometric-computer/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>Geometric Computer</h4><span class="fc-live">● live</span></div>
+      <p>Fold a state into a number and back, losslessly — then watch which patterns stay stable. A gated, runnable research build.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+    <a class="flag-card" href="https://sjgant80-hub.github.io/the-wisp/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>The Wisp</h4><span class="fc-live">● live</span></div>
+      <p>The estate isn't in any one repo — it's the pattern across all of them, present where the current flows. This is that pattern, made live.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+  </div>
+
+  <!-- APPLIED -->
+  <div class="flag-group-label">◊ Applied <span>— a real client, in production</span></div>
+  <div class="flag-grid">
+    <a class="flag-card" href="https://sjgant80-hub.github.io/wishwood/" target="_blank" rel="noopener">
+      <div class="fc-top"><h4>Wishwood</h4><span class="fc-live">● live</span></div>
+      <p>A real client build: a glamping operator's inbox, calendar, bookings and admin in one sovereign hub — with a live cross-channel double-booking alarm.</p>
+      <span class="fc-open">Open →</span>
+    </a>
+  </div>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:40px">
+    <a href="https://sjgant80-hub.github.io/fallmarket/" class="btn-secondary">Browse all 1,200+ in FallMarket →</a>
+    <a href="#architecture" class="btn-tertiary">How it all fits</a>
+  </div>
+</section>
 
 <!-- ═══════════════════ HOW IT FITS · three surfaces ═══════════════════ -->
 <section id="architecture" style="border-top:1px solid var(--border)">
