@@ -1,4 +1,11 @@
-# ai-nativesolutions
+# AI Native Solutions
+
+**▶ [fall-os — the operating system](https://sjgant80-hub.github.io/fall-os/)**  ·  **[Pitch deck](https://www.ai-nativesolutions.com/deck.html)** ([download PDF](https://www.ai-nativesolutions.com/fall-os-deck.pdf))  ·  **[Prospectus](https://www.ai-nativesolutions.com/prospectus.html)** ([download PDF](https://www.ai-nativesolutions.com/fall-os-prospectus.pdf))
+
+Live site: **[www.ai-nativesolutions.com](https://www.ai-nativesolutions.com)** · 1,548 repositories · 371 live builds
+
+---
+
 
 sovereign single-file browser tool · MIT · @ai-native-solutions
 
