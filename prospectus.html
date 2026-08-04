@@ -784,7 +784,41 @@
 <div class="note">The honest boundary: this is an operating system, a verification rail and an estate of working tools — not a foundation-model laboratory. It does not out-train the frontier labs and does not try to. The bet is that for the overwhelming majority of real business work, structure, verification and ownership matter more than parameter count — and that bet is already running in production.</div>
 
 
-<h2><span class="num">16</span>Provenance</h2>
+<h2><span class="num">17</span>How every build merges into one system</h2>
+<p class="k">An estate of 1,548 repositories is a liability if it is 1,548 separate things. It is an asset only if they are one system. This is the mechanism by which they are.</p>
+<p>Every build in the estate, whatever it does, reduces to the same four moves: it <strong>offers options</strong>, it <strong>scores them against one shared bar</strong>, it <strong>commits deliberately rather than reflexively</strong>, and it <strong>remembers what it did and what it passed over</strong>. A booking engine choosing between channels, a legal tool choosing between statutory routes, a memory layer choosing which link to form, a marketplace choosing which offer clears — the surface differs, the move does not.</p>
+<p>That is why the merge is not an integration project. Each build is re-pointed to call the shared core for those four moves instead of carrying its own copy, and registers with the conductor so it can be invoked in the loop. Its own logic is untouched. Nothing is rewritten; the decision-making is simply relocated to one place.</p>
+<div class="tw"><table>
+  <thead><tr><th>Layer</th><th>What merges into it</th><th>What that buys</th></tr></thead>
+  <tbody>
+    <tr><td><b>The core</b></td><td>Every build's option-generation, scoring, commitment and caching.</td><td>Improve the acceptance bar once and every organ's judgement improves at the same instant.</td></tr>
+    <tr><td><b>The conductor</b></td><td>Every build's entry point, as a registered organ.</td><td>One plain-language surface across the whole estate instead of a hundred interfaces.</td></tr>
+    <tr><td><b>Memory</b></td><td>Every build's outputs and the alternatives it discarded.</td><td>A corpus that consolidates and sharpens rather than a hundred isolated logs.</td></tr>
+    <tr><td><b>The trust rail</b></td><td>Every build's claim to work.</td><td>One reproducible standard of proof; a build that cannot pass does not become an organ.</td></tr>
+    <tr><td><b>Identity &amp; settlement</b></td><td>Every agent's authority, budget and earnings.</td><td>Bounded autonomy and provable contribution across the entire estate, not per tool.</td></tr>
+    <tr><td><b>The registry</b></td><td>Every build's callable surface — SDK, MCP server, HTTP API.</td><td>The estate becomes addressable by machines, not merely browsable by people.</td></tr>
+  </tbody>
+</table></div>
+<p><b>The compounding property.</b> Because the merge is at the decision layer rather than the feature layer, every improvement is estate-wide by construction. A better scoring rule, a deeper search, a sharper memory consolidation, a stricter gate — each lands once and propagates to everything already built and everything built afterwards. That is the difference between a portfolio of tools and an operating system, and it is the only reason an estate this size can be maintained at all.</p>
+
+<h2><span class="num">18</span>How this gets used</h2>
+<p class="k">Not a prediction — a description of the path already visible from what is running.</p>
+<h3>First, people stop paying rent for the obvious things</h3>
+<p>The initial move is unglamorous and immediate: an operator replaces three or four subscriptions with owned tools doing the same job on hardware already present, and the recurring line stops growing with headcount. Nothing about the way they work changes on day one. What changes is that the software stopped being a tenancy.</p>
+<h3>Then the assistant stops being a separate destination</h3>
+<p>Instead of visiting a chat window and copying results back into the business, the conductor is inside the work: it drafts the reply against real facts, flags what it cannot verify, prepares the invoice, and waits for a person to commit. Routine requests are answered locally at no marginal cost, so the instinct becomes to ask it everything rather than ration questions against a bill.</p>
+<h3>Then memory becomes the moat, and it is theirs</h3>
+<p>Every decision and every discarded alternative accumulates in a corpus that consolidates while idle. Six months in, the system answers questions it could not answer at the start — not because a larger model shipped, but because the structure of what it knows improved. That corpus is on their machine, so switching cost stops being a lever a vendor holds and starts being an asset they own.</p>
+<h3>Then work is delegated rather than performed</h3>
+<p>With autonomy granted per organ and bounded by a signed budget, a person stops doing the execution and starts authoring the decisions — the ninety-ten split. The constraint that makes this safe is structural: an agent cannot exceed a grant it holds, so delegation is defensible to an auditor rather than an act of faith.</p>
+<h3>Then the tools they build are worth something</h3>
+<p>What a business builds for itself is publishable — as a tool, an SDK, an MCP server or an API — into a marketplace where a buyer's own test decides its value and royalties travel up the fork tree. The by-product of running the business becomes an asset, and whoever improves it upstream keeps earning from it.</p>
+<h3>And agents transact with agents</h3>
+<p>The final step needs nothing new: signed identity, hard budgets, verified work and tamper-evident settlement already exist and already run. When machines hire machines they will need exactly a rail where capability is demonstrated rather than claimed and spend is bounded by construction. That is not a roadmap item here; it is the part that was built first.</p>
+<div class="note">The honest shape of this: none of it requires a breakthrough. Every step runs today at small scale, in public, with the gate behind it. What is uncertain is not whether it works but how fast the economics force the change — and the economics move one way, because owned and local is cheaper than rented and remote for the overwhelming majority of real work.</div>
+
+
+<h2><span class="num">19</span>Provenance</h2>
 <p>The foundations of this estate are <a href="https://github.com/teslasolar">Thomas Frumkin's</a> work, and the credit is his: the <em>assos</em> line it descends from, the Konomi standard and its fold architecture, Konomi peer-to-peer, the Regulus engine, the guild discipline behind the estate's rubric, and the onlybrains substrate that contribution settles onto.</p>
 <p>On mechanism, for the record: Regulus carries its fork lineage in the repository itself; konomigami and the standard were published as architecture and implemented here with the substrate input credited in each repository. Different mechanisms, one origin — and where a build began as his work it is forked openly rather than reimplemented quietly.</p>
 
