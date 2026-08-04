@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>fall-os · the pitch deck — AI Native Solutions</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="fall-os: the sovereign operating system for an AI-run estate. Software is going to zero; what remains scarce is proof and ownership. 1,548 repositories, 100+ live tools, one core.">
+<style>
+  :root{--bg:#0a0c10;--panel:#12161d;--ink:#eef2f7;--muted:#98a3b3;--faint:#5f6a78;--line:#1f2733;
+        --gold:#d4a656;--ok:#2fbd85;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,system-ui,sans-serif;
+        --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--serif:Georgia,"Times New Roman",serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .deck{max-width:1000px;margin:0 auto;padding:0 24px}
+  .slide{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:0}
+  .slide:last-child{border-bottom:none}
+  .n{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  h1{font-family:var(--serif);font-size:clamp(40px,8vw,88px);line-height:1.02;margin:0 0 18px;letter-spacing:-.02em}
+  h2{font-family:var(--serif);font-size:clamp(30px,5vw,52px);line-height:1.1;margin:0 0 20px;letter-spacing:-.02em}
+  h2 em{font-style:italic;color:var(--gold)}
+  p.big{font-size:clamp(17px,2.2vw,22px);color:var(--muted);max-width:62ch;margin:0 0 16px}
+  p.big strong{color:var(--ink);font-weight:600}
+  ul{list-style:none;padding:0;margin:22px 0 0;max-width:70ch}
+  li{padding:12px 0 12px 26px;border-top:1px solid var(--line);position:relative;color:var(--muted);font-size:16px}
+  li::before{content:"—";position:absolute;left:0;color:var(--gold)}
+  li b{color:var(--ink);font-weight:650}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px;margin-top:26px}
+  .card{background:var(--panel);border:1px solid var(--line);padding:20px}
+  .card h3{margin:0 0 8px;font-size:16px}
+  .card p{margin:0;color:var(--muted);font-size:14.5px}
+  .stats{display:flex;gap:38px;flex-wrap:wrap;margin-top:30px}
+  .stat b{display:block;font-family:var(--serif);font-size:clamp(34px,5vw,52px);color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+  .stat span{color:var(--faint);font-size:13px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
+  table{width:100%;border-collapse:collapse;font-size:15.5px;margin-top:24px;min-width:600px}
+  th{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  th.g{color:var(--gold)}
+  td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.l{color:var(--muted)}
+  .tw{overflow-x:auto;border:1px solid var(--line);margin-top:24px}
+  .tw table{margin-top:0;border:none}
+  a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+  .note{font-family:var(--mono);font-size:12.5px;color:var(--faint);margin-top:22px;max-width:72ch;line-height:1.65}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .btn{padding:13px 22px;border:1px solid var(--gold);color:var(--gold);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+  .btn.solid{background:var(--gold);color:#0a0c10;font-weight:700}
+  .btn:hover{text-decoration:none;opacity:.88}
+  nav.dots{position:fixed;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:9px;z-index:10}
+  nav.dots a{width:7px;height:7px;border-radius:50%;background:var(--line);display:block;transition:background .2s}
+  nav.dots a:hover,nav.dots a.on{background:var(--gold)}
+  @media(max-width:760px){nav.dots{display:none}.slide{min-height:auto;padding:60px 0}}
+  footer{padding:40px 0 60px;color:var(--faint);font-size:13px;text-align:center}
+</style></head><body>
+
+<nav class="dots" id="dots"></nav>
+<div class="deck">
+
+<section class="slide" id="s1">
+  <div class="n">AI Native Solutions</div>
+  <h1>Software is going<br>to zero.</h1>
+  <p class="big"><strong>What stays scarce is proof that it works, and ownership of the system it runs in.</strong> fall-os is an operating system built on that bet — and an estate of 1,548 repositories already standing on it.</p>
+  <div class="cta">
+    <a class="btn solid" href="https://sjgant80-hub.github.io/fall-os/" target="_blank" rel="noopener">Open fall-os</a>
+    <a class="btn" href="./index.html#fallos">See what's live</a>
+  </div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="n">01 · The problem</div>
+  <h2>You are renting <em>every part</em> of your own business.</h2>
+  <p class="big">A modern small firm pays per seat, per tool, per month — and pays again per token every time it asks an AI a question. The tools do not talk to each other, the integrations never finish, and the memory of your own work accumulates on someone else's servers.</p>
+  <ul>
+    <li><b>Cost compounds with headcount</b> — every new person multiplies every subscription.</li>
+    <li><b>Nothing composes</b> — twenty vendors, twenty data models, an integration budget that never closes.</li>
+    <li><b>Your corpus is the product</b> — retained, mined, and used to improve a model you do not own.</li>
+    <li><b>Nothing is provable</b> — "it works" is a claim you cannot re-run for yourself.</li>
+  </ul>
+</section>
+
+<section class="slide" id="s3">
+  <div class="n">02 · The shift</div>
+  <h2>When code costs nothing to produce, <em>value moves.</em></h2>
+  <p class="big">Generation is no longer the hard part. Two things become scarce instead — and both are structural, not features:</p>
+  <div class="grid">
+    <div class="card"><h3>Proof</h3><p>If anyone can generate a plausible tool, the question is whether it is correct. Reproducible verification becomes the asset.</p></div>
+    <div class="card"><h3>Ownership</h3><p>If the software itself is cheap, paying rent for it forever stops making sense. What you want is the system, on your hardware.</p></div>
+  </div>
+  <p class="note">This is the whole thesis, and the estate was built to it: a trust rail that makes correctness reproducible, and an operating system you own rather than subscribe to.</p>
+</section>
+
+<section class="slide" id="s4">
+  <div class="n">03 · What fall-os is</div>
+  <h2>One core. One conductor. <em>An estate of organs.</em></h2>
+  <p class="big">You direct a conductor in plain language. It runs on <strong>your own models</strong>, reasons over <strong>your own corpus</strong>, builds what you ask, and proves it before it ships. Every tool in the estate plugs into the same core as an organ — which is why a hundred separate tools behave as one system.</p>
+  <div class="grid">
+    <div class="card"><h3>The core</h3><p>One routine every organ calls: expand options, score them against one shared bar, commit deliberately, cache by content.</p></div>
+    <div class="card"><h3>The conductor</h3><p>One loop — explore, resolve, verify, build, remember. Organs are called by it, never run loose.</p></div>
+    <div class="card"><h3>The organs</h3><p>Booking, ledger, legal, memory, agents. Take the ones you need; add more later; remove any of them.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s4b">
+  <div class="n">03b · The unifier</div>
+  <h2>What <em>Konomi</em> actually is.</h2>
+  <p class="big">Konomi is a <strong>self-defining standards compression format</strong> — originating in industrial automation, where the standards are unforgiving. It carries ISA-95, ISA-88, ISA-101, ISA-18.2, OPC-UA, MQTT Sparkplug and Modbus as machine-readable types, with explicit crosswalks between them, so a definition written once is valid everywhere it is used.</p>
+  <p class="big">Its compositional half is <strong>konomigami</strong> — a fold algebra. Seven base operators, each a pure function from one state and mesh to the next, applied in sequence to a flat plane to produce a structure:</p>
+  <div class="tw"><table>
+    <thead><tr><th>Operator</th><th>Fold</th><th class="g">Automation level</th></tr></thead>
+    <tbody>
+      <tr><td><b>Ground</b></td><td class="l">identity / base</td><td>L0 · physical</td></tr>
+      <tr><td><b>Wave</b></td><td class="l">valley fold</td><td>L1 · sensing</td></tr>
+      <tr><td><b>Gate</b></td><td class="l">mountain fold</td><td>L2 · control</td></tr>
+      <tr><td><b>Sink</b></td><td class="l">vertex inward</td><td>L3 · operations</td></tr>
+      <tr><td><b>Reverse</b></td><td class="l">direction reversal</td><td>L4 · business</td></tr>
+      <tr><td><b>Petal</b></td><td class="l">open and flatten</td><td>L5 · enterprise</td></tr>
+      <tr><td><b>Collapse</b></td><td class="l">full collapse</td><td>L6 · observer</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Seven operators and six mutations compose into any structure — so the whole stack, from a sensor on a machine to an enterprise ledger, is described in one algebra instead of seven incompatible vocabularies. That is why tools built to it compose without integration work, and why the estate behaves as one system.</p>
+</section>
+
+<section class="slide" id="s5">
+  <div class="n">04 · Your models</div>
+  <h2>Local first. <em>Frontier optional.</em></h2>
+  <p class="big">Requests descend to the cheapest capable tier. Routine work is answered by deterministic logic or a model on your own machine at no marginal cost. A paid API is reached for only when you allow it — and your key hits your provider directly, with no intermediary.</p>
+  <ul>
+    <li><b>On your hardware</b> — built-in logic, an in-browser model, then your own local host.</li>
+    <li><b>Optional and consented</b> — free-tier and frontier models, under your own account, never required.</li>
+    <li><b>Structurally private</b> — a request cannot reach a tier you have not allowed; the remote provider is simply never called.</li>
+  </ul>
+</section>
+
+<section class="slide" id="s5b">
+  <div class="n">04b · The hardware</div>
+  <h2>It runs on what you <em>already own.</em></h2>
+  <p class="big">There is no minimum spend to start. The lowest tiers need no dedicated hardware at all — and each step up simply raises how much work stays local, never whether the system runs.</p>
+  <div class="grid">
+    <div class="card"><h3>A phone</h3><p>The tools are single-file and offline-capable. An operator can run bookings, jobs and checklists from a handset in the field, with no signal.</p></div>
+    <div class="card"><h3>A £500 laptop</h3><p>Deterministic logic and an in-browser model cover routine work with nothing installed. This is the honest floor — ordinary hardware, no GPU.</p></div>
+    <div class="card"><h3>A desktop or Mac Studio</h3><p>Add a local host and a mid-size model, and the great majority of day-to-day requests never leave the room or incur a bill.</p></div>
+    <div class="card"><h3>A tower rig</h3><p>Larger local weights for the heavy end — and idle capacity, including hardware written off after crypto, becomes useful again.</p></div>
+  </div>
+  <p class="note">The design thesis is that structure beats scale: better memory, better routing and better verification carry more of the load than raw parameter count for the work most businesses actually do. Which tier you need depends on your workload — and you can measure it yourself before spending anything.</p>
+</section>
+
+<section class="slide" id="s6">
+  <div class="n">05 · Memory</div>
+  <h2>Better memory — <em>not more retrieval.</em></h2>
+  <p class="big">The industry bolts a vector database onto a model and re-fetches raw passages by similarity on every question. It never gets sharper: the same lookup, the same noise, and a permanent bill for storage, embeddings and re-indexing.</p>
+  <p class="big">The estate places memory by <strong>content</strong>, wires it with <strong>typed relationships</strong>, and <strong>consolidates it while idle</strong> — merging duplicates, materialising links that follow from what is known, generalising rules, resolving contradictions by weight of evidence. The structure improves overnight with no retraining. Recall becomes a short walk through a graph.</p>
+  <p class="note">Measured, not asserted: the same day of memories in, one idle cycle later, questions answered that could not be answered before — with no parameters touched.</p>
+</section>
+
+<section class="slide" id="s7">
+  <div class="n">06 · The defensible asset</div>
+  <h2>Nothing ships on a claim. <em>Everything ships on a proof.</em></h2>
+  <p class="big">A gate alters one operator at a time in the code and requires the test suite to catch it. A green suite that cannot detect a broken version does not count as green. It runs on every push, and anyone can run it themselves.</p>
+  <div class="grid">
+    <div class="card"><h3>witness</h3><p>Deterministic mutation and fuzz gate. Packaged so any repository can adopt it.</p></div>
+    <div class="card"><h3>acg-assessor</h3><p>A deterministic quality rubric — same repository, same verdict, no self-marking.</p></div>
+    <div class="card"><h3>Proof-of-play</h3><p>Capability demonstrated against a pinned artifact and a canonical grader. A self-graded claim dies on re-grade.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s7b">
+  <div class="n">06b · Governance &amp; safety</div>
+  <h2>Four gates, and an agent that <em>cannot overspend.</em></h2>
+  <p class="big">Autonomy without constraint is the reason most AI pilots never reach production. Here the constraints are structural — properties of the system, not promises in a policy document.</p>
+  <ul>
+    <li><b>Correct</b> — a deterministic rubric grades the structure of the code, reproducibly.</li>
+    <li><b>Behaviourally proven</b> — the mutation gate requires the tests to catch a broken version before anything ships.</li>
+    <li><b>Alive</b> — liveness checks tell a running organ from a flatlined one.</li>
+    <li><b>Affordable</b> — every agent's signed identity <em>is</em> its capability and its budget ceiling. It cannot spend past its grant, because the grant is what it holds.</li>
+  </ul>
+  <p class="big" style="margin-top:24px">On top of that: the conductor never commits on its own — it prepares and proposes, and a person authors the decision. Where a tool touches law or money it is built to <strong>flag what it cannot verify rather than bluff</strong>, and to route to free human help rather than improvise. Contribution and settlement are recorded on a signed, tamper-evident ledger, and settle onto Thomas Frumkin's onlybrains substrate — so what an agent did, and what it earned, is provable rather than asserted.</p>
+</section>
+</section>
+
+<section class="slide" id="s8">
+  <div class="n">07 · The estate</div>
+  <h2>Not a prototype. <em>An estate.</em></h2>
+  <div class="stats">
+    <div class="stat"><b>1,548</b><span>repositories</span></div>
+    <div class="stat"><b>100+</b><span>live, link-verified</span></div>
+    <div class="stat"><b>1</b><span>shared core</span></div>
+  </div>
+  <p class="big" style="margin-top:28px">Accounting, legal, insurance and clinic practices; enterprise database, ledger, analytics and low-code; bookings, housekeeping and inbox; agent registries and settlements; memory, mesh and verification. Every one opens in a browser right now.</p>
+  <div class="cta"><a class="btn" href="./index.html#flagship">Open the catalogue</a></div>
+</section>
+
+<section class="slide" id="s9">
+  <div class="n">08 · What it replaces</div>
+  <h2>The software — and <em>the firm you retain to run it.</em></h2>
+  <p class="big">The expensive part of a business is rarely the licence; it is the practice on retainer. These do that work directly, and you own them.</p>
+  <ul>
+    <li><b>Accountancy</b> — a practice operating system, sole-trader and trades accounting, a double-entry ledger.</li>
+    <li><b>Legal</b> — a sovereign paralegal, a statutory redress navigator, cited letters with a guardrail on what cannot be verified.</li>
+    <li><b>Insurance &amp; clinics</b> — practice-shaped toolsets, model-agnostic and single-file.</li>
+    <li><b>Enterprise</b> — database, analytics, low-code builder and ledger, without the seven-figure platform.</li>
+    <li><b>Sales &amp; marketing</b> — a coordinated agent team in one sovereign file.</li>
+  </ul>
+</section>
+
+<section class="slide" id="s10">
+  <div class="n">09 · Rented versus owned</div>
+  <h2>What actually <em>changes.</em></h2>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Rented</th><th class="g">Owned</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cost</b></td><td class="l">Per seat, per tool, per month — forever.</td><td>Own what you take. No seats, no renewals.</td></tr>
+      <tr><td><b>Inference</b></td><td class="l">Every request billed per token.</td><td>Routine work on your hardware at no marginal cost.</td></tr>
+      <tr><td><b>Data</b></td><td class="l">Uploaded, retained, used to train someone else's model.</td><td>Stays on the machine; several kernels have no network capability at all.</td></tr>
+      <tr><td><b>Energy</b></td><td class="l">A datacenter round trip for every question.</td><td>Answered on the device already on your desk — hardware considered obsolete is enough.</td></tr>
+      <tr><td><b>Collaboration</b></td><td class="l">A vendor's server in the middle; an outage stops you.</td><td>Devices reconcile directly, offline edits merge cleanly — work can pass between machines with no network at all.</td></tr>
+      <tr><td><b>Trust</b></td><td class="l">A marketing claim you cannot re-run.</td><td>A reproducible gate you can run yourself.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Cost, time and energy differences depend on which tools you replace and how you work, so we publish the mechanism rather than a headline percentage. What is structural and checkable today: no per-seat licence, no per-token bill for work a local model handles, no upload of your data, no vendor between your own devices.</p>
+</section>
+
+<section class="slide" id="s11">
+  <div class="n">10 · How you buy it</div>
+  <h2>Take only <em>what you need.</em></h2>
+  <p class="big">Not a suite you must swallow whole. Take bookings and invoicing; leave analytics. Add a third tool next year. Because every organ is built on the same core and speaks one contract, they compose instead of collide — no integration project, no middleware tax — and improving the core improves everything you already own.</p>
+  <div class="cta">
+    <a class="btn solid" href="https://sjgant80-hub.github.io/fall-os/" target="_blank" rel="noopener">Open fall-os</a>
+    <a class="btn" href="./index.html#fallos">The crown</a>
+    <a class="btn" href="https://github.com/sjgant80-hub" target="_blank" rel="noopener">The estate</a>
+  </div>
+</section>
+
+<section class="slide" id="s13">
+  <div class="n">Credit</div>
+  <h2>Sourced, <em>and stated precisely.</em></h2>
+  <p class="big">Much of the foundation is <a href="https://github.com/teslasolar" target="_blank" rel="noopener">Thomas Frumkin's</a> work. Rather than a vague acknowledgement, here is exactly what came from where — and in what form.</p>
+  <ul>
+    <li><b>Forked directly, lineage in git</b> — <em>Regulus</em>, the health engine, forked from <span class="mono">teslasolar/regulus</span> and put through the estate's gate. The fork relationship is recorded by the repository itself, not merely claimed here.</li>
+    <li><b>Built to a published architecture</b> — <em>konomigami</em>, the 紙 Geometric Fold Architecture: seven fold operators over a plane. Implemented as konomigami-lib and the konomi-cube fold engine, each crediting the substrate input in its own README. There was no upstream repository to fork; the architecture was published and implemented.</li>
+    <li><b>Standards adopted</b> — the <em>Konomi Standard</em> (ISA-95, ISA-88, ISA-101, ISA-18.2, OPC-UA, MQTT Sparkplug, Modbus, with crosswalks) and <em>KonomiLang</em>. Adopted as the type and contract layer.</li>
+    <li><b>Guild lineage</b> — the assessment discipline of the <em>AI Craftspeople Guild</em>, whose initials the estate's deterministic rubric carries.</li>
+    <li><b>Settlement substrate</b> — <em>onlybrains</em>, where signed contribution is recorded and tracked.</li>
+    <li><b>Industrial grounding</b> — GitPLC, GitHMI, GitSCADA, GitTAG and ISA 5.1 work: the automation context the standard was proven against.</li>
+  </ul>
+  <p class="note">The distinction matters: a fork carries lineage in the repository, an implementation credits a published architecture, and an adopted standard is cited. All three appear here, and each is labelled as what it is.</p>
+</section>
+
+<section class="slide" id="s12">
+  <div class="n">Close</div>
+  <h2>Own the system. <em>Prove the work.</em></h2>
+  <p class="big">One core, one conductor, and as many organs as you need — running on hardware you already own, with your corpus as its context and a reproducible gate behind every build.</p>
+  <div class="cta">
+    <a class="btn solid" href="https://sjgant80-hub.github.io/fall-os/" target="_blank" rel="noopener">Open fall-os</a>
+    <a class="btn" href="./index.html">ai-nativesolutions.com</a>
+  </div>
+</section>
+
+<footer>Powered by Konomi architecture · AI Native Solutions</footer>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const dots=document.getElementById('dots');
+  dots.innerHTML=slides.map(s=>'<a href="#'+s.id+'" title="'+s.id+'"></a>').join('');
+  const links=[...dots.children];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+    const i=slides.indexOf(e.target); links.forEach((l,j)=>l.classList.toggle('on',i===j));}});},{threshold:.5});
+  slides.forEach(s=>io.observe(s));
+  addEventListener('keydown',e=>{
+    if(!['ArrowDown','ArrowRight','ArrowUp','ArrowLeft','PageDown','PageUp'].includes(e.key))return;
+    e.preventDefault();
+    const cur=slides.findIndex(s=>{const r=s.getBoundingClientRect();return r.top>=-40&&r.top<innerHeight/2;});
+    const i=cur<0?0:cur, fwd=['ArrowDown','ArrowRight','PageDown'].includes(e.key);
+    const t=slides[Math.max(0,Math.min(slides.length-1,i+(fwd?1:-1)))];
+    if(t)t.scrollIntoView({behavior:'smooth'});
+  });
+</script>
+</body></html>
