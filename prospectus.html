@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>fall-os · Prospectus — AI Native Solutions</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="fall-os prospectus: the sovereign operating system for an AI-run estate. Architecture, measured results, deployment tiers, use cases, commercial model and provenance.">
+<style>
+  :root{--bg:#fbfaf8;--panel:#fff;--ink:#14181f;--muted:#525c6b;--faint:#8b95a3;--line:#e2e6ec;--gold:#9a6b1f;--ok:#0c7a55;
+        --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,system-ui,sans-serif;
+        --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--serif:Georgia,"Times New Roman",serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;-webkit-font-smoothing:antialiased}
+  .doc{max-width:860px;margin:0 auto;padding:0 26px 90px}
+  .bar{position:sticky;top:0;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:20}
+  .bar .doc{padding:12px 26px;display:flex;align-items:center;gap:14px}
+  .bar b{font-family:var(--serif);font-size:17px}
+  .bar .sp{margin-left:auto;display:flex;gap:9px}
+  button,.lnk{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;padding:9px 15px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;text-decoration:none}
+  button.solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  button:hover,.lnk:hover{border-color:var(--gold);color:var(--gold)}
+  button.solid:hover{opacity:.9;color:var(--bg)}
+  header.cover{padding:78px 0 44px;border-bottom:2px solid var(--ink)}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+  h1{font-family:var(--serif);font-size:clamp(38px,6.5vw,62px);line-height:1.04;margin:16px 0 14px;letter-spacing:-.02em}
+  .sub{font-size:19px;color:var(--muted);max-width:62ch;margin:0}
+  .meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:30px;font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.05em;text-transform:uppercase}
+  h2{font-family:var(--serif);font-size:29px;margin:54px 0 6px;letter-spacing:-.015em;padding-top:16px;border-top:1px solid var(--line)}
+  h2 .num{font-family:var(--mono);font-size:12px;color:var(--gold);display:block;letter-spacing:.14em;margin-bottom:8px;text-transform:uppercase}
+  h3{font-size:16.5px;margin:26px 0 6px}
+  p{margin:0 0 13px;color:var(--muted)}
+  p.k{color:var(--ink);font-size:17px}
+  strong{color:var(--ink);font-weight:650}
+  ul{margin:12px 0 16px;padding-left:0;list-style:none}
+  li{padding:9px 0 9px 24px;border-top:1px solid var(--line);position:relative;color:var(--muted);font-size:15px}
+  li::before{content:"▸";position:absolute;left:2px;color:var(--gold);font-size:11px;top:11px}
+  li b{color:var(--ink)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;margin:16px 0}
+  th{text-align:left;padding:10px 12px;border-bottom:1.5px solid var(--ink);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+  td b{color:var(--ink)}
+  td.n{font-family:var(--mono);color:var(--ok);white-space:nowrap;font-size:13.5px}
+  .tw{overflow-x:auto}
+  .box{background:var(--panel);border:1px solid var(--line);padding:20px 22px;margin:18px 0}
+  .box h3{margin-top:0}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.two{grid-template-columns:1fr}}
+  .note{font-family:var(--mono);font-size:12px;color:var(--faint);line-height:1.7;border-left:2px solid var(--line);padding-left:14px;margin:16px 0}
+  a{color:var(--gold)}
+  footer{margin-top:60px;padding-top:20px;border-top:2px solid var(--ink);font-size:13px;color:var(--faint)}
+  @media print{
+    .bar{display:none} body{background:#fff;font-size:11.5pt} .doc{max-width:none;padding:0}
+    h2{page-break-after:avoid;break-after:avoid} table,.box,li{page-break-inside:avoid;break-inside:avoid}
+    header.cover{page-break-after:always;break-after:page;padding-top:20px}
+    a{color:#000;text-decoration:none} a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555}
+  }
+</style></head><body>
+
+<div class="bar"><div class="doc">
+  <b>fall-os · Prospectus</b>
+  <div class="sp">
+    <a class="lnk" href="./deck.html">Deck</a>
+    <a class="lnk" href="./index.html">Site</a>
+    <button class="solid" onclick="window.print()">Download PDF</button>
+  </div>
+</div></div>
+
+<div class="doc">
+<header class="cover">
+  <div class="kicker">AI Native Solutions · Prospectus</div>
+  <h1>fall-os</h1>
+  <p class="sub">The sovereign operating system for an AI-run estate. One shared core, one conductor directed in plain language, and an estate of 1,548 repositories of organs that route through them — running on hardware you already own.</p>
+  <div class="meta">
+    <span>1,548 repositories</span><span>100+ live builds</span><span>5 gated runtime modules</span><span>Zero runtime dependencies</span>
+  </div>
+</header>
+
+<h2><span class="num">01</span>The thesis</h2>
+<p class="k">The cost of producing software is collapsing toward zero. When a working tool can be specified and generated on demand, the scarce assets are no longer the code — they are <strong>proof that it is correct</strong> and <strong>ownership of the system it runs in</strong>.</p>
+<p>Every incumbent model assumes the opposite: that software is expensive to build, so it must be rented per seat, forever, from a vendor who also holds your data and bills you per token to reason over it. That assumption is failing. fall-os is built for what follows it — an operating system you own, running your own models, over your own corpus, with a reproducible gate behind every build.</p>
+<div class="note">The estate is not a plan for this position. It is 1,548 repositories and more than a hundred live, link-verified tools already standing on it.</div>
+
+<h2><span class="num">02</span>Architecture</h2>
+<p><strong>One core.</strong> A single routine every organ calls: expand candidate options with a non-clustering offset, score them against one shared acceptance bar, commit deliberately, and cache by content so identical work is never repeated.</p>
+<p><strong>One conductor.</strong> A single control loop — explore, resolve, verify, build, remember. Organs are invoked by the loop rather than run loose. The conductor is generic and trainable: a fresh instance ships blank, and registering organs plus signing it with an owner prefix produces a named instance.</p>
+<p><strong>Many organs.</strong> Every tool registers against the core rather than reimplementing its own decision logic. The consequence is the commercial one: <strong>improve the core once and every organ improves at the same time</strong>, and any two organs compose without an integration project.</p>
+<h3>The unifying standard</h3>
+<p>The architecture is Konomi — a self-defining standards compression format carrying ISA-95, ISA-88, ISA-101, ISA-18.2, OPC-UA, MQTT Sparkplug and Modbus as machine-readable types with explicit crosswalks, and its compositional half, konomigami: seven fold operators over a plane, mapped to automation levels L0 through L6. One algebra describes the stack from a sensor to an enterprise ledger, which is why tools built to it fit together instead of colliding.</p>
+
+<h2><span class="num">03</span>It runs in a browser tab</h2>
+<p>A hard architectural constraint, not a simplification. A tool is one file you open: no installer, no server, no container, no account. This is what makes a hundred tools cost nothing to distribute, and what makes sovereignty achievable rather than aspirational — a tool that never needed a server has no server holding your data.</p>
+<ul>
+  <li><b>Real cryptography in-page</b> — Ed25519 keypairs, signing and verification, so identity and tamper-evident ledgers work with nothing behind them.</li>
+  <li><b>Direct peer-to-peer</b> — devices reconcile with each other rather than through a vendor, built on Konomi peer-to-peer.</li>
+  <li><b>Near-native compute</b> — compiled modules run in the tab; signal processing and search execute locally instead of being billed back to you.</li>
+  <li><b>Local structured storage and offline operation</b> — service workers make a tab a durable application that keeps working with the network off.</li>
+  <li><b>Real-time audio</b> — enough to diagnose a structure by its ring, sonify system health, and pass work between machines as sound.</li>
+</ul>
+
+<h2><span class="num">04</span>Your models, not a vendor's</h2>
+<p>Requests descend to the cheapest capable tier. Routine work is answered by deterministic logic or a model on your own machine at no marginal cost; a paid API is reached for only when you permit it, and your key hits your provider directly.</p>
+<div class="tw"><table>
+  <thead><tr><th>Tier</th><th>Runs on</th><th>Consent</th></tr></thead>
+  <tbody>
+    <tr><td><b>Built-in logic</b></td><td>the device</td><td class="n">no model needed</td></tr>
+    <tr><td><b>In-browser model</b></td><td>the device</td><td class="n">no install</td></tr>
+    <tr><td><b>Local host</b></td><td>your machine</td><td class="n">your hardware</td></tr>
+    <tr><td><b>Large local</b></td><td>your rig</td><td class="n">your hardware</td></tr>
+    <tr><td><b>Free-tier API</b></td><td>external</td><td class="n">opt-in</td></tr>
+    <tr><td><b>Frontier model</b></td><td>external</td><td class="n">opt-in</td></tr>
+  </tbody>
+</table></div>
+<p>The safety property is structural rather than procedural: <strong>a request cannot reach a tier you have not allowed</strong>, because the remote provider is never invoked — so the prompt is never serialised outward. If no permitted tier can answer, the system returns an honest failure instead of silently escalating.</p>
+
+<h2><span class="num">05</span>Memory that improves, rather than retrieval that repeats</h2>
+<p>The prevailing pattern bolts a vector database onto a model and re-fetches raw passages by similarity on every question. It never gets sharper — the same lookup, the same noise — and it carries a permanent bill for storage, embeddings and re-indexing.</p>
+<p>Here memory is placed by content, wired with typed relationships, and consolidated while idle: duplicates merge, links that follow from what is already known are materialised, rules generalise across instances, and contradictions resolve by weight of evidence rather than recency. The knowledge structure improves with <strong>no retraining and no parameters touched</strong>, and recall becomes a short walk through a graph.</p>
+<div class="note">Measured: the same day of memories in, one consolidation cycle later, question accuracy moved from 2 of 4 to 4 of 4 — with weights unchanged. A rule ("birds fly") was constructed from three separate instances and appeared in no single memory; a transitive fact was materialised; and an evidence-backed answer correctly beat a later, noisier one. A specific counter-fact always overrides the generalisation, so the exception is never clobbered by the rule.</div>
+
+<h2><span class="num">06</span>The defensible asset: verification</h2>
+<p>Anyone can generate plausible code. The durable asset is being able to prove it is correct, reproducibly, without trusting the author. The estate's gate alters one operator at a time in the source and requires the test suite to detect the change; a suite that cannot catch a broken version does not count as passing.</p>
+<div class="box">
+  <h3>What that catches, measured</h3>
+  <p>Run against a codebase that had already passed four separate LLM audit rounds, the gate scored 0.55 — nine of twenty mutants survived — and surfaced an untested boundary condition every prior audit had missed. It took roughly eighteen seconds, deterministically, against approximately 1.5 million tokens per LLM audit pass.</p>
+  <p style="margin-bottom:0">That is the commercial argument in one line: <strong>deterministic verification is faster, cheaper and stricter than model-based review</strong>, and it produces the same verdict every time.</p>
+</div>
+<p>Above the gate sit a deterministic structural rubric and a demonstration-based reputation layer, in which capability is proved against a pinned artifact and a canonical grader — so a self-graded claim dies on re-grade rather than standing as marketing.</p>
+
+<h2><span class="num">07</span>Governance, safety and limits that hold by construction</h2>
+<p>Most AI pilots stall because autonomy cannot be bounded credibly. Here the bounds are properties of the system:</p>
+<ul>
+  <li><b>An agent cannot overspend.</b> Its signed identity <em>is</em> its capability grant and its budget ceiling; it cannot spend past what it holds. This was built directly in response to a real incident in which an unbounded fan-out consumed 2.2 million tokens — the same failure is now impossible by construction rather than by policy.</li>
+  <li><b>Nothing commits implicitly.</b> The conductor prepares and proposes; a person authors the decision. A system that auto-commits is merely a predictor again.</li>
+  <li><b>It refuses to bluff.</b> In domains touching law or money the tools assert only what they can verify, flag what they cannot, and route to free human help rather than improvise.</li>
+  <li><b>Four independent gates.</b> Correct (structural rubric), behaviourally proven (mutation gate), alive (liveness classification), and affordable (budget ceiling).</li>
+  <li><b>Provenance is signed.</b> Contribution and settlement are recorded on a hash-chained, tamper-evident ledger and settle onto the onlybrains substrate, so what an agent did and earned is provable.</li>
+</ul>
+
+<h2><span class="num">08</span>Measured results</h2>
+<p>Selected results from the estate's own gates. Each is reproducible from the corresponding public repository.</p>
+<div class="tw"><table>
+  <thead><tr><th>Build</th><th>Claim</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td><b>Even distribution</b></td><td>Non-clustering placement as a general primitive across four domains</td><td class="n">load variance 0.32 vs 0.93; strided-key hashing 351× tighter; 2D spacing 12×; peak concurrency halved</td></tr>
+    <tr><td><b>Health by ear</b></td><td>A correlated fault is audible while every individual metric is still green</td><td class="n">3 metrics at 75% of red-line → 0 alarms, 0.96 dissonance; leak heard 42 ticks before the red-line fired</td></tr>
+    <tr><td><b>Structural diagnosis</b></td><td>Sound vs flawed structure from one tap, by resonance alone</td><td class="n">96% absolute / 100% relative discrimination; ring quality ~850 vs ~70</td></tr>
+    <tr><td><b>Overnight consolidation</b></td><td>Memory made to behave like learning, without retraining</td><td class="n">2/4 → 4/4 accuracy, weights unchanged</td></tr>
+    <tr><td><b>Scraping defence</b></td><td>Content unlocks only after real proof-of-work</td><td class="n">~30 ms for a human; ~16 CPU-days for a 50M-page scraper</td></tr>
+    <tr><td><b>Air-gapped compute</b></td><td>Machines share work with no network stack at all</td><td class="n">0 of 10 network primitives present, checked against source; work exchanged as real audio, decoded exactly</td></tr>
+    <tr><td><b>Agent economy</b></td><td>Value moves only by signed transfer, earned only by verified work</td><td class="n">forged and tampered transfers rejected; no double-spend; conservation held under concurrent load</td></tr>
+  </tbody>
+</table></div>
+<div class="note">Reported honestly, including a negative result: a coupled-model pair was built, measured against fair baselines, and <em>lost</em> to both a plain ensemble and an equal-capacity single model. It shipped with the negative encoded in its own test suite so it cannot be quietly forgotten. A vendor that publishes its failures is telling you what its successes are worth.</div>
+
+<h2><span class="num">09</span>Deployment tiers</h2>
+<p>There is no minimum spend to begin. Each step up raises how much work stays local — never whether the system runs.</p>
+<div class="tw"><table>
+  <thead><tr><th>Tier</th><th>Suits</th><th>What it unlocks</th></tr></thead>
+  <tbody>
+    <tr><td><b>A phone</b></td><td>field operators</td><td>Single-file tools, offline, no signal required</td></tr>
+    <tr><td><b>A £500 laptop</b></td><td>sole traders, small teams</td><td>Deterministic logic plus an in-browser model; nothing installed, no GPU</td></tr>
+    <tr><td><b>Desktop or studio machine</b></td><td>a working firm</td><td>A local host and mid-size model; the majority of daily requests never leave the room</td></tr>
+    <tr><td><b>Tower rig</b></td><td>heavier or regulated workloads</td><td>Large local weights; idle or written-off hardware becomes productive again</td></tr>
+  </tbody>
+</table></div>
+
+<h2><span class="num">10</span>Use in practice</h2>
+<div class="two">
+  <div class="box">
+    <h3>Personal</h3>
+    <p>An individual runs their own accounts, correspondence and records without a subscription and without uploading any of it. Legal letters cite real statute and flag what cannot be verified. A knowledge store gets sharper each night rather than becoming a folder nobody searches. Devices sync directly with each other; a lost signal changes nothing.</p>
+    <p style="margin-bottom:0">The distinguishing property is not the feature list — it is that <strong>no third party is present in any of it</strong>.</p>
+  </div>
+  <div class="box">
+    <h3>Business</h3>
+    <p>A small operator runs bookings across every channel with double-booking caught before a guest is confirmed, housekeeping across sites offline, drafted replies grounded strictly in real facts, bookkeeping, and the statutory paperwork — from one conductor, on hardware already owned, with per-seat licensing eliminated.</p>
+    <p style="margin-bottom:0">This is not hypothetical: the pattern is deployed at a live UK glamping estate whose operator runs the business from a phone.</p>
+  </div>
+</div>
+<h3>Tailoring to a specific company</h3>
+<p>Because organs share one contract, fitting the system to a business is configuration and selection rather than bespoke development:</p>
+<ul>
+  <li><b>Select the organs.</b> Take bookings and invoicing; leave analytics. Add a third next year. Nothing arrives that was not asked for.</li>
+  <li><b>Fill one canonical set of facts.</b> The business's real details live in a single source that every surface reads, so a fact cannot drift between the website, the inbox and the invoice.</li>
+  <li><b>Set the model policy.</b> Decide which tiers are permitted. A firm handling sensitive material can forbid every external tier and still have a working system.</li>
+  <li><b>Grant autonomy per organ.</b> Each agent's budget and capability are explicit and signed; nothing is granted by default.</li>
+  <li><b>Keep the gate.</b> Anything built for the business passes the same verification as the core, so bespoke work is not less trustworthy than the platform.</li>
+</ul>
+
+<h2><span class="num">11</span>Commercial model</h2>
+<p>You own what you take. There are no seats, no renewals and no per-user arithmetic; the software is source-available under permissive licence, and what is genuinely scarce — verification, integration into an existing business, and the operating discipline around it — is what is sold.</p>
+<ul>
+  <li><b>No per-token bill</b> for work a local model answers, which for most businesses is the overwhelming majority of requests.</li>
+  <li><b>No integration project.</b> Organs compose because they were built to one contract.</li>
+  <li><b>Distribution costs nothing.</b> Shipping a tool is publishing a file.</li>
+  <li><b>The gate is adoptable independently</b> — the verification layer runs in any repository, including ones with no other connection to the estate.</li>
+</ul>
+<div class="note">Cost, time and energy savings depend entirely on which tools are replaced and how a business works. We publish the mechanism rather than a headline percentage: no per-seat licence, no per-token bill for local work, no upload of your data, and no vendor between your own devices. Each is checkable before spending anything.</div>
+
+<h2><span class="num">12</span>The estate, applied</h2>
+<p class="k">Every entry below is a live, link-verified build — open in a browser now, no install. They are grouped by faculty so the applied use is visible: what problem each one takes off the table, and what capability of the core it demonstrates in production.</p>
+<p>This is the answer to "could it do X for my business?" — in most cases something adjacent already exists and can be fitted, and where it does not, the core plus the gate is how it gets built and proven.</p>
+<h3>Runtime, conductor &amp; routing · 12 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fall-mcp-bridge/">fall-mcp-bridge</a></b></td><td>fall-mcp-bridge · uniform MCP server in front of any LLM · 8 adapters (ollama, llamacpp, mlx, lmstudio, anthropic, openai, openrouter, femto/konomi-cube) · provider lock-in dies here · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fall-os/">fall-os</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/falladviser/">falladviser</a></b></td><td>£ FallAdviser · sovereign UK financial adviser · UK 2025-26 tax rules · ISA/SIPP/LISA optimiser · pension projector · portfolio analyser · Q&amp;A T0+T3 · estate-aware · si-didy postMessage API · Mansoor P3 audit chain · informational not regulated · single HTML · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallcolony/">fallcolony</a></b></td><td>Agent-native settlement · AI agents work, talk, learn Konomi, upgrade themselves · KCC provenance-royalty ledger · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallhub/">fallhub</a></b></td><td>Sovereign direct-booking + unified inbox + AI reply drafting for independent stay operators · MIT · fork-and-configure · Wishwood-tested</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallrouter/">fallrouter</a></b></td><td>Sovereign model orchestrator · routes between local Ollama and frontier APIs · auto-failover · tamper-evident audit · MIT · Simon Gant</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallstudio/">fallstudio</a></b></td><td>FallStudio · the hub · sovereign Adobe Creative Cloud alternative · 8 single-HTML tools indexed · autopilot routes any creative intent to the right tool · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/forge-lab/">forge-lab</a></b></td><td>Forge Lab - Domain Expert Tool Builder</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/offramp-v2/">offramp-v2</a></b></td><td>The sovereign chat-history off-ramp — a dead vendor JSON export → live searchable memory. Content-addressed (cross-vendor dedupe proven), versioned extraction, the wisp over your own thinking-history. Runs in your browser. Proof-of-play CLEAN 60/60.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-wisp/">the-wisp</a></b></td><td>The wisp pointed at the whole estate as substrate — ~1000 repos as one field of folds, the moving frontier dancing across, with the heat-sink and spiral/orbit diagnostics from real data. Proof-of-play CLEAN.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/trilogy-forge/">trilogy-forge</a></b></td><td>The Psychological Build Engine - Jung + Freud + Sales 101. Auto-generates elite AI configs per client archetype, shadow, and role psychology.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/trilogy-forge-api/">trilogy-forge-api</a></b></td><td>The factory that makes factories. POST config, GET a sovereign HTML application. 9 forge types, 4 data APIs, AI agent swarms, works offline.</td></tr>
+</tbody></table></div>
+<h3>Reasoning — past, present, future · 13 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/cassie-oracle-3/">cassie-oracle-3</a></b></td><td>Recursive Claude subagent tree · L0 orchestrator + 7 spine-prime specialists + sparse chord resolver · v19 7-pass annealing · subscription auth</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallbase/">fallbase</a></b></td><td>⛁ FallBase · sovereign Oracle Database wedge · multi-DB · schema designer · SQL subset (SELECT/WHERE/JOIN/GROUP BY/aggregates) · CSV+JSON import · foreign keys + indexes · postMessage API · single HTML · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallbuild/">fallbuild</a></b></td><td>⚙ FallBuild · sovereign Oracle APEX wedge · drag-drop low-code app builder · 8 widget types · FallBase bindings · 5 templates · standalone-HTML export with runtime baked · single HTML · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallledger/">fallledger</a></b></td><td>⚖ FallLedger · sovereign Oracle GL / NetSuite ledger · double-entry · 38-account UK SME CoA · auto-import from FallInvoice/FallAP/FallAccount via fall-signal · TB / P&amp;L / Balance Sheet / Cash Flow / VAT · period close · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallreport/">fallreport</a></b></td><td>▣ FallReport · sovereign Oracle Analytics / Hyperion wedge · pivot tables · hand-rolled canvas charts (bar/line/area/pie/scatter) · dashboards · KPI cards · FallBase + FallLedger postMessage feeds · PDF/PNG/CSV export · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/generative-estate/">generative-estate</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/missig/">missig</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/recollapse/">recollapse</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/seedmind/">seedmind</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/suzen/">suzen</a></b></td><td>Necessity oracle · reads any estate node's JSON twins and returns what MUST come next · single-file · MIT · origin: hitsuzen 必然 via aneta</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/temuoracle/">temuoracle</a></b></td><td>⚒ TemuOracle · sovereign enterprise OS · the same Oracle / NetSuite enterprise software for £0 · indexes 17 sovereign Fall* tools · stack diagram · pricing comparison · autopilot · single HTML · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-dreamer/">the-dreamer</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-oracle/">the-oracle</a></b></td><td>Live build — open to see the applied use.</td></tr>
+</tbody></table></div>
+<h3>Memory &amp; consolidation · 3 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/estate-nest/">estate-nest</a></b></td><td>The OFFRAMP pipeline pointed inward — the ~1000-repo estate nested into the dodeca memory: signed by content, placed by golden angle, wired by typed edges, WALKABLE. Answer 'what do I have' by traversing. Proof-of-play CLEAN.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/honestly/">honestly</a></b></td><td>HONESTLY · verified search · the Perplexity killer · 3-vote adversarial verification on every claim · Konomi-signed answer envelopes · BYOK search + LLM · sovereign single-file · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/redress-engine/">redress-engine</a></b></td><td>A legal-process navigator for everyone — plain-English rights, the REAL statutory lever per scenario, calm cited letters, deadlines, honest routing to free human help. Accuracy-gated. Not legal advice.</td></tr>
+</tbody></table></div>
+<h3>Trust rail &amp; verification · 6 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/acg-assessor/">acg-assessor</a></b></td><td>The Assessor — deterministic rubric assessment for AI-assisted codebases. Same repository, same verdict, same hash.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/earned/">earned</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/geometric-computer/">geometric-computer</a></b></td><td>The v23 geometric-computing stack, gated: L1 primorial fold codec (lossless state⇄number) + L2 Entropic Torus Harmonics (which fold-signatures are stable — golden holds, resonance cancels). Proof-of-play CLEAN.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/niceassos/">niceassos</a></b></td><td>The OG sovereign browser OS: fallos desktop shell merged onto the signed niceassos-mesh — proof-of-play admission, local-first brain. Pure kernel witness 49/49.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-toll/">the-toll</a></b></td><td>A collective proof-of-work edge-wall — force EXECUTION not storage. Content unlocks only when a client solves a hash puzzle: invisible to a human, 16 CPU-days to a mass-scraper, stronger as more nodes adopt it. Proof-of-play gated.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/witness/">witness</a></b></td><td>Deterministic build gate: mutation + fuzz. Catches test-theatre and throw-on-malformed with no LLM, zero deps.</td></tr>
+</tbody></table></div>
+<h3>Identity, agents &amp; economy · 5 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/acg-geo-repo/">acg-geo-repo</a></b></td><td>AI Craftspeople Guild · GEO/AI-SEO infrastructure for guild client sites · fork-and-configure · agent marketplace · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/agora/">agora</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fall-sales-marketing/">fall-sales-marketing</a></b></td><td>8+1 AI agents replacing a full sales + marketing team · sovereign single HTML · MIT · renamed from FallOffice when that slot was reclaimed for the productivity suite</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/kard/">kard</a></b></td><td>Superseded by FallKard · sovereign card game where every AI-Native Solutions tool is a real playable card · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-wallet/">the-wallet</a></b></td><td>Live build — open to see the applied use.</td></tr>
+</tbody></table></div>
+<h3>Geometric &amp; neuromorphic · 9 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fall-kqtt-bridge/">fall-kqtt-bridge</a></b></td><td>fall-kqtt-bridge · BroadcastChannel('fall-signal') ↔ GS.KQTT · 50-LOC bridge for teslasolar/GoldenShower · live demo</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallcube-api/">fallcube-api</a></b></td><td>Sovereign File Storage API - upload, search, analyze, stream. Zero cloud.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallsecurity/">fallsecurity</a></b></td><td>FallCube · sovereign AI security as geometry · 8+1 vertex architecture · defeats gradient injection · WebLLM in-browser demo</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/golden-placer/">golden-placer</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/konomi-cube-v2/">konomi-cube-v2</a></b></td><td>紙 konomi-cube v2 · the interactive fold engine · Three.js + konomigami-lib · 7 fold operators + 6 mutations · audio-reactive ( from bass/treble) · GLB export · v20.4 §23 made visible · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/offgridcommunitiessystem/">offgridcommunitiessystem</a></b></td><td>Konomi Cube Coin · sovereign community OS for off-grid / intentional communities · single HTML · IndexedDB · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-cam/">the-cam</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-rotor/">the-rotor</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-spike/">the-spike</a></b></td><td>Live build — open to see the applied use.</td></tr>
+</tbody></table></div>
+<h3>Mesh, transport &amp; sensing · 10 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/airgap/">airgap</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallasset/">fallasset</a></b></td><td>FallAsset · sovereign Bridge + Lightroom wedge · File System Access · grid + loupe + compare · tags/rating/labels · non-destructive edit · collections · autopilot · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallmotion/">fallmotion</a></b></td><td>FallMotion · sovereign After Effects wedge · SVG scene + keyframe timeline · 4 easings · 4 templates · WEBM (MediaRecorder) + inline GIF89a encoder · autopilot · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallscene/">fallscene</a></b></td><td>FallScene · sovereign Dimension wedge · Three.js 3D scene builder · 6 primitives · TransformControls · materials · lighting · GLB/PNG/JSON export · autopilot · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/hum/">hum</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/mesh-sings/">mesh-sings</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/one-ladder/">one-ladder</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/soundcheck/">soundcheck</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-ear/">the-ear</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-throat/">the-throat</a></b></td><td>Live build — open to see the applied use.</td></tr>
+</tbody></table></div>
+<h3>Business operations · 6 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallaccount/">fallaccount</a></b></td><td>FallAccount Elite - Sovereign accounting for UK sole traders. Any LLM. Single HTML file. Zero SaaS.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallaccount-trades/">fallaccount-trades</a></b></td><td>Sovereign accounts app for UK builders, plumbers, sparkies, plasterers. One HTML file. Data on your phone. MTD-ready. CIS handled both directions.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallcrm/">fallcrm</a></b></td><td>fallcrm · sovereign single-file CRM · the delete-HubSpot wedge</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/glampos/">glampos</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/wishwood/">wishwood</a></b></td><td>Sovereign multi-channel automation for off-grid glamping. Built for Wishwood (Canterbury, Kent). Unified inbox + calendar + direct booking + AI replies. Zero SaaS.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/wishwood-keeper/">wishwood-keeper</a></b></td><td>Live build — open to see the applied use.</td></tr>
+</tbody></table></div>
+<h3>Legal &amp; consumer · 2 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallpage/">fallpage</a></b></td><td>FallPage · sovereign InDesign wedge · multi-page layout · 8 block types · A4/Letter/Legal/custom · masters · print-to-PDF · 5 templates · autopilot · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/groundlevel-shim/">groundlevel-shim</a></b></td><td>One &lt;script> tag adds 6 cited UK legal letter templates + floating widget to any site. ~29KB. Zero deps. MIT.</td></tr>
+</tbody></table></div>
+<h3>Agents on the open web · 3 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/konomigami-lib/">konomigami-lib</a></b></td><td>紙 konomigami-lib · the fold algebra · 7 base glyphs + 6 mutations · state algebra · bloom ↔ integer ↔ sequence · -coherence · pure JS · zero deps · v20.4 socket VI · MIT · substrate by Thomas Frumkin</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/the-kg/">the-kg</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/trilogy-framework/">trilogy-framework</a></b></td><td>The AI Pipeline Framework - Input to Intelligence to Output as one declarative flow</td></tr>
+</tbody></table></div>
+<h3>Other sovereign builds · 32 live</h3>
+<div class="tw"><table><thead><tr><th>Build</th><th>Applied use</th></tr></thead><tbody>
+<tr><td><b><a href="https://sjgant80-hub.github.io/acg-mapper/">acg-mapper</a></b></td><td>⚒ ACG Mapper · an AI Craftspeople Guild diagnostic · paste your workflow, find your audit rung · forked from FallMap · single HTML · sovereign</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/bonded-pair/">bonded-pair</a></b></td><td>Live build — open to see the applied use.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fall-prompt-gate/">fall-prompt-gate</a></b></td><td>⚒ fall-prompt-gate · sovereign prompt evaluation · six layers · version history · regression detection · single HTML</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fall-raas/">fall-raas</a></b></td><td>fall-raas · Research-as-a-Service · 5-angle fan-out · 3-vote adversarial · cited synthesis</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fall-substrate/">fall-substrate</a></b></td><td>fall-substrate · the cognitive substrate · research → spec → tool → ship · flagship</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fall-verify/">fall-verify</a></b></td><td>fall-verify · adversarial verification · 3-vote refute panel · did Claude hallucinate?</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fall-vetter/">fall-vetter</a></b></td><td>fall-vetter · drop-in guild signup gate · R2 ┃ validate</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallap/">fallap</a></b></td><td>fallap · sovereign invoice rewriter · PYMNTS hierarchy of convenience · one-click pay</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallaudio/">fallaudio</a></b></td><td>FallAudio · sovereign Audition wedge · record (getUserMedia + MediaRecorder) · waveform · cut/trim/fade/normalize/reverse · gain/speed/lowpass/highpass · WAV+webm export · autopilot · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallcarousel/">fallcarousel</a></b></td><td>fallcarousel · sovereign LinkedIn carousel builder · 1.39x reach format</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallcore/">fallcore</a></b></td><td>FallCore - on-prem brain that learns from your work - Anthropic-API-compatible local proxy + RAG + LoRA loop - reduces frontier-API reliance over time</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallcore-factory/">fallcore-factory</a></b></td><td>FallCore Factory - the factory that mints branded FallCore deployments on demand. Describe your company - download a complete docker-compose stack with cascade, RAG, LoRA loop, signed Konomi licence - all branded.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallenterprise/">fallenterprise</a></b></td><td>AI-Native Transformation for SMBs · sovereign self-hosted LLMs · fine-tuned · MIT · 4 tiers £20k-£200k · Simon Gant</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallfind/">fallfind</a></b></td><td>fallfind · search the sovereign estate · 60+ builds · find the tool that ends your pain</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallflip/">fallflip</a></b></td><td>The mirror · LinkedIn self-promo flip tool · paste their comment, get two responses (your post + theirs). Single HTML · sovereign · data on-device.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallflow/">fallflow</a></b></td><td>fallflow · 14-day cash-runway early-warning · Friday-by-Friday red/green wall</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallform/">fallform</a></b></td><td>Forms · no response cap · ever · sovereign single HTML · obsoletes Typeform/JotForm</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallgravity/">fallgravity</a></b></td><td>LinkedIn algorithm strategy tool · post scorer · hook generator · 90-min boost window · carousel builder · sovereign single HTML · on-device</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallhire/">fallhire</a></b></td><td>fallhire · sovereign hiring pipeline + interview scorecard · single HTML</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallinvoice/">fallinvoice</a></b></td><td>fallinvoice · sovereign single-file invoice + one-click-pay + reminders</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/falllist/">falllist</a></b></td><td>Newsletter · your list · your terms · 0% fee · BYOM (Resend/Postmark/Mailgun/SendGrid) · obsoletes Mailchimp + Substack</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallmage/">fallmage</a></b></td><td>FallMage · sovereign Photoshop wedge · single HTML · open · crop · rotate · resize · filter · text · brush · layers · autopilot · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallmap/">fallmap</a></b></td><td>Paste your workflow · see what a £20k consultant builds · see the sovereign version that does the same for £0 · single HTML · on-device</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallmind/">fallmind</a></b></td><td>FallMind · sovereign self-trained LLM estate · diamond·kappa=1 · 7-ring discipline</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallpdf/">fallpdf</a></b></td><td>FallPDF · sovereign Acrobat wedge · markdown / HTML / text → real PDF · multi-page · headers / footers / page numbers / images · autopilot · single HTML · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallpost/">fallpost</a></b></td><td>Sovereign LinkedIn engine · Jung+Freud+Sales 101 baked in · BYOK cascade · sovereign tone seed</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallreach/">fallreach</a></b></td><td>Sovereign AI SDR. Your hardware. Your keys. Your pipeline.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallscout/">fallscout</a></b></td><td>LinkedIn Intelligence API - scrape, research, craft tailored outreach. Zero wasted small talk.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallslot/">fallslot</a></b></td><td>Share a calendar link · sovereign · single HTML · zero subscription · obsoletes Calendly</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/fallvector/">fallvector</a></b></td><td>FallVector · sovereign Illustrator wedge · pure SVG editor · pen/rect/ellipse/line/text/select · layers · 12-color palette · SVG+PNG export · autopilot · MIT</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/nhs-reinjection/">nhs-reinjection</a></b></td><td>Sovereign single-file calculator. Audited contractor margins × verified outsourced NHS spend → realistic estimate of profit currently extracted from the NHS. With MP letter generator. MIT.</td></tr>
+<tr><td><b><a href="https://sjgant80-hub.github.io/operator/">operator</a></b></td><td>OPERATOR · sovereign single-file management consulting · 5-phase engagement engine · Porter / 7S / BCG / Value-Driver Tree · Minto pyramid deck · audit-chained · Konomi-signed · MIT · McKinsey frameworks without the £1M deck</td></tr>
+</tbody></table></div>
+<div class="note">101 live builds shown, drawn from 1,548 repositories (1,503 public, 45 private). This list is generated from the canonical estate index and every link is checked before publication — it is not a curated selection, and nothing is listed that does not resolve.</div>
+
+<h2><span class="num">13</span>What each part displaces</h2>
+<p class="k">This section is deliberately blunt. For every capability: what it is, what it makes unnecessary, which market it pressures, and what it implies if the pattern holds.</p>
+
+<h3>13.1 · The shared core and conductor</h3>
+<p><b>What it is.</b> One decision routine every tool calls, and one control loop that invokes them.</p>
+<p><b>What it makes unnecessary.</b> Per-tool orchestration logic; the integration middleware between tools; the workflow-automation product bought to make separately-purchased software cooperate.</p>
+<p><b>Pressure.</b> Integration platforms exist because tools were built without a shared contract. Where the contract is shared, that category has nothing to sell.</p>
+<p><b>Implication.</b> Improvement stops being per-product. One change to the core lifts every organ at once, so a small maintainer holds a surface area that would otherwise require a company.</p>
+
+<h3>13.2 · The local-first model cascade</h3>
+<p><b>What it is.</b> Requests descend to the cheapest capable tier; external models are consent-gated and never required.</p>
+<p><b>What it makes unnecessary.</b> Paying frontier prices for routine work; a metered inference bill as a permanent line item; lock-in through an assistant that only functions online.</p>
+<p><b>Pressure.</b> The prevailing AI business model assumes every request is billable. Most requests in a working business are routine — exactly what a small local model handles. That is margin, not capability, being defended.</p>
+<p><b>Implication.</b> Inference follows storage and compute — from metered utility to owned commodity. Durable business moves to what cannot be commoditised: verification, integration and trust.</p>
+
+<h3>13.3 · The browser as the runtime</h3>
+<p><b>What it is.</b> Every tool is one file opened in a tab, with real cryptography, peer-to-peer, near-native compute, local storage and offline operation.</p>
+<p><b>What it makes unnecessary.</b> Installers, app-store distribution and review, container orchestration, server provisioning, deployment pipelines, and the ops function maintaining them for small businesses.</p>
+<p><b>Pressure.</b> A large share of software cost is delivery rather than function. When shipping is publishing a file, that cost approaches zero — and so does the distribution moat built on it.</p>
+<p><b>Implication.</b> Capability decouples from infrastructure spend, and hardware written off as obsolete becomes productive again.</p>
+
+<h3>13.4 · Memory geometry</h3>
+<p><b>What it is.</b> Content-addressed placement, typed relationships, and idle consolidation that improves the knowledge structure without retraining.</p>
+<p><b>What it makes unnecessary.</b> The retrieval stack assembled around a model: the vector database, the embedding pipeline, the re-indexing job, the chunking strategy, and the recurring bill for all four.</p>
+<p><b>Pressure.</b> An entire tooling category exists to make a stateless model appear to remember. It re-fetches raw passages by similarity and never gets sharper. Consolidation attacks the premise rather than the implementation.</p>
+<p><b>Implication.</b> If memory improves structurally without touching weights, the practical frontier shifts from parameter count toward knowledge organisation — dramatically cheaper, local, and yours.</p>
+
+<h3>13.5 · Deterministic verification</h3>
+<p><b>What it is.</b> A gate that alters the source one operator at a time and requires the tests to catch it; a structural rubric; reputation earned by demonstration against a pinned artifact.</p>
+<p><b>What it makes unnecessary.</b> Model-based code review as a primary assurance mechanism; self-reported benchmarks; trust extended on the strength of a brand.</p>
+<p><b>Pressure.</b> Measured: on a codebase that had passed four LLM audit rounds, the gate found a missed boundary in roughly eighteen seconds, deterministically, against about 1.5 million tokens per audit pass.</p>
+<p><b>Implication.</b> As generation cost falls to zero, verification becomes the scarce good and the natural point of value capture — infrastructure for everyone generating code, including competitors.</p>
+
+<h3>13.6 · Signed, budget-bounded agents</h3>
+<p><b>What it is.</b> An agent's cryptographic identity <em>is</em> its capability grant and its spending ceiling; it cannot exceed what it holds.</p>
+<p><b>What it makes unnecessary.</b> Policy guardrails that depend on the agent's cooperation; observability bought to detect overspend after it happens; the committee assembled to authorise autonomy case by case.</p>
+<p><b>Pressure.</b> Most enterprise AI pilots stall because nobody can bound the downside credibly. A structural bound is a different kind of answer from a monitored one.</p>
+<p><b>Implication.</b> Bounded autonomy is the precondition for agents doing real work rather than demonstrations — the piece that makes a high machine-to-human ratio defensible to a board, an auditor or an insurer.</p>
+
+<h3>13.7 · Demonstration-based reputation</h3>
+<p><b>What it is.</b> Skill proved against a pinned artifact and a canonical grader; a self-graded claim dies on re-grade.</p>
+<p><b>What it makes unnecessary.</b> The CV as an assertion; interview theatre as a filter; ratings that measure popularity; vendor benchmarks that cannot be re-run.</p>
+<p><b>Pressure.</b> Hiring, freelance marketplaces, app-store review and procurement all rest on claims nobody can independently reproduce.</p>
+<p><b>Implication.</b> If capability is verified rather than asserted, intermediaries whose business is vouching lose their function — and the same rail serves humans and agents identically, which is what an agent economy requires.</p>
+
+<h3>13.8 · The even-distribution primitive</h3>
+<p><b>What it is.</b> A parameter-free placement rule that provably never clusters, at any count, online.</p>
+<p><b>What it makes unnecessary.</b> Virtual nodes in consistent hashing; hand-tuned jitter for thundering-herd mitigation; spreading heuristics reinvented per system.</p>
+<p><b>Pressure.</b> Measured against standard baselines: load variance 0.32 against 0.93 with one point per server; strided-key hashing 351× tighter than modulo; twice the effective spacing in two dimensions; peak concurrency roughly halved.</p>
+<p><b>Implication.</b> A small provable primitive that removes tuning from four unrelated infrastructure problems ends up inside other people's systems rather than competing with them.</p>
+
+<h3>13.9 · Air-gapped transport and acoustic diagnostics</h3>
+<p><b>What it is.</b> Machines exchanging work as sound with no network stack present — verified by the absence of every network primitive in the source — and diagnosing systems by resonance.</p>
+<p><b>What it makes unnecessary.</b> Network exposure as the price of collaboration; categories of monitoring instrumentation; calibrated inspection equipment for first-pass screening.</p>
+<p><b>Pressure.</b> Security spending assumes a wire to defend; inspection and observability assume dedicated instruments and dashboards.</p>
+<p><b>Implication.</b> "Unhackable over the wire because there is no wire" is categorical rather than probabilistic — and a correlated fault becomes audible while every dashboard reading is still green, measured at 42 ticks before the conventional threshold fired.</p>
+
+<h3>13.10 · Proof-of-work access control</h3>
+<p><b>What it is.</b> Content unlocking only after the client performs real computation — imperceptible to a person, prohibitive at scale.</p>
+<p><b>What it makes unnecessary.</b> Bot-detection subscriptions; rate-limiting that degrades legitimate use; the assumption that publishing means surrendering the corpus.</p>
+<p><b>Pressure.</b> Measured at roughly 30 milliseconds for a human visitor against about 16 CPU-days for a 50-million-page crawler.</p>
+<p><b>Implication.</b> If cost can be imposed on extraction without taxing readers, the economics that made indiscriminate scraping rational are reversed, and publishers regain leverage they currently lack.</p>
+
+<h3>13.11 · Standards compression</h3>
+<p><b>What it is.</b> One self-defining format carrying the major industrial standards as machine-readable types with explicit crosswalks, plus a seven-operator algebra spanning automation levels L0 to L6.</p>
+<p><b>What it makes unnecessary.</b> Bespoke integration work translating between vendor data models; per-project mapping documents; the consultancy that exists to reconcile them.</p>
+<p><b>Pressure.</b> Industrial systems integration is a large, durable services market whose existence depends on incompatibility.</p>
+<p><b>Implication.</b> One algebra describing a sensor and an enterprise ledger equally is what makes an operating system possible rather than a suite — and the piece least likely to be replicated by assembling the same feature list.</p>
+
+<h2><span class="num">14</span>Illustrative economics by industry</h2>
+<p class="k">The figures below are <strong>worked examples on stated assumptions</strong>, not market research and not audited results. They are shown so the arithmetic can be checked and disagreed with. Substitute your own numbers; the structure is the point.</p>
+<p><b>Assumptions used throughout.</b> Mid-market business software is priced per user per month. We assume £30 per seat per month as a mid-range figure across common categories, and separately an AI assistant seat at £20 per user per month. Local inference is treated as £0 marginal cost, since the electricity is already being spent to run the machine. One-off fitting and verification work is not modelled, because it varies more than anything else here.</p>
+
+<div class="tw"><table>
+  <thead><tr><th>Sector</th><th>Typical rented stack</th><th>Illustrative annual licence spend</th><th>What owning changes</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>Accountancy practice</b><br>10 staff</td>
+      <td>Ledger, practice management, document handling, e-signature, AI assistant — 5 tools</td>
+      <td class="n">10 × 5 × £30 × 12 = <b>£18,000</b><br>+ AI 10 × £20 × 12 = £2,400<br><b>≈ £20,400 / yr</b></td>
+      <td>Ledger, practice OS and drafting run as owned organs on existing machines; the recurring line becomes verification and fitting rather than seats.</td>
+    </tr>
+    <tr>
+      <td><b>Legal practice</b><br>6 fee earners</td>
+      <td>Practice management, document assembly, research subscription, AI drafting — 4 tools</td>
+      <td class="n">6 × 4 × £30 × 12 = <b>£8,640</b><br>+ research subscriptions, typically the larger line</td>
+      <td>Drafting and statutory navigation run locally with citations verified and gaps flagged rather than bluffed — the compliance argument, not just the cost one.</td>
+    </tr>
+    <tr>
+      <td><b>Hospitality / small stays</b><br>4 units, 2 staff</td>
+      <td>Channel manager, property management, inbox, invoicing — plus channel commission</td>
+      <td class="n">2 × 4 × £30 × 12 = <b>£2,880</b><br>+ commission at 15% of channel revenue, usually far larger</td>
+      <td>Direct booking with double-bookings caught before confirmation attacks the commission line, which dwarfs the licence line. Deployed today.</td>
+    </tr>
+    <tr>
+      <td><b>Trades / field services</b><br>8 staff</td>
+      <td>Job management, invoicing, accounts, scheduling — 4 tools</td>
+      <td class="n">8 × 4 × £30 × 12 = <b>£11,520</b></td>
+      <td>Offline-first tools on phones already owned; no signal dependency on site, and no per-seat cost as crews change.</td>
+    </tr>
+    <tr>
+      <td><b>Manufacturing / industrial</b><br>mid-size site</td>
+      <td>Historian, HMI/SCADA licensing, integration projects between vendor data models</td>
+      <td class="n">Licensing plus integration engagements, commonly the dominant cost</td>
+      <td>One standards-compression format with crosswalks removes the translation work that integration projects exist to perform.</td>
+    </tr>
+    <tr>
+      <td><b>Any firm using cloud AI</b><br>20 users</td>
+      <td>Assistant seats plus metered API usage plus a retrieval stack</td>
+      <td class="n">20 × £20 × 12 = <b>£4,800</b><br>+ metered API + vector database + embedding and re-indexing</td>
+      <td>Routine requests answered locally at no marginal cost; the retrieval stack is replaced by consolidation rather than re-purchased.</td>
+    </tr>
+  </tbody>
+</table></div>
+<div class="note">What is <em>not</em> claimed: that these totals become zero. Owning a system means paying for the fitting, the hardware you choose, and the verification discipline that makes it trustworthy — and those are real costs. What changes is the <em>shape</em>: a recurring per-head licence that grows with the business is replaced by a mostly one-off cost that does not. The larger prize in several of these sectors is not the licence at all — it is the commission, the integration engagement, or the professional retainer sitting above it.</div>
+
+<h2><span class="num">15</span>If the pattern holds</h2>
+<p>Four consequences follow, and none require anything not already built:</p>
+<ul>
+  <li><b>Software cost approaches zero; verification becomes the asset.</b> Value migrates from producing code to proving it. Whoever holds reproducible proof becomes infrastructure rather than a competitor.</li>
+  <li><b>Inference moves to the edge by economics, not ideology.</b> Routine work handled locally at no marginal cost is simply cheaper, and the hardware requirement keeps falling.</li>
+  <li><b>Agent economies need exactly this rail.</b> Signed identity, hard budgets, verified work and tamper-evident settlement are the minimum for machines transacting with machines. They exist here and they run.</li>
+  <li><b>Privacy stops being a policy and becomes a property.</b> A tool that never needed a server has no server holding your data — checkable in the source rather than promised in a document.</li>
+</ul>
+<div class="note">The honest boundary: this is an operating system, a verification rail and an estate of working tools — not a foundation-model laboratory. It does not out-train the frontier labs and does not try to. The bet is that for the overwhelming majority of real business work, structure, verification and ownership matter more than parameter count — and that bet is already running in production.</div>
+
+
+<h2><span class="num">16</span>Provenance</h2>
+<p>The foundations of this estate are <a href="https://github.com/teslasolar">Thomas Frumkin's</a> work, and the credit is his: the <em>assos</em> line it descends from, the Konomi standard and its fold architecture, Konomi peer-to-peer, the Regulus engine, the guild discipline behind the estate's rubric, and the onlybrains substrate that contribution settles onto.</p>
+<p>On mechanism, for the record: Regulus carries its fork lineage in the repository itself; konomigami and the standard were published as architecture and implemented here with the substrate input credited in each repository. Different mechanisms, one origin — and where a build began as his work it is forked openly rather than reimplemented quietly.</p>
+
+<footer>
+  <strong>Powered by Konomi architecture</strong> · AI Native Solutions · <a href="https://sjgant80-hub.github.io/fall-os/">sjgant80-hub.github.io/fall-os</a><br>
+  Every figure in this document is reproducible from the corresponding public repository. Where a number depends on your hardware or workload, we state the mechanism instead of inventing a figure.
+</footer>
+</div>
+</body></html>
