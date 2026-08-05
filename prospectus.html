@@ -166,27 +166,53 @@
 </table></div>
 
 <h2><span class="num">10</span>Use in practice</h2>
-<div class="two">
-  <div class="box">
-    <h3>Personal</h3>
-    <p>An individual runs their own accounts, correspondence and records without a subscription and without uploading any of it. Legal letters cite real statute and flag what cannot be verified. A knowledge store gets sharper each night rather than becoming a folder nobody searches. Devices sync directly with each other; a lost signal changes nothing.</p>
-    <p style="margin-bottom:0">The distinguishing property is not the feature list — it is that <strong>no third party is present in any of it</strong>.</p>
-  </div>
-  <div class="box">
-    <h3>Business</h3>
-    <p>A small operator runs bookings across every channel with double-booking caught before a guest is confirmed, housekeeping across sites offline, drafted replies grounded strictly in real facts, bookkeeping, and the statutory paperwork — from one conductor, on hardware already owned, with per-seat licensing eliminated.</p>
-    <p style="margin-bottom:0">This is not hypothetical: the pattern is deployed at a live UK glamping estate whose operator runs the business from a phone.</p>
-  </div>
-</div>
-<h3>Tailoring to a specific company</h3>
-<p>Because organs share one contract, fitting the system to a business is configuration and selection rather than bespoke development:</p>
+<p class="k">The same architecture serves a sole trader and a listed group. What changes is not the system — it is how many disconnected things it is asked to unify.</p>
+
+<h3>The enterprise problem this actually solves</h3>
+<p>A mid-size or large organisation does not suffer from a shortage of software. It suffers from thirty systems that were each bought to solve one department's problem and were never designed to speak to one another: a finance stack, a CRM, a document store, three reporting tools inherited through acquisitions, a data warehouse whose refresh nobody trusts, and a growing layer of AI pilots that sit alongside all of it rather than inside it. Integration work never finishes because every new vendor adds another data model, and the AI layer cannot reason across the estate because no two systems agree on what a customer, an invoice or an asset actually is.</p>
+<p>fall-os attacks that at the level the problem lives: <strong>one shared contract every system speaks, and one conductor that reasons across all of them</strong>. Existing systems are not ripped out — they are adapted at the edge, so their logic is untouched and only their decision-making and their data shape are brought onto the common standard. That standard originates in industrial automation, where incompatibility is expensive enough that the problem was solved properly: machine-readable types for the major standards with explicit crosswalks between them.</p>
+
+<div class="tw"><table>
+  <thead><tr><th>Organisation</th><th>The disconnected reality</th><th>What running on this changes</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>Ten-office accountancy firm</b><br><span class="mono">~200 staff</span></td>
+      <td>Practice management in one system, ledgers in another, workpapers on a shared drive, e-signature bolted on, an AI assistant each office adopted separately. Cross-office reporting is a monthly manual exercise.</td>
+      <td>One conductor over every office's data with a single definition of a client and an engagement. Drafting and review run locally, so client material never leaves the firm — which is the compliance argument, not just the cost one. Per-seat licensing across 200 staff stops compounding.</td>
+    </tr>
+    <tr>
+      <td><b>Multinational group</b><br><span class="mono">multi-entity, multi-jurisdiction</span></td>
+      <td>Different ERP instances per region from historic acquisitions, incompatible chart-of-accounts, a consolidation process that is quarterly and painful, and AI pilots that cannot be approved because nobody can bound their spend or their data access.</td>
+      <td>Regional systems adapted onto one contract rather than replaced, so consolidation becomes a query rather than a project. Agents carry signed identities with hard budget ceilings and per-organ authority — the specific thing that lets a board or an auditor approve autonomy at all.</td>
+    </tr>
+    <tr>
+      <td><b>Listed company</b><br><span class="mono">public reporting obligations</span></td>
+      <td>Vendor AI that cannot be audited, no reproducible record of how a figure or a decision was reached, and a data-residency position that depends on a supplier's contract rather than on architecture.</td>
+      <td>Every build passes a reproducible gate anyone can re-run; every decision records what was chosen <em>and</em> what was rejected; inference defaults to owned hardware. The residency answer becomes structural — there is no server holding the data — rather than contractual.</td>
+    </tr>
+    <tr>
+      <td><b>Private mid-market operator</b><br><span class="mono">50–500 staff</span></td>
+      <td>A stack assembled over fifteen years, two systems nobody dares migrate off, and a per-seat bill that grows with every hire regardless of usage.</td>
+      <td>Take the organs that matter, adapt the systems that cannot move, and stop paying per head for software. Anything built for the business passes the same gate as the core, so bespoke work is not the least trustworthy part of the estate.</td>
+    </tr>
+    <tr>
+      <td><b>Individual or sole trader</b></td>
+      <td>Several subscriptions doing what one owned toolset could, and a corpus of their own work accumulating on somebody else's servers.</td>
+      <td>The same system, scaled down: accounts, correspondence, records and knowledge, with no third party present in any of it.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<h3>How an organisation is fitted</h3>
+<p>Because organs share one contract, fitting the system to a company is configuration, adaptation and selection — not a multi-year replacement programme:</p>
 <ul>
-  <li><b>Select the organs.</b> Take bookings and invoicing; leave analytics. Add a third next year. Nothing arrives that was not asked for.</li>
-  <li><b>Fill one canonical set of facts.</b> The business's real details live in a single source that every surface reads, so a fact cannot drift between the website, the inbox and the invoice.</li>
-  <li><b>Set the model policy.</b> Decide which tiers are permitted. A firm handling sensitive material can forbid every external tier and still have a working system.</li>
-  <li><b>Grant autonomy per organ.</b> Each agent's budget and capability are explicit and signed; nothing is granted by default.</li>
-  <li><b>Keep the gate.</b> Anything built for the business passes the same verification as the core, so bespoke work is not less trustworthy than the platform.</li>
+  <li><b>Adapt, do not rip out.</b> Existing engines are wrapped so they call the shared core and register as organs. Their internal logic is untouched; only their decision-making relocates. This is the difference between a migration and a transformation programme.</li>
+  <li><b>One canonical set of facts.</b> The organisation's real definitions live in a single source every surface reads, so a customer, an invoice or an asset cannot mean three different things in three systems.</li>
+  <li><b>Set the model policy centrally.</b> Decide which tiers are permitted. A regulated firm can forbid every external tier and still have a fully working system — the guarantee is structural, so it survives audit.</li>
+  <li><b>Grant autonomy per organ, signed.</b> Each agent's capability and budget ceiling are explicit and cryptographic, and nothing is granted by default.</li>
+  <li><b>Keep the gate on everything.</b> Bespoke work built for the business passes the same verification as the platform, so internal development stops being the weakest link in the assurance story.</li>
 </ul>
+<p class="note">Deployment scales with ambition rather than gating it: the entry tier needs no dedicated hardware at all, and a single local host covers the majority of daily requests for a working team. There is a live production deployment at the small end of this range; the architecture is identical at the large end, because the merge happens at the decision layer rather than per application.</p>
 
 <h2><span class="num">11</span>Commercial model</h2>
 <p>You own what you take. There are no seats, no renewals and no per-user arithmetic; the software is source-available under permissive licence, and what is genuinely scarce — verification, integration into an existing business, and the operating discipline around it — is what is sold.</p>
