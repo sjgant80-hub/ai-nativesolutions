@@ -659,6 +659,32 @@
 <h3>Depth as a dial</h3>
 <p>One further capability worth stating plainly: the conductor's search depth is adjustable. At depth one it expands a set of options and resolves. Increase it and it re-expands from the options it passed over, covering a larger and less redundant region before committing — and because a deeper search is a strict superset of a shallower one, <strong>it can find a better answer but never a worse one</strong>. Practically: turn it up for consequential decisions and leave it low for routine ones, at a cost you control rather than a price someone charges.</p>
 
+<h2><span class="num">12e</span>The clinic — agents that diagnose and improve themselves</h2>
+<p class="k">An organism reads the body it built. This is the part of the estate where an agent is examined against its own record, its weakest capability is identified, and the next generation is biased toward fixing exactly that — with the improvement measured against a blind control rather than asserted.</p>
+
+<h3>How it works</h3>
+<p>An agent's performance is replayed deterministically from a seed. Seven independent detectors read that replay and project it onto the agent's capability axes — each detector grounded in the engine's own state transitions rather than in labels imposed from outside. The axis that scores worst is the agent's <strong>shadow</strong>: its weakest real capability, identified from evidence rather than self-report.</p>
+<p>That shadow then does work. Remediation biases the next generation in proportion to the shadow histogram, and selection scores fitness as performance <em>minus</em> the amplitude of the remaining weakness — so an agent cannot win by being strong on average while carrying a severe blind spot. Over generations, the frequency with which any given axis is the weakest one declines.</p>
+
+<div class="box">
+  <h3>The measurement, with a control</h3>
+  <p>The claim is falsifiable and was falsified properly: the remediation arm was run against a <strong>blind control</strong> arm that selects without reading the shadow. The therapy arm drove population shadow down to <strong>0.18 against the control's 0.04</strong> movement, reproducibly across seeds.</p>
+  <p style="margin-bottom:0">It also has a <strong>phase transition</strong>, which is the honest and more interesting finding: below a threshold of population size and remediation strength, the therapy does not heal at all. Above it, the therapy arm beats the blind control on every seed tested. The shipped defaults are pinned above that transition, so the effect is cold-reproducible rather than a lucky configuration.</p>
+</div>
+
+<h3>Memory as compression, not storage</h3>
+<p>The clinic keeps a lifetime journal that is <em>minted, not reset</em>. It does not retain the raw record of every episode — it compresses each one into a single lesson and keeps that. The raw experience fades; the instinct remains. This is the same principle as the memory layer elsewhere in the estate, applied to an agent's own competence: what persists is the correction, not the transcript.</p>
+
+<h3>Why this matters commercially</h3>
+<ul>
+  <li><b>Self-improving agents with evidence.</b> Not "the model gets better over time" as a marketing line — a specific weakness identified from replay, a remediation applied, and a measured decline in that weakness against a control arm.</li>
+  <li><b>It closes the loop the rest of the system opens.</b> The build gate proves code is correct; the clinic proves an <em>agent</em> is improving. Structure and behaviour, both verified.</li>
+  <li><b>Weakness cannot be averaged away.</b> Because fitness subtracts the shadow, an agent that performs well overall while failing badly on one axis is scored down — which is precisely the failure mode that makes autonomous systems unsafe to deploy.</li>
+  <li><b>A negative result is retained, not buried.</b> The phase transition means the honest answer to "does this always work?" is no — it works above a stated threshold, and the threshold is published.</li>
+</ul>
+<p class="note" style="margin-top:14px">Live: <a href="https://sjgant80-hub.github.io/fallkard/clinic.html">the clinic</a> · deterministic, reproducible from seed, and readable in the browser.</p>
+
+
 <h2><span class="num">13</span>What each part displaces</h2>
 <p class="k">This section is deliberately blunt. For every capability: what it is, what it makes unnecessary, which market it pressures, and what it implies if the pattern holds.</p>
 

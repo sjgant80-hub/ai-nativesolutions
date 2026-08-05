@@ -170,6 +170,21 @@
   </div>
 </section>
 
+<section class="slide" id="s7c">
+  <div class="n">06c · The clinic</div>
+  <h2>Agents that find their own <em>weakest point.</em></h2>
+  <p class="big">An agent's performance is replayed deterministically from a seed. Seven detectors read that replay and project it onto the agent's capability axes, grounded in the engine's own state transitions rather than labels applied from outside. The worst-scoring axis is the agent's <strong>shadow</strong> — its real weakness, identified from evidence, not self-report.</p>
+  <p class="big">Then the shadow does work: remediation biases the next generation in proportion to it, and fitness is scored as performance <strong>minus</strong> the weakness that remains. An agent cannot win by being strong on average while carrying a severe blind spot — which is exactly the failure mode that makes autonomy unsafe to deploy.</p>
+  <ul>
+    <li><b>Measured against a blind control</b> — the therapy arm drove population shadow to 0.18 against the control's 0.04, reproducibly across seeds.</li>
+    <li><b>With a published phase transition</b> — below a threshold of population and remediation strength it does not heal at all; above it, it beats the control on every seed. Defaults ship above that line, so the result is cold-reproducible.</li>
+    <li><b>Memory as compression</b> — the lifetime journal is minted, not reset: each episode compresses to one lesson. The raw record fades, the correction remains.</li>
+    <li><b>It closes the loop</b> — the build gate proves the code is correct; the clinic proves the agent is improving. Structure and behaviour, both verified.</li>
+  </ul>
+  <p class="note" style="margin-top:20px">The honest answer to "does it always work?" is no — it works above a stated threshold, and the threshold is published rather than hidden.</p>
+</section>
+
+
 <section class="slide" id="s7b">
   <div class="n">06b · Governance &amp; safety</div>
   <h2>Four gates, and an agent that <em>cannot overspend.</em></h2>
