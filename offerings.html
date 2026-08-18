@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Offerings — AI Native Solutions</title>
+<meta name="description" content="Sovereign local-first AI systems, built and handed over. One-off, you own the source, nothing recurring. Five tiers from a readiness audit to an enterprise system, and the technical stack behind every one.">
+<meta name="theme-color" content="#0a0a0a">
+<style>
+:root{
+  --bg:#0a0a0a; --surface:#141414; --surface-2:#1a1a18; --border:#1a1a1a;
+  --text:#e8e6e3; --muted:#888; --gold:#d4a017; --amber:#e8a012;
+  --success:#44aa44; --danger:#cc3333; --info:#6a9aff; --cream:#e6e1d3;
+  --brass:#b8974a; --dim:#666; --void:#060606; --max:1280px;
+  --mono:'DM Mono',ui-monospace,monospace;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+  font-size:16px;line-height:1.65;-webkit-text-size-adjust:100%}
+a{color:var(--gold)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+.narrow{max-width:820px}
+
+header{border-bottom:1px solid var(--border);background:var(--void);position:sticky;top:0;z-index:10}
+header .wrap{display:flex;align-items:center;gap:18px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+header .mark{font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream)}
+header .mark b{color:var(--gold)}
+header nav{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}
+header nav a{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);text-decoration:none}
+header nav a:hover{color:var(--gold)}
+
+.hero{padding:clamp(46px,9vw,96px) 0 clamp(26px,5vw,48px)}
+h1{font-family:var(--serif);font-size:clamp(34px,6vw,68px);line-height:1.04;letter-spacing:-.025em;margin:0 0 20px;font-weight:600}
+.hero .stand{font-size:clamp(17px,2.4vw,21px);color:var(--cream);max-width:60ch;margin:0 0 14px;line-height:1.55}
+.hero .sub{color:var(--muted);max-width:62ch;margin:0}
+.hero .sub b{color:var(--text);font-weight:600}
+
+section{padding:clamp(34px,5vw,64px) 0;border-top:1px solid var(--border)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin-bottom:12px}
+h2{font-family:var(--serif);font-size:clamp(25px,3.6vw,38px);line-height:1.14;letter-spacing:-.018em;margin:0 0 14px;font-weight:600}
+h3{font-family:var(--sans);font-size:17px;margin:0 0 6px;font-weight:650}
+p{margin:0 0 14px;color:var(--muted);max-width:70ch}
+p b,li b{color:var(--text);font-weight:600}
+p.lede{color:var(--cream);font-size:17.5px;max-width:64ch}
+
+.tiers{display:grid;gap:14px;margin-top:26px}
+.tier{border:1px solid var(--border);border-left:3px solid var(--brass);border-radius:6px;
+  background:var(--surface);padding:20px 22px;display:grid;gap:8px}
+.tier.pick{border-left-color:var(--gold);background:var(--surface-2)}
+.tier .top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.tier .n{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.tier.pick .n{color:var(--gold)}
+.tier .t{font-family:var(--serif);font-size:23px;font-weight:600;letter-spacing:-.01em}
+.tier .when{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--dim);white-space:nowrap}
+.tier .who{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.tier p{margin:0;max-width:66ch}
+.tier .has{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+.tier .has span{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--border);
+  border-radius:99px;padding:2px 10px;background:var(--void)}
+.flag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--brass);border-radius:3px;padding:1px 7px}
+
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));margin-top:22px}
+.card{border:1px solid var(--border);border-radius:6px;background:var(--surface);padding:17px 19px}
+.card h3{color:var(--cream)}
+.card p{font-size:14.5px;margin:0}
+
+table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14.5px;display:block;overflow-x:auto;white-space:nowrap}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);font-weight:400}
+td{color:var(--muted)} td:first-child{color:var(--text)}
+td code{font-family:var(--mono);font-size:13px;color:var(--info)}
+
+ul{margin:0 0 14px;padding-left:20px;color:var(--muted);max-width:70ch}
+li{margin-bottom:8px}
+
+.rule{border:1px solid var(--brass);border-radius:6px;background:var(--surface-2);padding:18px 20px;margin-top:22px}
+.rule .k{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.rule p:last-child{margin-bottom:0}
+.warn{border-color:var(--danger)} .warn .k{color:var(--danger)}
+
+.order{display:grid;gap:11px;margin-top:22px;counter-reset:step}
+.step{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;border:1px solid var(--border);
+  border-radius:6px;background:var(--surface);padding:15px 18px}
+.step .no{font-family:var(--mono);font-size:12px;color:var(--brass);border:1px solid var(--border);
+  border-radius:50%;width:28px;height:28px;display:grid;place-items:center;flex:0 0 auto}
+.step.done{border-color:var(--success)}
+.step.done .no{color:var(--success);border-color:var(--success)}
+.step .s{font-size:14.5px;color:var(--muted);margin-top:3px}
+
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.cta a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+  border-radius:5px;padding:12px 20px;border:1px solid var(--brass);color:var(--gold)}
+.cta a.solid{background:var(--gold);color:var(--void);border-color:var(--gold);font-weight:700}
+.cta a:hover{filter:brightness(1.12)}
+
+footer{border-top:1px solid var(--border);background:var(--void);padding:26px 0;margin-top:20px}
+footer .wrap{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline}
+footer span,footer a{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="mark">AI NATIVE <b>SOLUTIONS</b></span>
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./fallos.html">fall-os</a>
+      <a href="./prospectus.html">Prospectus</a>
+      <a href="./deck.html">Deck</a>
+      <a href="https://sjgant80-hub.github.io/contact/">Talk</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap narrow">
+
+  <div class="hero">
+    <h1>AI systems that run on your machines.</h1>
+    <p class="stand">No cloud. No subscriptions. No data leaving your network. You own the source,
+      it is built and handed over, and it keeps working after I have gone.</p>
+    <p class="sub">Judge the work, not a CV. Everything below was built the same way, and it is
+      <b>running</b> — you can open it, read it, and check it yourself before we ever speak.</p>
+    <div class="cta">
+      <a class="solid" href="https://sjgant80-hub.github.io/acg-mapper/">Start with the audit</a>
+      <a href="https://sjgant80-hub.github.io/contact/">Talk it through</a>
+    </div>
+  </div>
+
+</div>
+
+<section>
+  <div class="wrap narrow">
+    <div class="eyebrow">The position</div>
+    <h2>Software is going to zero. Own the system instead.</h2>
+    <p class="lede">Renting software means paying forever for something you never come to own, with
+      your data sitting on somebody else's hardware and your costs rising as you use it more.</p>
+    <p>The alternative is not cheaper software. It is <b>owned</b> software: built once, handed over
+      with the source, running on machines you control. There is no vendor to be locked into, because
+      after handover there is no vendor — there is your team and your code.</p>
+    <p>That means the relationship is <b>build → transfer → leave</b>. Anything recurring afterwards
+      is advice you can stop, never access to what was delivered.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <div class="eyebrow">What you get</div>
+    <h2>Five tiers, one stack.</h2>
+    <p>Each tier is the same technical foundation at a larger scope. Every one is one-off: unminified
+      source, offline deployment packages and walkthroughs transferred to you at the end.</p>
+
+    <div class="tiers">
+
+      <div class="tier">
+        <div class="top">
+          <span class="n">Tier 0</span>
+          <span class="t">Sovereign-readiness audit</span>
+          <span class="when">fixed fee</span>
+        </div>
+        <div class="who">for anybody · the way in</div>
+        <p>A map of where your current stack leaks data, where it costs you money every month, and
+          where it locks you in — and what the local-first replacement for each piece looks like.
+          Low commitment, and it stands on its own whether or not anything is built afterwards.</p>
+        <div class="has"><span>data-exposure map</span><span>recurring-cost inventory</span><span>lock-in points</span><span>replacement plan</span></div>
+      </div>
+
+      <div class="tier">
+        <div class="top">
+          <span class="n">Tier 1</span>
+          <span class="t">Core tool</span>
+          <span class="when">about 2 weeks</span>
+        </div>
+        <div class="who">for solo operators and small businesses</div>
+        <p>One sovereign AI tool, built for a job you actually do. Runs in a browser from a file,
+          stores everything on the device, and uses either your own AI key or a model on your own
+          machine — your choice, switchable.</p>
+        <div class="has"><span>single file</span><span>local storage</span><span>works offline</span><span>your key or your model</span></div>
+      </div>
+
+      <div class="tier pick">
+        <div class="top">
+          <span class="n">Tier 2</span>
+          <span class="t">Operating suite</span>
+          <span class="when">about 4–5 weeks</span>
+        </div>
+        <div class="who">for small and mid-sized businesses <span class="flag">most people start here</span></div>
+        <p>Three connected tools over one shared local store, with the AI able to read and act on your
+          real operational data through structured tools rather than guessing at it. Falls back to a
+          model running on your own hardware when you would rather not spend.</p>
+        <div class="has"><span>3 connected tools</span><span>shared local store</span><span>AI tool-calling</span><span>local model fallback</span></div>
+      </div>
+
+      <div class="tier">
+        <div class="top">
+          <span class="n">Tier 3</span>
+          <span class="t">Sovereign system</span>
+          <span class="when">about 8 weeks</span>
+        </div>
+        <div class="who">for corporates</div>
+        <p>A full custom suite, plus devices syncing directly to each other with no server in between,
+          and validation that lets one person's export be checked by another's machine without either
+          trusting a central authority.</p>
+        <div class="has"><span>full suite</span><span>device-to-device sync</span><span>no server</span><span>cross-team validation</span></div>
+      </div>
+
+      <div class="tier">
+        <div class="top">
+          <span class="n">Tier 4</span>
+          <span class="t">Enterprise</span>
+          <span class="when">scoped per engagement</span>
+        </div>
+        <div class="who">for enterprise procurement</div>
+        <p>Everything in Tier 3, plus models tuned on your own data on your own hardware, architecture
+          advisory, and delivery by a team working to one shared standard — with verifiable provenance
+          on every component, which is what procurement actually needs to sign off.</p>
+        <div class="has"><span>local fine-tuning</span><span>full mesh</span><span>architecture advisory</span><span>verified provenance</span></div>
+      </div>
+
+    </div>
+
+    <div class="rule">
+      <div class="k">On every tier, without exception</div>
+      <p>One-off cost. You receive the unminified source, offline deployment packages and video
+        walkthroughs. <b>There is no recurring licence and no rented access to what was delivered.</b>
+        If you later want a retainer, a re-audit or advisory time, that is a service you can cancel —
+        and cancelling it leaves everything you own still working.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <div class="eyebrow">Why the timelines are real</div>
+    <h2>Assembled from proven parts, not written from scratch.</h2>
+    <p>A two-week build sounds impossible if every project starts at an empty folder. These do not.
+      Each engagement assembles pieces that already exist and have already been tested to destruction,
+      and adds only the part specific to you.</p>
+
+    <div class="grid">
+      <div class="card"><h3>The reasoning layer</h3><p>The agent that reads your input, lays out the options and shows what it set aside. Drops in whole.</p></div>
+      <div class="card"><h3>The AI layer</h3><p>Works with no AI at all, with a model on your machine, or with your own paid key — and tells you which it used, every time.</p></div>
+      <div class="card"><h3>The storage layer</h3><p>The device holds the primary copy. Writes never wait on a network, and everything keeps working with the connection off.</p></div>
+      <div class="card"><h3>The verification layer</h3><p>Signed records and append-only logs, so what happened can be re-checked later by anyone, including you.</p></div>
+      <div class="card"><h3>The knowledge layer</h3><p>Your own material, searchable and usable by the AI, held locally rather than uploaded.</p></div>
+      <div class="card"><h3>The packaging layer</h3><p>Whole working tools that travel as a single file, and portals generated from what is actually there.</p></div>
+    </div>
+
+    <p style="margin-top:20px">Each build adds its client-specific piece back to that library, so the
+      next one starts further along. <b>The delivery gets faster, and the price does not have to go up
+      to match.</b></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <div class="eyebrow">The technical position</div>
+    <h2>The browser is the computer. There is no backend.</h2>
+    <p>This is the part that makes the promise keepable. If a delivered tool needed a server of mine
+      to run, "you own it and I leave" would be a fiction — so nothing is built that way.</p>
+
+    <table>
+      <thead><tr><th>What you need</th><th>How it is done</th><th>What that removes</th></tr></thead>
+      <tbody>
+        <tr><td>It keeps your data</td><td>Stored on the device itself, in the browser</td><td>No database server, no hosting bill, no breach of somebody else's cloud</td></tr>
+        <tr><td>It works offline</td><td>Installed like an app; the network is optional</td><td>No downtime when a provider has an outage</td></tr>
+        <tr><td>It uses AI</td><td>Your own key, or a model running on your hardware</td><td>No per-seat AI subscription; <b>keys never leave your browser</b></td></tr>
+        <tr><td>Several people use it</td><td>Devices talk directly to each other</td><td>No sync server, no per-user pricing</td></tr>
+        <tr><td>You can trust the output</td><td>Signed, append-only records anyone can re-check</td><td>No "trust us" — the receipts are yours</td></tr>
+        <tr><td>It is provably tested</td><td>The tests are attacked to prove they catch real faults</td><td>No green tick that means nothing</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <div class="eyebrow">Why it cannot simply be copied</div>
+    <h2>Anyone can say local-first. Proving it is the hard part.</h2>
+    <ul>
+      <li><b>The library.</b> A competitor starting from zero quotes months for what assembles here in weeks. That gap widens with every engagement.</li>
+      <li><b>Proof rather than claims.</b> Every component's tests are run on neutral hardware, from a fresh copy, with no credentials — so the result is something you can reproduce, not something you have to take on faith.</li>
+      <li><b>It joins up.</b> Systems delivered to different clients can be made to work together without either party giving up control of their own data.</li>
+      <li><b>One standard.</b> A distributed team producing interchangeable, independently checkable work is what makes enterprise delivery possible without becoming a body shop.</li>
+    </ul>
+    <p>Every delivery carries a verification you can run <b>yourself, on your own hardware</b>. Not a
+      certificate somebody issued — a check you perform.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <div class="eyebrow">Where this is up to</div>
+    <h2>Built in order, simplest first.</h2>
+    <div class="order">
+      <div class="step done"><span class="no">✓</span><div><h3>The showcase</h3><div class="s">A working sovereign system, live and open, so the claims can be checked before anybody talks to me.</div></div></div>
+      <div class="step done"><span class="no">✓</span><div><h3>The audit</h3><div class="s">The readiness diagnostic exists and runs — paste in how you work now and see where you actually stand.</div></div></div>
+      <div class="step"><span class="no">3</span><div><h3>The first delivery</h3><div class="s">One real client tool, end to end, becoming both a case study and the next reusable piece of the library.</div></div></div>
+      <div class="step"><span class="no">4</span><div><h3>The library, formalised</h3><div class="s">The reusable pieces packaged properly, so a Tier 1 build drops from weeks toward days.</div></div></div>
+      <div class="step"><span class="no">5</span><div><h3>Team delivery</h3><div class="s">Role-based delivery and verifiable provenance, once there is enough demand to need it. Not before.</div></div></div>
+    </div>
+    <p style="margin-top:20px">Enterprise is last on purpose. A tier that cannot be delivered honestly
+      is not an offering, it is a brochure.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <div class="eyebrow">The honest wire</div>
+    <h2>What is true, and what is not claimed.</h2>
+
+    <div class="rule">
+      <div class="k">Guarantees</div>
+      <ul style="margin-bottom:0">
+        <li>The build is one-off and you receive the source, unminified.</li>
+        <li>It runs on your machines. Nothing delivered depends on a server of mine.</li>
+        <li>AI keys stay in your browser and go only to whoever issued them. They are never sent to me, because there is nowhere for them to be sent.</li>
+        <li>Anything recurring is advice you can stop. Stopping it does not switch anything off.</li>
+      </ul>
+    </div>
+
+    <div class="rule warn">
+      <div class="k">Not claimed</div>
+      <ul style="margin-bottom:0">
+        <li>This is not financial or legal advice, and it is not a regulated service.</li>
+        <li>Timelines are what the existing library can genuinely hit for a scoped build. An unscoped one gets scoped first, at Tier 0.</li>
+        <li>Team delivery is offered only where role-based delivery is genuinely in place, not as a label on solo work.</li>
+        <li>Local models are capable but not identical to the largest hosted ones. Where that difference matters, it gets said before the build, not after.</li>
+      </ul>
+    </div>
+
+    <div class="cta">
+      <a class="solid" href="https://sjgant80-hub.github.io/acg-mapper/">Find where you stand</a>
+      <a href="https://sjgant80-hub.github.io/contact/">Get in touch</a>
+      <a href="./prospectus.html">Read the detail</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>AI Native Solutions</span>
+    <a href="./index.html">Home</a>
+    <a href="./fallos.html">fall-os</a>
+    <a href="https://sjgant80-hub.github.io/contact/">Contact</a>
+    <span>Built and handed over. You own it.</span>
+  </div>
+</footer>
+
+</body>
+</html>
