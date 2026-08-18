@@ -96,6 +96,30 @@ li{margin-bottom:8px}
 .cta a.solid{background:var(--gold);color:var(--void);border-color:var(--gold);font-weight:700}
 .cta a:hover{filter:brightness(1.12)}
 
+
+.live{border:1px solid var(--border);border-radius:6px;background:var(--surface);padding:18px 20px;margin-top:22px}
+.live textarea{width:100%;background:var(--void);border:1px solid var(--border);border-radius:5px;color:var(--text);
+  font-family:var(--sans);font-size:15.5px;line-height:1.6;padding:13px 15px;resize:vertical}
+.liverow{display:flex;align-items:center;gap:14px;margin-top:12px;flex-wrap:wrap}
+.liverow button{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  background:var(--gold);color:var(--void);border:none;border-radius:5px;padding:12px 22px;cursor:pointer}
+.liverow button:hover{filter:brightness(1.12)}
+.liverow button:disabled{background:var(--surface-2);color:var(--dim);cursor:default}
+.proof{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-left:auto}
+.proof b{color:var(--success)}
+#out{margin-top:16px}
+.opt{border:1px solid var(--border);border-left:3px solid var(--brass);border-radius:5px;background:var(--void);
+  padding:13px 16px;margin-bottom:9px}
+.opt.best{border-left-color:var(--gold)}
+.opt.aside{border-left-color:var(--dim);opacity:.72}
+.opt .h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.opt .n{font-weight:650;font-size:15.5px;color:var(--cream)}
+.opt .sc{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+.opt .m{color:var(--muted);font-size:14.5px;margin-top:4px}
+.opt .cue{font-family:var(--mono);font-size:11.5px;color:var(--brass);margin-top:6px}
+.opt .cue.against{color:var(--dim)}
+h4.split{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);
+  margin:20px 0 10px;font-weight:400}
 footer{border-top:1px solid var(--border);background:var(--void);padding:26px 0;margin-top:20px}
 footer .wrap{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline}
 footer span,footer a{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
@@ -277,6 +301,36 @@ footer span,footer a{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
   </div>
 </section>
 
+
+<section id="try">
+  <div class="wrap narrow">
+    <div class="eyebrow">Not a claim &mdash; try it</div>
+    <h2>This page runs the same engine I would build you.</h2>
+    <p class="lede">Everything above says the systems run on your own machine with no server and no
+      account. Rather than ask you to believe that, the box below <b>is</b> one &mdash; running here,
+      in your browser, right now.</p>
+    <p>Describe something you are actually weighing up &mdash; a system you are thinking of replacing,
+      a decision you are stuck on. It will read your own words, lay out the ways it could go, and
+      show you the ones it set aside and why.</p>
+
+    <div class="live">
+      <textarea id="ask" rows="4" placeholder="e.g. we pay for four SaaS tools, our data sits on their servers, and renewal is in March &mdash; but migrating is risky and we are short-handed"></textarea>
+      <div class="liverow">
+        <button id="go" type="button">Think it through</button>
+        <span class="proof" id="proof">no key &middot; no account &middot; nothing leaves this tab</span>
+      </div>
+      <div id="out"></div>
+    </div>
+
+    <div class="rule">
+      <div class="k">What just happened</div>
+      <p id="what">Nothing yet &mdash; but note the page has not asked you to sign in, and will not.
+        When you press the button, no request goes anywhere: the reasoning happens in this tab, on
+        your hardware. Open your network tab and watch if you like.</p>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="wrap narrow">
     <div class="eyebrow">Why it cannot simply be copied</div>
@@ -350,6 +404,448 @@ footer span,footer a{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
     <span>Built and handed over. You own it.</span>
   </div>
 </footer>
+
+
+<script type="module">
+const { GOLDEN_DEG, KAPPA, PHI, collapse, fork, h16, hold, makeCache, move, organ } = (() => {
+// core.mjs — LIVEWARE · THE ONE MOVE, as shared DNA.
+//
+// Every organ built this window is the SAME operation aimed at a different target:
+//   hold possibility open  →  fork on the golden offset (so branches diverge, not cluster)
+//   →  resolve at the κ-gate (≥κ holds, <κ clashes)  →  collapse DELIBERATELY (never auto)
+//   →  cache by content (run(S)==S, build once).
+// The Oracle (future), re-collapse (past) and the generative estate (build-space) are this
+// one move with a different (generate, score, choose) injected. Build the core once; the
+// organs are its expressions. Generators/scorers are INJECTED so the core stays pure,
+// deterministic and gated — the gated logic IS the live logic.
+
+const PHI = (1 + Math.sqrt(5)) / 2;              // golden ratio
+const KAPPA = 1 / PHI;                           // ≈ 0.6180339887 — the collapse threshold (1/φ)
+const GOLDEN_DEG = 360 / (PHI * PHI);            // ≈ 137.5077640 — the divergence offset (golden angle)
+
+const clamp01 = x => (x < 0 ? 0 : (x > 1 ? 1 : x));
+
+// ── content address: deterministic FNV-1a ×2 → 16 hex (the estate's h16). Same content ⇒ same key. ──
+function h16(s) {
+  s = String(s);
+  let a = 0x811c9dc5 >>> 0, b = 0x9e3779b9 >>> 0;
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i);
+    a = Math.imul(a ^ c, 0x01000193) >>> 0;
+    b = Math.imul((b ^ c) >>> 0, 0x85ebca6b) >>> 0;
+    b = ((b << 13) | (b >>> 19)) >>> 0;
+  }
+  return (b >>> 0).toString(16).padStart(8, '0') + (a >>> 0).toString(16).padStart(8, '0');
+}
+
+// ── FORK: generate N DIVERGENT branches. Branch i is seeded at angle i·137.5° so the branches
+//    spread across the space instead of clustering near the obvious (the three-gap property of the
+//    golden angle). `generate(i, theta)` is injected — it turns an index+angle into a candidate. ──
+function fork(n, generate, { seed = 0 } = {}) {
+  const k = Math.max(0, Math.floor(n));
+  const out = [];
+  for (let i = 0; i < k; i++) {
+    const theta = (((seed + i) * GOLDEN_DEG) % 360 + 360) % 360;
+    out.push({ i, theta, value: generate(i, theta) });
+  }
+  return out;
+}
+
+// ── HOLD: keep the branches un-collapsed, each SCORED but not chosen. `score(value) → [0,1]`.
+//    A branch HOLDS iff its score ≥ κ, else it CLASHES. Nothing is decided here — possibility is
+//    held open, side by side. This is the dream state: everything at once, nothing collapsed. ──
+function hold(branches, score) {
+  return branches.map(b => {
+    const s = clamp01(Number(score(b.value)));
+    return { i: b.i, theta: b.theta, value: b.value, score: s, holds: s >= KAPPA };
+  });
+}
+
+// ── COLLAPSE: DELIBERATE. Surfaces the branches that HOLD (best first) AND the roads-not-taken
+//    (the clashed branches — KEPT, not discarded: this is the L6 "shadow", the un-collapsed
+//    complement, made queryable). It NEVER auto-decides: a winner is chosen only if an `author`
+//    function is supplied (VERIFY, or a person). Without an author, collapse PRESENTS the field
+//    and `decided` is false. This is the load-bearing safety — the collapse is authored. ──
+function collapse(held, author = null) {
+  const holds = held.filter(b => b.holds).slice().sort((a, b) => b.score - a.score || a.i - b.i);
+  const roads = held.filter(b => !b.holds).slice().sort((a, b) => b.score - a.score || a.i - b.i);
+  let chosen = null;
+  if (typeof author === 'function') { const c = author(holds, roads); chosen = (c === undefined ? null : c); }
+  return { holds, roads, chosen, decided: chosen !== null };
+}
+
+// ── CACHE: content-addressed. run(S)==S — the same spec collapses ONCE, then replays. ──
+function makeCache() {
+  const m = new Map();
+  return {
+    has: k => m.has(h16(k)),
+    get: k => m.get(h16(k)),
+    once: (k, produce) => { const key = h16(k); if (!m.has(key)) m.set(key, produce()); return m.get(key); },
+    size: () => m.size,
+    keys: () => [...m.keys()],
+  };
+}
+
+// ── THE ONE MOVE, composed. hold-open → fork(golden) → hold(resolve) → collapse(authored).
+//    Optionally cached by content so a given spec builds once. This function IS the framework in
+//    one call; an organ is a choice of (generate, score, author) plus a target `spec`. ──
+function move(spec, { n = 8, generate, score, author = null, cache = null, seed = 0 } = {}) {
+  if (typeof generate !== 'function') throw new TypeError('move: generate(i,theta) is required');
+  if (typeof score !== 'function') throw new TypeError('move: score(value) is required');
+  const run = () => collapse(hold(fork(n, generate, { seed }), score), author);
+  return cache ? cache.once(String(spec) + '|n=' + n + '|seed=' + seed, run) : run();
+}
+
+// ── an ORGAN = the one move with a fixed (generate, score, author) triple, aimed at a target.
+//    This is how the past/present/future organs are the same DNA differently expressed. ──
+function organ({ generate, score, author = null, n = 8 }) {
+  const cache = makeCache();
+  return {
+    run: (spec, opts = {}) => move(spec, { n, generate, score, author, cache, ...opts }),
+    cache,
+  };
+}
+
+
+return { GOLDEN_DEG, KAPPA, PHI, collapse, fork, h16, hold, makeCache, move, organ };
+})();
+
+const { cast, castShadow, describe, makeIndex, ranked, recurring, related, resurrect, shadowsOf, twinsOf } = (() => {
+// shadow.mjs — THE SHADOW-INDEX · catch the un-collapsed 99%.
+//
+// Every collapse casts a shadow: the roads-not-taken the core already keeps but that otherwise
+// evaporate. This organ CATCHES them — content-addresses each un-collapsed branch (so the same
+// branch forked-toward across DIFFERENT decisions dedupes and counts up), and runs a recurrence
+// detector: the branch you keep circling but never commit to is the signal for the next build.
+//
+// Zero myth: "keep the roads-not-taken, address them, count them, search them." Zero new compute:
+// a COLLECTOR on outputs the Oracle / re-collapse / generative estate already produce and discard.
+// It imports only the core's content-address (h16) — a REMEMBER-adjacent organ of the one body.
+
+function makeIndex() { return { shadows: new Map(), order: [] }; }
+
+// a branch → stable text → its content address. (collapse roads carry {value:{label,...}}.)
+function describe(branch) {
+  if (typeof branch === 'string') return branch;
+  if (branch && branch.value !== undefined) return (branch.value && branch.value.label) ? String(branch.value.label) : JSON.stringify(branch.value);
+  return JSON.stringify(branch);
+}
+
+// CAST one un-collapsed branch, tagged by the decision that cast it. Dedupes by content:
+// the same branch from a DIFFERENT decision ⇒ +1 distinct context ⇒ times_shadowed rises.
+function cast(idx, branch, decision) {
+  const desc = describe(branch), id = h16(desc), dec = String(decision);
+  let e = idx.shadows.get(id);
+  if (!e) { e = { id, branch: desc, first_seen_at: dec, contexts: [], times_shadowed: 0, related: [] }; idx.shadows.set(id, e); idx.order.push(id); }
+  if (!e.contexts.includes(dec)) e.contexts.push(dec);   // count DISTINCT decisions, not repeats
+  e.times_shadowed = e.contexts.length;
+  return e;
+}
+
+// CAST the whole shadow of one collapse() — every road-not-taken becomes a shadow of `decision`,
+// recorded as siblings (related). THIS is the hook every organ wires to; it invents nothing.
+function castShadow(idx, collapsed, decision) {
+  const roads = (collapsed && collapsed.roads) ? collapsed.roads : [];
+  const cast_ = roads.map(r => cast(idx, r, decision));
+  const ids = cast_.map(e => e.id);
+  for (const e of cast_) for (const sib of ids) if (sib !== e.id && !e.related.includes(sib)) e.related.push(sib);
+  return cast_;
+}
+
+// RECURRENCE — the payoff. Rank shadows by the number of DISTINCT decisions that forked toward
+// them; ≥ threshold across different decisions = a pattern = the un-collapsed next-build signal.
+function recurring(idx, threshold = 3) {
+  return [...idx.shadows.values()]
+    .filter(e => e.times_shadowed >= threshold)
+    .sort((a, b) => b.times_shadowed - a.times_shadowed || a.branch.localeCompare(b.branch));
+}
+function ranked(idx) {
+  return [...idx.shadows.values()].sort((a, b) => b.times_shadowed - a.times_shadowed || a.branch.localeCompare(b.branch));
+}
+
+// QUERY — mine the shadow (it's a library, not a graveyard).
+const shadowsOf = (idx, decision) => [...idx.shadows.values()].filter(e => e.contexts.includes(String(decision)));   // "what did I nearly build HERE"
+function twinsOf(idx, branch) { const e = idx.shadows.get(h16(describe(branch))); return e ? e.related.map(id => idx.shadows.get(id)).filter(Boolean) : []; }  // "the un-collapsed twin of X"
+function related(idx, id) { const e = idx.shadows.get(id); return e ? e.related.map(r => idx.shadows.get(r)).filter(Boolean) : []; }
+
+// RESURRECT — promote a shadow back to a live possibility-spec, to hand to the generative estate.
+function resurrect(idx, id) {
+  const e = idx.shadows.get(id);
+  return e ? { spec: e.branch, from: 'shadow:' + id, forked_toward: e.times_shadowed, contexts: e.contexts.slice() } : null;
+}
+
+
+return { cast, castShadow, describe, makeIndex, ranked, recurring, related, resurrect, shadowsOf, twinsOf };
+})();
+
+const { conduct, makeDidy, organsFor, register, train } = (() => {
+// didy.mjs — DIDY, the ONE conductor of fall-os (the nervous system).
+//
+// An OS is not 20 tools stuck together: it's ONE core (the bloodstream — core.mjs) + ONE conductor
+// (a Didy) with every build registered as an ORGAN that routes through them. The Didy runs the single
+// cycle EXPLORE → RESOLVE → VERIFY → BUILD → REMEMBER, and EVERY phase calls the shared core (fork on
+// the golden offset / hold at the κ-gate / collapse deliberately / cache by content). So an upgrade to
+// the core improves every pass at once. Grounded: it BUILDs only what an author collapses (never
+// reflexive); the roads-not-taken are remembered into the shadow-index, not thrown away.
+//
+// A DIDY is the generic conductor that ships with every fork: blank, untrained. You TRAIN it by
+// registering organs and SIGN it with your prefix — a trained instance is a `<prefix>-didy`, a new
+// signed branch of the fold-tree. A blank Didy has no prefix; the prefix is the mark of whose it is.
+
+function makeDidy(prefix = '') {
+  const p = String(prefix == null ? '' : prefix).trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+  return { name: p ? p + '-didy' : 'didy', prefix: p, organs: {}, memory: [], shadow: makeIndex(), cache: makeCache(), log: [] };
+}
+
+// TRAIN a Didy: register an organ into a phase. Organs supply core-callable pieces (generate/score/author)
+// and are CALLED BY the loop — never run standalone. This is the fall-os "wrap, don't rebuild" seam:
+// training a blank Didy into yours is plugging your organs in.
+function register(c, name, organ) {
+  if (!name || !organ || typeof organ !== 'object') return { ok: false, why: 'name + organ object required' };
+  c.organs[name] = { name, phase: organ.phase || 'explore', ...organ };
+  return { ok: true, name };
+}
+const train = register;   // vocabulary: you TRAIN a Didy by registering its organs
+const organsFor = (c, phase) => Object.values(c.organs).filter(o => o.phase === phase);
+
+// THE ONE LOOP. A decision in → a remembered build out (or an open field if nothing is authored).
+function conduct(c, decision, { n = 6, author = null } = {}) {
+  const dec = String(decision == null ? '' : decision).trim();
+  const ex = organsFor(c, 'explore')[0];                                   // the explore-organ (e.g. the Oracle)
+  const generate = (ex && ex.generate) || ((i, theta) => ({ label: dec + ' · branch ' + i, theta }));
+  const score = (ex && ex.score) || (v => ((v.theta || 0) % 360) / 360);
+  const auth = author || (ex && ex.author) || null;
+  const branches = fork(n, generate, {});                                  // EXPLORE — via the shared golden fork
+  const held = hold(branches, score);                                      // RESOLVE — at the shared κ-gate
+  const field = collapse(held, auth);                                      // VERIFY — the collapse is AUTHORED, never reflexive
+  const built = field.decided ? field.chosen : null;                       // BUILD — only an authored, held branch stands
+  if (built) { c.cache.once(dec, () => built); c.memory.push({ decision: dec, built: built.value, score: built.score }); }  // build-once + REMEMBER the taken
+  for (const r of field.roads) cast(c.shadow, r, 'conduct:' + dec);        // REMEMBER the roads-not-taken → the shadow-index
+  for (const h of field.holds) if (!built || h.i !== built.i) cast(c.shadow, h, 'conduct:' + dec);
+  c.log.push({ decision: dec, explored: branches.length, held: field.holds.length, built: !!built });
+  return { decision: dec, field, built, remembered: !!built };
+}
+
+
+return { conduct, makeDidy, organsFor, register, train };
+})();
+
+const { SIGNALS, STANCES, evidence, scoreStance, summarise, t0Organ } = (() => {
+// t0.mjs — TIER 0 · the conductor's brain when there is NO model at all.
+//
+// The page could describe fall-os but handed a visitor nothing to use: the demo forked
+// "candidate 1", "candidate 2" — it SHOWED the core and DID nothing. This organ is what makes the
+// conductor usable on the visitor's own words with zero setup: no key, no download, no server, no
+// network. It is the EXPLORE organ that `conduct()` calls, so the five phases run on real input.
+//
+// WHAT IT HONESTLY IS: a deterministic decision-framing tool. It does not understand the sentence.
+// It looks for SIGNALS it can name (cue words), and forks a fixed taxonomy of decision STANCES
+// scored against those signals. That is a real, useful thing — a scored field of stances grounded
+// in evidence quoted back from your own text, with the rejected ones kept as roads-not-taken.
+//
+// WHAT IT IS NOT: a language model. It cannot paraphrase you, and it never pretends to. Every score
+// is traceable to a cue word it will show you, and when it finds nothing it SAYS so rather than
+// inventing a reading. `evidence()` is exported precisely so the UI can display the basis — a score
+// a visitor cannot audit is a number they have no reason to trust.
+//
+// Tier 1 (in-browser WebLLM) and above phrase these stances against the specific decision. They
+// improve the WORDING. The field, the gate and the shadow are this file either way.
+
+// ── SIGNALS ──────────────────────────────────────────────────────────────────────────────────────
+//
+// Each signal is a named thing to look for, with the literal cues that count as finding it. Cues are
+// matched on word boundaries so "user" does not fire inside "users" by accident of substring — plural
+// forms are listed where they are wanted. Deliberately small and readable: a visitor can check it.
+const SIGNALS = [
+  { id: 'reversible',   label: 'easy to undo',        cues: ['try', 'trial', 'experiment', 'prototype', 'pilot', 'revert', 'undo', 'reversible', 'draft', 'spike'] },
+  { id: 'irreversible', label: 'hard to undo',        cues: ['migrate', 'migration', 'rewrite', 'replace', 'delete', 'permanent', 'irreversible', 'sign', 'launch', 'publish', 'hire', 'fire', 'sell', 'commit'] },
+  { id: 'deadline',     label: 'time pressure',       cues: ['deadline', 'urgent', 'urgently', 'asap', 'today', 'tomorrow', 'friday', 'monday', 'late', 'overdue', 'behind', 'soon'] },
+  { id: 'cost',         label: 'money at stake',      cues: ['cost', 'costs', 'expensive', 'cheap', 'budget', 'price', 'pricing', 'spend', 'spending', 'pay', 'paid', 'afford', 'invoice'] },
+  { id: 'risk',         label: 'something can break', cues: ['risk', 'risky', 'safe', 'safety', 'danger', 'dangerous', 'break', 'breaks', 'broken', 'fail', 'fails', 'failure', 'outage', 'security', 'legal', 'compliance', 'liability'] },
+  { id: 'scale',        label: 'affects many things', cues: ['all', 'every', 'whole', 'entire', 'everything', 'everyone', 'bulk', 'mass', 'fleet', 'thousands', 'millions'] },
+  { id: 'unknown',      label: 'genuine uncertainty', cues: ['unsure', 'unclear', 'maybe', 'perhaps', 'might', 'guess', 'wondering', 'confused', 'whether'] },
+  { id: 'people',       label: 'other people affected', cues: ['team', 'client', 'clients', 'customer', 'customers', 'user', 'users', 'partner', 'staff', 'stakeholder', 'stakeholders', 'colleague', 'colleagues', 'boss'] },
+  { id: 'existing',     label: 'something already runs', cues: ['existing', 'current', 'currently', 'already', 'legacy', 'live', 'production', 'incumbent'] },
+  { id: 'speed',        label: 'wants to move fast',  cues: ['fast', 'quick', 'quickly', 'ship', 'now', 'immediately', 'mvp', 'rapid'] },
+];
+
+const WORD = /[a-z0-9£$]+/g;
+
+/**
+ * What the text actually says, as far as this organ can tell. Returns the signals FOUND, each with
+ * the cue words that fired — so the score can be audited against the visitor's own sentence — plus
+ * `found: false` when there is nothing, which the UI is expected to say out loud.
+ *
+ * A question mark counts toward `unknown`: it is the one piece of punctuation that reliably carries
+ * meaning here, and a decision phrased as a question is genuinely less settled than one phrased flat.
+ */
+function evidence(text) {
+  const s = String(text == null ? '' : text).toLowerCase();
+  const words = new Set(s.match(WORD) || []);
+  const signals = [];
+  for (const sig of SIGNALS) {
+    const hits = sig.cues.filter(c => words.has(c));
+    if (sig.id === 'unknown' && s.includes('?') && !hits.includes('?')) hits.push('?');
+    if (hits.length) signals.push({ id: sig.id, label: sig.label, cues: hits });
+  }
+  return { signals, ids: signals.map(x => x.id), found: signals.length > 0, words: words.size };
+}
+
+// ── STANCES ──────────────────────────────────────────────────────────────────────────────────────
+//
+// A fixed taxonomy of ways to come at a decision. `wants` raise a stance, `avoids` lower it, and
+// `prior` is how strong the stance is with NO signal at all — a stated default, not a learned weight.
+// The priors are deliberately not uniform: "ship the smallest reversible slice" really is the better
+// blind bet than "run both in parallel", and pretending otherwise would make the tool useless on the
+// short inputs most people type first.
+const STANCES = [
+  { name: 'Ship the smallest reversible slice', move: 'Find the version you could undo on Monday, and do that one.', prior: 0.64, wants: ['reversible', 'unknown', 'speed'], avoids: ['irreversible'] },
+  { name: 'Verify before you commit',           move: 'Decide what would prove this wrong, and go look for it first.', prior: 0.62, wants: ['irreversible', 'risk', 'scale'], avoids: ['reversible'] },
+  { name: 'Cut the scope, not the quality',     move: 'Drop whole features rather than doing all of them badly.', prior: 0.60, wants: ['deadline', 'cost', 'scale'], avoids: [] },
+  { name: 'Do the irreversible part last',      move: 'Reorder the work so every undoable step happens before the one-way door.', prior: 0.54, wants: ['irreversible', 'risk'], avoids: [] },
+  { name: 'Set a stop rule before you start',   move: 'Write down now what result would make you abandon this.', prior: 0.52, wants: ['cost', 'unknown', 'scale'], avoids: [] },
+  { name: 'Buy or reuse instead of building',   move: 'Check whether the boring paid version ends this today.', prior: 0.50, wants: ['cost', 'deadline', 'existing'], avoids: ['scale'] },
+  { name: 'Talk to whoever it lands on',        move: 'Ask the people who live with the result before you pick.', prior: 0.48, wants: ['people', 'irreversible'], avoids: ['speed'] },
+  { name: 'Run the new one beside the old one', move: 'Keep what works running until the replacement has earned the swap.', prior: 0.46, wants: ['existing', 'risk', 'irreversible'], avoids: ['cost'] },
+  { name: 'Hold it open — decide later',        move: 'Name the date you will decide, and spend nothing until then.', prior: 0.44, wants: ['unknown'], avoids: ['deadline', 'speed'] },
+  { name: 'Do nothing — waiting is cheap here', move: 'If nothing breaks by not choosing, that is the choice.', prior: 0.40, wants: ['unknown', 'reversible'], avoids: ['deadline', 'risk'] },
+];
+
+const clamp01 = (x) => (Number.isFinite(x) ? Math.min(1, Math.max(0, x)) : 0);
+
+/**
+ * Score one stance against found signals. Traceable by construction: the returned `why` lists exactly
+ * which signals pushed it up and which pushed it down, so the number can be checked against the text.
+ */
+function scoreStance(stance, ids) {
+  const present = new Set(ids);
+  const wantHit = (stance.wants || []).filter(w => present.has(w));
+  const avoidHit = (stance.avoids || []).filter(a => present.has(a));
+  const wantFrac = stance.wants && stance.wants.length ? wantHit.length / stance.wants.length : 0;
+  const avoidFrac = stance.avoids && stance.avoids.length ? avoidHit.length / stance.avoids.length : 0;
+  const score = clamp01(stance.prior + 0.45 * wantFrac - 0.30 * avoidFrac);
+  return { score, up: wantHit, down: avoidHit };
+}
+
+/**
+ * The organ, in the shape `conduct()` expects: `{ phase, generate, score }`.
+ *
+ * `generate(i, theta)` is called by the core's `fork`, which walks i = 0,1,2… and hands back the
+ * golden angle. The stance is picked by STEPPING THROUGH THE TAXONOMY AT THE GOLDEN OFFSET rather
+ * than in list order — so a visitor asking for 4 branches gets four spread across the taxonomy
+ * instead of the first four in the file, which is the whole point of forking on 137.5°. Modulo the
+ * list length it is a bijection for any n ≤ the taxonomy size, so nothing is visited twice.
+ */
+function t0Organ(text) {
+  const ev = evidence(text);
+  const seen = new Set();
+  return {
+    phase: 'explore',
+    evidence: ev,
+    generate(i, theta) {
+      // A fork always walks i upward from zero, so a zero index marks the START of one. Clearing here makes the
+      // organ safe to run more than once — without it the "already handed out" set survives into the
+      // next fork and the SAME organ answers the SAME question with a different field. That is not a
+      // cosmetic bug: the conductor re-runs the loop when the visitor authors a branch, so committing
+      // "verify before you commit" would quietly build something they never saw.
+      if (i === 0) seen.clear();
+      // Walk the taxonomy by the golden step, skipping any stance already handed out. The skip loop
+      // is what keeps it a permutation when n approaches the taxonomy size.
+      let idx = Math.round((theta / 360) * STANCES.length) % STANCES.length;
+      let guard = 0;
+      while (seen.has(idx) && guard < STANCES.length) { idx = (idx + 1) % STANCES.length; guard++; }
+      seen.add(idx);
+      const st = STANCES[idx];
+      const { score, up, down } = scoreStance(st, ev.ids);
+      return { label: st.name, move: st.move, stance: st.name, precomputed: score, up, down, theta };
+    },
+    score(v) { return clamp01(v && typeof v.precomputed === 'number' ? v.precomputed : 0); },
+  };
+}
+
+/**
+ * Read a field the conductor produced back as plain English. The estate's rule is that nothing is
+ * silently dropped: this reports how many stances held, how many were kept as roads-not-taken, and
+ * — when the text carried no signal at all — says that in place of implying the scores meant more
+ * than the stated priors.
+ */
+function summarise(field, ev) {
+  const held = field && field.holds ? field.holds.length : 0;
+  const roads = field && field.roads ? field.roads.length : 0;
+  if (!ev || !ev.found) {
+    return `No signals found in that text, so these are ranked by their stated defaults only — ${held} held, ${roads} kept as roads-not-taken. Say more about what is at stake and the ranking will change.`;
+  }
+  const names = ev.signals.map(s => s.label).join(', ');
+  return `Found ${ev.signals.length} signal${ev.signals.length === 1 ? '' : 's'} in your text (${names}). ${held} stance${held === 1 ? '' : 's'} cleared the gate; ${roads} kept as roads-not-taken.`;
+}
+
+
+return { SIGNALS, STANCES, evidence, scoreStance, summarise, t0Organ };
+})();
+
+
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+// ⚑ THE PAGE RUNS THE ENGINE IT IS SELLING. A brochure claiming "sovereign, local, no backend"
+// which is itself a dead HTML file asks the reader to take the whole thing on faith — and it is the
+// one claim that could have been demonstrated instead of asserted, on the very page making it.
+//
+// Everything above this line is fall-os, vendored and unmodified. The reasoning below happens in
+// this tab: no key, no account, no request, nothing to sign up for. Open the network tab and watch.
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+const $ = (s) => document.querySelector(s);
+const el = (t, c, x) => { const n = document.createElement(t); if (c) n.className = c; if (x != null) n.textContent = x; return n; };
+
+function optionCard(branch, kind, ev) {
+  const v = branch.value || branch;
+  const d = el('div', 'opt ' + kind);
+  const h = el('div', 'h');
+  h.append(el('span', 'n', v.label || v.stance || 'a way to go'));
+  h.append(el('span', 'sc', typeof branch.score === 'number' ? branch.score.toFixed(2) : ''));
+  d.append(h);
+  if (v.move) d.append(el('div', 'm', v.move));
+
+  // Every score traces back to a word the reader actually typed. That is the whole point: it is
+  // not guessing at them, and it can show its working.
+  const found = new Map(((ev && ev.signals) || []).map(s => [s.id, s]));
+  const said = (ids) => (ids || []).map(i => found.get(i)).filter(Boolean)
+    .map(s => s.label + ' (' + s.cues.join(', ') + ')');
+  const up = said(v.up), down = said(v.down);
+  if (up.length) d.append(el('div', 'cue', 'counts for it: ' + up.join(' \u00b7 ')));
+  if (down.length) d.append(el('div', 'cue against', 'counts against it: ' + down.join(' \u00b7 ')));
+  return d;
+}
+
+$('#go').addEventListener('click', () => {
+  const asked = $('#ask').value.trim();
+  const out = $('#out');
+  if (!asked) { $('#what').textContent = 'Put something in the box first \u2014 a real one works better than a test.'; return; }
+
+  const organ = t0Organ(asked);
+  const didy = makeDidy('ains');
+  register(didy, 't0', organ);
+  const run = conduct(didy, asked, { n: 6 });
+  const ev = organ.evidence;
+
+  out.replaceChildren();
+  const held = run.field.holds || [], roads = run.field.roads || [];
+
+  if (!ev.found) {
+    out.append(el('p', null, 'It found no signals it could name in that. Say more about what is at '
+      + 'stake \u2014 what it costs, who it affects, what happens if it goes wrong \u2014 and the ranking changes.'));
+  }
+  held.forEach((b, i) => out.append(optionCard(b, i === 0 ? 'best' : '', ev)));
+  if (roads.length) {
+    out.append(el('h4', 'split', 'set aside \u2014 kept, not deleted'));
+    for (const r of roads) out.append(optionCard(r, 'aside', ev));
+  }
+
+  $('#proof').innerHTML = '<b>0 requests</b> \u00b7 ran on your machine';
+  $('#what').textContent = summarise(run.field, ev)
+    + ' That ran entirely in this tab. No key, no account, no server, and nothing was sent anywhere '
+    + '\u2014 which is exactly how anything I build for you works. The options are ranked but nothing '
+    + 'is decided: it lays them out, you choose.';
+});
+</script>
 
 </body>
 </html>
