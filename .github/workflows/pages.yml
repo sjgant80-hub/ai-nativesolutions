@@ -1,0 +1,61 @@
+name: pages
+# ⚑ WHY THIS EXISTS. The repo was on legacy branch-deploy, which stopped firing a build for new
+# commits — the file was on GitHub, the site served the previous version, and nothing anywhere
+# reported a failure. A deploy that silently does not happen is worse than one that fails loudly.
+# This is the explicit path: it runs, it is visible in the Actions tab, and it can go red.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Every page a visitor can reach has to actually be there. A nav link to a missing file is a
+      # dead end on the one page somebody landed on to decide whether to get in touch.
+      # ⚑ A NAV LINK TO A MISSING PAGE IS A DEAD END on the one page somebody landed on to decide
+      # whether to get in touch. Checked here because a deploy that silently serves a broken site is
+      # exactly what this workflow was added to stop.
+      #
+      # Only real markup is scanned. An earlier version read the whole file, so JavaScript strings
+      # inside <script> blocks looked like links and it reported three pages as broken that were
+      # perfectly fine — and a check that fires on correct code is one people learn to ignore.
+      - name: every page a visitor can reach is really there
+        run: |
+          node -e "
+          const fs=require('fs');
+          let dead=0, missingAsset=0;
+          for(const f of fs.readdirSync('.').filter(x=>x.endsWith('.html'))){
+            const markup=fs.readFileSync(f,'utf8').replace(/<script[\s\S]*?<\/script>/gi,'');
+            for(const m of markup.matchAll(/(?:href|src)=\"(?!https?:|data:|mailto:|#|\/\/)([^\"?#]+)/g)){
+              const t=m[1].replace(/^\.\//,'').replace(/^\//,'');
+              if(!t || fs.existsSync(t)) continue;
+              if(/\.html?$/i.test(t)){ console.error('DEAD PAGE  '+f+' -> '+t); dead++; }
+              else { console.error('missing asset  '+f+' -> '+t); missingAsset++; }
+            }
+          }
+          if(missingAsset) console.error('\n'+missingAsset+' missing asset(s) — cosmetic, not a dead end.');
+          if(dead){ console.error('\n'+dead+' link(s) go nowhere. A visitor would hit a 404.'); process.exit(1); }
+          console.log('every page a visitor can reach is really there');
+          "
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: '.' }
+      - id: deployment
+        uses: actions/deploy-pages@v4
