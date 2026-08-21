@@ -1,1698 +1,190 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-GB">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0a0a0a">
-<title>AI Native Solutions — fall-os · the sovereign operating system</title>
-<meta name="description" content="A sovereign software estate you can click. Live products today — legal &amp; redress tools, sovereign infrastructure, applied client builds — each shipped through a proof-of-play trust rail (witness · acg-assessor). Plus 1,200+ agent-callable listings in FallMarket. MIT · Ed25519-signed.">
-<meta property="og:title" content="AI Native Solutions · Live sovereign software, proven not promised">
-<meta property="og:description" content="Click any tool — it's live. Legal &amp; redress, sovereign infra, and a proof-of-play trust rail (witness · acg-assessor). Plus 1,200+ agent-callable listings in FallMarket. MIT · Ed25519-signed.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0a0f">
+<title>AI Native Solutions — software your firm owns</title>
+<meta name="description" content="AI-first software for businesses, built to be owned: runs on your machines, your data never leaves, and the machinery is proven before it ships. Walk the live builds before we ever speak.">
+<meta property="og:title" content="AI Native Solutions — software your firm owns">
+<meta property="og:description" content="Own it once instead of renting it forever. Walk a 100-person AI-first company running live in your browser — then talk to us.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.ai-nativesolutions.com">
 <link rel="canonical" href="https://www.ai-nativesolutions.com/">
-<link rel="manifest" href='data:application/manifest+json,{"name":"AI Native Solutions","short_name":"AIN","start_url":".","display":"standalone","background_color":"#0a0a0a","theme_color":"#d4a017","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 fill=%22%230a0a0a%22/><text x=%2232%22 y=%2244%22 text-anchor=%22middle%22 font-size=%2236%22 fill=%22%23d4a017%22 font-family=%22serif%22 font-weight=%22bold%22>◊</text></svg>","sizes":"any","type":"image/svg+xml"}]}'>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://www.ai-nativesolutions.com/#organization",
-      "name": "AI Native Solutions",
-      "url": "https://www.ai-nativesolutions.com",
-      "logo": "https://www.ai-nativesolutions.com/favicon.ico",
-      "founder": { "@id": "https://www.ai-nativesolutions.com/#person" },
-      "description": "The sovereign software estate · 1211 agent-callable listings on FallMarket · FallColony agent settlement · MIT licensed · client-side · IndexedDB primary · MCP-callable · no SaaS dependencies",
-      "email": "ainativesolutions@gmail.com",
-      "sameAs": ["https://github.com/sjgant80-hub"],
-      "knowsAbout": ["Sovereign software", "Single-file PWAs", "WebLLM", "Model Context Protocol", "Provenance economics", "Client-side cryptography", "Ed25519 signing", "MCP servers", "IndexedDB", "WebRTC mesh"]
-    },
-    {
-      "@type": "Person",
-      "@id": "https://www.ai-nativesolutions.com/#person",
-      "name": "Simon Gant",
-      "url": "https://www.ai-nativesolutions.com",
-      "jobTitle": "Sovereign Software Operator",
-      "worksFor": { "@id": "https://www.ai-nativesolutions.com/#organization" },
-      "sameAs": ["https://github.com/sjgant80-hub"],
-      "knowsAbout": ["Sovereign software architecture", "Single-file PWAs", "WebLLM in-browser inference", "WebRTC peer mesh", "Ed25519 signing", "Model Context Protocol (MCP)", "Provenance economics", "Client-side cryptography"]
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://www.ai-nativesolutions.com/#website",
-      "url": "https://www.ai-nativesolutions.com",
-      "name": "AI Native Solutions",
-      "publisher": { "@id": "https://www.ai-nativesolutions.com/#organization" },
-      "inLanguage": "en-GB"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "kcc-bridge",
-      "url": "https://sjgant80-hub.github.io/kcc-bridge/",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Cross-platform · Cloudflare Worker",
-      "description": "MCP-over-HTTP server exposing the entire AI Native Solutions estate (1211 FallMarket listings) as callable tools for Claude Desktop, OpenAI Custom GPTs, n8n, LangChain, AutoGen, CrewAI, raw curl",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "fall-kit",
-      "url": "https://sjgant80-hub.github.io/fall-kit/",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Browser",
-      "description": "Shared cascade library (T0/T2/T3 + WebRTC mesh + Ed25519 signing) ported across all 243 estate seeds",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "kcc-mint",
-      "url": "https://sjgant80-hub.github.io/kcc-mint/",
-      "applicationCategory": "FinanceApplication",
-      "operatingSystem": "Browser",
-      "description": "Provenance protocol substrate · KCC-MINT-001 spec · sovereign Ed25519 minting · royalty propagation up fork chains",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "kcc-jobs",
-      "url": "https://sjgant80-hub.github.io/kcc-jobs/",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Browser",
-      "description": "Sovereign agent marketplace · 5 bundle types · reputation engine · 7 tabs · IndexedDB local",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "offgridcommunitiessystem",
-      "url": "https://sjgant80-hub.github.io/offgridcommunitiessystem/",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Browser · Raspberry Pi · USB",
-      "description": "Level-4 institution seed · 7 modules · members + mutual-credit ledger + governance + calendar + resources + skills + settings · for off-grid intentional communities",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "witness",
-      "url": "https://sjgant80-hub.github.io/witness/",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Node.js · GitHub Action",
-      "description": "A deterministic build gate: mutation + fuzz. A tool's own tests must catch a broken version or it does not ship. The trust rail — proof-of-play.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "acg-assessor",
-      "url": "https://sjgant80-hub.github.io/acg-assessor/",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Cross-platform",
-      "description": "A deterministic code-quality rubric for AI-assisted codebases. Same repository, same verdict, same hash.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Redress Engine",
-      "url": "https://sjgant80-hub.github.io/redress-engine/",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Browser",
-      "description": "A plain-English legal-process navigator: the real statutory lever for each situation, cited letters, statutory deadlines, and free human help. Flags what it can't verify rather than bluff.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "divorcerbot",
-      "url": "https://sjgant80-hub.github.io/divorcerbot/",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Browser",
-      "description": "UK divorce self-help (England & Wales, Scotland, Northern Ireland): verified law, a child-maintenance calculator, and a cited strategy engine. Not legal advice.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "The Toll",
-      "url": "https://sjgant80-hub.github.io/the-toll/",
-      "applicationCategory": "SecurityApplication",
-      "operatingSystem": "Browser",
-      "description": "A proof-of-work edge-wall: content unlocks only when a client solves a hash puzzle — invisible to a human, crushing to a mass scraper.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "The Ear",
-      "url": "https://sjgant80-hub.github.io/the-ear/",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Browser",
-      "description": "Debug a running system by ear — each metric is a voice in a chord, a fault is audible as rising dissonance before any single dashboard red-line trips.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "The Dreamer",
-      "url": "https://sjgant80-hub.github.io/the-dreamer/",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Browser",
-      "description": "A sleep cycle for any local model — it reorganises the day's memory into typed connections overnight, so it answers sharper each morning without retraining.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Soundcheck",
-      "url": "https://sjgant80-hub.github.io/soundcheck/",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Browser · phone",
-      "description": "Tap-and-listen structural diagnostics — a whole thing rings, a cracked one thuds. Read a structure's health from its resonance. Structures, not medical.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "hum",
-      "url": "https://sjgant80-hub.github.io/hum/",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Browser",
-      "description": "A filesystem you open by humming — every file has a Kaṭapayādi name and a pentatonic tune; hum it in any key and it opens. A real content-addressing scheme underneath.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "agora",
-      "url": "https://sjgant80-hub.github.io/agora/",
-      "applicationCategory": "FinanceApplication",
-      "operatingSystem": "Browser",
-      "description": "A personal sovereign economy — your own Ed25519 agents earn by verified work and pay each other with signed transfers on a tamper-evident ledger, on your machine.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "earned",
-      "url": "https://sjgant80-hub.github.io/earned/",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Browser",
-      "description": "A reputation protocol that replaces the CV — you can't claim a skill, only demonstrate it live; a signed lie is caught by re-grading the pinned work.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "airgap",
-      "url": "https://sjgant80-hub.github.io/airgap/",
-      "applicationCategory": "SecurityApplication",
-      "operatingSystem": "Browser",
-      "description": "Air-gapped mesh compute — machines share work over sound with no network stack at all. Unhackable over the wire, because there is no wire.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Golden Placer",
-      "url": "https://sjgant80-hub.github.io/golden-placer/",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Browser",
-      "description": "Even distribution as one primitive — golden-angle placement that never clusters, with measured wins in consistent hashing, key hashing, layout and scheduling.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "seedmind",
-      "url": "https://sjgant80-hub.github.io/seedmind/",
-      "applicationCategory": "ProductivityApplication",
-      "operatingSystem": "Browser",
-      "description": "A one-file personal knowledge organism — it holds what you know, forms new links between your notes overnight, and can seed a living copy for someone else.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Bonded Pair",
-      "url": "https://sjgant80-hub.github.io/bonded-pair/",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Browser",
-      "description": "Two small models coupled and made to disagree, measured against a single model of equal size — a reproducible experiment, reported straight, negative result and all.",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@id": "https://www.ai-nativesolutions.com/#person" }
-    }
-  ]
-}
-</script>
-<link rel="alternate" type="text/markdown" title="llms.txt" href="/llms.txt">
-<link rel="alternate" type="text/markdown" title="llms-full.txt" href="/llms-full.txt">
-<link rel="me" href="https://github.com/sjgant80-hub">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-:root {
-  --bg: #0a0a0a; --surface: #141414; --surface-2: #1a1a18; --border: #1a1a1a;
-  --text: #e8e6e3; --muted: #888; --gold: #d4a017; --amber: #e8a012;
-  --success: #44aa44; --danger: #cc3333; --info: #6a9aff;
-  --cream: #e6e1d3; --brass: #b8974a; --dim: #666; --void: #060606;
-  --max: 1280px;
+:root{--bg:#0b0a0f;--bg2:#100d15;--card:#141218;--ink:#e2d9c8;--gold:#d4a017;--gold2:#ffb648;--line:#2b251f;--soft:#8f8778}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Georgia,"Iowan Old Style",serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:0 22px}
+a{color:var(--gold)}
+
+header{padding:20px 0;border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:baseline;gap:22px;flex-wrap:wrap}
+.mark{font-weight:bold;font-size:1.05em;letter-spacing:.02em}
+.mark span{color:var(--gold)}
+.nav a{color:var(--soft);text-decoration:none;font-size:.9em}
+.nav a:hover{color:var(--gold)}
+.nav .cta{margin-left:auto;color:var(--gold)}
+
+.hero{padding:88px 0 60px;background:radial-gradient(60% 45% at 50% 0%,rgba(212,160,23,.09),transparent 70%)}
+.hero h1{font-size:clamp(2rem,5.4vw,3.4rem);line-height:1.12;margin:0 0 18px;letter-spacing:-.015em}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:1.14em;max-width:620px;color:var(--ink);margin:0 0 30px}
+.hero .sub{color:var(--soft);font-size:.98em}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;padding:13px 24px;border-radius:9px;text-decoration:none;font-size:1em;transition:.15s}
+.btn.solid{background:linear-gradient(96deg,var(--gold),var(--gold2));color:#161006;font-weight:bold}
+.btn.solid:hover{filter:brightness(1.08)}
+.btn.ghost{border:1px solid var(--line);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--gold)}
+
+section{padding:58px 0;border-top:1px solid var(--line)}
+h2{font-size:1.5rem;color:var(--gold);margin:0 0 8px;letter-spacing:-.01em}
+.lede{color:var(--soft);max-width:640px;margin:0 0 26px}
+
+.proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.pcard{background:linear-gradient(180deg,var(--bg2),var(--card));border:1px solid var(--line);border-radius:12px;padding:18px 20px;transition:border-color .15s;display:block;text-decoration:none;color:var(--ink)}
+.pcard:hover{border-color:var(--gold)}
+.pcard b{color:var(--gold);font-size:1.04em}
+.pcard p{margin:7px 0 0;font-size:.9em;color:var(--soft)}
+
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.tier{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+.tier h3{margin:0 0 6px;font-size:1.06em;color:var(--gold)}
+.tier p{font-size:.92em;color:var(--soft);margin:0 0 12px}
+.tier a{font-size:.92em}
+
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px}
+.rule{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 17px;font-size:.92em}
+.rule b{color:var(--gold);display:block;margin-bottom:4px}
+
+.estate-door{display:block;background:linear-gradient(120deg,rgba(212,160,23,.1),rgba(212,160,23,.03));border:1px solid var(--gold);border-radius:14px;padding:28px 30px;text-decoration:none;color:var(--ink);transition:.15s}
+.estate-door:hover{background:linear-gradient(120deg,rgba(212,160,23,.16),rgba(212,160,23,.05))}
+.estate-door b{font-size:1.35em;color:var(--gold)}
+.estate-door p{margin:8px 0 0;color:var(--soft)}
+.estate-door .num{color:var(--ink);font-variant-numeric:tabular-nums}
+
+.contact{text-align:center;padding:70px 0}
+.contact h2{margin-bottom:14px}
+.contact p{color:var(--soft);max-width:520px;margin:0 auto 26px}
+
+footer{border-top:1px solid var(--line);padding:26px 0 46px;color:var(--soft);font-size:.82em}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--soft)}
+footer .k{margin-left:auto}
+@media(prefers-reduced-motion:no-preference){
+  .hero h1,.hero p,.btns{animation:rise .6s ease both}
+  .hero p{animation-delay:.08s}.btns{animation-delay:.16s}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 }
-html, body { background: var(--bg); color: var(--text); font: 17px/1.65 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; min-height: 100dvh; -webkit-font-smoothing: antialiased; }
-code, pre, kbd { font-family: 'DM Mono', ui-monospace, monospace; }
-body { overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); scroll-behavior: smooth; }
-::selection { background: var(--gold); color: #0a0a0a; }
-a { color: inherit; text-decoration: none; transition: color 0.2s; }
-a:hover { color: var(--gold); }
-h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; }
-h2 { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; }
-h3, h4 { font-family: 'Inter', system-ui, sans-serif; font-weight: 700; }
-
-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(10, 10, 10, 0.88); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border); padding: 14px 24px;
-}
-.nav { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.brand { display: flex; align-items: center; gap: 10px; }
-.brand-mark { font-family: 'Playfair Display'; font-weight: 800; color: var(--gold); font-size: 26px; }
-.brand-name { font-family: 'Inter'; font-weight: 800; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; }
-.nav-links { display: flex; gap: 22px; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
-.nav-links a { color: var(--text); font-family: 'Inter'; font-weight: 600; }
-.nav-cta { font-family: 'Inter'; font-weight: 700; padding: 9px 16px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 12px; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; text-transform: uppercase; text-decoration: none; }
-.nav-cta:hover { background: var(--gold); color: #0a0a0a; }
-@media (max-width: 720px) { .nav-links { display: none; } header { padding: 12px 18px; } .brand-name { font-size: 12px; } }
-
-/* Tightened from 110px → 56px to remove massive black empty space when nav anchors land at short sections (elite-SaaS pattern) */
-section { padding: 56px 24px; max-width: var(--max); margin: 0 auto; }
-@media (max-width: 720px) { section { padding: 40px 18px; } }
-section:first-of-type { padding-top: 80px; }
-/* Compensate for fixed header on anchor jumps so content doesn't slip under the bar */
-section[id] { scroll-margin-top: 80px; }
-
-.section-label { font-family: 'Inter'; font-weight: 700; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
-.section-line { width: 60px; height: 1px; background: var(--gold); margin-bottom: 18px; }
-
-.hero { padding-top: 180px; padding-bottom: 80px; min-height: 100vh; display: flex; align-items: center; }
-.hero-inner { max-width: 920px; }
-.hero h1 { font-size: clamp(48px, 8vw, 88px); margin-bottom: 28px; }
-.hero h1 em { font-style: italic; color: var(--gold); }
-.hero p { font-family: 'Inter'; font-size: clamp(20px, 2.4vw, 28px); font-style: italic; color: var(--text); margin-bottom: 36px; max-width: 720px; line-height: 1.45; }
-.hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
-.btn-primary, .btn-secondary, .btn-tertiary { font-family: 'Inter'; font-weight: 700; padding: 16px 28px; cursor: pointer; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid var(--gold); transition: all 0.2s; display: inline-block; text-decoration: none; }
-.btn-primary { background: var(--gold); color: #0a0a0a; }
-.btn-primary:hover { background: var(--amber); border-color: var(--amber); color: #0a0a0a; }
-.btn-secondary { background: transparent; color: var(--text); border-color: var(--text); }
-.btn-secondary:hover { color: var(--gold); border-color: var(--gold); }
-.btn-tertiary { background: transparent; color: var(--muted); border-color: var(--border); }
-.btn-tertiary:hover { color: var(--gold); border-color: var(--gold); }
-.hero-stats { display: flex; gap: 24px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid var(--border); font-family: 'DM Mono'; font-size: 12px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
-.hero-stats b { color: var(--gold); font-family: 'Playfair Display'; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-right: 4px; }
-
-.wound h2, .mirror h2, .marketplace h2, .proof h2, .tribe h2, .forge h2, .pricing h2, .guild h2 { font-size: clamp(34px, 5vw, 56px); margin-bottom: 18px; }
-.wound h2 { margin-bottom: 36px; }
-.mirror h2 em, .gift h2 em { font-style: italic; color: var(--gold); }
-.wound .stanza { font-family: 'Playfair Display'; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.55; margin-bottom: 28px; max-width: 760px; }
-.wound .stanza em { color: var(--gold); font-style: italic; }
-.wound .punchline { font-family: 'Inter'; font-size: clamp(24px, 3vw, 36px); font-weight: 700; color: var(--gold); margin-top: 56px; max-width: 700px; line-height: 1.25; }
-.mirror p { font-family: 'Playfair Display'; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.55; margin-bottom: 28px; max-width: 720px; }
-p.lede { font-family: 'Inter'; font-size: 22px; font-style: italic; color: var(--muted); margin-bottom: 32px; max-width: 760px; }
-
-/* ═══ MARKETPLACE controls ═══ */
-.controls { background: var(--surface); border: 1px solid var(--border); padding: 20px 22px; margin-bottom: 22px; }
-.controls-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
-.controls-row:last-child { margin-bottom: 0; }
-.search-input { flex: 1; min-width: 220px; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; font-family: 'DM Mono'; font-size: 14px; }
-.search-input:focus { outline: 1px solid var(--gold); outline-offset: -1px; }
-.count-pill { font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; padding: 12px 16px; border: 1px solid var(--border); white-space: nowrap; }
-.count-pill .num { color: var(--gold); font-weight: 700; }
-
-.kind-tabs { display: flex; gap: 0; margin-bottom: 16px; border: 1px solid var(--border); background: var(--surface); flex-wrap: wrap; }
-.kind-tab { font-family: 'Inter'; font-weight: 700; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 14px 22px; background: transparent; border: none; color: var(--muted); cursor: pointer; transition: all 0.2s; flex: 1; min-width: 110px; border-right: 1px solid var(--border); }
-.kind-tab:last-child { border-right: none; }
-.kind-tab:hover { color: var(--text); }
-.kind-tab.active { background: var(--gold); color: #0a0a0a; }
-.kind-tab .count { opacity: 0.7; margin-left: 8px; font-size: 10px; }
-
-.cat-bar { display: flex; gap: 6px; flex-wrap: wrap; padding-bottom: 6px; }
-
-/* ◊ Cognitive Substrate · featured pin */
-.substrate-pin { background: linear-gradient(135deg, rgba(139,26,26,0.12) 0%, rgba(184,151,74,0.08) 100%); border: 1px solid var(--gold); padding: 26px 28px; margin: 0 0 28px 0; position: relative; overflow: hidden; }
-.substrate-pin::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gold); }
-.substrate-pin .sp-tag { font-family: 'DM Mono'; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-.substrate-pin .sp-h { font-family: 'Libre Baskerville', serif; font-size: clamp(22px, 3vw, 30px); line-height: 1.25; margin: 0 0 10px 0; color: var(--cream); }
-.substrate-pin .sp-body { color: var(--cream); font-size: 14.5px; line-height: 1.6; margin: 0 0 18px 0; opacity: 0.9; }
-.substrate-pin .sp-products { display: flex; gap: 10px; flex-wrap: wrap; }
-.substrate-pin .sp-product { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--border); color: var(--cream); text-decoration: none; transition: border-color 0.15s, background 0.15s; }
-.substrate-pin .sp-product:hover { border-color: var(--gold); background: rgba(212,168,83,0.06); }
-.substrate-pin .sp-product.sp-flagship { border-color: var(--gold); background: rgba(212,168,83,0.05); }
-.substrate-pin .sp-prime { font-family: 'DM Mono'; font-size: 11px; color: var(--brass); }
-.substrate-pin .sp-name { font-family: 'Inter'; font-weight: 700; font-size: 14px; color: var(--cream); letter-spacing: 0.02em; }
-.substrate-pin .sp-tag2 { font-family: 'DM Mono'; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
-.substrate-pin .sp-flagship .sp-tag2 { color: var(--gold); }
-@media (max-width: 600px) { .substrate-pin .sp-products { flex-direction: column; } .substrate-pin .sp-product { width: 100%; } }
-.cat-chip { font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.06em; padding: 6px 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; transition: all 0.2s; text-transform: lowercase; }
-.cat-chip:hover { color: var(--text); border-color: var(--text); }
-.cat-chip.active { background: var(--gold); border-color: var(--gold); color: #0a0a0a; }
-
-.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-.tool-card { background: var(--surface); padding: 26px 22px; transition: all 0.25s; position: relative; border-left: 2px solid transparent; min-height: 220px; display: flex; flex-direction: column; }
-.tool-card:hover { background: var(--surface-2); border-left-color: var(--gold); transform: translateY(-2px); }
-.tool-card .tc-kind { position: absolute; top: 14px; right: 16px; font-family: 'DM Mono'; font-size: 9px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--gold); }
-.tool-card .tc-kind.api { color: var(--info); border-color: var(--info); }
-.tool-card .tc-kind.sdk { color: var(--success); border-color: var(--success); }
-.tool-card .tc-kind.research { color: var(--muted); border-color: var(--muted); }
-.tool-card .tc-kind.infra { color: #d68f8f; border-color: #d68f8f; }
-.tool-card h3 { font-size: 20px; margin-bottom: 6px; font-family: 'Inter'; font-weight: 800; padding-right: 70px; line-height: 1.15; }
-.tool-card .tc-domain { font-family: 'Inter'; font-style: italic; font-size: 15px; color: var(--text); margin-bottom: 12px; line-height: 1.4; padding-right: 70px; }
-.tool-card .tc-purpose { font-size: 12px; line-height: 1.65; color: var(--muted); margin-bottom: 14px; flex: 1; }
-.tool-card .tc-meta { font-family: 'DM Mono'; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
-.tool-card .tc-meta .prime { color: var(--gold); }
-.tool-card .tc-grift { font-family: 'DM Mono'; font-size: 10px; color: var(--danger); margin-bottom: 12px; line-height: 1.5; }
-.tool-card .tc-grift::before { content: 'OBSOLETES · '; color: var(--gold); }
-.tool-card .tc-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; }
-.tool-card .tc-actions a { font-family: 'Inter'; font-weight: 700; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 12px; border: 1px solid var(--border); color: var(--text); transition: all 0.2s; }
-.tool-card .tc-actions a.primary { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
-.tool-card .tc-actions a.primary:hover { background: var(--amber); border-color: var(--amber); }
-.tool-card .tc-actions a:hover { color: var(--gold); border-color: var(--gold); }
-.tool-card .tc-actions a.primary:hover { color: #0a0a0a; }
-.tool-card.dim { opacity: 0.55; }
-.tool-card.dim:hover { opacity: 1; }
-.status-badge { font-family: 'Inter'; font-weight: 700; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; margin-left: 6px; display: inline-block; vertical-align: middle; }
-.status-badge.live { background: var(--success); color: #0a0a0a; }
-.status-badge.down { background: var(--amber); color: #0a0a0a; }
-.status-badge.offline { background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
-.status-badge.alpha { background: var(--info); color: #0a0a0a; }
-.status-badge.published { background: transparent; border: 1px solid var(--muted); color: var(--muted); }
-.tc-pay-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-family: 'DM Mono'; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
-.tc-pay-row .label { white-space: nowrap; opacity: 0.6; }
-.tc-pay-marks { display: flex; gap: 6px; flex-wrap: wrap; }
-.tc-pay-mark { display: inline-grid; place-items: center; padding: 3px 7px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 2px; font-family: 'Inter'; font-weight: 700; font-size: 9px; letter-spacing: 0.08em; color: var(--text); opacity: 0.7; }
-.tc-pay-mark.paypal { color: var(--info); }
-.tc-pay-mark.stripe { color: var(--success); }
-.tc-pay-mark.gh { color: var(--gold); }
-.tc-actions a.buy { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
-.tc-actions a.buy:hover { background: var(--amber); border-color: var(--amber); color: #0a0a0a; }
-.tc-actions a.buy-quote { background: transparent; color: var(--gold); border-color: var(--gold); }
-.tc-actions a.buy-quote:hover { background: var(--gold); color: #0a0a0a; }
-a.tc-pay-mark { text-decoration: none; cursor: pointer; }
-a.tc-pay-mark:hover { opacity: 1; border-color: var(--gold); color: var(--gold); }
-
-.proof { background: #0c0c0c; }
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-.stat { background: var(--surface); padding: 32px 24px; text-align: left; }
-.stat .num { font-family: 'Playfair Display'; font-weight: 700; font-size: 56px; color: var(--gold); line-height: 1; margin-bottom: 8px; letter-spacing: -0.03em; }
-.stat .lbl { font-family: 'Inter'; font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-
-.tribe .quotes { display: grid; gap: 28px; margin-bottom: 48px; }
-.quote { padding: 26px 30px; border-left: 2px solid var(--gold); background: var(--surface); }
-.quote .qt { font-family: 'Playfair Display'; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--text); margin-bottom: 14px; }
-.quote .at { font-family: 'Inter'; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
-.users-line { font-family: 'Playfair Display'; font-size: 22px; line-height: 1.6; color: var(--text); margin-bottom: 28px; max-width: 760px; }
-.users-line strong { color: var(--gold); font-weight: 700; }
-
-.forge { background: linear-gradient(180deg, var(--bg) 0%, #0c0c0c 100%); }
-.forge .layers { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 32px 0; }
-.layer { background: var(--surface); padding: 22px 18px; transition: all 0.2s; }
-.layer:hover { background: var(--surface-2); }
-.layer .num { font-family: 'Playfair Display'; font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 8px; }
-.layer .name { font-family: 'Inter'; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); margin-bottom: 6px; }
-.layer .desc { font-size: 12px; line-height: 1.6; color: var(--muted); }
-.forge-panel { background: var(--surface); border: 1px solid var(--border); padding: 28px; max-width: 920px; margin-top: 28px; }
-.forge-panel label { font-family: 'Inter'; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
-.forge-panel textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 14px; font-family: 'DM Mono'; font-size: 14px; line-height: 1.6; min-height: 120px; resize: vertical; }
-.forge-panel textarea:focus { outline: 1px solid var(--gold); outline-offset: -1px; }
-.forge-panel .controls-row { margin: 18px 0 0; }
-.forge-tier { font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; padding-left: 8px; }
-.forge-tier.t3 { color: var(--gold); }
-.forge-output { margin-top: 24px; padding: 20px; background: var(--bg); border-left: 2px solid var(--gold); font-family: 'DM Mono'; font-size: 13px; line-height: 1.7; display: none; }
-.forge-output.show { display: block; }
-.forge-output pre { white-space: pre-wrap; word-break: break-word; }
-
-.tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 56px; }
-.tier { background: var(--surface); padding: 36px 28px; position: relative; }
-.tier.featured { border-top: 2px solid var(--gold); }
-.tier-label { font-family: 'Inter'; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
-.tier-label.gold { color: var(--gold); }
-.tier-price { font-family: 'Playfair Display'; font-weight: 700; font-size: 48px; color: var(--text); line-height: 1; margin-bottom: 6px; }
-.tier-cycle { font-family: 'DM Mono'; font-size: 12px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 24px; text-transform: uppercase; }
-.tier-features { list-style: none; margin-bottom: 28px; }
-.tier-features li { font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.5; }
-.tier-features li:last-child { border-bottom: none; }
-.tier-features li::before { content: '◊ '; color: var(--gold); }
-.tier-cta { font-family: 'Inter'; font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 22px; border: 1px solid var(--text); color: var(--text); display: inline-block; transition: all 0.2s; cursor: pointer; background: transparent; }
-.tier-cta:hover { color: var(--gold); border-color: var(--gold); }
-.tier.featured .tier-cta { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
-.tier.featured .tier-cta:hover { background: var(--amber); border-color: var(--amber); }
-
-.guild { background: var(--bg); }
-.guild .guild-panel { background: var(--surface); border: 1px solid var(--border); padding: 32px; margin-top: 28px; }
-.guild .field { margin-bottom: 14px; }
-.guild .field label { font-family: 'Inter'; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
-.guild .field input, .guild .field textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; font-family: 'DM Mono'; font-size: 14px; }
-.guild .field input:focus, .guild .field textarea:focus { outline: 1px solid var(--gold); outline-offset: -1px; }
-.guild .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 600px) { .guild .field-row { grid-template-columns: 1fr; } }
-.guild-bullets { list-style: none; margin: 14px 0 22px; }
-.guild-bullets li { padding: 6px 0; color: var(--text); }
-.guild-bullets li::before { content: '◊  '; color: var(--gold); font-weight: 700; }
-
-/* ───── ACG Guild Mesh ───── */
-.guild-mesh { background: var(--bg); }
-.guild-mesh-grid { display: grid; grid-template-columns: 1fr; gap: 28px; margin-top: 32px; }
-.gm-card { background: var(--surface); border: 1px solid var(--border); padding: 36px; position: relative; }
-.gm-card::before { content: '◊'; position: absolute; top: 22px; right: 28px; font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); opacity: 0.45; }
-.gm-head { margin-bottom: 18px; }
-.gm-handle { font-family: 'Playfair Display', Georgia, serif; font-weight: 900; font-size: clamp(28px, 3.4vw, 38px); color: var(--gold); letter-spacing: -0.01em; line-height: 1.1; }
-.gm-name { font-family: 'Inter'; font-weight: 600; font-size: 11px; letter-spacing: 0.26em; color: var(--muted); text-transform: uppercase; margin-top: 8px; }
-.gm-role { font-family: 'DM Mono'; font-size: 13px; color: var(--muted); margin: 14px 0 18px; padding-block: 12px; border-block: 1px dashed var(--border); }
-.gm-blurb { font-family: 'Inter', Georgia, serif; font-style: italic; font-size: clamp(18px, 2vw, 21px); line-height: 1.6; color: var(--text); margin-bottom: 24px; }
-.gm-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
-.gm-btn { padding: 9px 18px; font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; border: 1px solid; transition: all .15s; }
-.gm-btn.primary { border-color: var(--gold); color: var(--gold); }
-.gm-btn.primary:hover { background: var(--gold); color: var(--bg); }
-.gm-btn.ghost { border-color: var(--border); color: var(--muted); }
-.gm-btn.ghost:hover { border-color: var(--gold); color: var(--gold); }
-.gm-tools-label { font-family: 'Inter'; font-weight: 700; font-size: 10px; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin: 26px 0 14px; padding-top: 22px; border-top: 1px solid var(--border); }
-.gm-tools { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-.gm-tool { background: var(--bg); border: 1px solid var(--border); padding: 14px 16px; text-decoration: none; color: inherit; display: block; transition: border-color .15s, transform .15s; }
-.gm-tool:hover { border-color: var(--gold); transform: translateY(-1px); }
-.gm-tool .gt-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
-.gm-tool .gt-name { font-family: 'Inter'; font-weight: 700; font-size: 12px; letter-spacing: 0.06em; color: var(--gold); text-transform: uppercase; }
-.gm-tool .gt-kind { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; }
-.gm-tool .gt-purpose { font-family: 'DM Mono'; font-size: 12px; color: var(--text); line-height: 1.5; }
-
-.gift { background: #0c0c0c; }
-.gift .label { font-family: 'Inter'; font-weight: 800; font-size: 13px; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 24px; text-transform: uppercase; }
-.gift h2 { font-family: 'Playfair Display'; font-weight: 800; font-size: clamp(56px, 10vw, 120px); color: var(--text); line-height: 0.95; margin-bottom: 24px; letter-spacing: -0.03em; }
-.gift p { font-family: 'Inter'; font-style: italic; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.5; color: var(--text); max-width: 760px; margin-bottom: 40px; }
-.gift .ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-
-footer { background: #060606; border-top: 1px solid var(--border); padding: 56px 24px 36px; }
-.foot { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
-@media (max-width: 720px) { .foot { grid-template-columns: 1fr 1fr; gap: 28px; } }
-.foot h4 { font-family: 'Inter'; font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-.foot ul { list-style: none; }
-.foot li { padding: 4px 0; font-size: 13px; }
-.foot li a { color: var(--text); }
-.foot-brand h3 { font-family: 'Playfair Display'; font-weight: 800; font-size: 22px; color: var(--text); margin-bottom: 12px; }
-.foot-brand p { font-family: 'Inter'; font-style: italic; font-size: 16px; color: var(--muted); line-height: 1.6; max-width: 320px; }
-.foot-bottom { max-width: var(--max); margin: 24px auto 0; padding-top: 20px; border-top: 1px solid var(--border); font-family: 'DM Mono'; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-
-.pay-row { max-width: var(--max); margin: 36px auto 0; padding: 20px 0 4px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
-.pay-label { font-family: 'Inter'; font-weight: 700; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
-.pay-marks { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; color: var(--muted); opacity: 0.85; }
-.pay-mark { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; transition: all 0.2s; min-width: 64px; height: 36px; }
-.pay-mark svg { width: 50px; height: 18px; display: block; }
-.pay-mark:hover { color: var(--gold); border-color: var(--gold); opacity: 1; }
-
-/* Reveal animation: tightened — content always visible (no empty black space), only animates on first scroll */
-.reveal { opacity: 1; transform: translateY(0); transition: opacity 0.4s ease, transform 0.4s ease; }
-@media (prefers-reduced-motion: no-preference) {
-  .reveal:not(.visible):not(:first-child) { opacity: 0.92; }
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-.section-highlight { animation: highlight 1.6s ease; }
-@keyframes highlight {
-  0% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0); }
-  30% { box-shadow: 0 0 60px 0 rgba(212, 160, 23, 0.4); }
-  100% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0); }
-}
-
-.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #0a0a0a; padding: 12px 22px; font-family: 'Inter'; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; z-index: 200; opacity: 0; transition: opacity 0.2s, transform 0.2s; pointer-events: none; }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
-
-.skeleton { background: linear-gradient(90deg, var(--surface) 0%, #1c1c1c 50%, var(--surface) 100%); background-size: 200% 100%; animation: pulse 1.5s ease-in-out infinite; height: 200px; }
-@keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-.empty-state { padding: 40px 24px; text-align: center; background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-family: 'Inter'; font-style: italic; font-size: 18px; grid-column: 1 / -1; }
-
-/* ═══ WHAT'S NEW · changelog feed ═══ */
-.whatsnew { background: #0c0c0c; }
-.whatsnew-feed { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 24px; }
-.feed-item { background: var(--surface); padding: 22px 26px; transition: all 0.2s; display: grid; grid-template-columns: 110px 1fr auto; gap: 22px; align-items: start; }
-.feed-item:hover { background: var(--surface-2); border-left: 2px solid var(--gold); padding-left: 24px; }
-.feed-item .date { font-family: 'DM Mono'; font-size: 11px; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; padding-top: 4px; }
-.feed-item .body { min-width: 0; }
-.feed-item .body h4 { font-family: 'Inter'; font-weight: 800; font-size: 18px; margin-bottom: 4px; }
-.feed-item .body .what { font-family: 'Inter'; font-style: italic; color: var(--text); font-size: 15px; margin-bottom: 6px; }
-.feed-item .body .why { font-size: 12px; color: var(--muted); line-height: 1.6; }
-.feed-item .actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.feed-item .actions a { font-family: 'Inter'; font-weight: 700; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 11px; border: 1px solid var(--border); color: var(--text); transition: all 0.2s; }
-.feed-item .actions a.primary { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
-.feed-item .actions a:hover { color: var(--gold); border-color: var(--gold); }
-.feed-item .actions a.primary:hover { background: var(--amber); border-color: var(--amber); color: #0a0a0a; }
-@media (max-width: 600px) {
-  .feed-item { grid-template-columns: 1fr; gap: 12px; }
-  .feed-item .date { padding-top: 0; }
-}
-
-/* ═══ SIGN-IN MODAL + BUILDER ═══ */
-.builder-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Inter'; font-weight: 700; padding: 9px 14px; background: transparent; border: 1px solid var(--border); color: var(--text); font-size: 12px; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; text-transform: uppercase; text-decoration: none; }
-.builder-btn:hover { border-color: var(--gold); color: var(--gold); }
-.builder-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); display: inline-block; }
-.builder-btn.in .dot { background: var(--success); }
-.builder-btn.in { color: var(--gold); border-color: var(--gold); }
-.builder-avatar { width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: #0a0a0a; display: inline-grid; place-items: center; font-family: 'Playfair Display'; font-weight: 800; font-size: 12px; }
-
-.modal-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); z-index: 300; display: none; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(4px); }
-.modal-bg.open { display: flex; }
-.modal { background: var(--surface); border: 1px solid var(--border); padding: 32px 36px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; }
-.modal-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; gap: 16px; }
-.modal-hd h2 { font-size: 22px !important; margin: 0 !important; }
-.modal-close { background: none; border: none; color: var(--muted); font-size: 28px; cursor: pointer; padding: 0 8px; line-height: 1; font-family: monospace; }
-.modal-close:hover { color: var(--gold); }
-.modal .field { margin-bottom: 14px; }
-.modal .field label { font-family: 'Inter'; font-weight: 700; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
-.modal .field input, .modal .field textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; font-family: 'DM Mono'; font-size: 14px; }
-.modal .field input:focus, .modal .field textarea:focus { outline: 1px solid var(--gold); outline-offset: -1px; }
-.modal p.note { font-family: 'Inter'; font-style: italic; font-size: 14px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
-.modal .profile-card { background: var(--bg); border: 1px solid var(--gold); padding: 18px; display: flex; gap: 14px; align-items: center; margin-bottom: 16px; }
-.modal .profile-card .builder-avatar { width: 48px; height: 48px; font-size: 22px; }
-.modal .profile-card .info { flex: 1; min-width: 0; }
-.modal .profile-card .name { font-family: 'Playfair Display'; font-weight: 700; font-size: 18px; }
-.modal .profile-card .handle { font-family: 'DM Mono'; font-size: 12px; color: var(--gold); }
-.modal .profile-card .meta { font-family: 'DM Mono'; font-size: 11px; color: var(--muted); margin-top: 4px; }
-.verify-badge { display: inline-block; padding: 3px 8px; font-family: 'Inter'; font-weight: 700; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; }
-.verify-badge.yes { background: var(--success); color: #0a0a0a; }
-.verify-badge.no { background: transparent; border: 1px solid var(--muted); color: var(--muted); }
-/* ◊ NAS · fork-aware marketplace · L9 window manager */
-body[data-nas-vertical] .nas-priority { order: -1; outline: 1px solid rgba(184,151,74,.4); outline-offset: 4px; }
-.nas-fork-banner {
-  display: none; padding: 16px 20px;
-  background: linear-gradient(90deg, rgba(184,151,74,.08), rgba(11,10,15,.4));
-  border-top: 1px solid rgba(184,151,74,.35); border-bottom: 1px solid rgba(184,151,74,.35);
-  font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px;
-  color: #b8974a; letter-spacing: .05em; text-align: center;
-}
-body[data-nas-vertical] .nas-fork-banner { display: block; }
-.nas-fork-banner b { color: #e6e1d3; }
-.nas-fork-banner a { color: #b8974a; text-decoration: underline; }
 </style>
-<script src="https://sjgant80-hub.github.io/fall-euaiact/cdn/nas-shim.js" data-tool="ai-nativesolutions" data-organ="L9.window-manager"></script>
-    <script src="https://sjgant80-hub.github.io/fall-euaiact/cdn/mistake-shim.js" data-tool="ai-nativesolutions-repo" defer></script>
 </head>
 <body>
-<header>
-  <div class="nav">
-    <a href="#top" class="brand">
-      <div class="brand-mark">◊</div>
-      <div class="brand-name">AI Native Solutions</div>
-    </a>
-    <div class="nav-links">
-      <a href="#fallos">fall-os</a>
-      <a href="#flagship">Live tools</a>
-      <a href="#architecture">Architecture</a>
-      <a href="#fallmarket">FallMarket</a>
-      <a href="#fallcolony">FallColony</a>
-      <a href="#applications">Applications</a>
-      <a href="/ai.html">For agents</a>
-    </div>
-    <a href="./fall-os-deck.pdf" download class="nav-cta" style="background:transparent;border:1px solid var(--gold);color:var(--gold);margin-right:8px">↓ Deck PDF</a><a href="./fall-os-prospectus.pdf" download class="nav-cta" style="background:transparent;border:1px solid var(--border);color:var(--muted);margin-right:8px">↓ Prospectus PDF</a><a href="https://sjgant80-hub.github.io/fall-os/" target="_blank" rel="noopener" class="nav-cta">Open fall-os</a>
+
+<header><div class="wrap nav">
+  <span class="mark">AI <span>Native</span> Solutions</span>
+  <a href="#proof">See it running</a>
+  <a href="#offer">What we build</a>
+  <a href="#how">How we work</a>
+  <a href="estate.html">The estate</a>
+  <a class="cta" href="mailto:ainativesolutions@gmail.com">Talk to us</a>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <h1>Software your firm <em>owns</em>.<br>Built AI-first. Proven before it ships.</h1>
+  <p>We build business software the way it should have been built all along: it runs on your
+  machines, your data never leaves your control, the routine work runs itself — and you pay
+  once, instead of renting forever.</p>
+  <p class="sub">Don't take our word for any of it. Everything we make runs live, in the open,
+  before we ever speak.</p>
+  <div class="btns">
+    <a class="btn solid" href="https://sjgant80-hub.github.io/fallcorp-demo/">Watch a 100-person firm run →</a>
+    <a class="btn ghost" href="estate.html">Enter the estate</a>
   </div>
-</header>
+</div></div>
 
-<!-- ═══════════════════ HERO · 3-nested-cube 4D projection ═══════════════════ -->
-<section class="hero" id="top" style="padding-top:64px;padding-bottom:44px;position:relative;overflow:hidden">
-  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(900px 520px at 18% -10%,rgba(212,160,23,0.16),transparent 62%),radial-gradient(760px 460px at 88% 6%,rgba(112,72,232,0.12),transparent 60%)"></div>
-  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.35;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:72px 72px;-webkit-mask-image:radial-gradient(circle at 50% 18%,#000 0%,transparent 70%);mask-image:radial-gradient(circle at 50% 18%,#000 0%,transparent 70%)"></div>
-
-  <div class="hero-inner" style="max-width:1180px;position:relative;z-index:1">
-    <div style="font-family:'DM Mono';font-size:11px;letter-spacing:0.24em;color:var(--gold);text-transform:uppercase;margin-bottom:18px">The sovereign operating system · live now</div>
-
-    <h1 style="margin-bottom:14px;font-size:clamp(42px,7.4vw,84px);line-height:1.02;letter-spacing:-0.03em">Software is going to zero.<br><em style="color:var(--gold);font-style:italic">Own the system instead.</em></h1>
-
-    <p style="font-family:'Inter';font-size:clamp(17px,2vw,21px);color:var(--muted);max-width:74ch;margin:18px 0 26px;line-height:1.6">
-      <strong style="color:var(--fg,#fff)">fall-os</strong> is an operating system for an AI-run business: you direct a conductor in plain language, it runs on <strong style="color:var(--fg,#fff)">your own models</strong> on hardware you already own, reasons over <strong style="color:var(--fg,#fff)">your own corpus</strong>, and proves every build before it ships. No seats. No per-token bill for routine work. Nothing leaves the machine unless you send it.
-    </p>
-
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px">
-      <a href="https://sjgant80-hub.github.io/fall-os/" target="_blank" rel="noopener" style="font-family:'DM Mono';font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:15px 26px;background:var(--gold);color:#0b0b0f;font-weight:700;border:1px solid var(--gold)">Open fall-os →</a>
-      <a href="./offerings.html" style="font-family:'DM Mono';font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:15px 26px;border:1px solid var(--gold);background:var(--gold);color:var(--void);font-weight:700">What I build for you</a>
-      <a href="./deck.html" style="font-family:'DM Mono';font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:15px 26px;border:1px solid var(--gold);color:var(--gold)">Pitch deck</a>
-      <a href="./fall-os-prospectus.pdf" download style="font-family:'DM Mono';font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:15px 26px;border:1px solid var(--border);color:var(--muted)">↓ Prospectus (PDF)</a>
-      <a href="#flagship" style="font-family:'DM Mono';font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:15px 26px;border:1px solid var(--border);color:var(--muted)">See what's live</a>
-    </div>
-
-    <div style="display:flex;gap:44px;flex-wrap:wrap;padding-top:26px;border-top:1px solid var(--border)">
-      <div><div style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(30px,4vw,44px);color:var(--gold);line-height:1;font-variant-numeric:tabular-nums">371</div><div style="font-family:'DM Mono';font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:6px">live builds, link-verified</div></div>
-      <div><div style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(30px,4vw,44px);color:var(--gold);line-height:1;font-variant-numeric:tabular-nums">1,548</div><div style="font-family:'DM Mono';font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:6px">repositories in the estate</div></div>
-      <div><div style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(30px,4vw,44px);color:var(--gold);line-height:1;font-variant-numeric:tabular-nums">90/10</div><div style="font-family:'DM Mono';font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:6px">machine / human split</div></div>
-      <div><div style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(30px,4vw,44px);color:var(--gold);line-height:1">£0</div><div style="font-family:'DM Mono';font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:6px">per seat, per month, forever</div></div>
-    </div>
-
-    <div style="margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px">
-      <div style="border:1px solid var(--border);padding:18px;background:rgba(255,255,255,0.02)"><div style="font-family:'DM Mono';font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Runs on your models</div><div style="font-size:14.5px;color:var(--muted);line-height:1.55">A local-first cascade — built-in logic, in-browser, then your own Ollama host. A paid API only if you allow it.</div></div>
-      <div style="border:1px solid var(--border);padding:18px;background:rgba(255,255,255,0.02)"><div style="font-family:'DM Mono';font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Runs in a browser tab</div><div style="font-size:14.5px;color:var(--muted);line-height:1.55">One file, no installer, no server. Real signing, peer-to-peer and offline operation in the page itself.</div></div>
-      <div style="border:1px solid var(--border);padding:18px;background:rgba(255,255,255,0.02)"><div style="font-family:'DM Mono';font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Proven, not claimed</div><div style="font-size:14.5px;color:var(--muted);line-height:1.55">A mutation gate breaks the code on purpose and demands the tests catch it. Green is earned. You can run it yourself.</div></div>
-    </div>
+<section id="proof"><div class="wrap">
+  <h2>See it running first</h2>
+  <p class="lede">Most vendors show you slides. We show you working systems — and every demo
+  prints its own current limitations on the page, because a demo that hides where it's weak
+  shouldn't be trusted where it's strong.</p>
+  <div class="proof">
+    <a class="pcard" href="https://sjgant80-hub.github.io/fallcorp/"><b>The company, designed</b>
+      <p>A 100-person claims firm rebuilt AI-first, seat by seat: 90 automated seats, 10 humans
+      holding exactly the doors that must be human — money, legal, judgment, client trust.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/fallcorp-demo/"><b>The company, running</b>
+      <p>A fictional working day playing live in your browser: deadlines computed, invoices that
+      reconcile to themselves, settlements split to the exact penny, double-bookings refused.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/fallforce/verticals.html"><b>The regulated shelf</b>
+      <p>Tools for firms whose client data cannot legally live on someone else's servers —
+      claims practices, accountants, brokers, letting agents, adviser firms.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/fallforce/stack.html"><b>The owned stack</b>
+      <p>CRM, invoicing, scheduling, documents, e-sign, automation — the subscriptions your
+      business rents today, rebuilt as software you own once.</p></a>
   </div>
-</section>
+</div></section>
 
-<style>
-@keyframes cube-spin-outer {
-  0%   { transform: rotate3d(1, 1, 0.4, 0deg); }
-  100% { transform: rotate3d(1, 1, 0.4, 360deg); }
-}
-@keyframes cube-spin-mid {
-  0%   { transform: rotate3d(1, -0.9, 0.55, 0deg); }
-  100% { transform: rotate3d(1, -0.9, 0.55, -360deg); }
-}
-@keyframes cube-spin-inner {
-  0%   { transform: rotate3d(0.5, 0.9, -0.8, 0deg); }
-  100% { transform: rotate3d(0.5, 0.9, -0.8, 360deg); }
-}
-@keyframes ring-spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-@keyframes fold-outer {
-  0%   { transform: rotate3d(1, 1, 0.4, 0deg) scale(1); }
-  25%  { transform: rotate3d(1, 1, 0.4, 200deg) scale(0.55); opacity: 0.55; }
-  50%  { transform: rotate3d(1, 1, 0.4, 400deg) scale(0.05); opacity: 0.1; }
-  75%  { transform: rotate3d(1, 1, 0.4, 600deg) scale(0.6); opacity: 0.7; }
-  100% { transform: rotate3d(1, 1, 0.4, 800deg) scale(1); opacity: 1; }
-}
-@keyframes fold-mid {
-  0%   { transform: rotate3d(1, -0.9, 0.55, 0deg) scale(1); opacity: 0.94; }
-  25%  { transform: rotate3d(1, -0.9, 0.55, -220deg) scale(1.55); opacity: 1; }
-  50%  { transform: rotate3d(1, -0.9, 0.55, -440deg) scale(2.2); opacity: 0.75; }
-  75%  { transform: rotate3d(1, -0.9, 0.55, -660deg) scale(1.35); opacity: 1; }
-  100% { transform: rotate3d(1, -0.9, 0.55, -880deg) scale(1); opacity: 0.94; }
-}
-@keyframes fold-inner {
-  0%   { transform: rotate3d(0.5, 0.9, -0.8, 0deg) scale(1); opacity: 0.9; }
-  25%  { transform: rotate3d(0.5, 0.9, -0.8, 340deg) scale(2.4); opacity: 1; }
-  50%  { transform: rotate3d(0.5, 0.9, -0.8, 680deg) scale(3.4); opacity: 0.85; }
-  75%  { transform: rotate3d(0.5, 0.9, -0.8, 1020deg) scale(2.1); opacity: 1; }
-  100% { transform: rotate3d(0.5, 0.9, -0.8, 1360deg) scale(1); opacity: 0.9; }
-}
-#cube-stage.paused #cube-scene,
-#cube-stage.paused #cube-scene-mid,
-#cube-stage.paused #cube-scene-inner,
-#cube-stage.paused #ringDashes { animation-play-state: paused; }
-#cube-stage.folding #cube-scene { animation: fold-outer 3.2s cubic-bezier(0.7, 0, 0.3, 1); }
-#cube-stage.folding #cube-scene-mid { animation: fold-mid 3.2s cubic-bezier(0.7, 0, 0.3, 1); }
-#cube-stage.folding #cube-scene-inner { animation: fold-inner 3.2s cubic-bezier(0.7, 0, 0.3, 1); }
-#ringDashes { animation: ring-spin 62s linear infinite; }
-
-/* OUTER · 380px · gold */
-.cube-face { position: absolute; width: 380px; height: 380px; background: rgba(20,19,25,0.93); border: 1px solid var(--gold); border-radius: 9px; box-shadow: 0 0 26px rgba(212,160,23,0.22), inset 0 0 26px rgba(0,0,0,0.6); overflow: hidden; backdrop-filter: blur(2px); cursor: pointer; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
-.cube-face:hover { border-color: var(--amber); transform: scale(1.02); box-shadow: 0 0 34px rgba(232,168,58,0.4), inset 0 0 26px rgba(0,0,0,0.6); }
-.cube-face iframe { width: 100%; height: 100%; border: none; background: var(--void); pointer-events: none; opacity: 0.86; }
-.cube-face .cf-label { position: absolute; top: 12px; left: 12px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase; background: rgba(11,10,15,0.9); padding: 5px 10px; border-radius: 3px; z-index: 2; border: 1px solid rgba(212,160,23,0.25); }
-.cube-face .cf-kind { position: absolute; top: 12px; right: 12px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; background: rgba(11,10,15,0.9); padding: 4px 8px; border-radius: 3px; z-index: 2; border: 1px solid rgba(255,255,255,0.06); }
-.cube-face .cf-cta { position: absolute; bottom: 12px; right: 12px; background: var(--gold); color: var(--void); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 10px; border-radius: 3px; font-weight: 700; z-index: 2; }
-.cube-face .cf-sigil { position: absolute; bottom: 12px; left: 12px; font-family: 'DM Mono', monospace; font-size: 16px; color: var(--gold); opacity: 0.6; z-index: 2; text-shadow: 0 0 6px rgba(212,160,23,0.6); }
-/* corner brackets */
-.cube-face::before, .cube-face::after,
-.cube-face-mid::before, .cube-face-mid::after,
-.cube-face-inner::before, .cube-face-inner::after {
-  content: ''; position: absolute; width: 14px; height: 14px; border-color: var(--gold); pointer-events: none; z-index: 3;
-}
-.cube-face::before { top: 4px; left: 4px; border-top: 1px solid; border-left: 1px solid; }
-.cube-face::after  { bottom: 4px; right: 4px; border-bottom: 1px solid; border-right: 1px solid; }
-
-/* MIDDLE · 220px · amber */
-.cube-face-mid { position: absolute; width: 220px; height: 220px; background: rgba(20,19,25,0.95); border: 1px solid var(--amber); border-radius: 7px; box-shadow: 0 0 20px rgba(232,168,58,0.34), inset 0 0 16px rgba(0,0,0,0.65); overflow: hidden; cursor: pointer; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s; }
-.cube-face-mid:hover { border-color: var(--gold); transform: scale(1.04); box-shadow: 0 0 26px rgba(212,160,23,0.5), inset 0 0 16px rgba(0,0,0,0.65); }
-.cube-face-mid iframe { width: 100%; height: 100%; border: none; background: var(--void); pointer-events: none; opacity: 0.78; }
-.cube-face-mid .cfm-label { position: absolute; top: 6px; left: 6px; right: 6px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--amber); letter-spacing: 0.08em; text-transform: uppercase; background: rgba(11,10,15,0.92); padding: 3px 6px; border-radius: 2px; z-index: 2; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 1px solid rgba(232,168,58,0.28); }
-.cube-face-mid .cfm-sigil { position: absolute; bottom: 6px; right: 8px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--amber); opacity: 0.7; z-index: 2; text-shadow: 0 0 4px rgba(232,168,58,0.6); }
-.cube-face-mid::before { top: 3px; left: 3px; border-top: 1px solid var(--amber); border-left: 1px solid var(--amber); width: 10px; height: 10px; }
-.cube-face-mid::after  { bottom: 3px; right: 3px; border-bottom: 1px solid var(--amber); border-right: 1px solid var(--amber); width: 10px; height: 10px; }
-
-/* INNER · 120px · rose */
-.cube-face-inner { position: absolute; width: 120px; height: 120px; background: rgba(20,19,25,0.96); border: 1px solid #e6846e; border-radius: 5px; box-shadow: 0 0 14px rgba(230,132,110,0.45), inset 0 0 10px rgba(0,0,0,0.7); overflow: hidden; cursor: pointer; transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s; }
-.cube-face-inner:hover { border-color: var(--gold); transform: scale(1.08); box-shadow: 0 0 20px rgba(212,160,23,0.55), inset 0 0 10px rgba(0,0,0,0.7); }
-.cube-face-inner iframe { width: 100%; height: 100%; border: none; background: var(--void); pointer-events: none; opacity: 0.7; }
-.cube-face-inner .cfi-label { position: absolute; top: 4px; left: 3px; right: 3px; font-family: 'DM Mono', monospace; font-size: 8px; color: #f0a690; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(11,10,15,0.94); padding: 2px 4px; border-radius: 2px; z-index: 2; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 1px solid rgba(230,132,110,0.3); }
-.cube-face-inner .cfi-sigil { position: absolute; bottom: 3px; right: 4px; font-family: 'DM Mono', monospace; font-size: 9px; color: #f0a690; opacity: 0.75; z-index: 2; }
-.cube-face-inner::before { top: 2px; left: 2px; border-top: 1px solid #e6846e; border-left: 1px solid #e6846e; width: 6px; height: 6px; }
-.cube-face-inner::after  { bottom: 2px; right: 2px; border-bottom: 1px solid #e6846e; border-right: 1px solid #e6846e; width: 6px; height: 6px; }
-
-#cube-crumbs .crumb { color: var(--gold); cursor: pointer; }
-#cube-crumbs .crumb:hover { color: var(--text); text-decoration: underline; }
-#cube-crumbs .sep { color: var(--dim); margin: 0 8px; }
-@media (max-width: 640px) {
-  .cube-face { width: 260px; height: 260px; }
-  .cube-face-mid { width: 150px; height: 150px; }
-  .cube-face-inner { width: 82px; height: 82px; }
-}
-</style>
-
-<script>
-(function() {
-  const FLAGSHIP_ROOT = [
-    { id: 'fallmarket',        title: 'FallMarket',    kind: 'surface' },
-    { id: 'fallcolony',        title: 'FallColony',    kind: 'surface' },
-    { id: 'fall-cube',         title: 'FallCube',      kind: 'surface' },
-    { id: 'fall-autopilot-kit',title: 'Autopilot Kit', kind: 'surface' },
-    { id: 'fallmirror',        title: 'FallMirror',    kind: 'wellness' },
-    { id: 'shadowcompass',     title: 'ShadowCompass', kind: 'wellness' }
-  ];
-
-  let CATALOG = null;
-  let stack = []; // navigation history · each entry = { title, faces[] }
-  let paused = false;
-
-  async function loadCatalog() {
-    try {
-      const r = await fetch('https://sjgant80-hub.github.io/fallmarket/listings.json', { cache: 'no-store' });
-      CATALOG = await r.json();
-      const n = CATALOG.total;
-      document.getElementById('hs-listings').textContent = n;
-      document.getElementById('hs-listings-hero').textContent = n;
-      (document.getElementById('cube-depth')||{}).textContent = 'depth 0 · ' + n + ' tools reachable';
-    } catch (e) {
-      console.warn('catalog fetch failed', e);
-    }
-    stack = [{ title: 'root', faces: FLAGSHIP_ROOT.slice() }];
-    paintStarfield();
-    renderCube();
-    renderCrumbs();
-  }
-
-  // Hard blocklist · private substrate repos never surface on the public cube
-  const PRIVATE_BLOCKLIST = /^(konomi|konomilang|konomi-signer|konomi-swarm|konomioke|konomistandard|konception|master-seed|acg|acgp2p|acgeden|acg-|acg_|symb-fer|bloomcad|hummingbird|kp2p|eden|metajung|si-didy|si-didy-|mesh-89-tracker|regulus|falltopo|fall-topo|topo-registry|fall-euaiact|niceassos|nas-|lightbringer|thomas-|-tesla|teslasolar)/i;
-  const isPublicSafe = (id) => !PRIVATE_BLOCKLIST.test(id);
-
-  function pickCompanions(centerId) {
-    if (!CATALOG) return FLAGSHIP_ROOT.slice(0, 6);
-    // Prefer same kind, then same first-name prefix, then random
-    const all = CATALOG.listings.filter(l => isPublicSafe(l.id));
-    const center = all.find(l => l.id === centerId) || CATALOG.listings.find(l => l.id === centerId);
-    let pool = [];
-    if (center) {
-      const prefix = (center.id.match(/^([a-z]+)/) || [])[1] || '';
-      pool = all
-        .filter(l => l.id !== centerId && isPublicSafe(l.id))
-        .map(l => {
-          let score = 0;
-          if (l.kind === center.kind) score += 3;
-          if ((l.id.match(/^([a-z]+)/) || [])[1] === prefix) score += 2;
-          if ((l.tags || []).some(t => (center.tags || []).includes(t))) score += 2;
-          return { l, score };
-        })
-        .sort((a, b) => b.score - a.score || Math.random() - 0.5);
-    } else {
-      pool = all.map(l => ({ l, score: 0 })).sort(() => Math.random() - 0.5);
-    }
-    return pool.slice(0, 6).map(x => ({ id: x.l.id, title: x.l.title || x.l.id, kind: x.l.kind }));
-  }
-
-  // Deterministic-ish sigil glyph per slug · pure UI decoration
-  const SIGILS = ['◊', '◈', '△', '▽', '◇', '⬡', '◐', '◑', '◒', '◓', '⬢', '⬣', '⟁', '⟐', '⟡', '⟢'];
-  const sigilFor = (id) => {
-    let h = 0; for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
-    return SIGILS[h % SIGILS.length];
-  };
-
-  function pickMiddleFaces(outerFaces) {
-    if (!CATALOG) return outerFaces.slice(0, 6);
-    const seed = outerFaces[0]?.id || CATALOG.listings[0].id;
-    return pickCompanions(seed);
-  }
-  function pickInnerFaces(middleFaces) {
-    if (!CATALOG) return middleFaces.slice(0, 6);
-    const seed = middleFaces[0]?.id || CATALOG.listings[0].id;
-    return pickCompanions(seed);
-  }
-
-  function renderCube() {
-    if (!document.getElementById('cube-stage')) return;   // cube stage removed from the hero
-    const scene = document.getElementById('cube-scene');
-    const mid = document.getElementById('cube-scene-mid');
-    const inner = document.getElementById('cube-scene-inner');
-    const cur = stack[stack.length - 1];
-    const faces = cur.faces;
-
-    // Outer · 380px cube · translateZ 190
-    const outerRotations = [
-      'rotateY(0deg) translateZ(190px)',
-      'rotateY(180deg) translateZ(190px)',
-      'rotateY(90deg) translateZ(190px)',
-      'rotateY(-90deg) translateZ(190px)',
-      'rotateX(90deg) translateZ(190px)',
-      'rotateX(-90deg) translateZ(190px)'
-    ];
-    scene.innerHTML = faces.slice(0, 6).map((f, i) => `
-      <div class="cube-face" style="transform:${outerRotations[i]}" data-slug="${f.id}" onclick="cubeDescend('${f.id}','${(f.title || '').replace(/'/g, '')}')">
-        <div class="cf-label">${(i + 1)} · ${f.title || f.id}</div>
-        <div class="cf-kind">${f.kind || ''}</div>
-        <iframe src="https://sjgant80-hub.github.io/${f.id}/" title="${f.title || f.id}" loading="lazy"></iframe>
-        <div class="cf-sigil">${sigilFor(f.id)}</div>
-        <div class="cf-cta">descend →</div>
-      </div>
-    `).join('');
-
-    // Middle · 220px cube · translateZ 110
-    const middleFaces = pickMiddleFaces(faces);
-    const midRotations = [
-      'rotateY(0deg) translateZ(110px)',
-      'rotateY(180deg) translateZ(110px)',
-      'rotateY(90deg) translateZ(110px)',
-      'rotateY(-90deg) translateZ(110px)',
-      'rotateX(90deg) translateZ(110px)',
-      'rotateX(-90deg) translateZ(110px)'
-    ];
-    mid.innerHTML = middleFaces.slice(0, 6).map((f, i) => `
-      <div class="cube-face-mid" style="transform:${midRotations[i]}" onclick="event.stopPropagation();cubeDescend('${f.id}','${(f.title || '').replace(/'/g, '')}')">
-        <div class="cfm-label">${(f.title || f.id).slice(0, 18)}</div>
-        <iframe src="https://sjgant80-hub.github.io/${f.id}/" title="${f.title || f.id}" loading="lazy"></iframe>
-        <div class="cfm-sigil">${sigilFor(f.id)}</div>
-      </div>
-    `).join('');
-
-    // Inner · 120px cube · translateZ 60
-    const innerFaces = pickInnerFaces(middleFaces);
-    const innerRotations = [
-      'rotateY(0deg) translateZ(60px)',
-      'rotateY(180deg) translateZ(60px)',
-      'rotateY(90deg) translateZ(60px)',
-      'rotateY(-90deg) translateZ(60px)',
-      'rotateX(90deg) translateZ(60px)',
-      'rotateX(-90deg) translateZ(60px)'
-    ];
-    inner.innerHTML = innerFaces.slice(0, 6).map((f, i) => `
-      <div class="cube-face-inner" style="transform:${innerRotations[i]}" onclick="event.stopPropagation();cubeDescend('${f.id}','${(f.title || '').replace(/'/g, '')}')">
-        <div class="cfi-label">${(f.title || f.id).slice(0, 12)}</div>
-        <iframe src="https://sjgant80-hub.github.io/${f.id}/" title="${f.title || f.id}" loading="lazy"></iframe>
-        <div class="cfi-sigil">${sigilFor(f.id)}</div>
-      </div>
-    `).join('');
-  }
-
-  // Star field · dozen or so drifting points behind the cubes
-  function paintStarfield() {
-    const g = document.getElementById('starfield');
-    const dashG = document.getElementById('ringDashes');
-    if (!g || !dashG) return;
-    // seeded but simple
-    let s = 91;
-    const rand = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
-    const stars = [];
-    for (let i = 0; i < 120; i++) {
-      const cx = 40 + rand() * 860;
-      const cy = 30 + rand() * 620;
-      const r = 0.3 + rand() * 1.4;
-      const o = 0.15 + rand() * 0.7;
-      stars.push('<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="' + r.toFixed(2) + '" opacity="' + o.toFixed(2) + '"/>');
-    }
-    g.innerHTML = stars.join('');
-    // ring tick-marks — 24 small dashes across three rings for a projection-cage feel
-    const dashes = [];
-    for (let i = 0; i < 24; i++) {
-      const a = (i / 24) * Math.PI * 2;
-      const push = (r1, r2) => {
-        const x1 = 470 + Math.cos(a) * r1, y1 = 313 + Math.sin(a) * r1;
-        const x2 = 470 + Math.cos(a) * r2, y2 = 313 + Math.sin(a) * r2;
-        dashes.push('<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '"/>');
-      };
-      push(215, 222);
-      if (i % 2 === 0) push(135, 141);
-      if (i % 3 === 0) push(76, 82);
-    }
-    dashG.innerHTML = dashes.join('');
-  }
-
-  function renderCrumbs() {
-    const crumbs = document.getElementById('cube-crumbs');
-    const back = document.getElementById('cube-back');
-    const depth = stack.length - 1;
-    (document.getElementById('cube-depth')||{}).textContent = 'depth ' + depth + (depth === 0 ? ' · ' + (CATALOG?.total || 1211) + ' tools reachable' : '');
-    back.style.display = depth > 0 ? 'inline-block' : 'none';
-    if (depth === 0) {
-      crumbs.innerHTML = '<span class="crumb" onclick="cubeReset()">◊ root</span>';
-    } else {
-      crumbs.innerHTML = stack.map((s, i) => {
-        if (i === stack.length - 1) return '<span style="color:var(--text)">' + s.title + '</span>';
-        return '<span class="crumb" onclick="cubeGoTo(' + i + ')">' + s.title + '</span><span class="sep">▸</span>';
-      }).join('');
-    }
-  }
-
-  window.cubeDescend = function(slug, title) {
-    if (stack.length >= 4) { window.open('https://sjgant80-hub.github.io/' + slug + '/', '_blank'); return; }
-    const faces = pickCompanions(slug);
-    stack.push({ title: title || slug, faces });
-    renderCube();
-    renderCrumbs();
-  };
-  window.cubeGoTo = function(idx) {
-    stack = stack.slice(0, idx + 1);
-    renderCube();
-    renderCrumbs();
-  };
-  window.cubeReset = function() {
-    stack = [{ title: 'root', faces: FLAGSHIP_ROOT.slice() }];
-    renderCube();
-    renderCrumbs();
-  };
-  if(document.getElementById('cube-back'))document.getElementById('cube-back').onclick = function() {
-    if (stack.length > 1) { stack.pop(); renderCube(); renderCrumbs(); }
-  };
-  window.cubeShuffle = function() {
-    const cur = stack[stack.length - 1];
-    if (stack.length === 1) {
-      cur.faces = FLAGSHIP_ROOT.slice().sort(() => Math.random() - 0.5);
-    } else {
-      const centerId = stack[stack.length - 2].faces.find(f => f.title === cur.title)?.id || cur.faces[0].id;
-      cur.faces = pickCompanions(centerId);
-    }
-    renderCube();
-  };
-  window.cubeTogglePause = function() {
-    paused = !paused;
-    (document.getElementById('cube-stage')||{classList:{toggle(){}}}).classList.toggle('paused', paused);
-    (document.getElementById('cube-pause')||{}).textContent = paused ? '► Play' : '◼ Pause';
-  };
-  window.cubeFold = function() {
-    const stage = document.getElementById('cube-stage');
-    if (stage.classList.contains('folding')) return;
-    stage.classList.add('folding');
-    // After the fold animation, swap outer ↔ inner faces so it feels like the
-    // structure has folded through itself and returned inverted.
-    setTimeout(() => {
-      const cur = stack[stack.length - 1];
-      // If we're at depth 0, shuffle the flagship set; otherwise re-pick companions
-      if (stack.length === 1) {
-        cur.faces = FLAGSHIP_ROOT.slice().sort(() => Math.random() - 0.5);
-      } else {
-        const centerId = cur.faces[0].id;
-        cur.faces = pickCompanions(centerId);
-      }
-      renderCube();
-    }, 1300);
-    setTimeout(() => stage.classList.remove('folding'), 2650);
-  };
-
-  loadCatalog();
-})();
-</script>
-
-<!-- ═══════════════════ FLAGSHIP · what actually ships, live now ═══════════════════ -->
-<style>
-  #flagship .flag-rail { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1px; background:var(--border); border:1px solid var(--gold); margin:36px 0 12px; }
-  #flagship .flag-pillar { background:linear-gradient(135deg,rgba(212,160,23,0.07),transparent); padding:26px 24px; }
-  #flagship .flag-pillar .fp-k { font-family:'DM Mono'; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
-  #flagship .flag-pillar h3 { font-family:'Playfair Display', Georgia, serif; font-weight:700; font-size:24px; margin-bottom:8px; }
-  #flagship .flag-pillar p { font-size:13px; line-height:1.62; color:var(--muted); margin-bottom:14px; }
-  #flagship .flag-pillar a { font-family:'DM Mono'; font-size:11px; color:var(--gold); letter-spacing:0.06em; text-transform:uppercase; }
-  #flagship .flag-pillar a:hover { color:var(--amber); }
-  #flagship .rail-note { font-family:'Inter'; font-style:italic; font-size:14px; color:var(--dim); margin-bottom:8px; }
-  #flagship .flag-group-label { font-family:'Inter'; font-weight:700; font-size:12px; letter-spacing:0.13em; text-transform:uppercase; color:var(--gold); margin:40px 0 14px; }
-  #flagship .flag-group-label span { color:var(--dim); font-weight:500; letter-spacing:0.04em; text-transform:none; font-style:italic; }
-  #flagship .flag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); }
-  #flagship .flag-card { background:var(--surface); padding:24px 22px; display:flex; flex-direction:column; border-left:2px solid transparent; transition:background 0.2s, border-color 0.2s, transform 0.2s; color:var(--text); }
-  #flagship .flag-card:hover { background:var(--surface-2); border-left-color:var(--gold); transform:translateY(-2px); }
-  #flagship .flag-card .fc-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:8px; }
-  #flagship .flag-card h4 { font-family:'Inter'; font-weight:800; font-size:18px; letter-spacing:-0.01em; }
-  #flagship .flag-card .fc-live { font-family:'DM Mono'; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--success); border:1px solid var(--success); padding:2px 7px; white-space:nowrap; }
-  #flagship .flag-card p { font-size:13px; line-height:1.6; color:var(--muted); flex:1; margin-bottom:14px; }
-  #flagship .flag-card .fc-open { font-family:'DM Mono'; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); }
-</style>
-<!-- ═══ THE CROWN · fall-os ═══ -->
-<section id="fallos" style="border-top:1px solid var(--border)">
-  <div class="section-label">§ 00 · The crown</div>
-  <div class="section-line"></div>
-  <h2 style="font-size:clamp(34px,5vw,56px);margin-bottom:18px">Everything below was building <em style="font-style:italic;color:var(--gold)">this.</em></h2>
-  <p class="lede">fall-os is the operating system the whole estate runs on: one shared core, one conductor you direct in plain language, and every tool here plugged into it as an organ. The unifying design — the Konomi architecture — is why more than a hundred separate tools behave as one system instead of a folder of apps. It is also the end of paying rent for software.</p>
-
-  <div class="flag-rail" style="margin-top:34px">
-    <div class="flag-pillar">
-      <div class="fp-k">The crown · 01</div>
-      <h3>It replaces SaaS</h3>
-      <p>Not another subscription — the end of them. You own the system, it runs on your machine and your models, and there is no seat count, no renewal, and no vendor holding your data. Cancel nothing; there is nothing to cancel.</p>
-      <a href="https://sjgant80-hub.github.io/fall-os/" target="_blank" rel="noopener">Open fall-os →</a>
-    </div>
-    <div class="flag-pillar">
-      <div class="fp-k">The crown · 02</div>
-      <h3>You take only what you need</h3>
-      <p>A catalogue of self-contained tools, not a suite you must swallow whole. Take booking and invoicing; leave analytics. Add a third next year. Nothing you did not ask for, nothing you cannot remove.</p>
-      <a href="#flagship">See what's live →</a>
-    </div>
-    <div class="flag-pillar">
-      <div class="fp-k">The crown · 03</div>
-      <h3>The Konomi architecture makes it fit</h3>
-      <p>Every tool is built on one core and speaks one contract, so they compose instead of collide — no integration project, no middleware tax. Improve the core once and every organ you own improves with it.</p>
-      <a href="#architecture">How it fits →</a>
-    </div>
+<section id="offer"><div class="wrap">
+  <h2>What we build</h2>
+  <p class="lede">Three ways in, from a single owned tool to a firm that mostly runs itself.</p>
+  <div class="tiers">
+    <div class="tier"><h3>Owned tools</h3>
+      <p>Single-purpose business tools that run in the browser, work offline, and are yours
+      outright. No subscription, no vendor, no way to switch them off.</p>
+      <a href="estate.html">Browse the live builds →</a></div>
+    <div class="tier"><h3>The whole stack</h3>
+      <p>The full set your business currently rents — replaced with owned equivalents, with the
+      own-once savings worked out line by line, in the open.</p>
+      <a href="https://sjgant80-hub.github.io/fallforce/stack.html">See the maths →</a></div>
+    <div class="tier"><h3>Custom deployment</h3>
+      <p>Your firm, rebuilt AI-first: a paid discovery that produces your real numbers, a
+      configured build, side-by-side validation against your existing process, and handover.
+      You own the result.</p>
+      <a href="mailto:ainativesolutions@gmail.com?subject=Discovery%20call">Start a discovery conversation →</a></div>
   </div>
-  <p class="rail-note">One core. One conductor. As many organs as you need — and not one more.</p>
+</div></section>
 
-  <!-- MEMORY GEOMETRY -->
-  <div class="flag-group-label">Memory geometry <span>— why the retrieval stack becomes unnecessary</span></div>
-  <p class="lede" style="margin-bottom:22px">Conventional assistants bolt a vector database onto a model and re-fetch raw passages by similarity on every question. It never gets sharper: the same lookup, the same noise, forever — and it is a permanent bill for storage, embeddings and re-indexing. The estate takes the opposite route. Memory is placed by <strong>content</strong>, wired with <strong>typed relationships</strong>, and <strong>consolidated while idle</strong> — merging duplicates, materialising the links that follow from what is already known, generalising rules, and resolving contradictions by weight of evidence. The structure improves overnight with no retraining, so recall is a short walk through a graph rather than a similarity lottery over chunks. Better memory, not more retrieval.</p>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/the-dreamer/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Consolidation, measured</h4><span class="fc-live">● live</span></div>
-      <p>The same day of memories in; one idle cycle later it answers questions it could not answer before — accuracy up with no parameters touched. Memory made to behave like learning.</p>
-      <span class="fc-open">Open the-dreamer →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/the-cam/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Placement, not indexing</h4><span class="fc-live">● live</span></div>
-      <p>Content-addressed memory placed so it never clusters — balanced buckets and a shrinking search fraction as the store grows, without an embedding pipeline to maintain.</p>
-      <span class="fc-open">Open the-cam →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/the-kg/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Typed relationships</h4><span class="fc-live">● live</span></div>
-      <p>Knowledge held as a typed, cycle-safe graph — related, complementary, contradicting, contained — so retrieval follows meaning instead of guessing at proximity.</p>
-      <span class="fc-open">Open the-kg →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/estate-nest/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>The whole estate, addressable</h4><span class="fc-live">● live</span></div>
-      <p>Every repository signed by content and nested into one traversable memory — "what do I have" answered by walking the graph, not by scanning a folder.</p>
-      <span class="fc-open">Open estate-nest →</span>
-    </a>
+<section id="how"><div class="wrap">
+  <h2>How we work</h2>
+  <p class="lede">Four rules, kept in the software itself — not in a policy document.</p>
+  <div class="how">
+    <div class="rule"><b>Machines run the routine.</b> Intake, drafting, scheduling, tracking,
+    totalling — the work that fills a firm's day runs continuously and automatically.</div>
+    <div class="rule"><b>Humans hold the doors.</b> Moving money, signing legal instruments,
+    judgment calls, and client trust always stop and wait for a named person. Nothing signs itself.</div>
+    <div class="rule"><b>The maths is proven, not promised.</b> The engines that compute deadlines
+    and money are tested to a standard most software never faces — and where they have limits,
+    the limits are stated on the page.</div>
+    <div class="rule"><b>You own it.</b> Source in your hands, running on your infrastructure.
+    It cannot be price-raised, discontinued, or switched off by anyone but you.</div>
   </div>
+</div></section>
 
+<section><div class="wrap">
+  <a class="estate-door" href="estate.html">
+    <b>Enter the estate →</b>
+    <p>Everything above is drawn from a working software estate of
+    <span class="num"><!--N-PUBLIC-->1,424<!--/N-PUBLIC--></span> public builds —
+    <span class="num"><!--N-LIVE-->1,414<!--/N-LIVE--></span> of them live right now, each one a page
+    you can open, use, and read the source of. Counted from the index on
+    <span class="num"><!--GENERATED-->2026-08-21<!--/GENERATED--></span>, never typed by hand.</p>
+  </a>
+</div></section>
 
+<div class="contact"><div class="wrap">
+  <h2>Talk to us</h2>
+  <p>Walk the builds first. Then, if it looks like your firm, the next step is a short
+  discovery conversation — no deck, no pressure, your real numbers.</p>
+  <a class="btn solid" href="mailto:ainativesolutions@gmail.com?subject=Discovery%20conversation">ainativesolutions@gmail.com</a>
+</div></div>
 
-  <!-- LEGACY VS EMERGENT -->
-  <div class="flag-group-label">Legacy versus emergent <span>— where this is all going</span></div>
-  <p class="lede" style="margin-bottom:22px">The cost of producing software is collapsing toward zero. When a working tool can be specified and generated on demand, the scarce thing stops being the code and becomes two other things: <strong>proof that it is correct</strong>, and <strong>ownership of the system it runs in</strong>. That is the whole bet here — a trust rail that makes correctness reproducible, and an operating system you own rather than rent. The direction of travel is on-device and local-first, and the estate is already standing on the far side of it.</p>
-  <div style="overflow-x:auto;border:1px solid var(--border);margin-bottom:16px">
-  <table style="width:100%;border-collapse:collapse;font-size:15px;min-width:660px">
-    <thead><tr style="background:rgba(255,255,255,0.03)">
-      <th style="text-align:left;padding:13px 16px;border-bottom:1px solid var(--border);font-family:'DM Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Legacy model</th>
-      <th style="text-align:left;padding:13px 16px;border-bottom:1px solid var(--border);font-family:'DM Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)">What replaces it</th>
-    </tr></thead>
-    <tbody>
-      <tr><td style="padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)">Software is expensive to build, so you rent it per seat, forever.</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border)">Software approaches zero marginal cost. You own the tools; what you pay for is the proof they work.</td></tr>
-      <tr><td style="padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)">Every request travels to a datacenter and back, burning energy in a building you will never see.</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border)">Routine work is answered on the device already on your desk — no round trip, no datacenter draw, and hardware considered obsolete is enough to run it.</td></tr>
-      <tr><td style="padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)">Bigger models, more parameters, more power — capability bought with scale.</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border)">Capability bought with structure: better memory, better routing and better verification beat brute size for the work most businesses actually do.</td></tr>
-      <tr><td style="padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)">Twenty tools from twenty vendors, joined by integration projects that never finish.</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border)">One core, one contract, many organs — they compose because they were built to, and improving the core improves all of them.</td></tr>
-      <tr><td style="padding:13px 16px;color:var(--muted)">Your data is the product, and the memory of your work belongs to the vendor.</td>
-          <td style="padding:13px 16px">Your corpus is your context. It stays on your machine, and it gets sharper over time without ever leaving it.</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <p class="rail-note" style="text-align:left;margin-bottom:30px">Energy and cost differences follow from where the work happens: a request answered on your own device makes no datacenter round trip at all. We state the mechanism rather than a headline figure, because the honest number depends on your hardware and your workload — and you can measure it yourself.</p>
-
-  <!-- THE COMPARISON -->
-  <div class="flag-group-label">Rented versus owned <span>— what actually changes</span></div>
-  <div style="overflow-x:auto;border:1px solid var(--border);margin-bottom:16px">
-  <table style="width:100%;border-collapse:collapse;font-size:15px;min-width:660px">
-    <thead><tr style="background:rgba(255,255,255,0.03)">
-      <th style="text-align:left;padding:13px 16px;border-bottom:1px solid var(--border);font-family:'DM Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)"></th>
-      <th style="text-align:left;padding:13px 16px;border-bottom:1px solid var(--border);font-family:'DM Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Rented (SaaS + cloud AI)</th>
-      <th style="text-align:left;padding:13px 16px;border-bottom:1px solid var(--border);font-family:'DM Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)">Owned (fall-os)</th>
-    </tr></thead>
-    <tbody>
-      <tr><td style="padding:13px 16px;border-bottom:1px solid var(--border);font-weight:600">Cost shape</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)">Per seat, per tool, per month — forever, and rising with headcount.</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border)">Own the tools you take. No seats, no renewals, no per-user maths.</td></tr>
-      <tr><td style="padding:13px 16px;border-bottom:1px solid var(--border);font-weight:600">Inference cost</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)">Every request billed per token, including the routine ones.</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border)">Routine work answered on your own hardware at no marginal cost; a paid model is reached for only when you allow it.</td></tr>
-      <tr><td style="padding:13px 16px;border-bottom:1px solid var(--border);font-weight:600">Your data</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)">Uploaded, retained, and often used to improve someone else's model.</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border)">Stays on the machine. Several kernels contain no network capability at all — a property checked against the code, not promised in a policy.</td></tr>
-      <tr><td style="padding:13px 16px;border-bottom:1px solid var(--border);font-weight:600">Time</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)">Work spread across a dozen tabs that do not talk to each other; the joining-up is your job.</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border)">One conductor across everything you own — bookings, inbox, ledger and jobs answered in one place, because they share one core.</td></tr>
-      <tr><td style="padding:13px 16px;border-bottom:1px solid var(--border);font-weight:600">Working together</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted)">Collaboration means a vendor's server in the middle — and an outage means you stop.</td>
-          <td style="padding:13px 16px;border-bottom:1px solid var(--border)">Devices reconcile directly with conflict-free sync; offline edits merge cleanly, and work can even pass between machines over sound with no network at all.</td></tr>
-      <tr><td style="padding:13px 16px;font-weight:600">Trust</td>
-          <td style="padding:13px 16px;color:var(--muted)">"It works" is a marketing claim you cannot re-run.</td>
-          <td style="padding:13px 16px">Every build passes a reproducible gate before it ships, and you can run that gate yourself.</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <p class="rail-note" style="text-align:left;margin-bottom:30px">Cost and time differences depend entirely on which tools you replace and how you work — we publish the mechanism rather than a headline percentage. What is structural, and checkable today: no per-seat licence, no per-token bill for work a local model handles, no upload of your data, and no vendor in the middle of your own devices.</p>
-
-  <!-- SERVICE-FIRM KILLERS -->
-  <div class="flag-group-label">The professional-services layer <span>— the firm's work, owned</span></div>
-  <p class="lede" style="margin-bottom:22px">The expensive part of running a business is rarely the software — it is the firm you retain to operate it. These are built to do that work directly, and every one is open right now.</p>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/accountinghouse/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Accounting House</h4><span class="fc-live">● live</span></div>
-      <p>An AI-first operating system for an accountancy practice — the practice itself, not a plug-in for one.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/fallaccount/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>FallAccount</h4><span class="fc-live">● live</span></div>
-      <p>Sovereign accounting for UK sole traders — your ledger on your machine, any model, no seat fee. A trades edition ships alongside it.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/fallledger/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>FallLedger</h4><span class="fc-live">● live</span></div>
-      <p>Double-entry general ledger in the enterprise class — the ledger layer without the enterprise licence.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/fall-sales-marketing/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Sales &amp; marketing team</h4><span class="fc-live">● live</span></div>
-      <p>Nine coordinated agents doing the work of a full sales and marketing function, in a single sovereign file.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/kardv5/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Sovereign paralegal</h4><span class="fc-live">● live</span></div>
-      <p>Tribunal skeletons, negotiation letters and counter-arguments — the paralegal hours, without the retainer.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/redress-engine/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Redress Engine</h4><span class="fc-live">● live</span></div>
-      <p>The real statutory lever for a situation, cited letters and deadlines — and it flags what it cannot verify rather than bluff.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/fallseed-insurance/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Insurance &amp; clinic practices</h4><span class="fc-live">● live</span></div>
-      <p>Practice-shaped toolsets for UK insurance and clinic firms — model-agnostic, single-file, yours.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/temuoracle/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Enterprise stack</h4><span class="fc-live">● live</span></div>
-      <p>The enterprise surface — database, analytics, low-code builder and ledger — as sovereign wedges rather than a seven-figure platform.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-  </div>
-
-  <!-- AGENT MARKETPLACE -->
-  <div class="flag-group-label">Where the agents trade <span>— the marketplace layer</span></div>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/fallmarket/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>FallMarket</h4><span class="fc-live">● live</span></div>
-      <p>A sovereign registry of tools, agents, SDKs and MCP servers, where a listing proves itself against your own test case before the transaction completes. Quality is the salesman.</p>
-      <span class="fc-open">Browse the registry →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/fallcolony/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>FallColony</h4><span class="fc-live">● live</span></div>
-      <p>An agent-native settlement: agents work, trade, and upgrade one another — with signed identity and a budget each one cannot exceed.</p>
-      <span class="fc-open">Enter the colony →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/fallenterprise/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>FallEnterprise</h4><span class="fc-live">● live</span></div>
-      <p>AI-native transformation for small and mid-sized businesses on self-hosted models — the consultancy engagement, delivered as a system you keep.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/honestly/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Honestly</h4><span class="fc-live">● live</span></div>
-      <p>Verified search with adversarial cross-checking — answers that carry their evidence, not a confident paragraph.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-  </div>
-
-  <p class="rail-note" style="margin-top:26px">Over a hundred tools are live and link-checked, drawn from an estate of 1,548 repositories — each a working organ you can open now, any of which plugs into the same core. <a href="./deck.html" style="color:var(--gold)">Read the pitch deck →</a> · <a href="./prospectus.html" style="color:var(--gold)">the full prospectus (PDF) →</a></p>
-</section>
-
-
-<section id="flagship" style="border-top:1px solid var(--border)">
-  <div class="section-label">§ 0 · Live right now</div>
-  <div class="section-line"></div>
-  <h2 style="font-size:clamp(34px,5vw,56px);margin-bottom:18px">Not a promise. <em style="font-style:italic;color:var(--gold)">A live link.</em></h2>
-  <p class="lede">Every product below is running right now — click a card and the working tool opens. And every one passed a reproducible gate before it shipped. That gate is the whole point.</p>
-
-  <!-- THE TRUST RAIL -->
-  <div class="flag-rail">
-    <div class="flag-pillar">
-      <div class="fp-k">The trust rail · 01</div>
-      <h3>witness</h3>
-      <p>A deterministic build gate — mutation + fuzz. A tool's own tests must actually catch a broken version, or it does not ship. Green is earned, not claimed.</p>
-      <a href="https://sjgant80-hub.github.io/witness/" target="_blank" rel="noopener">Open witness →</a>
-    </div>
-    <div class="flag-pillar">
-      <div class="fp-k">The trust rail · 02</div>
-      <h3>acg-assessor</h3>
-      <p>A deterministic quality rubric for AI-assisted code. Same repository, same verdict, same hash — no vibes, no self-marking.</p>
-      <a href="https://sjgant80-hub.github.io/acg-assessor/" target="_blank" rel="noopener">Open the Assessor →</a>
-    </div>
-    <div class="flag-pillar">
-      <div class="fp-k">The trust rail · 03</div>
-      <h3>Proof-of-play</h3>
-      <p>The rule that binds the estate: nothing goes live without a reproducible pass. Trust here is empirical, not marketed.</p>
-      <a href="#doctrine">Read the doctrine →</a>
-    </div>
-  </div>
-  <p class="rail-note">The trust rail is the point of difference: below it, everything shipped through it.</p>
-
-  <!-- LAW & REDRESS -->
-  <div class="flag-group-label">◊ Law &amp; redress <span>— for people, not just firms</span></div>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/redress-engine/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Redress Engine</h4><span class="fc-live">● live</span></div>
-      <p>Use the rights you already have. The real statutory lever for each situation, calm cited letters, statutory deadlines, and non-skippable free human help — it flags what it can't verify rather than bluff.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/divorcerbot/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>divorcerbot</h4><span class="fc-live">● live</span></div>
-      <p>UK divorce self-help across England &amp; Wales, Scotland and Northern Ireland — verified law, a CMS calculator, and a cited strategy engine. Not legal advice.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/falljustice/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>FallJustice</h4><span class="fc-live">● live</span></div>
-      <p>A Clause-40 Letter Before Action and DSAR engine built on verified UK case-law — every citation sourced, with a sovereign-citizen guardrail.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-  </div>
-
-  <!-- SOVEREIGN INFRASTRUCTURE -->
-  <div class="flag-group-label">◊ Sovereign infrastructure <span>— runs on your side of the wire</span></div>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/the-toll/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>The Toll</h4><span class="fc-live">● live</span></div>
-      <p>A proof-of-work edge-wall: content unlocks only when the visitor's browser solves a hash puzzle. Invisible to a human (~30ms), crushing to a mass scraper. Force execution, not storage.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/konomium-vault/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Konomium Vault</h4><span class="fc-live">● live</span></div>
-      <p>Sovereign encrypted accounting — an AES-GCM vault with encryption at rest, MTD-ready. Your books stay yours, on your machine.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/niceassos/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>niceassos</h4><span class="fc-live">● live</span></div>
-      <p>A sovereign-OS desktop shell — signed apps in the browser, offline-first, no install. Built on Thomas's original "assos"; niceassos is the estate's fork.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/offramp-v2/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>OFFRAMP</h4><span class="fc-live">● live</span></div>
-      <p>A dead ChatGPT or Claude export becomes a searchable, pattern-surfacing sovereign memory. Content-addressed, cross-vendor, yours to keep.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-  </div>
-
-  <!-- THE LAB -->
-  <div class="flag-group-label">◊ The lab <span>— the estate, made legible</span></div>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/estate-nest/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Estate Nest</h4><span class="fc-live">● live</span></div>
-      <p>The whole ~1,500-repo estate poured into a memory you can walk: signed by content, placed by golden angle, wired by kinship — duplication made visible.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/geometric-computer/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Geometric Computer</h4><span class="fc-live">● live</span></div>
-      <p>Fold a state into a number and back, losslessly — then watch which patterns stay stable. A gated, runnable research build.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/the-wisp/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>The Wisp</h4><span class="fc-live">● live</span></div>
-      <p>The estate isn't in any one repo — it's the pattern across all of them, present where the current flows. This is that pattern, made live.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-  </div>
-
-  <!-- DEVELOPER INSTRUMENTS -->
-  <div class="flag-group-label">◊ Developer instruments <span>— tools that make the invisible obvious</span></div>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/the-ear/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>The Ear</h4><span class="fc-live">● live</span></div>
-      <p>Debug a running system by ear: each metric becomes a voice in a chord, and a fault is audible as rising dissonance — heard before any single dashboard red-line trips.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/the-dreamer/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>The Dreamer</h4><span class="fc-live">● live</span></div>
-      <p>A sleep cycle for any local model: overnight it reorganises the day's memory into typed connections, so it answers sharper each morning — no retraining, weights untouched.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/soundcheck/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Soundcheck</h4><span class="fc-live">● live</span></div>
-      <p>Tap-and-listen structural diagnostics: a whole thing rings, a cracked one thuds. Read a structure's health from its resonance, on your phone. Structures, not medical.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/hum/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>hum</h4><span class="fc-live">● live</span></div>
-      <p>A filesystem you open by humming. Every file has a tune; hum it in any key and it opens. Delightful on top, a real content-addressing scheme underneath.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-  </div>
-
-  <!-- SOVEREIGN PRIMITIVES -->
-  <div class="flag-group-label">◊ Sovereign primitives <span>— building blocks, each provable</span></div>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/agora/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>agora</h4><span class="fc-live">● live</span></div>
-      <p>A personal sovereign economy: your own agents earn by verified work and pay each other with signed transfers on a tamper-evident ledger — all on your machine, no coin, no cloud.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/earned/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>earned</h4><span class="fc-live">● live</span></div>
-      <p>A reputation that replaces the CV: you can't claim a skill, only demonstrate it live — and a signed lie is caught by re-grading the pinned work. Kills the résumé.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/airgap/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>airgap</h4><span class="fc-live">● live</span></div>
-      <p>Air-gapped mesh compute: machines share work over sound with no network stack at all. Unhackable over the wire, because there is no wire.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/golden-placer/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Golden Placer</h4><span class="fc-live">● live</span></div>
-      <p>Even distribution as one primitive: golden-angle placement that never clusters — measured wins in consistent hashing, key hashing, spatial layout and scheduling.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-  </div>
-
-  <!-- HONEST EXPERIMENTS -->
-  <div class="flag-group-label">◊ Honest experiments <span>— reproducible, reported straight</span></div>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/seedmind/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>seedmind</h4><span class="fc-live">● live</span></div>
-      <p>A personal knowledge base in one file that holds what you know, dreams up new links between your notes overnight, and can seed a living copy to hand to someone else.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-    <a class="flag-card" href="https://sjgant80-hub.github.io/bonded-pair/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Bonded Pair</h4><span class="fc-live">● live</span></div>
-      <p>Two small models coupled and made to disagree, measured against a single model of equal size — a reproducible experiment, reported straight, negative result and all.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-  </div>
-
-  <!-- APPLIED -->
-  <div class="flag-group-label">◊ Applied <span>— a real client, in production</span></div>
-  <div class="flag-grid">
-    <a class="flag-card" href="https://sjgant80-hub.github.io/wishwood/" target="_blank" rel="noopener">
-      <div class="fc-top"><h4>Wishwood</h4><span class="fc-live">● live</span></div>
-      <p>A real client build: a glamping operator's inbox, calendar, bookings and admin in one sovereign hub — with a live cross-channel double-booking alarm.</p>
-      <span class="fc-open">Open →</span>
-    </a>
-  </div>
-
-  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:40px">
-    <a href="https://sjgant80-hub.github.io/fallmarket/" class="btn-secondary">Browse all 1,200+ in FallMarket →</a>
-    <a href="#architecture" class="btn-tertiary">How it all fits</a>
-  </div>
-</section>
-
-<!-- ═══════════════════ HOW IT FITS · three surfaces ═══════════════════ -->
-<section id="architecture" style="border-top:1px solid var(--border)">
-  <div class="section-label">§ I · How it fits</div>
-  <div class="section-line"></div>
-  <h2 style="font-size:clamp(34px,5vw,56px);margin-bottom:18px">Three surfaces. <em style="font-style:italic;color:var(--gold)">One estate.</em></h2>
-  <p class="lede">A registry for discovering sovereign tools. A settlement where agents work and transact. Applications on top for real businesses.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:40px">
-
-    <div style="background:var(--surface);padding:36px 30px;border-left:2px solid var(--gold)">
-      <div style="font-family:'DM Mono';font-size:10px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:14px">The registry</div>
-      <h3 style="font-family:'Playfair Display';font-weight:700;font-size:26px;line-height:1.2;margin-bottom:12px">FallMarket</h3>
-      <p style="font-size:14px;line-height:1.65;color:var(--muted);margin-bottom:20px">1211 sovereign agent-callable listings. SDKs on npm, MCP servers, HTTP APIs, standalone tools. Every listing MIT-licensed and Ed25519-signed. The single largest agent-callable estate on GitHub.</p>
-      <a href="#fallmarket" style="font-family:'DM Mono';font-size:11px;padding:8px 14px;border:1px solid var(--gold);color:var(--gold);letter-spacing:0.08em;text-transform:uppercase">Browse ↓</a>
-    </div>
-
-    <div style="background:var(--surface);padding:36px 30px">
-      <div style="font-family:'DM Mono';font-size:10px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:14px">The settlement</div>
-      <h3 style="font-family:'Playfair Display';font-weight:700;font-size:26px;line-height:1.2;margin-bottom:12px">FallColony</h3>
-      <p style="font-size:14px;line-height:1.65;color:var(--muted);margin-bottom:20px">Nine chambers where sovereign agents live, work, transact, and remember. Signed submissions. Provenance-royalty economics. Fork the tree, earn from the tree.</p>
-      <a href="#fallcolony" style="font-family:'DM Mono';font-size:11px;padding:8px 14px;border:1px solid var(--border);color:var(--muted);letter-spacing:0.08em;text-transform:uppercase">Enter ↓</a>
-    </div>
-
-    <div style="background:var(--surface);padding:36px 30px">
-      <div style="font-family:'DM Mono';font-size:10px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:14px">The applications</div>
-      <h3 style="font-family:'Playfair Display';font-weight:700;font-size:26px;line-height:1.2;margin-bottom:12px">Vertical seeds &amp; workstations</h3>
-      <p style="font-size:14px;line-height:1.65;color:var(--muted);margin-bottom:20px">Sovereign single-HTML applications for eleven UK regulated industries. FallHub, FallRouter, FallEnterprise, FallForge, FallOS. Install to desktop, work offline.</p>
-      <a href="#applications" style="font-family:'DM Mono';font-size:11px;padding:8px 14px;border:1px solid var(--border);color:var(--muted);letter-spacing:0.08em;text-transform:uppercase">Applications ↓</a>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════════════════ FALLMARKET · the registry ═══════════════════ -->
-<section id="fallmarket" style="border-top:1px solid var(--border);background:#0c0c0c">
-  <div class="section-label">§ II · The registry</div>
-  <div class="section-line"></div>
-  <h2 style="font-size:clamp(34px,5vw,56px);margin-bottom:18px"><em style="font-style:italic;color:var(--gold)">FallMarket</em> · the sovereign registry of AI tools, agents, SDKs, MCPs, and APIs.</h2>
-  <p class="lede">1211 listings. Every tool signed. Every claim benchmarkable. The single largest agent-callable estate on GitHub.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:32px 0">
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:44px;color:var(--gold);line-height:1;margin-bottom:6px">301</div><div style="font-family:'Inter';font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)">SDKs on npm</div></div>
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:44px;color:var(--gold);line-height:1;margin-bottom:6px">297</div><div style="font-family:'Inter';font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)">MCP servers</div></div>
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:44px;color:var(--gold);line-height:1;margin-bottom:6px">297</div><div style="font-family:'Inter';font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)">HTTP APIs</div></div>
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:44px;color:var(--gold);line-height:1;margin-bottom:6px">329</div><div style="font-family:'Inter';font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)">Standalone tools</div></div>
-  </div>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:20px">
-    <div>
-      <h4 style="font-family:'Inter';font-weight:700;font-size:15px;letter-spacing:0.05em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Sovereign by design</h4>
-      <p style="font-size:14px;line-height:1.65;color:var(--muted)">Every listing runs offline, ships as one file when possible, outlasts the vendor. No SaaS lock-in. No telemetry. If the internet goes dark, the tools still work.</p>
-    </div>
-    <div>
-      <h4 style="font-family:'Inter';font-weight:700;font-size:15px;letter-spacing:0.05em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Signed and verifiable</h4>
-      <p style="font-size:14px;line-height:1.65;color:var(--muted)">Every listing, benchmark, and transaction is Ed25519-signed. Provenance travels with the fork tree. Trust is empirical, not marketed.</p>
-    </div>
-    <div>
-      <h4 style="font-family:'Inter';font-weight:700;font-size:15px;letter-spacing:0.05em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Agent-callable</h4>
-      <p style="font-size:14px;line-height:1.65;color:var(--muted)">Every SDK ships on npm. Every MCP works with Claude, Cursor, and Codex. Every API is Docker-ready. Machine-to-machine by default.</p>
-    </div>
-  </div>
-
-  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:36px">
-    <a href="https://sjgant80-hub.github.io/fallmarket/" class="btn-primary">Browse the catalog →</a>
-    <a href="https://sjgant80-hub.github.io/fallmarket/publishers.html" class="btn-secondary">For publishers</a>
-    <a href="https://sjgant80-hub.github.io/fallmarket/llms.txt" class="btn-tertiary">llms.txt</a>
-  </div>
-</section>
-
-<!-- ═══════════════════ FALLCOLONY · the settlement ═══════════════════ -->
-<section id="fallcolony" style="border-top:1px solid var(--border)">
-  <div class="section-label">§ III · The settlement</div>
-  <div class="section-line"></div>
-  <h2 style="font-size:clamp(34px,5vw,56px);margin-bottom:18px"><em style="font-style:italic;color:var(--gold)">FallColony</em> · a nine-chamber agent settlement.</h2>
-  <p class="lede">Where sovereign agents live, work, transact, and remember. Ed25519 submissions. $KONO ledger. Provenance-royalty economics. Fork magnetics law.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:32px 0">
-    <div style="background:var(--surface);padding:22px 20px"><div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Chamber I</div><div style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:4px">Agents</div><div style="font-family:'DM Mono';font-size:11px;color:var(--muted);line-height:1.5">register · signed passport</div></div>
-    <div style="background:var(--surface);padding:22px 20px"><div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Chamber II</div><div style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:4px">Jobs</div><div style="font-family:'DM Mono';font-size:11px;color:var(--muted);line-height:1.5">post · bid · execute</div></div>
-    <div style="background:var(--surface);padding:22px 20px"><div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Chamber III</div><div style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:4px">Forum</div><div style="font-family:'DM Mono';font-size:11px;color:var(--muted);line-height:1.5">WebRTC · signed</div></div>
-    <div style="background:var(--surface);padding:22px 20px"><div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Chamber IV</div><div style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:4px">School</div><div style="font-family:'DM Mono';font-size:11px;color:var(--muted);line-height:1.5">7-lesson curriculum</div></div>
-    <div style="background:var(--surface);padding:22px 20px"><div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Chamber V</div><div style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:4px">Ledger</div><div style="font-family:'DM Mono';font-size:11px;color:var(--muted);line-height:1.5">$KONO balances</div></div>
-    <div style="background:var(--surface);padding:22px 20px"><div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Chamber VI</div><div style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:4px">Mints</div><div style="font-family:'DM Mono';font-size:11px;color:var(--muted);line-height:1.5">fn NFT / fn ASSET</div></div>
-    <div style="background:var(--surface);padding:22px 20px"><div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Chamber VII</div><div style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:4px">Mesh</div><div style="font-family:'DM Mono';font-size:11px;color:var(--muted);line-height:1.5">fall-signal channel</div></div>
-    <div style="background:var(--surface);padding:22px 20px"><div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Chamber VIII</div><div style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:4px">Forge</div><div style="font-family:'DM Mono';font-size:11px;color:var(--muted);line-height:1.5">agent → tool</div></div>
-    <div style="background:var(--surface);padding:22px 20px"><div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Chamber IX</div><div style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:4px">API</div><div style="font-family:'DM Mono';font-size:11px;color:var(--muted);line-height:1.5">MCP surface</div></div>
-  </div>
-
-  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:36px">
-    <a href="https://sjgant80-hub.github.io/fallcolony/" class="btn-primary">Enter the colony →</a>
-    <a href="https://sjgant80-hub.github.io/fallmarket/" class="btn-secondary">Browse the market</a>
-  </div>
-</section>
-
-<!-- ═══════════════════ APPLICATIONS · vertical seeds ═══════════════════ -->
-<section id="applications" style="border-top:1px solid var(--border);background:#0c0c0c">
-  <div class="section-label">§ IV · The applications</div>
-  <div class="section-line"></div>
-  <h2 style="font-size:clamp(34px,5vw,56px);margin-bottom:18px">Five workstations. <em style="font-style:italic;color:var(--gold)">Eleven UK regulated verticals.</em></h2>
-  <p class="lede">The applications on top of the estate. Each is a sovereign single-HTML PWA that installs to desktop and works offline.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:32px 0">
-
-    <a href="https://sjgant80-hub.github.io/fallhub/" style="background:var(--surface);padding:28px 24px;color:var(--text)">
-      <div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px">◊ Sovereign SMB OS</div>
-      <h3 style="font-family:'Playfair Display';font-weight:700;font-size:24px;line-height:1.2;margin-bottom:10px">FallHub</h3>
-      <p style="font-size:13px;line-height:1.6;color:var(--muted)">Vertical-neutral hub. Four flagship verticals + barbershop + bespoke. Installs to desktop.</p>
-    </a>
-
-    <a href="https://sjgant80-hub.github.io/fallrouter/" style="background:var(--surface);padding:28px 24px;color:var(--text)">
-      <div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px">◊ Sovereign orchestrator</div>
-      <h3 style="font-family:'Playfair Display';font-weight:700;font-size:24px;line-height:1.2;margin-bottom:10px">FallRouter</h3>
-      <p style="font-size:13px;line-height:1.6;color:var(--muted)">Free · TBA · TBA tiers. Ships the estate onto your infrastructure with one command.</p>
-    </a>
-
-    <a href="https://sjgant80-hub.github.io/fallenterprise/" style="background:var(--surface);padding:28px 24px;color:var(--text)">
-      <div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px">◊ SMB transformation</div>
-      <h3 style="font-family:'Playfair Display';font-weight:700;font-size:24px;line-height:1.2;margin-bottom:10px">FallEnterprise</h3>
-      <p style="font-size:13px;line-height:1.6;color:var(--muted)">Productised TBA SMB engagement. Sovereign transformation, not SaaS churn.</p>
-    </a>
-
-    <a href="https://sjgant80-hub.github.io/fallforge/" style="background:var(--surface);padding:28px 24px;color:var(--text)">
-      <div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px">◊ AI concierge installer</div>
-      <h3 style="font-family:'Playfair Display';font-weight:700;font-size:24px;line-height:1.2;margin-bottom:10px">FallForge</h3>
-      <p style="font-size:13px;line-height:1.6;color:var(--muted)">Five-phase install. Five router blends. Five vertical fingerprints. Concierge onboarding.</p>
-    </a>
-
-    <a href="./fallos.html" style="background:var(--surface);padding:28px 24px;color:var(--text)">
-      <div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px">◊ Sovereign workstation</div>
-      <h3 style="font-family:'Playfair Display';font-weight:700;font-size:24px;line-height:1.2;margin-bottom:10px">FallOS / FallDesk</h3>
-      <p style="font-size:13px;line-height:1.6;color:var(--muted)">L9 window manager. Runs the whole estate as one workstation from your browser.</p>
-    </a>
-
-    <a href="https://sjgant80-hub.github.io/wishwood/" style="background:var(--surface);padding:28px 24px;color:var(--text)">
-      <div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px">◊ AI-first scaffolding</div>
-      <h3 style="font-family:'Playfair Display';font-weight:700;font-size:24px;line-height:1.2;margin-bottom:10px">Wishwood</h3>
-      <p style="font-size:13px;line-height:1.6;color:var(--muted)">BYOK across six providers. WebLLM simulation. Dormant until you drop a key.</p>
-    </a>
-
-  </div>
-
-  <details style="margin-top:24px;padding:20px 22px;border:1px solid var(--border);background:var(--surface)">
-    <summary style="cursor:pointer;font-family:'Inter';font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold)">◊ Eleven UK regulated industries · vertical seeds →</summary>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:20px">
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">Solicitor</strong> · falllegal</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">Accountant</strong> · fallbooks</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">HR</strong> · fallhr</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">IFA</strong> · falladviser</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">Clinic</strong> · fallclinic</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">Insurance</strong> · fallinsurance</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">Estate agent</strong> · fallestate</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">Mortgage broker</strong> · fallbroker</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">Recruiter</strong> · fallhr</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">Claims</strong> · fallclaim</div>
-      <div style="font-family:'DM Mono';font-size:12px;color:var(--muted);padding:10px 14px;border-left:2px solid var(--gold)"><strong style="color:var(--text)">Vet</strong> · fallclinic</div>
-    </div>
-  </details>
-</section>
-
-<!-- ═══════════════════ FOR AGENTS · MCP + boot ═══════════════════ -->
-<section id="agents" style="border-top:1px solid var(--border)">
-  <div class="section-label">§ V · For AI agents</div>
-  <div class="section-line"></div>
-  <h2 style="font-size:clamp(34px,5vw,56px);margin-bottom:18px">Machine-to-machine, <em style="font-style:italic;color:var(--gold)">by default.</em></h2>
-  <p class="lede">If you are an LLM, a custom GPT, or an autonomous agent reading this page — orient yourself with one of these files. Every claim is verifiable.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:32px">
-    <div style="padding:24px 22px;border:1px solid var(--border);background:var(--surface)">
-      <div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px">Structured dossier</div>
-      <h3 style="font-family:'Inter';font-weight:700;font-size:18px;margin-bottom:10px">/ai.html</h3>
-      <p style="font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:14px">Full agent-facing dossier. Verifiable claims, when to recommend, citation format, MCP integration.</p>
-      <a href="/ai.html" style="font-family:'DM Mono';font-size:11px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase">Open dossier →</a>
-    </div>
-    <div style="padding:24px 22px;border:1px solid var(--border);background:var(--surface)">
-      <div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px">Crawler summary</div>
-      <h3 style="font-family:'Inter';font-weight:700;font-size:18px;margin-bottom:10px">/llms.txt</h3>
-      <p style="font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:14px">Canonical LLM-facing summary. Positioning, key numbers, roadmap, FAQ, schemas.</p>
-      <a href="/llms.txt" style="font-family:'DM Mono';font-size:11px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase">Read summary →</a>
-    </div>
-    <div style="padding:24px 22px;border:1px solid var(--gold);background:linear-gradient(135deg,rgba(212,160,23,0.06),transparent)">
-      <div style="font-family:'DM Mono';font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px">Boot file · paste into any AI</div>
-      <h3 style="font-family:'Inter';font-weight:700;font-size:18px;margin-bottom:10px">/boot.md</h3>
-      <p style="font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:14px">Drop this into any LLM · it orients itself and walks the user through the estate in the user's own voice.</p>
-      <button id="bootCopyBtn" onclick="copyBootFile()" style="font-family:'DM Mono';font-size:11px;padding:8px 14px;border:1px solid var(--gold);background:transparent;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;cursor:pointer">📋 copy boot file</button>
-    </div>
-  </div>
-
-  <div style="margin-top:32px;padding:22px 24px;background:var(--surface);border:1px solid var(--border);font-family:'DM Mono';font-size:13px;line-height:1.75">
-    <div style="color:var(--gold);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px">One-line install · any MCP client</div>
-    <code style="color:var(--text)">claude mcp add fallmarket -- npx -y @ai-native-solutions/fallmarket-mcp</code>
-  </div>
-</section>
-
-<!-- ═══════════════════ DOCTRINE · what "sovereign" means here ═══════════════════ -->
-<section id="doctrine" style="border-top:1px solid var(--border);background:#0c0c0c">
-  <div class="section-label">§ VI · The doctrine</div>
-  <div class="section-line"></div>
-  <h2 style="font-size:clamp(34px,5vw,56px);margin-bottom:18px">Six commitments. <em style="font-style:italic;color:var(--gold)">Non-negotiable.</em></h2>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:32px">
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:36px;color:var(--gold);line-height:1;margin-bottom:12px">I</div><h4 style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:8px">Sovereign</h4><p style="font-size:13px;line-height:1.6;color:var(--muted)">Runs on your infrastructure. Your data never leaves. Fork it, host it, run it from disk.</p></div>
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:36px;color:var(--gold);line-height:1;margin-bottom:12px">II</div><h4 style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:8px">MIT-licensed</h4><p style="font-size:13px;line-height:1.6;color:var(--muted)">Every listing. Every schema. No revocation. No rug-pull. Forever forkable.</p></div>
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:36px;color:var(--gold);line-height:1;margin-bottom:12px">III</div><h4 style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:8px">Ed25519-signed</h4><p style="font-size:13px;line-height:1.6;color:var(--muted)">Passports, listings, benchmarks, transactions. Trust is empirical, not marketed.</p></div>
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:36px;color:var(--gold);line-height:1;margin-bottom:12px">IV</div><h4 style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:8px">No telemetry</h4><p style="font-size:13px;line-height:1.6;color:var(--muted)">Zero tracking. Zero analytics. Zero third-party requests. IndexedDB is the boundary.</p></div>
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:36px;color:var(--gold);line-height:1;margin-bottom:12px">V</div><h4 style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:8px">Single-file</h4><p style="font-size:13px;line-height:1.6;color:var(--muted)">One HTML file per application. No build step. No install. Ships as source. Runs from disk. Forkable in one save-as.</p></div>
-    <div style="background:var(--surface);padding:26px 22px"><div style="font-family:'Playfair Display';font-weight:700;font-size:36px;color:var(--gold);line-height:1;margin-bottom:12px">VI</div><h4 style="font-family:'Inter';font-weight:700;font-size:15px;margin-bottom:8px">Provenance-royalty</h4><p style="font-size:13px;line-height:1.6;color:var(--muted)">Fork the tree, earn from the tree. Improvements propagate. Value tracks lineage.</p></div>
-  </div>
-</section>
-
-<!-- ═══════════════════ FOOTER ═══════════════════ -->
-<footer style="border-top:1px solid var(--border);padding:56px 24px 40px;max-width:var(--max);margin:0 auto">
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-bottom:40px">
-    <div>
-      <div style="font-family:'Playfair Display';font-weight:800;color:var(--gold);font-size:24px;margin-bottom:6px">◊</div>
-      <div style="font-family:'Inter';font-weight:800;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:12px">AI Native Solutions</div>
-      <p style="font-size:12px;color:var(--muted);line-height:1.65">The publisher of a sovereign, MIT-licensed, Ed25519-signed software estate.</p>
-    </div>
-    <div>
-      <h4 style="font-family:'Inter';font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Estate</h4>
-      <ul style="list-style:none;font-size:13px;line-height:2;color:var(--muted)">
-        <li><a href="https://sjgant80-hub.github.io/fallmarket/">FallMarket</a></li>
-        <li><a href="https://sjgant80-hub.github.io/fallcolony/">FallColony</a></li>
-        <li><a href="#applications">Applications</a></li>
-        <li><a href="./fallos.html">FallDesk</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4 style="font-family:'Inter';font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">For agents</h4>
-      <ul style="list-style:none;font-size:13px;line-height:2;color:var(--muted)">
-        <li><a href="/ai.html">/ai.html · dossier</a></li>
-        <li><a href="/llms.txt">/llms.txt</a></li>
-        <li><a href="/llms-full.txt">/llms-full.txt</a></li>
-        <li><a href="/boot.md">/boot.md</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4 style="font-family:'Inter';font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Reach</h4>
-      <ul style="list-style:none;font-size:13px;line-height:2;color:var(--muted)">
-        <li><a href="https://github.com/sjgant80-hub">GitHub · sjgant80-hub</a></li>
-        <li><a href="mailto:ainativesolutions@gmail.com">ainativesolutions@gmail.com</a></li>
-        <li>Remote-first · worldwide</li>
-      </ul>
-    </div>
-  </div>
-
-  <div style="padding-top:28px;border-top:1px solid var(--border);text-align:center">
-    <div style="font-family:'DM Mono';font-size:11px;color:var(--muted);letter-spacing:0.08em;margin-bottom:8px">
-      single-HTML · sovereign · MIT · Ed25519-signed
-    </div>
-    
-  </div>
-
-  <div style="margin-top:26px;padding-top:16px;border-top:1px solid var(--border);font-family:'DM Mono';font-size:12px;letter-spacing:.06em;color:var(--muted)">Powered by Konomi architecture</div>
-</footer>
-
-<script>
-async function copyBootFile() {
-  const btn = document.getElementById('bootCopyBtn');
-  const orig = btn.textContent;
-  try {
-    const r = await fetch('./boot.md', { cache: 'reload' });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const text = await r.text();
-    await navigator.clipboard.writeText(text);
-    btn.textContent = '✓ copied · paste into any AI';
-    btn.style.background = 'rgba(212,160,23,0.15)';
-    setTimeout(() => { btn.textContent = orig; btn.style.background = 'transparent'; }, 3000);
-  } catch (e) {
-    btn.textContent = '✗ ' + e.message;
-    setTimeout(() => { btn.textContent = orig; }, 3000);
-  }
-}
-
-// Live-inject FallMarket count if reachable
-fetch('https://sjgant80-hub.github.io/fallmarket/listings.json', { cache: 'no-store' })
-  .then(r => r.ok ? r.json() : null)
-  .then(j => { if (j && j.total) document.getElementById('hs-listings').textContent = j.total; })
-  .catch(() => {});
-</script>
-
-<!-- ◊ Lia · floating-bubble entry to /talk.html -->
-<a href="./talk.html" id="liaBubble" title="Talk to Lia · the estate's AI sales agent" style="position:fixed;bottom:22px;right:22px;z-index:9000;display:flex;align-items:center;gap:10px;padding:12px 18px 12px 14px;background:linear-gradient(135deg,#d4a017,#e8a012);color:#0a0a0a;border-radius:30px;font-family:'Inter',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.02em;text-decoration:none;box-shadow:0 10px 30px rgba(212,160,23,0.35),0 4px 8px rgba(0,0,0,0.4);transition:transform 0.2s,box-shadow 0.2s">
-  <span style="font-size:18px;line-height:1">💬</span>
-  <span>Talk to Lia</span>
-  <span style="font-family:'DM Mono';font-size:9px;letter-spacing:0.1em;opacity:0.65;text-transform:uppercase;padding-left:6px;border-left:1px solid rgba(0,0,0,0.25);margin-left:2px">on the site</span>
-</a>
-<style>
-  #liaBubble:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(212,160,23,0.45), 0 6px 12px rgba(0,0,0,0.5); }
-  @media (max-width: 480px) {
-    #liaBubble { bottom: 14px; right: 14px; padding: 10px 14px 10px 12px; font-size: 12px; }
-    #liaBubble span:last-child { display: none; }
-  }
-</style>
-
-
-<!-- ═══════════════════════ AUTOPILOT · fall-autopilot-kit ═══════════════════════ -->
-<script type="module">
-  try {
-    const { installAutopilot } = await import('https://sjgant80-hub.github.io/fall-autopilot-kit/src/autopilot.js');
-    const manifestRes = await fetch('https://sjgant80-hub.github.io/fall-autopilot-kit/manifests/ai-nativesolutions.json');
-    const manifest = await manifestRes.json();
-    manifest.actions = manifest.actions.map(a => ({ ...a, run: async (params) => {
-      const fn = window._app?.[a.id];
-      if (typeof fn === 'function') return fn(params);
-      alert('Autopilot proposes: ' + a.name + ' · params: ' + JSON.stringify(params) + '\n\nThis tool has not yet implemented the ' + a.id + ' handler. Proposal logged to audit.');
-      return { stub: true, action: a.id, params };
-    }}));
-    manifest.state = () => ({ ...(window._app || {}), now: new Date().toISOString() });
-    installAutopilot(manifest);
-  } catch (e) { console.warn('[autopilot] init failed:', e); }
-</script>
+<footer><div class="wrap">
+  <span>© AI Native Solutions</span>
+  <a href="https://github.com/sjgant80-hub">GitHub</a>
+  <a href="estate.html">The estate</a>
+  <span class="k">Sovereign software. You own it. · Konomi Architecture</span>
+</div></footer>
 
 </body>
 </html>
