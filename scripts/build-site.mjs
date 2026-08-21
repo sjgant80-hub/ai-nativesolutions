@@ -19,7 +19,15 @@ if (!Array.isArray(idx.nodes) || idx.nodes.length < 100) {
 }
 
 const pub = idx.nodes.filter(n => !n.private && !n.archived && !n.fork);
-const live = pub.filter(n => n.live);
+// the human shelf: companion -api/-mcp/-sdk surfaces are programmatic mirrors, and the audit
+// found their Pages widely disabled while the index flag lags — a front door must not 404
+const companion = (n) => /-(api|mcp|sdk)$/.test(n.name);
+// every candidate page was HEAD-verified; the ones that did not answer live in deadlist.json —
+// a front door lists only doors that open
+let deadlist = { dead: [] };
+try { deadlist = JSON.parse(readFileSync(join(here, '..', 'deadlist.json'), 'utf8')); } catch {}
+const deadSet = new Set(deadlist.dead || []);
+const live = pub.filter(n => n.live && !companion(n) && !deadSet.has(n.name));
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 // ── the numbers, injected into the landing between markers ──
@@ -83,7 +91,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <h1>The estate</h1>
 <p class="sub">${live.length.toLocaleString('en-GB')} live builds of ${pub.length.toLocaleString('en-GB')} public repositories —
 this page is generated from the estate index of ${esc(String(idx.generated || '').slice(0, 10))}, never typed.
-Every link below is a running page.</p>
+Every link below answered a live check on ${esc(String(deadlist.verified || 'the last verification'))}. Programmatic companion surfaces (API/MCP/SDK mirrors) are not listed here.</p>
 
 <h2 style="color:var(--gold);font-size:1.05rem">Start here</h2>
 <div class="flag">

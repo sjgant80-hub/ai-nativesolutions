@@ -1,0 +1,25 @@
+{
+ "verified": "2026-08-21",
+ "checked": 392,
+ "dead": [
+  "ACG-Test",
+  "ACGBM",
+  "ACGCLI",
+  "ACGGLOCK",
+  "ACGNET",
+  "ACGP2P",
+  "ACGPHONE",
+  "ACG_Repo_Template",
+  "Konception",
+  "SYMB-FER",
+  "contact",
+  "fallseed-generator",
+  "fallwatcher",
+  "groundlevel-obsidian",
+  "hummingbird",
+  "konomi",
+  "konomioke",
+  "kp2p",
+  "si-didy-k2"
+ ]
+}
