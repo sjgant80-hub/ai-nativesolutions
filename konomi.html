@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0a0f">
+<title>Konomi — the architecture, in plain words</title>
+<meta name="description" content="Konomi is a way of building software so that you own it, it runs on your machines, the maths is proven before it ships, and machines can never cross the doors that belong to people.">
+<meta property="og:title" content="Konomi — the architecture, in plain words">
+<meta property="og:description" content="Four promises, each one backed by a live page you can open right now — including the one that lists what Konomi cannot do yet.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ai-nativesolutions.com/konomi.html">
+<link rel="canonical" href="https://www.ai-nativesolutions.com/konomi.html">
+<style>
+:root{--bg:#0b0a0f;--bg2:#100d15;--card:#141218;--ink:#e2d9c8;--gold:#d4a017;--gold2:#ffb648;--line:#2b251f;--soft:#8f8778}
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,"Iowan Old Style",serif;background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 22px}
+a{color:var(--gold)}
+header{padding:20px 0;border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:baseline;gap:22px;flex-wrap:wrap}
+.mark{font-weight:bold;font-size:1.05em}
+.mark span{color:var(--gold)}
+.nav a{color:var(--soft);text-decoration:none;font-size:.9em}
+.nav a:hover{color:var(--gold)}
+.hero{padding:76px 0 48px;background:radial-gradient(60% 45% at 50% 0%,rgba(212,160,23,.09),transparent 70%)}
+.hero .sigil{font-size:2.6rem;color:var(--gold);line-height:1}
+.hero h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.14;margin:14px 0 16px;letter-spacing:-.015em}
+.hero p{font-size:1.12em;max-width:600px;color:var(--ink)}
+section{padding:44px 0;border-top:1px solid var(--line)}
+h2{font-size:1.35rem;color:var(--gold);margin:0 0 10px;letter-spacing:-.01em}
+.promise{background:linear-gradient(180deg,var(--bg2),var(--card));border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin:16px 0}
+.promise h3{margin:0 0 8px;font-size:1.12em;color:var(--gold)}
+.promise p{margin:0 0 12px;font-size:.97em}
+.promise .proof{font-size:.9em}
+.promise .proof a{font-weight:bold}
+.not{border:1px solid var(--line);border-radius:12px;padding:20px 24px;background:var(--card);font-size:.95em}
+.not h3{margin:0 0 8px;color:var(--gold);font-size:1.05em}
+.origin{color:var(--soft);font-size:.95em}
+.cta{text-align:center;padding:56px 0}
+.btn{display:inline-block;padding:13px 24px;border-radius:9px;text-decoration:none;font-size:1em;background:linear-gradient(96deg,var(--gold),var(--gold2));color:#161006;font-weight:bold}
+footer{border-top:1px solid var(--line);padding:24px 0 44px;color:var(--soft);font-size:.82em}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--soft)}
+footer .k{margin-left:auto}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <span class="mark">AI <span>Native</span> Solutions</span>
+  <a href="index.html">Home</a>
+  <a href="estate.html">The estate</a>
+  <a href="mailto:ainativesolutions@gmail.com">Talk to us</a>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div class="sigil">◊</div>
+  <h1>Konomi is a way of building software<br>so it belongs to the people who use it.</h1>
+  <p>You've seen the word in the footer of every page we make. This is what it means —
+  four promises, each one backed by a live page you can open right now, including the one
+  that lists what Konomi cannot do yet.</p>
+</div></div>
+
+<section><div class="wrap">
+  <h2>The four promises</h2>
+
+  <div class="promise">
+    <h3>1 · You own it</h3>
+    <p>A Konomi tool is a file, not a subscription. The source is in your hands under a licence
+    nobody can revoke. There is no vendor who can raise the price, discontinue the product, or
+    switch it off — because there is no vendor between you and your software.</p>
+    <p class="proof">Proof: <a href="estate.html">the estate</a> — hundreds of live builds, every
+    one open-source, every one a page that keeps working if we disappear tomorrow.</p>
+  </div>
+
+  <div class="promise">
+    <h3>2 · It runs on your machines</h3>
+    <p>Konomi software runs in your browser and works offline. Your client records, case files,
+    and numbers stay on your device — they never travel to a server, because there is no server.
+    For firms whose regulators expect them to control client data, this isn't a preference;
+    it's the point.</p>
+    <p class="proof">Proof: <a href="https://sjgant80-hub.github.io/fallforce/verticals.html">the
+    regulated shelf</a> — working tools for claims firms, accountants, brokers, and agents,
+    each one running entirely on the machine that opens it.</p>
+  </div>
+
+  <div class="promise">
+    <h3>3 · The maths is proven before it ships</h3>
+    <p>The engines that compute deadlines, totals, and money are tested by deliberately breaking
+    them — mutation testing — which checks not just that the code passes its tests, but that the
+    tests would catch the code if it were wrong. A total that can't reconcile refuses the
+    document instead of being silently absorbed. And where an engine has a limit, the limit is
+    printed on the page.</p>
+    <p class="proof">Proof: <a href="https://sjgant80-hub.github.io/fallcorp-demo/">Northgate
+    Claims</a> — a fictional firm running a live working day on those engines, with its own
+    limitations stated on screen.</p>
+  </div>
+
+  <div class="promise">
+    <h3>4 · Machines never cross the human doors</h3>
+    <p>In a Konomi system, automated agents run the routine work — but four kinds of action
+    always stop and wait for a named person: moving money, signing anything legal, judgment
+    calls, and moments of client trust. This is enforced in the software itself, not written
+    in a policy. Nothing signs itself.</p>
+    <p class="proof">Proof: <a href="https://sjgant80-hub.github.io/fallcorp/">the konomified
+    company</a> — a 100-person firm designed seat by seat, where the org chart is validated by
+    code that refuses any structure breaking that rule.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>What Konomi does not do — yet</h2>
+  <div class="not">
+    <h3>Said plainly, because trust is the product:</h3>
+    <p>Konomi tools today are single-device by design — there is no shared multi-user layer, so a
+    team working one caseload together needs that layer built as part of their deployment. There
+    is no cloud scale-out, because there is no cloud. And a Konomi system will not pretend to be
+    finished: every demo prints its current limits, and this page will keep this section for as
+    long as it stays true. A vendor that hides where it's weak shouldn't be trusted where it's
+    strong — that rule applies to us first.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Where it comes from</h2>
+  <p class="origin">Konomi grew out of a working software estate built by one person with AI
+  agents doing the operational ninety percent — the same architecture we sell is the one we run
+  on, every day, in public. The name marks any page built this way: owned, offline, proven,
+  and doored. When you see the word in a footer, these four promises are what it's claiming —
+  and each one links back to something live.</p>
+</div></section>
+
+<div class="cta"><div class="wrap">
+  <h2>See it, then talk to us</h2>
+  <p style="color:var(--soft);max-width:520px;margin:8px auto 24px">Walk the builds first —
+  they're the argument. Then bring us your firm.</p>
+  <a class="btn" href="https://sjgant80-hub.github.io/fallcorp-demo/">Watch a company run on Konomi →</a>
+</div></div>
+
+<footer><div class="wrap">
+  <span>© AI Native Solutions</span>
+  <a href="index.html">Home</a>
+  <a href="estate.html">The estate</a>
+  <a href="https://github.com/sjgant80-hub">GitHub</a>
+  <span class="k">Sovereign software. You own it. · Konomi Architecture</span>
+</div></footer>
+
+</body>
+</html>

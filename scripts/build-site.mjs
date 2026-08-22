@@ -91,7 +91,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <h1>The estate</h1>
 <p class="sub">${live.length.toLocaleString('en-GB')} live builds of ${pub.length.toLocaleString('en-GB')} public repositories —
 this page is generated from the estate index of ${esc(String(idx.generated || '').slice(0, 10))}, never typed.
-Every link below answered a live check on ${esc(String(deadlist.verified || 'the last verification'))}. Programmatic companion surfaces (API/MCP/SDK mirrors) are not listed here.</p>
+Every link below answered a live check on ${esc(String(idx.verified || deadlist.verified || 'the last verification'))}. Programmatic companion surfaces (API/MCP/SDK mirrors) are not listed here.</p>
 
 <h2 style="color:var(--gold);font-size:1.05rem">Start here</h2>
 <div class="flag">
@@ -104,7 +104,7 @@ ${FLAGSHIPS.map(f => `<div class="fcard"><a href="https://sjgant80-hub.github.io
 <div class="grid" id="grid"></div>
 
 <footer>Generated from the estate index — no number typed by hand. Every build is MIT-licensed source
-you can read, fork, and keep. · <a href="index.html">AI Native Solutions</a> · Konomi Architecture</footer>
+you can read, fork, and keep. · <a href="index.html">AI Native Solutions</a> · <a href="konomi.html">Konomi Architecture</a></footer>
 
 <script>
 const DATA = ${JSON.stringify(data)};
