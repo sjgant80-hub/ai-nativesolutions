@@ -1,0 +1,33 @@
+{
+  "doors": { "money": "human", "legal": "human", "taste": "human", "client-trust": "human" },
+  "doorNotes": {
+    "money": "Stripe not yet set up — the door is held, the rail behind it isn't built. Counsel before it opens.",
+    "legal": "no engagement signed yet — held, waiting on the first real deal.",
+    "taste": "active — approves posts before autonomy is earned, picks which builds ship.",
+    "client-trust": "active — the human takes every real conversation; si-didy drafts, Simon speaks."
+  },
+  "stages": [
+    { "n": 1, "seat": "Marketing agent", "state": "BUILT",
+      "machinery": "the sanctioned rail + outbox + fallscrub + the operator's content drafts",
+      "does": "mines the estate for the day's angle, drafts the post, scrubs every model-tell, posts on the Meta Graph API, measures, learns what converts",
+      "waiting": "one paste: the Meta Page token. Built and gated; the moment it's in, this seat goes public." },
+    { "n": 2, "seat": "Pipeline agent", "state": "PLANNED",
+      "does": "capture the interest the marketing seat pulls, draft replies, track the pipeline, route the serious ones to the human close",
+      "waiting": "the operator already drafts proposals; the lead-capture surface is the real next build." },
+    { "n": 3, "seat": "Product agent", "state": "LIVE",
+      "proof": "https://sjgant80-hub.github.io/sididy-catalogue/",
+      "machinery": "the si-didy operator: crawl the estate, compose, validate, mint",
+      "does": "runs nightly — crawls the estate, mints sovereign builds into the catalogue with savings-math. This one genuinely operates today." },
+    { "n": 4, "seat": "Delivery agent", "state": "BUILT",
+      "machinery": "the signed-door executor + the invoiceTotals kernel + the baby-KCC ledger",
+      "does": "auto-delivers the file on purchase, prepares the invoice for the human to sign, keeps the ledger",
+      "waiting": "a first real sale to fulfil — the machinery is proven, the customer is next." },
+    { "n": 5, "seat": "Learning loop", "state": "BUILT",
+      "machinery": "the nightly ritual: study, sweep, dream, drill the course, sit a wisp exam, write the morning brief",
+      "does": "improves every seat over time — fan, gate, remember. Runs internally every night on Simon's own electric." },
+    { "n": 6, "seat": "Company = product", "state": "LIVE",
+      "proof": "https://sjgant80-hub.github.io/fallcorp/",
+      "machinery": "fallcorp + Northgate (the running demo) + the engagement proposal",
+      "does": "the company becomes its own case study — 'we run ourselves 90/10, we'll do it for your firm too.' The asset is live and public; the first engagement sale is the next door." }
+  ]
+}

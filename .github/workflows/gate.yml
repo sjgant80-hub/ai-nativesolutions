@@ -1,0 +1,15 @@
+name: gate
+on: [push, workflow_dispatch]
+jobs:
+  witness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: proof-of-play — the operating-board gate
+        run: node --test stages.test.mjs
+      - name: witness — try to break the tests
+        run: |
+          git clone --depth 1 --branch v0.6 https://github.com/sjgant80-hub/witness.git /tmp/witness
+          node /tmp/witness/witness.mjs mutate stages.mjs --timeout 60000 --cap 400 --test node --test stages.test.mjs
