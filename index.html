@@ -11,6 +11,63 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.ai-nativesolutions.com">
 <link rel="canonical" href="https://www.ai-nativesolutions.com/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.ai-nativesolutions.com/#org",
+      "name": "AI Native Solutions",
+      "url": "https://www.ai-nativesolutions.com/",
+      "description": "AI-first business software you own: it runs on your machines, your data never leaves your control, and the machinery is proven before it ships.",
+      "founder": { "@type": "Person", "name": "Simon Gant" },
+      "sameAs": ["https://github.com/sjgant80-hub"],
+      "email": "ainativesolutions@gmail.com",
+      "areaServed": "GB",
+      "knowsAbout": ["Sovereign AI", "On-premise AI", "Provable AI", "AI audit trail", "EU AI Act evidence", "Owned software", "Client-side AI", "AI confidentiality"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.ai-nativesolutions.com/#site",
+      "url": "https://www.ai-nativesolutions.com/",
+      "name": "AI Native Solutions",
+      "publisher": { "@id": "https://www.ai-nativesolutions.com/#org" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.ai-nativesolutions.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are AI chatbot conversations privileged in court?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. In United States v. Heppner (S.D.N.Y., 2026) a US federal court ruled that a chief executive's conversations with a public AI assistant were protected by neither attorney-client privilege nor the work-product doctrine, and the files became evidence. Anything typed into a rented chatbot can be discoverable and sits on the vendor's servers. AI that runs inside your own perimeter avoids that third-party disclosure. This is information, not legal advice." }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the EU AI Act require, and when?",
+          "acceptedAnswer": { "@type": "Answer", "text": "From 2 August 2026, providers of higher-risk AI systems must keep automatic logs and evidence of what their systems did, among other obligations. Owned, on-premise AI with a signed, tamper-evident audit trail produces that record by design — we build the audit trail in from the start." }
+        },
+        {
+          "@type": "Question",
+          "name": "Should a business own or rent its AI software?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Own it. Rented AI means a monthly bill forever, your data on someone else's servers, and a tool the vendor can price up or switch off. Owned software runs on your machines, keeps your data inside your walls, and is yours once — the routine work runs itself while a named person still holds every money, legal and judgment decision." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can AI software keep client data on-premise and offline?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The tools are single files that run entirely in your browser, keep data in local storage, and work offline after first load — nothing is sent to a server. That suits firms whose client data cannot legally live on someone else's infrastructure, such as claims practices, accountants, brokers, letting agents and adviser firms." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you prove an AI system actually works?",
+          "acceptedAnswer": { "@type": "Answer", "text": "With a signed, deterministic proof — a mutation-tested gate and a hash-chained receipt — never one AI grading another. Every build runs live before we speak and prints its own limitations on the page. If a receipt doesn't show the model beats your baseline, you don't pay." }
+        }
+      ]
+    }
+  ]
+}
+</script>
 <style>
 :root{--bg:#0b0a0f;--bg2:#100d15;--card:#141218;--ink:#e2d9c8;--gold:#d4a017;--gold2:#ffb648;--line:#2b251f;--soft:#8f8778}
 *{box-sizing:border-box}
@@ -58,6 +115,15 @@ h2{font-size:1.5rem;color:var(--gold);margin:0 0 8px;letter-spacing:-.01em}
 .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px}
 .rule{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 17px;font-size:.92em}
 .rule b{color:var(--gold);display:block;margin-bottom:4px}
+
+.faq{display:grid;gap:12px;margin-top:8px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:2px 18px}
+.faq summary{cursor:pointer;padding:15px 0;font-weight:bold;color:var(--gold);list-style:none;font-size:1.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";float:right;color:var(--soft);font-weight:normal}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 16px;color:var(--soft);font-size:.94em}
+.faq details p a{color:var(--gold)}
 
 .estate-door{display:block;background:linear-gradient(120deg,rgba(212,160,23,.1),rgba(212,160,23,.03));border:1px solid var(--gold);border-radius:14px;padding:28px 30px;text-decoration:none;color:var(--ink);transition:.15s}
 .estate-door:hover{background:linear-gradient(120deg,rgba(212,160,23,.16),rgba(212,160,23,.05))}
@@ -183,6 +249,40 @@ footer .k{margin-left:auto}
     the limits are stated on the page.</div>
     <div class="rule"><b>You own it.</b> Source in your hands, running on your infrastructure.
     It cannot be price-raised, discontinued, or switched off by anyone but you.</div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>Questions firms actually ask</h2>
+  <p class="lede">Plain answers, with the facts and the live builds behind them.</p>
+  <div class="faq">
+    <details open><summary>Are AI chatbot conversations privileged in court?</summary>
+      <p>No. In <em>United States v. Heppner</em> (S.D.N.Y., 2026) a US federal court ruled that a chief
+      executive's conversations with a public AI assistant were protected by neither attorney-client
+      privilege nor the work-product doctrine, and the files became evidence. Anything typed into a rented
+      chatbot can be discoverable and sits on the vendor's servers. AI that runs inside your own perimeter
+      avoids that third-party disclosure. This is information, not legal advice.
+      <a href="https://sjgant80-hub.github.io/perimeter/">See the full argument →</a></p></details>
+    <details><summary>What does the EU AI Act require, and when?</summary>
+      <p>From 2 August 2026, providers of higher-risk AI systems must keep automatic logs and evidence of
+      what their systems did, among other obligations. Owned, on-premise AI with a signed, tamper-evident
+      audit trail produces that record by design — we build the audit trail in from the start.
+      <a href="https://sjgant80-hub.github.io/agent-proof/">See the audit trail →</a></p></details>
+    <details><summary>Should a business own or rent its AI software?</summary>
+      <p>Own it. Rented AI means a monthly bill forever, your data on someone else's servers, and a tool the
+      vendor can price up or switch off. Owned software runs on your machines, keeps your data inside your
+      walls, and is yours once — the routine work runs itself while a named person still holds every money,
+      legal and judgment decision.</p></details>
+    <details><summary>Can AI software keep client data on-premise and offline?</summary>
+      <p>Yes. The tools are single files that run entirely in your browser, keep data in local storage, and
+      work offline after first load — nothing is sent to a server. That suits firms whose client data cannot
+      legally live on someone else's infrastructure, such as claims practices, accountants, brokers, letting
+      agents and adviser firms.</p></details>
+    <details><summary>How do you prove an AI system actually works?</summary>
+      <p>With a signed, deterministic proof — a mutation-tested gate and a hash-chained receipt — never one
+      AI grading another. Every build runs live before we speak and prints its own limitations on the page.
+      If a receipt doesn't show the model beats your baseline, you don't pay.
+      <a href="https://sjgant80-hub.github.io/mint-a-node/">Mint a proven model →</a></p></details>
   </div>
 </div></section>
 
