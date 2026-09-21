@@ -25,7 +25,7 @@
       "sameAs": ["https://github.com/sjgant80-hub"],
       "email": "ainativesolutions@gmail.com",
       "areaServed": "GB",
-      "knowsAbout": ["Sovereign AI", "On-premise AI", "Provable AI", "AI audit trail", "EU AI Act evidence", "Owned software", "Client-side AI", "AI confidentiality"]
+      "knowsAbout": ["Sovereign AI", "On-premise AI", "Provable AI", "AI audit trail", "EU AI Act evidence", "Owned software", "Client-side AI", "AI confidentiality", "Sovereign agent architecture", "Peer-to-peer AI", "WebGPU compute", "Local-first cryptography"]
     },
     {
       "@type": "WebSite",
@@ -152,6 +152,7 @@ footer .k{margin-left:auto}
   <span class="mark">AI <span>Native</span> Solutions</span>
   <a href="#proof">See it running</a>
   <a href="#why">Why own it now</a>
+  <a href="#sovereign">The architecture</a>
   <a href="#offer">What we build</a>
   <a href="#how">How we work</a>
   <a href="os.html">We run ourselves</a>
@@ -214,6 +215,48 @@ footer .k{margin-left:auto}
       hardware and comes with a signed receipt proving it beats your current baseline — and if the receipt
       doesn't say it beats it, you don't pay.</p></a>
   </div>
+</div></section>
+
+<section id="sovereign"><div class="wrap">
+  <h2>The architecture underneath</h2>
+  <p class="lede">Every build sits on one architecture: software that carries its own identity, its own
+  limits, and its own proof — so it runs on your machines, offline, with nothing in the middle to breach.
+  These are the parts. Each one is a working build you can open, and none of it depends on a cloud account.</p>
+  <div class="proof">
+    <a class="pcard" href="https://sjgant80-hub.github.io/the-wallet/"><b>Identity you generate, not rent</b>
+      <p>An Ed25519 keypair created on the device itself — no identity provider, no password, no login for
+      anyone to breach. Cloning the software makes a separate tenant; there is no shared account to contaminate.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/openkonomi/"><b>Agents that cannot overrun</b>
+      <p>Every action is checked against a capability and a budget before it runs. An agent cannot act
+      outside its grant or spend past its limit — refused by construction, not asked nicely by a policy.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/perimeter/"><b>Sealed, and inside your walls</b>
+      <p>Anything that leaves is encrypted first — AES-256-GCM, in the browser. And a prompt to a public AI
+      tool isn't privileged; it can become an exhibit. Software in your own perimeter never sends it.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/meshos/"><b>Peer-to-peer, no server between</b>
+      <p>Sites sync directly over an encrypted WebRTC mesh — no central server to breach, meter, subpoena or
+      switch off. Proven relaying across three separate nodes.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/agent-proof/"><b>A receipt that can say FAILS</b>
+      <p>Every action appends to a signed, tamper-evident hash-chain, checked deterministically — never one
+      AI grading another. Alter one entry and verification catches exactly which.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/witness/"><b>Rules the agent can't rewrite</b>
+      <p>The core limits are baked into the code and mutation-tested before anything ships — a prompt
+      injection or a runaway agent can't move them.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/cassietorusbtc135solver/"><b>Distributed browser compute</b>
+      <p>Heavy parallel work spread across ordinary browsers over WebGPU and coordinated peer-to-peer over
+      WebRTC — a compute swarm with no cluster to rent. Shown here on a hard elliptic-curve search.</p></a>
+  </div>
+  <div style="margin-top:18px">
+    <a class="estate-door" href="https://sjgant80-hub.github.io/sovereign-demo/">
+      <b>Walk the whole architecture, live →</b>
+      <p>An example company runs one real action through the stack, in your own browser: an identity it
+      generates, a grant it can't exceed, a payload it seals, a peer it syncs to with no server, and a
+      receipt you can <em>try to forge</em> and watch get rejected — with a live counter proving nothing
+      left the page. Real cryptography, not a slideshow.</p>
+    </a>
+  </div>
+  <p class="lede" style="margin-top:22px">Want this shape for your firm? It becomes a custom build — scoped
+  to your process, priced to the work, and yours once it ships.
+  <a href="mailto:ainativesolutions@gmail.com?subject=Sovereign%20architecture%20—%20custom%20build">Talk to us about a custom build →</a></p>
 </div></section>
 
 <section id="offer"><div class="wrap">
