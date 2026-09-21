@@ -103,6 +103,8 @@ h2{font-size:1.5rem;color:var(--gold);margin:0 0 8px;letter-spacing:-.01em}
 .proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
 .pcard{background:linear-gradient(180deg,var(--bg2),var(--card));border:1px solid var(--line);border-radius:12px;padding:18px 20px;transition:border-color .15s;display:block;text-decoration:none;color:var(--ink)}
 .pcard:hover{border-color:var(--gold)}
+.pcard.nolink{cursor:default}
+.pcard.nolink:hover{border-color:var(--line)}
 .pcard b{color:var(--gold);font-size:1.04em}
 .pcard p{margin:7px 0 0;font-size:.9em;color:var(--soft)}
 
@@ -241,9 +243,9 @@ footer .k{margin-left:auto}
     <a class="pcard" href="https://sjgant80-hub.github.io/witness/"><b>Rules the agent can't rewrite</b>
       <p>The core limits are baked into the code and mutation-tested before anything ships — a prompt
       injection or a runaway agent can't move them.</p></a>
-    <a class="pcard" href="https://sjgant80-hub.github.io/cassietorusbtc135solver/"><b>Distributed browser compute</b>
+    <div class="pcard nolink"><b>Distributed browser compute</b>
       <p>Heavy parallel work spread across ordinary browsers over WebGPU and coordinated peer-to-peer over
-      WebRTC — a compute swarm with no cluster to rent. Shown here on a hard elliptic-curve search.</p></a>
+      WebRTC — a compute swarm with no cluster to rent.</p></div>
   </div>
   <div style="margin-top:18px">
     <a class="estate-door" href="https://sjgant80-hub.github.io/sovereign-demo/">
