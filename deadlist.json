@@ -1,6 +1,6 @@
 {
- "verified": "2026-08-21",
- "checked": 392,
+ "verified": "2026-09-28",
+ "checked": 486,
  "dead": [
   "ACG-Test",
   "ACGBM",
@@ -21,5 +21,6 @@
   "konomioke",
   "kp2p",
   "si-didy-k2"
- ]
+ ],
+ "how": "derived from estate-index.json: public, non-archived, non-fork, Pages enabled, not an -api/-mcp/-sdk mirror, and the page did NOT answer an HTTP request when the index was built"
 }

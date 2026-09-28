@@ -29,6 +29,9 @@ try { deadlist = JSON.parse(readFileSync(join(here, '..', 'deadlist.json'), 'utf
 const deadSet = new Set(deadlist.dead || []);
 const live = pub.filter(n => n.live && !companion(n) && !deadSet.has(n.name));
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+// the portal lists builds whose descriptions name dreaming → it carries Gary W. Floyd's full credit, from the facts file
+const GARY_DREAM = JSON.parse(readFileSync(join(here, '..', 'media', 'film', 'facts.json'), 'utf8')).credits.garyDream;
+if (!/Lumiea Systems Research Division/.test(GARY_DREAM || '')) { console.error('REFUSED: facts.json credits.garyDream is missing or not in full form'); process.exit(1); }
 
 // ── the numbers, injected into the landing between markers ──
 const landingPath = join(here, '..', 'index.html');
@@ -104,7 +107,8 @@ ${FLAGSHIPS.map(f => `<div class="fcard"><a href="https://sjgant80-hub.github.io
 <div class="grid" id="grid"></div>
 
 <footer>Generated from the estate index — no number typed by hand. Every build is MIT-licensed source
-you can read, fork, and keep. · <a href="index.html">AI Native Solutions</a> · <a href="konomi.html">Konomi Architecture</a></footer>
+you can read, fork, and keep. · <a href="index.html">AI Native Solutions</a> · Powered by the <a href="konomi.html">Konomi architecture</a>, created by Thomas Frumkin
+<p>The estate's dream-state memory builds draw on dream-state design Gary W. Floyd shared with the estate: ${esc(GARY_DREAM)}.</p></footer>
 
 <script>
 const DATA = ${JSON.stringify(data)};
