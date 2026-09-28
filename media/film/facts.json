@@ -1,0 +1,197 @@
+{
+  "_rule": "One source of truth for every number in the film, brochure, images and site. Each fact carries how it was measured or where it is cited. Nothing here is typed from memory.",
+  "asOf": "2026-09-28",
+  "estate": {
+    "publicRepos": 1717,
+    "publicReposLabel": "1,700+ public repositories",
+    "how": "GitHub API, org sjgant80-hub, public repos counted 2026-09-28 (gh api --paginate)",
+    "note": "Repo count is the territory, not the product. Much of it is templated scaffold; the crown products are the handful of gated, live builds named here."
+  },
+  "forgemint": {
+    "url": "https://sjgant80-hub.github.io/fallforgemint/",
+    "ladder": [
+      "~1B",
+      "~3–4B",
+      "~7–8B",
+      "~12–14B",
+      "~32B",
+      "~70B",
+      "~100–200B (MoE)"
+    ],
+    "ladderModels": [
+      "Llama 3.2 1B",
+      "Llama 3.2 3B",
+      "Llama 3.1 8B",
+      "Phi-4 14B",
+      "Qwen2.5-Coder 32B",
+      "Llama 3.3 70B",
+      "Mixtral 8x22B"
+    ],
+    "sizerExamples": [
+      {
+        "job": "classify, short label",
+        "result": "Llama 3.2 1B (~1B)"
+      },
+      {
+        "job": "extract to JSON",
+        "result": "Llama 3.2 3B (~3–4B)"
+      },
+      {
+        "job": "write code, strict",
+        "result": "Llama 3.3 70B (~70B)"
+      }
+    ],
+    "witness": {
+      "killed": 224,
+      "total": 225,
+      "score": 0.996,
+      "survivors": 0,
+      "commit": "7a2989b"
+    },
+    "tests": 46,
+    "heldOutClaim": "The held-out answers were not in the spec given to the model (hash-disjoint); anyone can re-run it.",
+    "how": "witness mutation gate + node:test on fallforgemint kernel.mjs at commit 7a2989b, 2026-09-28"
+  },
+  "foldcycle": {
+    "url": "https://sjgant80-hub.github.io/kar-foldcycle/",
+    "prefillLatencyCutPct": 95,
+    "embeddingCallsAvoidedPct": 67,
+    "balanceCondition": "LEARN — a fixed cap is about as good",
+    "controlSavingPct": 0,
+    "how": "kar-foldcycle results.json (WIN, savingPct 95, control 0) and results-mech2.json (WIN, callsSavedPct 67, control 0); results-mech3.json LEARN"
+  },
+  "router": {
+    "url": "https://sjgant80-hub.github.io/capability-router/",
+    "stages": [
+      "Prove",
+      "Own",
+      "Shape",
+      "Carry",
+      "Remember",
+      "Run",
+      "Connect"
+    ],
+    "addresses": 127,
+    "witness": "1.0 (22/22 mutants killed)",
+    "how": "capability-router README (witness CLEAN, score 1.0, 22/22)"
+  },
+  "dispatcher": {
+    "auto": 7,
+    "behindKey": 9,
+    "todo": 8,
+    "organs": 24,
+    "autoOrgans": [
+      "witness",
+      "acg-assessor",
+      "dual-map-gate",
+      "fallkit",
+      "fall-remember",
+      "nested-solid",
+      "durable-memory"
+    ],
+    "how": "counted from dispatch-plan.mjs POLICY (24 organs, 9 walled) and dispatch.mjs HANDLERS (7 safe handlers), 2026-09-28; the three states are shown live on the capability-router page"
+  },
+  "federate": {
+    "url": "https://sjgant80-hub.github.io/fall-federate/join/",
+    "join": "Two parties connect peer-to-peer over a real WebRTC link with manual signalling — no server in the middle. The mechanism is proven; the next step is a second human on a different machine.",
+    "witness": "17/17, score 1.0",
+    "how": "fall-federate README"
+  },
+  "leftpad": {
+    "repo": "left-pad/left-pad",
+    "tests": 35,
+    "killed": 5,
+    "total": 6,
+    "score": 0.833,
+    "survivors": 1,
+    "line": "The published green suite does not pin one line — the witness gate found it.",
+    "how": "fall-federate witness-external.json, ranAt 2026-09-26"
+  },
+  "meshos": {
+    "url": "https://sjgant80-hub.github.io/meshos/",
+    "relay": "Messages hop device to device through the people between you — relaying proven across three separate nodes; no server between.",
+    "how": "meshos README (friend-of-a-friend group hops) + the site's existing claim"
+  },
+  "foundry": {
+    "url": "https://sjgant80-hub.github.io/sovereign-foundry/",
+    "line": "The front door that ties the seven stages to every live piece of the estate. Composed, not merged — MIT."
+  },
+  "forgegrowth": {
+    "url": "https://sjgant80-hub.github.io/forgegrowth/",
+    "line": "The growth engine that can't lie and can't post: every number cites the receipt or is refused, and every external publish waits behind a human key."
+  },
+  "fallos": {
+    "url": "https://sjgant80-hub.github.io/fall-os/",
+    "line": "Hatch an empty Didy — your own assistant — and level it up into your own operating system, on your own models."
+  },
+  "citations": {
+    "ownVsRent": {
+      "claim": "At high utilisation, owning inference ran ~6× cheaper per million tokens than cloud GPU instances and ~17× cheaper than a hosted reasoning-model API; breakeven ~5.2 months against on-demand cloud. Below roughly 5 hours a day of use, renting can win.",
+      "short": "~6–17× cheaper to own at high use — renting wins below it",
+      "source": "Lenovo Press LP2368, “On-Premise vs Cloud: Generative AI Total Cost of Ownership (2026 Edition)”, 24 July 2026",
+      "url": "https://lenovopress.lenovo.com/lp2368-on-premise-vs-cloud-generative-ai-total-cost-of-ownership-2026-edition"
+    },
+    "slm": {
+      "claim": "Small language models are “sufficiently powerful, inherently more suitable, and necessarily more economical for many invocations in agentic systems.”",
+      "source": "Belcak et al., NVIDIA Research, “Small Language Models are the Future of Agentic AI”, arXiv:2506.02153, June 2025",
+      "url": "https://arxiv.org/abs/2506.02153"
+    },
+    "modelCollapse": {
+      "claim": "Training on model-generated content causes irreversible defects “where tails of the original content distribution disappear.”",
+      "source": "Shumailov et al., “The Curse of Recursion: Training on Generated Data Makes Models Forget”, arXiv:2305.17493 (Nature, 2024)",
+      "url": "https://arxiv.org/abs/2305.17493"
+    }
+  },
+  "thesis": "As models train on their own output they lose the tails of the distribution. A mesh of real people doing real work is the tails — the clean signal a monolith averages away. Owned, provable models are how that signal is kept, and a receipt that can fail is how anyone trusts it.",
+  "credits": {
+    "konomi": "Powered by the Konomi architecture, created by Thomas Frumkin",
+    "maccubeface": "The seven-stage, 127-address capability basis is Thomas Frumkin's MACCubeFACE",
+    "garyDream": "Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC — “Dream State Architecture: GEP-Guided Memory Consolidation and Entropy Regulation in Artificial Consciousness Systems,” 2025",
+    "garyDualMap": "Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC — “From GEP Stabilization to Dual-Map Ethical Reasoning,” Derivation v0.2",
+    "forge": "FallForge by Simon Gant · AI Native Solutions",
+    "license": "MIT"
+  },
+  "honesty": {
+    "live": [
+      "fallforgemint + the sizer",
+      "fall-os",
+      "capability-router",
+      "fall-federate /join",
+      "sovereign-foundry",
+      "forgegrowth",
+      "meshos",
+      "kar-foldcycle"
+    ],
+    "provenNeedsHuman": [
+      "fall-federate across two different machines (needs a second human)",
+      "witness in one external team's CI (needs a willing maintainer)"
+    ],
+    "next": [
+      "one-click CI re-run of a scorecard",
+      "the marketplace of pre-minted, proven models"
+    ]
+  },
+  "realReceipt": {
+    "node": "review-1b",
+    "task": "code-review-v1",
+    "probes": 16,
+    "vsBase": {
+      "model": "llama3.2:1b",
+      "node": 9,
+      "base": 4,
+      "verdict": "BEATS",
+      "certified": true,
+      "hash": "52517cbf310f9412…"
+    },
+    "vsBigger": {
+      "model": "qwen2.5:7b",
+      "node": 9,
+      "other": 11,
+      "verdict": "LOSES",
+      "certified": false,
+      "hash": "82fa7701ba5319cb…"
+    },
+    "signed": "Ed25519 (manifest)",
+    "how": "fallforgemint out/receipt-vs-base.json, out/receipt-vs-qwen.json, out/manifest.json — shipped and verified in CI"
+  }
+}

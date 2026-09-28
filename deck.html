@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <title>fall-os · the pitch deck — AI Native Solutions</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="fall-os: the sovereign operating system for an AI-run estate. Software is going to zero; what remains scarce is proof and ownership. 1,548 repositories, 371 live tools, one core.">
+<meta name="description" content="fall-os: the sovereign operating system for an AI-run estate. Software is going to zero; what remains scarce is proof and ownership. 1,700+ public repositories, one core — now with FallForge Mint and the sizer.">
 <style>
   :root{--bg:#0a0c10;--panel:#12161d;--ink:#eef2f7;--muted:#98a3b3;--faint:#5f6a78;--line:#1f2733;
         --gold:#d4a656;--ok:#2fbd85;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,system-ui,sans-serif;
@@ -48,6 +48,8 @@
   nav.dots a:hover,nav.dots a.on{background:var(--gold)}
   @media(max-width:760px){nav.dots{display:none}.slide{min-height:auto;padding:60px 0}}
   footer{padding:40px 0 60px;color:var(--faint);font-size:13px;text-align:center}
+img.fig{display:block;width:100%;max-width:980px;height:auto;border-radius:12px;border:1px solid var(--line);margin-top:22px}
+@media print{@page{size:297mm 210mm;margin:0}html,body{background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}#dots,footer,#topbar+div{display:none}#topbar{display:none!important}.deck{max-width:none;padding:0;margin:0}.slide{box-sizing:border-box;height:210mm;min-height:0;padding:12mm 20mm;margin:0;border:0;overflow:hidden;break-inside:avoid;break-after:page;page-break-after:always}.slide:last-of-type{break-after:auto;page-break-after:auto}img.fig{max-height:92mm;width:auto;max-width:100%}}
 </style></head><body>
 
 <div id="topbar" style="position:fixed;top:0;left:0;right:0;z-index:40;display:flex;gap:10px;align-items:center;padding:10px 18px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)">
@@ -65,13 +67,38 @@
 <section class="slide" id="s1">
   <div class="n">AI Native Solutions</div>
   <h1>Software is going<br>to zero.</h1>
-  <p class="big"><strong>What stays scarce is proof that it works, and ownership of the system it runs in.</strong> fall-os is an operating system built on that bet — and an estate of 1,548 repositories already standing on it.</p>
+  <p class="big"><strong>What stays scarce is proof that it works, and ownership of the system it runs in.</strong> fall-os is an operating system built on that bet — and an estate of 1,700+ public repositories already standing on it.</p>
   <div class="cta">
     <a class="btn solid" href="https://sjgant80-hub.github.io/fall-os/" target="_blank" rel="noopener">Open fall-os</a>
+    <a class="btn" href="./explainer.html#film">▶ Watch the 90-second film</a>
     <a class="btn" href="./index.html#fallos">See what's live</a>
     <a class="btn" href="./fall-os-deck.pdf" download>Download PDF</a>
   </div>
 </section>
+
+<!--EDITION-SLIDES-->
+<section class="slide" id="s1n1">
+  <div class="n">New in this edition · FallForge Mint</div>
+  <h2>Size it. Mint it. <em>Prove it.</em></h2>
+  <p class="big">The sizer picks the <strong>smallest open-weight model that clears your bar</strong> — ~1B to ~200B, every factor shown, never an upsell. Mint it from a few of your own examples; prove it on examples it never saw.</p>
+  <img class="fig" src="media/images/sizer-ladder.jpg" alt="The sizer ladder recommending Llama 3.2 1B" loading="lazy">
+</section>
+
+<section class="slide" id="s1n2">
+  <div class="n">New in this edition · The receipt</div>
+  <h2>A receipt that can <em>say you lost.</em></h2>
+  <p class="big"><strong>review-1b</strong> scored 9/16 against its base's 4/16 — BEATS. Against a model ~7× its size: 9/16 to 11/16 — LOSES. The held-out answers weren't in the spec the model was given, and anyone can re-run it.</p>
+  <img class="fig" src="media/images/scorecard-real-receipt.jpg" alt="A real receipt that says BEATS and LOSES" loading="lazy">
+</section>
+
+<section class="slide" id="s1n3">
+  <div class="n">New in this edition · The estate</div>
+  <h2>One front door. <em>Every door live.</em></h2>
+  <p class="big">Seven stages, one pipeline. The dispatcher routes every job: <strong>7</strong> organs run themselves, <strong>9</strong> wait for a human key, <strong>8</strong> are honestly to-do.</p>
+  <img class="fig" src="media/images/estate-map.jpg" alt="The estate map" loading="lazy">
+  <div class="cta"><a class="btn solid" href="./explainer.html#film">▶ Watch the 90-second film</a><a class="btn" href="./explainer.html#facts">Every number, sourced</a></div>
+</section>
+<!--/EDITION-SLIDES-->
 
 <section class="slide" id="s2">
   <div class="n">01 · The problem</div>
@@ -203,7 +230,7 @@
   <div class="n">07 · The estate</div>
   <h2>Not a prototype. <em>An estate.</em></h2>
   <div class="stats">
-    <div class="stat"><b>1,548</b><span>repositories</span></div>
+    <div class="stat"><b>1,700+</b><span>public repositories</span></div>
     <div class="stat"><b>371</b><span>live, link-verified</span></div>
     <div class="stat"><b>1</b><span>shared core</span></div>
   </div>
@@ -268,7 +295,7 @@
 
 <section class="slide" id="s11c">
   <div class="n">09c · The merge</div>
-  <h2>Why 1,548 repositories are <em>one system.</em></h2>
+  <h2>Why 1,700+ repositories are <em>one system.</em></h2>
   <p class="big">Every build in the estate reduces to the same four moves: offer options, score them against one shared bar, commit deliberately, and remember both the choice and what was passed over. A booking engine, a legal tool, a memory layer and a marketplace differ at the surface and are identical underneath.</p>
   <p class="big">So merging is not an integration project. Each build is re-pointed to call the shared core for those four moves and registers with the conductor. Its own logic is untouched — only the decision-making relocates.</p>
   <ul>
@@ -325,7 +352,7 @@
   </div>
 </section>
 
-<footer>Powered by Konomi architecture · AI Native Solutions</footer>
+<footer>Powered by the Konomi architecture, created by Thomas Frumkin · AI Native Solutions</footer>
 </div>
 
 <script>

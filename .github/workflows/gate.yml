@@ -9,6 +9,13 @@ jobs:
         with: { node-version: '20' }
       - name: proof-of-play — the operating-board gate
         run: node --test stages.test.mjs
+      - name: the film package is drawn from its facts file (fixpoint)
+        run: |
+          node scripts/build-explainer.mjs
+          node scripts/build-edition.mjs
+          git diff --exit-code explainer.html prospectus.html deck.html
+      - name: surface gate — no own pricing, credits present, proof language narrow-true, figures match facts, links resolve
+        run: node scripts/surface-gate.mjs
       - name: witness — try to break the tests
         run: |
           git clone --depth 1 --branch v0.6 https://github.com/sjgant80-hub/witness.git /tmp/witness
