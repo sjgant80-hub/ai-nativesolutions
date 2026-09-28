@@ -220,5 +220,11 @@
     },
     "signed": "Ed25519 (manifest)",
     "how": "fallforgemint out/receipt-vs-base.json, out/receipt-vs-qwen.json, out/manifest.json — shipped and verified in CI"
+  },
+  "estateMap": {
+    "doors": 9,
+    "live": 9,
+    "checked": "2026-09-28",
+    "how": "HTTP 200 from each door's live page on 2026-09-28: sovereign-foundry, fallforgemint, fall-os, capability-router, fall-federate, forgegrowth, meshos, witness, kar-foldcycle"
   }
 }

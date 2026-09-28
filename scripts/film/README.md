@@ -14,7 +14,7 @@ The images it captures (`shots/*.png`) and the voice clips (`vo/*.wav`) are gene
 5. `node verify-mp4.cjs` — parse the boxes, decode, seek, play in real time, check voice energy.
 6. `node site-film-update.cjs <site> <version>` — copy the film and captions into `media/film/`, carry changed
    lines into the explainer transcript, and key every embed with `?v=<version>`.
-7. `node pdf-prospectus.cjs <site>` — the brochure PDF from `prospectus.html` (Chrome print, A4).
+7. `node pdf-prospectus.cjs <site>` — the brochure PDF only; `node pdfs.cjs <site>` — the brochure and the deck (A4 landscape, one slide per page). Both write into the site folder you name; there is no default.
 
 `film.html` reads `facts.json` (pass `?facts=<url>` to point it at `media/film/facts.json`), so every number on
 screen comes from the site's one facts file.

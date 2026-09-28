@@ -71,7 +71,7 @@ const slides = `
 <section class="slide" id="s1n1">
   <div class="n">New in this edition · FallForge Mint</div>
   <h2>Size it. Mint it. <em>Prove it.</em></h2>
-  <p class="big">The sizer picks the <strong>smallest open-weight model that clears your bar</strong> — ~1B to ~200B, every factor shown, never an upsell. Mint it from a few of your own examples; prove it on examples it never saw.</p>
+  <p class="big">The sizer suggests the <strong>smallest open-weight model that should clear your bar</strong> — ~1B to ~200B, every factor shown, never an upsell. Mint it from a few of your own examples; prove it on examples kept out of its spec.</p>
   <img class="fig" src="media/images/sizer-ladder.jpg" alt="The sizer ladder recommending Llama 3.2 1B" loading="lazy">
 </section>
 
@@ -84,8 +84,8 @@ const slides = `
 
 <section class="slide" id="s1n3">
   <div class="n">New in this edition · The estate</div>
-  <h2>One front door. <em>Every door live.</em></h2>
-  <p class="big">Seven stages, one pipeline. The dispatcher routes every job: <strong>${D.auto}</strong> organs run themselves, <strong>${D.behindKey}</strong> wait for a human key, <strong>${D.todo}</strong> are honestly to-do.</p>
+  <h2>One front door. <em>${F.estateMap.live} of ${F.estateMap.doors} doors live.</em></h2>
+  <p class="big">Seven stages, one pipeline. The dispatcher routes every job: <strong>${D.auto}</strong> organs run themselves, <strong>${D.behindKey}</strong> wait for a human key, <strong>${D.todo}</strong> are honestly to-do. Every door on the map answered live when checked on ${esc(F.estateMap.checked)}.</p>
   <img class="fig" src="media/images/estate-map.jpg" alt="The estate map" loading="lazy">
   <div class="cta"><a class="btn solid" href="./explainer.html#film">▶ Watch the 90-second film</a><a class="btn" href="./explainer.html#facts">Every number, sourced</a></div>
 </section>
