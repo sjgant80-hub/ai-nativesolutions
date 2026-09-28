@@ -72,6 +72,12 @@
         "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36439573329"
       },
       "how": "fallforgemint rerun/proof, 2026-09-28: genuine.json minted in CI (run 36431565425), 4/5 vs base 0/5; the forgery recomputes every number but the run it names made a different scorecard; tampered.json and forged.json derived in the open by make-tampered.mjs. GitHub keeps a run's upload about 90 days; after that the rail confirms only that the named run was the rail and was running when the scorecard was stamped, and says so"
+    },
+    "launch": {
+      "version": "v1.0.0",
+      "date": "2026-09-28",
+      "release": "https://github.com/sjgant80-hub/fallforgemint/releases/tag/v1.0.0",
+      "how": "GitHub release on sjgant80-hub/fallforgemint, published 2026-09-28T15:22:28Z (gh release view), carrying the CI-minted scorecard and the runs that pass it and fail its forgeries"
     }
   },
   "foldcycle": {
@@ -175,7 +181,7 @@
   },
   "honesty": {
     "live": [
-      "fallforgemint + the sizer + the CI re-run rail",
+      "fallforgemint (launched, v1.0.0) + the sizer + the CI re-run rail",
       "fall-os",
       "capability-router",
       "fall-federate /join",

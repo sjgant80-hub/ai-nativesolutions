@@ -77,6 +77,11 @@ for (const f of SITE) {
 // 4b · the explainer carries the narrow-true held-out claim, verbatim from the facts file
 if (!visible(read('explainer.html')).includes(F.forgemint.heldOutClaim)) fail('explainer.html', 'the narrow-true held-out claim is missing or reworded');
 
+// 4d · the launch: a real fallforgemint version-tag release, linked on the explainer
+const LA = F.forgemint.launch;
+if (!LA || !/^https:\/\/github\.com\/sjgant80-hub\/fallforgemint\/releases\/tag\/v[0-9]+\.[0-9]+\.[0-9]+$/.test(LA.release) || !LA.release.endsWith('/' + LA.version)) fail('media/film/facts.json', 'forgemint.launch must name a fallforgemint version-tag release');
+else if (!read('explainer.html').includes('href="' + LA.release + '"')) fail('explainer.html', 'the launch release is not linked');
+
 // 4c · the CI re-run rail: its proof runs are real GitHub Actions run links (never a placeholder), and the explainer links them
 const RR = F.forgemint.rerun, RUN = /^https:\/\/github\.com\/sjgant80-hub\/fallforgemint(?:-rerun)?\/actions\/runs\/[1-9][0-9]{0,19}$/;
 if (!RR) fail('media/film/facts.json', 'forgemint.rerun (the CI re-run rail) is missing');

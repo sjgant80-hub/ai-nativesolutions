@@ -24,6 +24,7 @@ const rows = [
   ['A real signed receipt (review-1b, ' + R.task + ')', R.vsBase.node + '/' + R.probes + ' vs its base ' + R.vsBase.model + ' ' + R.vsBase.base + '/' + R.probes + ' → ' + R.vsBase.verdict, 'Measured: ' + R.how],
   ['…and the same node against a model ~7× its size', R.vsBigger.node + '/' + R.probes + ' vs ' + R.vsBigger.model + ' ' + R.vsBigger.other + '/' + R.probes + ' → ' + R.vsBigger.verdict, 'The receipt is allowed to say it lost — and does'],
   ['The held-out claim on every scorecard', 'narrow-true', esc(F.forgemint.heldOutClaim) + ' It makes no claim that the grader was isolated from the answers.'],
+  ['FallForge Mint — launched', F.forgemint.launch.version + ' · ' + F.forgemint.launch.date, 'Released: ' + link(F.forgemint.launch.release, 'the ' + F.forgemint.launch.version + ' release') + ' — ' + esc(F.forgemint.launch.how)],
   ['The CI re-run rail — a shared scorecard, re-run in the open', RR.genuine.label + ' passes · ' + RR.tampered.label + ' and ' + RR.forged.label + ' fail',
     'Real GitHub Actions runs: ' + [RR.genuine, RR.tampered, RR.forged].map((x) => link(x.run, x.label + ' → ' + x.outcome)).join(' · ') + '. ' + esc(RR.how) + ' · ' + link(RR.url, 'live') + ' · ' + link(RR.template, 'run it yourself')],
   ['Fold-cycle — prefill latency cut', '~' + F.foldcycle.prefillLatencyCutPct + '%', 'Measured (control ' + F.foldcycle.controlSavingPct + '%): ' + F.foldcycle.how + ' · ' + link(F.foldcycle.url, 'live')],
