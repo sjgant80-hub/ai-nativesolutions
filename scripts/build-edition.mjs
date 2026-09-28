@@ -91,7 +91,10 @@ const slides = `
 </section>
 `;
 
-for (const [file, key, html] of [['prospectus.html', 'EDITION', section], ['deck.html', 'EDITION-SLIDES', slides]]) {
+// the front page names the dreaming layer (the fall-os card) → it carries Gary W. Floyd's full dream-state credit
+const dreamCredit = '\n  <p class="credit">The dreaming layer draws on dream-state design Gary W. Floyd shared with the estate: ' + esc(K.garyDream) + '.</p>\n';
+
+for (const [file, key, html] of [['prospectus.html', 'EDITION', section], ['deck.html', 'EDITION-SLIDES', slides], ['index.html', 'CREDIT-DREAM', dreamCredit]]) {
   const p = join(root, file); let page = readFileSync(p, 'utf8');
   const a = page.indexOf('<!--' + key + '-->'), b = page.indexOf('<!--/' + key + '-->');
   if (a < 0 || b < 0) { console.error('REFUSED: marker ' + key + ' missing from ' + file); process.exit(1); }

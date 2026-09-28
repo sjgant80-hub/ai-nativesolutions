@@ -13,7 +13,7 @@ jobs:
         run: |
           node scripts/build-explainer.mjs
           node scripts/build-edition.mjs
-          git diff --exit-code explainer.html prospectus.html deck.html
+          git diff --exit-code explainer.html prospectus.html deck.html index.html
       - name: surface gate — no own pricing, credits present, proof language narrow-true, figures match facts, links resolve
         run: node scripts/surface-gate.mjs
       - name: witness — try to break the tests

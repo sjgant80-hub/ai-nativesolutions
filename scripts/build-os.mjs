@@ -24,6 +24,12 @@ try {
   live = idx.nodes.filter(n => !n.private && !n.archived && !n.fork && n.live).length;
 } catch { /* header degrades to no counts */ }
 
+// Gary W. Floyd's dream-state credit, full form, from the ONE facts file (media/film/facts.json) — any page that
+// ships the dream framing carries it; scripts/surface-gate.mjs fails the build if it ever goes missing.
+const GARY_DREAM = JSON.parse(readFileSync(join(here, '..', 'media', 'film', 'facts.json'), 'utf8')).credits.garyDream;
+if (!/Lumiea Systems Research Division/.test(GARY_DREAM || '')) { console.error('REFUSED: facts.json credits.garyDream is missing or not in full form'); process.exit(1); }
+const DREAM_CREDIT = (subject) => subject + ' draws on dream-state design Gary W. Floyd shared with the estate: ' + GARY_DREAM + '.';
+
 const DOORICON = { money: '💷', legal: '⚖', taste: '◈', 'client-trust': '🤝' };
 const STATECLASS = { LIVE: 'live', BUILT: 'built', PLANNED: 'planned' };
 const STATEWORD = { LIVE: 'LIVE', BUILT: 'BUILT · waiting', PLANNED: 'PLANNED' };
@@ -122,7 +128,8 @@ footer a{color:var(--soft)}footer .k{float:right}
 
 <footer><div class="wrap">
   <span>© AI Native Solutions · generated from stages-data.json through the gated board — no status typed by hand</span>
-  <span class="k"><a href="konomi.html">Konomi Architecture</a></span>
+  <span class="k">Powered by the <a href="konomi.html">Konomi architecture</a>, created by Thomas Frumkin</span>
+  <p style="clear:both;margin:10px 0 0">${esc(DREAM_CREDIT('The nightly dream step'))}</p>
 </div></footer>
 </body></html>`;
 

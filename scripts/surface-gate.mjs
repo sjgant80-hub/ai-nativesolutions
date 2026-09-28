@@ -7,7 +7,7 @@
 //  5 · the site's figures match media/film/facts.json, the single source behind the film and brochure
 //  6 · every same-repo link and asset resolves
 //   node scripts/surface-gate.mjs        exit 0 = clean · exit 1 = the failures, named
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -42,6 +42,16 @@ for (const f of OWNED) {
 }
 for (const f of ['llms.txt', 'llms-full.txt']) if (/hermetic|memoris|memoriz|cannot have been/i.test(read(f))) fail(f, 'a drift word in the proof language');
 
+// 2b · SITE-WIDE: any page that ships the dream / dreaming framing carries Gary W. Floyd's FULL dream-state credit
+// (name + company + paper). Not scoped to the package pages — every .html in the site root, plus the llms files.
+const GARY_DREAM = /Gary W\. Floyd,?\s*Lumiea Systems Research Division\s*—\s*ThunderStruck Service LLC[\s\S]{0,12}Dream State Architecture/;
+const SITE = readdirSync(root).filter(x => x.endsWith('.html')).concat(['llms.txt', 'llms-full.txt']);
+for (const f of SITE) {
+  const raw = read(f), text = f.endsWith('.html') ? visible(raw) : raw.replace(/\s+/g, ' ');
+  const hit = text.match(/.{0,40}\bdream.{0,30}/i);
+  if (hit && !GARY_DREAM.test(text)) fail(f, 'ships the dream framing ("' + hit[0].trim() + '") without Gary W. Floyd\'s full dream-state credit (Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC — “Dream State Architecture…,” 2025)');
+}
+
 // 4b · the explainer carries the narrow-true held-out claim, verbatim from the facts file
 if (!visible(read('explainer.html')).includes(F.forgemint.heldOutClaim)) fail('explainer.html', 'the narrow-true held-out claim is missing or reworded');
 
@@ -52,4 +62,4 @@ for (const want of [`scored ${R.vsBase.node}/${R.probes} against its base's ${R.
   if (!idx.includes(want)) fail('index.html', 'figure disagrees with facts.json (expected "' + want + '")');
 
 if (fails.length) { console.error('SURFACE GATE FAILED — ' + fails.length + ' problem(s):\n  ' + fails.join('\n  ')); process.exit(1); }
-console.log('surface gate clean — ' + OWNED.length + ' pages: no own pricing, credits present, no private notation, proof language narrow-true, figures match facts.json, every same-repo link resolves');
+console.log('surface gate clean — ' + OWNED.length + ' package pages + dream-credit rule across ' + SITE.length + ' site files: no own pricing, credits present, no private notation, proof language narrow-true, figures match facts.json, every same-repo link resolves');
