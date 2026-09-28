@@ -1,0 +1,348 @@
+{
+ "fps": 30,
+ "width": 1920,
+ "height": 1080,
+ "duration": 90,
+ "partTwoAt": 45.82,
+ "scenes": [
+  {
+   "id": "bill",
+   "part": 1,
+   "text": "Your team rents a giant AI model by the token — to do the same small job, over and over.",
+   "voStart": 0.35,
+   "voEnd": 5.61,
+   "start": 0,
+   "end": 5.71,
+   "captions": [
+    {
+     "start": 0.35,
+     "end": 3.135,
+     "text": "Your team rents a giant AI model by the token"
+    },
+    {
+     "start": 3.135,
+     "end": 5.71,
+     "text": "to do the same small job, over and over."
+    }
+   ]
+  },
+  {
+   "id": "argument",
+   "part": 1,
+   "text": "Your CFO wants the bill down. Your engineers want proof it won't break.",
+   "voStart": 5.81,
+   "voEnd": 10.3,
+   "start": 5.71,
+   "end": 10.4,
+   "captions": [
+    {
+     "start": 5.81,
+     "end": 7.67,
+     "text": "Your CFO wants the bill down."
+    },
+    {
+     "start": 7.67,
+     "end": 10.4,
+     "text": "Your engineers want proof it won't break."
+    }
+   ]
+  },
+  {
+   "id": "sizer",
+   "part": 1,
+   "text": "FallForge Mint starts with one question: which model is enough? The sizer suggests the smallest open-weight model that should clear your bar. A one-billion answer says one billion.",
+   "voStart": 10.5,
+   "voEnd": 21.04,
+   "start": 10.4,
+   "end": 21.14,
+   "captions": [
+    {
+     "start": 10.5,
+     "end": 12.882,
+     "text": "FallForge Mint starts with one question:"
+    },
+    {
+     "start": 12.882,
+     "end": 14.192,
+     "text": "which model is enough?"
+    },
+    {
+     "start": 14.192,
+     "end": 18.777,
+     "text": "The sizer suggests the smallest open-weight model that should clear your bar."
+    },
+    {
+     "start": 18.777,
+     "end": 21.14,
+     "text": "A one-billion answer says one billion."
+    }
+   ]
+  },
+  {
+   "id": "prove",
+   "part": 1,
+   "text": "Mint it from a few of your own examples. Then it tries to beat the base model on examples kept out of its spec — and it can say you lost.",
+   "voStart": 21.24,
+   "voEnd": 29.35,
+   "start": 21.14,
+   "end": 29.45,
+   "captions": [
+    {
+     "start": 21.24,
+     "end": 23.679,
+     "text": "Mint it from a few of your own examples."
+    },
+    {
+     "start": 23.679,
+     "end": 27.887,
+     "text": "Then it tries to beat the base model on examples kept out of its spec"
+    },
+    {
+     "start": 27.887,
+     "end": 29.45,
+     "text": "and it can say you lost."
+    }
+   ]
+  },
+  {
+   "id": "receipt",
+   "part": 1,
+   "text": "You get a signed scorecard. The held-out answers weren't in the spec we gave the model. Anyone can re-run it.",
+   "voStart": 29.55,
+   "voEnd": 35.89,
+   "start": 29.45,
+   "end": 35.99,
+   "captions": [
+    {
+     "start": 29.55,
+     "end": 31.15,
+     "text": "You get a signed scorecard."
+    },
+    {
+     "start": 31.15,
+     "end": 34.646,
+     "text": "The held-out answers weren't in the spec we gave the model."
+    },
+    {
+     "start": 34.646,
+     "end": 35.99,
+     "text": "Anyone can re-run it."
+    }
+   ]
+  },
+  {
+   "id": "rent",
+   "part": 1,
+   "text": "At high use, owning can run six to seventeen times cheaper. When renting wins, it says keep renting.",
+   "voStart": 36.09,
+   "voEnd": 42.73,
+   "start": 35.99,
+   "end": 42.83,
+   "captions": [
+    {
+     "start": 36.09,
+     "end": 40.047,
+     "text": "At high use, owning can run six to seventeen times cheaper."
+    },
+    {
+     "start": 40.047,
+     "end": 42.83,
+     "text": "When renting wins, it says keep renting."
+    }
+   ]
+  },
+  {
+   "id": "own",
+   "part": 1,
+   "text": "One file. Your machine. No meter.",
+   "voStart": 42.93,
+   "voEnd": 45.62,
+   "start": 42.83,
+   "end": 45.72,
+   "captions": [
+    {
+     "start": 42.93,
+     "end": 43.711,
+     "text": "One file."
+    },
+    {
+     "start": 43.711,
+     "end": 44.839,
+     "text": "Your machine."
+    },
+    {
+     "start": 44.839,
+     "end": 45.72,
+     "text": "No meter."
+    }
+   ]
+  },
+  {
+   "id": "estate",
+   "part": 2,
+   "text": "And Forge is one door into a whole sovereign estate. Seven stages, one pipeline.",
+   "voStart": 45.82,
+   "voEnd": 51.14,
+   "start": 45.72,
+   "end": 51.24,
+   "captions": [
+    {
+     "start": 45.82,
+     "end": 49.322,
+     "text": "And Forge is one door into a whole sovereign estate."
+    },
+    {
+     "start": 49.322,
+     "end": 51.24,
+     "text": "Seven stages, one pipeline."
+    }
+   ]
+  },
+  {
+   "id": "trust",
+   "part": 2,
+   "text": "Gated builds ride a trust rail: it breaks the code to test the tests. It even found a line left-pad's passing tests don't check.",
+   "voStart": 51.34,
+   "voEnd": 59.59,
+   "start": 51.24,
+   "end": 59.69,
+   "captions": [
+    {
+     "start": 51.34,
+     "end": 53.37,
+     "text": "Gated builds ride a trust rail:"
+    },
+    {
+     "start": 53.37,
+     "end": 55.792,
+     "text": "it breaks the code to test the tests."
+    },
+    {
+     "start": 55.792,
+     "end": 59.69,
+     "text": "It even found a line left-pad's passing tests don't check."
+    }
+   ]
+  },
+  {
+   "id": "fallos",
+   "part": 2,
+   "text": "In fall-os, you hatch your own assistant and level it into your own operating system.",
+   "voStart": 59.79,
+   "voEnd": 64.66,
+   "start": 59.69,
+   "end": 64.76,
+   "captions": [
+    {
+     "start": 59.79,
+     "end": 63.674,
+     "text": "In fall-os, you hatch your own assistant and level it into your own"
+    },
+    {
+     "start": 63.674,
+     "end": 64.76,
+     "text": "operating system."
+    }
+   ]
+  },
+  {
+   "id": "dispatch",
+   "part": 2,
+   "text": "The dispatcher routes every job: seven organs run themselves, nine wait for a human key, and eight are honestly marked to-do.",
+   "voStart": 64.86,
+   "voEnd": 72.42,
+   "start": 64.76,
+   "end": 72.52,
+   "captions": [
+    {
+     "start": 64.86,
+     "end": 66.827,
+     "text": "The dispatcher routes every job:"
+    },
+    {
+     "start": 66.827,
+     "end": 71.068,
+     "text": "seven organs run themselves, nine wait for a human key, and eight are"
+    },
+    {
+     "start": 71.068,
+     "end": 72.52,
+     "text": "honestly marked to-do."
+    }
+   ]
+  },
+  {
+   "id": "mesh",
+   "part": 2,
+   "text": "Peers connect directly, no server between — and sovereign-foundry ties it together.",
+   "voStart": 72.62,
+   "voEnd": 78.11,
+   "start": 72.52,
+   "end": 78.21,
+   "captions": [
+    {
+     "start": 72.62,
+     "end": 75.434,
+     "text": "Peers connect directly, no server between"
+    },
+    {
+     "start": 75.434,
+     "end": 78.21,
+     "text": "and sovereign-foundry ties it together."
+    }
+   ]
+  },
+  {
+   "id": "thesis",
+   "part": 2,
+   "text": "Models trained on their own output lose the tails. A mesh of real people is the clean signal. Owned, provable AI is the moat.",
+   "voStart": 78.31,
+   "voEnd": 85.92,
+   "start": 78.21,
+   "end": 86.02,
+   "captions": [
+    {
+     "start": 78.31,
+     "end": 81.403,
+     "text": "Models trained on their own output lose the tails."
+    },
+    {
+     "start": 81.403,
+     "end": 84.002,
+     "text": "A mesh of real people is the clean signal."
+    },
+    {
+     "start": 84.002,
+     "end": 86.02,
+     "text": "Owned, provable AI is the moat."
+    }
+   ]
+  },
+  {
+   "id": "end",
+   "part": 2,
+   "text": "AI Native Solutions. Own it. Prove it.",
+   "voStart": 86.12,
+   "voEnd": 89.34,
+   "start": 86.02,
+   "end": 90,
+   "captions": [
+    {
+     "start": 86.12,
+     "end": 87.909,
+     "text": "AI Native Solutions."
+    },
+    {
+     "start": 87.909,
+     "end": 88.535,
+     "text": "Own it."
+    },
+    {
+     "start": 88.535,
+     "end": 89.69,
+     "text": "Prove it."
+    }
+   ]
+  }
+ ]
+}

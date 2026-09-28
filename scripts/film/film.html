@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Own it. Prove it. — the FallForge film</title>
+<style>
+  html,body{margin:0;height:100%;background:#0b0a0f;color:#e2d9c8;font-family:Georgia,serif}
+  #stage{position:relative;width:min(100vw,177.78vh);aspect-ratio:16/9;margin:0 auto;top:50%;transform:translateY(-50%)}
+  canvas{width:100%;height:100%;display:block}
+  #play{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(11,10,15,.55);cursor:pointer;border:0;color:#e2d9c8;font:600 1.3rem Georgia,serif}
+  #play span{border:1px solid #d4a017;border-radius:999px;padding:.9em 1.8em;background:rgba(212,160,23,.12)}
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="c" width="1920" height="1080" aria-label="Own it. Prove it. — a 90-second film about FallForge and the sovereign estate"></canvas>
+<button id="play" aria-label="Play the film with sound"><span>▶ Play the film (90s, with sound)</span></button></div>
+<script type="module">
+const W = 1920, H = 1080, FPS = 30;
+const C = { bg:'#0b0a0f', bg2:'#100d15', card:'#141218', ink:'#e2d9c8', gold:'#d4a017', gold2:'#ffb648', line:'#2b251f', soft:'#8f8778', good:'#5fbf7f', bad:'#e06a5f', amber:'#e3a43b' };
+const SERIF = 'Georgia, "Iowan Old Style", serif', SANS = '"Segoe UI", system-ui, sans-serif', MONO = 'Consolas, "Cascadia Mono", monospace';
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const q = new URLSearchParams(location.search);
+
+// ── data: the ONE source of numbers, and the voice-timed timeline ────────────────────────────────
+const [F, TL] = await Promise.all([fetch(new URLSearchParams(location.search).get('facts') || 'facts.json').then(r => r.json()), fetch('timeline.json').then(r => r.json())]);
+const IMG = {};
+const shotNames = ['fallforgemint-sizer', 'fallforgemint-verify', 'fallforgemint-rerun', 'fallforgemint-get', 'fall-os', 'capability-router', 'sovereign-foundry', 'witness'];
+await Promise.all(shotNames.map(n => new Promise((res) => { const im = new Image(); im.onload = () => { IMG[n] = im; res(); }; im.onerror = () => res(); im.src = 'shots/' + n + '.png'; })));
+
+// ── helpers ───────────────────────────────────────────────────────────────────────────────────────
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const seg = (x, a, b) => clamp((x - a) / (b - a));
+const eo = (x) => 1 - Math.pow(1 - clamp(x), 3);
+const eio = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const lerp = (a, b, x) => a + (b - a) * x;
+function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+function card(x, y, w, h, o = {}) {
+  ctx.save(); ctx.globalAlpha *= (o.alpha ?? 1);
+  if (o.glow) { ctx.shadowColor = o.glow; ctx.shadowBlur = 40; }
+  rr(x, y, w, h, o.r ?? 18); const g = ctx.createLinearGradient(0, y, 0, y + h); g.addColorStop(0, o.top || C.bg2); g.addColorStop(1, o.fill || C.card); ctx.fillStyle = g; ctx.fill();
+  ctx.shadowBlur = 0; ctx.lineWidth = o.lw || 2; ctx.strokeStyle = o.stroke || C.line; ctx.stroke(); ctx.restore();
+}
+function txt(s, x, y, o = {}) {
+  ctx.save(); ctx.globalAlpha *= (o.alpha ?? 1); ctx.font = o.font || ('36px ' + SERIF); ctx.fillStyle = o.color || C.ink;
+  ctx.textAlign = o.align || 'left'; ctx.textBaseline = o.base || 'alphabetic';
+  if (o.grad) { const m = ctx.measureText(s).width, x0 = o.align === 'center' ? x - m / 2 : x; const g = ctx.createLinearGradient(x0, 0, x0 + m, 0); g.addColorStop(0, C.gold); g.addColorStop(1, C.gold2); ctx.fillStyle = g; }
+  ctx.fillText(s, x, y); const w = ctx.measureText(s).width; ctx.restore(); return w;
+}
+function wrap(s, x, y, maxW, lh, o = {}) {
+  ctx.save(); ctx.font = o.font || ('32px ' + SERIF); const words = s.split(' '); let line = '', yy = y; const lines = [];
+  for (const w of words) { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line); ctx.restore();
+  for (const l of lines) { txt(l, x, yy, o); yy += lh; } return lines.length;
+}
+function pill(s, x, y, o = {}) {
+  ctx.save(); ctx.globalAlpha *= (o.alpha ?? 1); ctx.font = o.font || ('600 24px ' + SANS); const w = ctx.measureText(s).width + (o.pad ?? 28) * 2, h = o.h || 48;
+  const x0 = o.align === 'center' ? x - w / 2 : (o.align === 'right' ? x - w : x);
+  rr(x0, y - h / 2, w, h, h / 2); ctx.fillStyle = o.bg || 'rgba(212,160,23,.12)'; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = o.color || C.gold; ctx.stroke();
+  ctx.fillStyle = o.color || C.gold; ctx.textBaseline = 'middle'; ctx.textAlign = 'center'; ctx.fillText(s, x0 + w / 2, y + 1); ctx.restore(); return w;
+}
+function eyebrow(s, x, y, a = 1) { txt(s.toUpperCase(), x, y, { font: '600 22px ' + SANS, color: C.gold, alpha: a }); }
+function shot(name, x, y, w, h, o = {}) {
+  const im = IMG[name]; if (!im) return;
+  ctx.save(); ctx.globalAlpha *= (o.alpha ?? 1);
+  ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 50; ctx.shadowOffsetY = 18; rr(x, y, w, h, o.r ?? 16); ctx.fillStyle = C.card; ctx.fill(); ctx.shadowColor = 'transparent';
+  ctx.clip();
+  const z = o.zoom ?? 1, sw = im.width / z, sh = sw * h / w, sx = clamp((im.width - sw) * (o.px ?? 0), 0, im.width - sw), sy = clamp((im.height - sh) * (o.py ?? 0), 0, Math.max(0, im.height - sh));
+  ctx.drawImage(im, sx, sy, sw, Math.min(sh, im.height - sy), x, y, w, Math.min(h, (im.height - sy) * w / sw));
+  ctx.restore(); ctx.save(); ctx.globalAlpha *= (o.alpha ?? 1); rr(x, y, w, h, o.r ?? 16); ctx.lineWidth = 2; ctx.strokeStyle = o.stroke || 'rgba(212,160,23,.55)'; ctx.stroke(); ctx.restore();
+  if (o.label) pill(o.label, x + 22, y - 2, { font: '600 21px ' + SANS, h: 40, bg: 'rgba(11,10,15,.92)', alpha: o.alpha ?? 1 });
+}
+function dot(x, y, r, color, a = 1) { ctx.save(); ctx.globalAlpha *= a; const g = ctx.createRadialGradient(x, y, 0, x, y, r * 3); g.addColorStop(0, color); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * 3, 0, 7); ctx.fill(); ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); ctx.restore(); }
+function source(s, a = 1) {   // wraps to at most two lines inside the safe width, always above the caption band
+  ctx.save(); ctx.font = '20px ' + SANS; const words = s.split(' '), lines = []; let line = '';
+  for (const w of words) { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > 1680 && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line); ctx.restore();
+  const shown = lines.slice(0, 2), y0 = shown.length === 2 ? 872 : 896;
+  shown.forEach((l, i) => txt(l, 120, y0 + i * 26, { font: '20px ' + SANS, color: C.soft, alpha: a * .95 }));
+}
+
+function background(t) {
+  ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+  const gx = W * (0.5 + 0.18 * Math.sin(t * 0.05)), g = ctx.createRadialGradient(gx, -120, 0, gx, -120, 1100);
+  g.addColorStop(0, 'rgba(212,160,23,.13)'); g.addColorStop(1, 'rgba(212,160,23,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.globalAlpha = .045; ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 80) { ctx.beginPath(); ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, H); ctx.stroke(); }
+  for (let y = 0; y <= H; y += 80) { ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); ctx.stroke(); } ctx.restore();
+  const v = ctx.createRadialGradient(W / 2, H / 2, H * .35, W / 2, H / 2, H * 1.05); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.55)'); ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+}
+function chrome(t) {
+  const p2 = t >= TL.partTwoAt - 0.3;
+  txt('◊', 120, 78, { font: '34px ' + SERIF, color: C.gold });
+  txt('AI Native Solutions', 160, 76, { font: 'bold 26px ' + SERIF, color: C.ink });
+  txt(p2 ? 'PART TWO · THE ESTATE' : 'PART ONE · FALLFORGE MINT', W - 120, 76, { font: '600 20px ' + SANS, color: C.soft, align: 'right' });
+}
+let NOCAP = q.has('nocap');
+function captions(t) {
+  if (NOCAP) return;
+  for (const s of TL.scenes) for (const c of s.captions) if (t >= c.start && t < c.end) {
+    const a = Math.min(seg(t, c.start, c.start + 0.12), 1 - seg(t, c.end - 0.12, c.end));
+    ctx.save(); ctx.globalAlpha = a; ctx.font = '38px ' + SERIF; const w = Math.min(1640, ctx.measureText(c.text).width + 80);
+    rr(W / 2 - w / 2, 930, w, 78, 14); ctx.fillStyle = 'rgba(8,7,11,.82)'; ctx.fill(); ctx.strokeStyle = 'rgba(212,160,23,.25)'; ctx.lineWidth = 1.5; ctx.stroke(); ctx.restore();
+    txt(c.text, W / 2, 981, { font: '38px ' + SERIF, align: 'center', alpha: a, color: C.ink });
+  }
+  if (!q.has('still')) { ctx.fillStyle = 'rgba(212,160,23,.55)'; ctx.fillRect(0, H - 4, W * (t / TL.duration), 4); }
+}
+
+// ── the scenes (lt = seconds into the scene, d = scene length) ───────────────────────────────────
+const S = {};
+S.bill = (lt, d) => {
+  eyebrow('The bill', 120, 190, eo(seg(lt, .1, .6)));
+  txt('One small job.', 120, 290, { font: '72px ' + SERIF, alpha: eo(seg(lt, .2, .8)) });
+  txt('A giant model, rented by the token.', 120, 372, { font: '52px ' + SERIF, color: C.gold, alpha: eo(seg(lt, .6, 1.2)) });
+  const cx = 1330, cy = 520, R = 250 + 8 * Math.sin(lt * 2.2), a = eo(seg(lt, .3, 1.2));
+  ctx.save(); ctx.globalAlpha = a; const g = ctx.createRadialGradient(cx - 80, cy - 90, 20, cx, cy, R); g.addColorStop(0, '#3a3140'); g.addColorStop(1, '#141118');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.fill(); ctx.strokeStyle = 'rgba(226,217,200,.18)'; ctx.lineWidth = 2; ctx.stroke(); ctx.restore();
+  txt('RENTED FRONTIER MODEL', cx, cy + 8, { font: '600 26px ' + SANS, color: C.soft, align: 'center', alpha: a });
+  for (let k = 0; k < 12; k++) { const ang = lt * .5 + k * Math.PI / 6; txt('per token', cx + Math.cos(ang) * (R + 58), cy + Math.sin(ang) * (R + 58) + 8, { font: '19px ' + MONO, color: C.gold, align: 'center', alpha: a * .55 }); }
+  for (let k = 0; k < 5; k++) { const p = ((lt * .55 + k / 5) % 1); if (lt < .8) continue; const x = lerp(170, cx - R + 30, eio(p)), s = lerp(1, .35, p);
+    ctx.save(); ctx.globalAlpha = (1 - p) * .95; ctx.translate(x, 640); ctx.scale(s, s); card(-150, -44, 300, 88, { r: 12 }); txt('classify a ticket', 0, 9, { font: '26px ' + SANS, align: 'center' }); ctx.restore(); }
+  txt('billed per token · every month · for the same small job', cx, cy + R + 118, { font: '24px ' + SANS, color: C.soft, align: 'center', alpha: a });
+};
+S.argument = (lt) => {
+  eyebrow('The AI-bill argument', W / 2 - 150, 200, eo(seg(lt, .1, .5)));
+  const a1 = eo(seg(lt, .15, .75)), a2 = eo(seg(lt, .8, 1.4));
+  card(lerp(40, 160, a1), 290, 760, 420, { alpha: a1, glow: 'rgba(212,160,23,.12)' });
+  txt('THE ENGINEERING LEAD', lerp(90, 210, a1), 370, { font: '600 22px ' + SANS, color: C.soft, alpha: a1 });
+  txt('“Prove it', lerp(90, 210, a1), 490, { font: '84px ' + SERIF, alpha: a1 }); txt('won’t break.”', lerp(90, 210, a1), 590, { font: '84px ' + SERIF, alpha: a1 });
+  card(lerp(1120, 1000, a2), 290, 760, 420, { alpha: a2, glow: 'rgba(212,160,23,.12)', stroke: 'rgba(212,160,23,.6)' });
+  txt('THE CFO', lerp(1170, 1050, a2), 370, { font: '600 22px ' + SANS, color: C.soft, alpha: a2 });
+  txt('“Get the bill', lerp(1170, 1050, a2), 490, { font: '84px ' + SERIF, color: C.gold, alpha: a2 }); txt('down.”', lerp(1170, 1050, a2), 590, { font: '84px ' + SERIF, color: C.gold, alpha: a2 });
+  txt('Both want a receipt they can check.', W / 2, 800, { font: 'italic 34px ' + SERIF, color: C.soft, align: 'center', alpha: eo(seg(lt, 2.2, 2.8)) });
+};
+const LADDER = [['~1B', 1.2, 'Llama 3.2 1B'], ['~3–4B', 3.5, 'Llama 3.2 3B'], ['~7–8B', 8, 'Llama 3.1 8B'], ['~12–14B', 14.7, 'Phi-4 14B'], ['~32B', 32.5, 'Qwen2.5-Coder 32B'], ['~70B', 70, 'Llama 3.3 70B'], ['~100–200B', 141, 'Mixtral 8x22B (MoE)']];
+function ladder(lt, x0, y0, rowH, o = {}) {
+  LADDER.forEach(([band, p, name], i) => {
+    const y = y0 + (LADDER.length - 1 - i) * rowH, a = eo(seg(lt, .2 + i * .12, .7 + i * .12)), w = 90 + Math.log10(p * 10) / Math.log10(1410) * 470;
+    const hit = o.hit === i;
+    txt(band, x0, y + 12, { font: (hit ? 'bold ' : '') + '26px ' + MONO, color: hit ? C.gold2 : C.soft, alpha: a });
+    ctx.save(); ctx.globalAlpha = a; rr(x0 + 190, y - 20, w * eo(seg(lt, .3 + i * .12, 1 + i * .12)), 40, 8);
+    const g = ctx.createLinearGradient(x0 + 190, 0, x0 + 190 + w, 0); g.addColorStop(0, hit ? C.gold : '#2a2530'); g.addColorStop(1, hit ? C.gold2 : '#1d1a22'); ctx.fillStyle = g; ctx.fill();
+    if (hit) { ctx.shadowColor = 'rgba(255,182,72,.6)'; ctx.shadowBlur = 30; ctx.strokeStyle = C.gold2; ctx.lineWidth = 2; ctx.stroke(); } ctx.restore();
+    txt(name, x0 + 210 + w, y + 10, { font: (hit ? '600 ' : '') + '25px ' + SANS, color: hit ? C.ink : C.soft, alpha: a });
+  });
+}
+S.sizer = (lt, d) => {
+  eyebrow('01 · Size it', 120, 176, eo(seg(lt, .1, .5)));
+  txt('The smallest model that should clear your bar.', 120, 250, { font: '56px ' + SERIF, alpha: eo(seg(lt, .15, .7)) });
+  const inShot = seg(lt, 7.0, 7.8);
+  ctx.save(); ctx.globalAlpha = 1 - inShot * .75;
+  const jobB = lt > 4.6; const hitA = lt > 3.0 && !jobB, hitB = lt > 5.7;
+  ladder(lt, 150, 330, 76, { hit: hitB ? 5 : (hitA ? 0 : -1) });
+  const ja = eo(seg(lt, 2.0, 2.5));
+  if (!jobB) { pill('job: classify a ticket · answer: a short label', 1250, 330, { alpha: ja, font: '500 23px ' + SANS });
+    if (hitA) { const b = eo(seg(lt, 3.0, 3.5)); pill('task: classify → rung 0', 1250, 420, { alpha: b, color: C.soft, bg: 'rgba(143,135,120,.08)', font: '22px ' + MONO }); pill('shape: short label → −1 (floor)', 1250, 480, { alpha: eo(seg(lt, 3.3, 3.8)), color: C.soft, bg: 'rgba(143,135,120,.08)', font: '22px ' + MONO });
+      pill('Start with Llama 3.2 1B', 1250, 575, { alpha: eo(seg(lt, 3.7, 4.2)), color: C.good, bg: 'rgba(95,191,127,.12)', font: '600 28px ' + SANS, h: 58 }); } }
+  else { pill('job: write code · strict · on a GPU box', 1250, 330, { alpha: eo(seg(lt, 4.6, 5.1)), font: '500 23px ' + SANS });
+    if (hitB) { pill('task: code → rung 4', 1250, 420, { alpha: eo(seg(lt, 5.7, 6.1)), color: C.soft, bg: 'rgba(143,135,120,.08)', font: '22px ' + MONO }); pill('quality: strict → +1', 1250, 480, { alpha: eo(seg(lt, 5.9, 6.3)), color: C.soft, bg: 'rgba(143,135,120,.08)', font: '22px ' + MONO });
+      pill('Start with Llama 3.3 70B', 1250, 575, { alpha: eo(seg(lt, 6.1, 6.5)), color: C.good, bg: 'rgba(95,191,127,.12)', font: '600 28px ' + SANS, h: 58 }); } }
+  txt('Never an upsell — a 1B answer says 1B.', 1250, 680, { font: 'italic 30px ' + SERIF, color: C.gold, alpha: eo(seg(lt, 4.0, 4.5)) * (1 - seg(lt, 6.8, 7.1)) });
+  ctx.restore();
+  if (inShot > 0) { const z = lerp(1.0, 1.08, seg(lt, 7.0, d)); shot('fallforgemint-sizer', lerp(1900, 470, eo(inShot)), 300, 1300, 540, { zoom: z, px: .05, py: .15, label: 'Live now · fallforgemint', alpha: inShot });
+    txt('A transparent heuristic starting point — the proof is the scorecard.', 120, 894, { font: '21px ' + SANS, color: C.soft, alpha: inShot }); }
+};
+S.prove = (lt, d) => {
+  eyebrow('02 · Mint it, then prove it', 120, 176, eo(seg(lt, .1, .5)));
+  txt('It tries to beat the base — and can say you lost.', 120, 250, { font: '52px ' + SERIF, alpha: eo(seg(lt, .15, .7)) });
+  // examples → spec vs held-out
+  const exA = eo(seg(lt, .3, .9));
+  for (let i = 0; i < 5; i++) { const toSpec = i < 3, m = eio(seg(lt, 1.0 + i * .12, 1.9 + i * .12)); const sx = 140 + i * 18, sy = 330 + i * 16;
+    const tx = toSpec ? 170 + i * 150 : 190 + (i - 3) * 150, ty = toSpec ? 560 : 770;
+    ctx.save(); ctx.globalAlpha = exA; card(lerp(sx, tx, m), lerp(sy, ty - 34, m), 130, 68, { r: 10, stroke: toSpec ? 'rgba(212,160,23,.5)' : 'rgba(95,191,127,.5)' });
+    txt('example ' + (i + 1), lerp(sx, tx, m) + 65, lerp(sy, ty - 34, m) + 42, { font: '20px ' + SANS, color: C.soft, align: 'center' }); ctx.restore(); }
+  const bx = eo(seg(lt, 1.6, 2.2));
+  txt('THE SPEC (MODELFILE) — what the model is given', 150, 505, { font: '600 20px ' + SANS, color: C.gold, alpha: bx });
+  txt('HELD OUT — not in the spec the model is given', 150, 715, { font: '600 20px ' + SANS, color: C.good, alpha: bx });
+  // the real receipt
+  const r = F.realReceipt, ra = eo(seg(lt, 2.4, 2.9));
+  card(820, 330, 980, 470, { alpha: ra, glow: 'rgba(212,160,23,.1)' });
+  txt('A real signed receipt · review-1b · code review, ' + r.probes + ' probes', 860, 385, { font: '600 22px ' + SANS, color: C.soft, alpha: ra });
+  const fill = eo(seg(lt, 2.8, 4.2));
+  const bar = (label, v, max, y, col) => { txt(label, 860, y, { font: '26px ' + MONO, color: C.ink, alpha: ra }); ctx.save(); ctx.globalAlpha = ra; rr(860, y + 16, 680, 30, 8); ctx.fillStyle = '#1d1a22'; ctx.fill(); rr(860, y + 16, 680 * (v / max) * fill, 30, 8); ctx.fillStyle = col; ctx.fill(); ctx.restore();
+    txt(Math.round(v * fill) + '/' + max, 1560, y + 42, { font: 'bold 28px ' + MONO, color: col, alpha: ra }); };
+  bar('base · llama3.2:1b', r.vsBase.base, r.probes, 440, C.soft);
+  bar('yours · review-1b', r.vsBase.node, r.probes, 530, C.gold2);
+  pill('BEATS its base — passed its gate', 860, 650, { alpha: eo(seg(lt, 4.2, 4.6)), color: C.good, bg: 'rgba(95,191,127,.12)', font: '600 26px ' + SANS, h: 54 });
+  const lo = eo(seg(lt, 5.2, 5.7));
+  txt('vs qwen2.5:7b — a model ~7× its size: ' + r.vsBigger.other + '/' + r.probes, 860, 735, { font: '24px ' + MONO, color: C.soft, alpha: lo });
+  pill('LOSES — and the receipt says so', 1300, 650, { alpha: lo, color: C.bad, bg: 'rgba(224,106,95,.12)', font: '600 24px ' + SANS, h: 54 });
+  source('fallforgemint · shipped receipts receipt-vs-base.json + receipt-vs-qwen.json · Ed25519-signed manifest, verified in CI', eo(seg(lt, 2.5, 3)));
+};
+S.receipt = (lt, d) => {
+  eyebrow('03 · The receipt', 120, 176, eo(seg(lt, .1, .5)));
+  txt('A scorecard anyone can check.', 120, 250, { font: '56px ' + SERIF, alpha: eo(seg(lt, .15, .7)) });
+  card(120, 300, 900, 540, { glow: 'rgba(212,160,23,.1)', alpha: eo(seg(lt, .2, .6)) });
+  const rows = [['kind', 'fallforgemint-scorecard', C.ink], ['verdict', 'BEATS | LOSES | TIES', C.good], ['keyClass', 'software-ed25519', C.ink], ['held-out', 'hash-disjoint ✓', C.good], ['rerun', 'a real CI run — link bound ✓', C.good], ['hash', 'sha-256 over every field above', C.soft]];
+  rows.forEach(([k, v, col], i) => { const a = eo(seg(lt, .5 + i * .28, .9 + i * .28)); txt(k, 170, 372 + i * 54, { font: '27px ' + MONO, color: C.soft, alpha: a }); txt(v, 380, 372 + i * 54, { font: '27px ' + MONO, color: col, alpha: a }); });
+  wrap('“' + F.forgemint.heldOutClaim + '”', 170, 736, 800, 40, { font: 'italic 28px ' + SERIF, color: C.gold, alpha: eo(seg(lt, 2.4, 3.0)) });
+  const sa = eo(seg(lt, 1.2, 1.9));
+  shot('fallforgemint-rerun', 1080, 300, 720, 540, { alpha: sa, zoom: 1.28, px: .42, py: .05, label: 'Live · re-run it on a clean GitHub runner' });
+  pill('✓ BOUND — the run it names made it', 1440, 770, { align: 'center', alpha: eo(seg(lt, 3.2, 3.6)) * (1 - seg(lt, 4.6, 4.9)), color: C.good, bg: 'rgba(11,10,15,.9)', font: '600 24px ' + SANS });
+  pill('✗ TAMPERED — a borrowed CI link fails', 1440, 770, { align: 'center', alpha: eo(seg(lt, 4.9, 5.3)), color: C.bad, bg: 'rgba(11,10,15,.9)', font: '600 24px ' + SANS });
+  txt('A software key proves the numbers are unedited — not who ran it.  CI re-run: live — the run it names must have made this exact scorecard.', 120, 894, { font: '21px ' + SANS, color: C.soft, alpha: eo(seg(lt, 3.5, 4)) });
+};
+S.rent = (lt, d) => {
+  eyebrow('04 · Own vs rent — the honest maths', 120, 176, eo(seg(lt, .1, .5)));
+  txt('At high use, owning is several times cheaper.', 120, 250, { font: '52px ' + SERIF, alpha: eo(seg(lt, .15, .7)) });
+  const bars = [['Own it — on your hardware, high use', 1, C.gold2], ['Rent — cloud GPU instances', 6, C.soft], ['Rent — a hosted reasoning-model API', 17, C.soft]];
+  bars.forEach(([label, m, col], i) => { const y = 350 + i * 118, a = eo(seg(lt, .4 + i * .3, .9 + i * .3)), w = 60 + (m / 17) * 1040 * eo(seg(lt, .6 + i * .3, 1.8 + i * .3));
+    txt(label, 120, y, { font: '26px ' + SANS, color: C.ink, alpha: a }); ctx.save(); ctx.globalAlpha = a; rr(120, y + 16, w, 46, 10); const g = ctx.createLinearGradient(120, 0, 120 + w, 0);
+    g.addColorStop(0, i === 0 ? C.gold : '#3a3340'); g.addColorStop(1, i === 0 ? C.gold2 : '#2a2530'); ctx.fillStyle = g; ctx.fill(); ctx.restore();
+    txt(i === 0 ? '1×' : '~' + m + '×', 140 + w, y + 52, { font: 'bold 30px ' + MONO, color: col, alpha: a }); });
+  txt('cost per million tokens, relative', 120, 760, { font: '22px ' + SANS, color: C.soft, alpha: eo(seg(lt, 1.5, 2)) });
+  const t1 = seg(lt, 3.6, 4.0), t2 = seg(lt, 4.9, 5.3);
+  card(1330, 360, 470, 330, { alpha: eo(t1), stroke: 'rgba(212,160,23,.5)' });
+  txt(t2 > .5 ? 'High use' : 'Low use', 1565, 440, { font: '600 30px ' + SANS, align: 'center', alpha: eo(t1) });
+  txt(t2 > .5 ? '(roughly 5+ hours a day)' : '(under ~5 hours a day)', 1565, 485, { font: '22px ' + SANS, color: C.soft, align: 'center', alpha: eo(t1) });
+  pill(t2 > .5 ? 'OWN IT' : 'KEEP RENTING', 1565, 590, { align: 'center', alpha: eo(t1), color: t2 > .5 ? C.good : C.amber, bg: t2 > .5 ? 'rgba(95,191,127,.12)' : 'rgba(227,164,59,.12)', font: '600 34px ' + SANS, h: 70 });
+  source('Lenovo Press LP2368 · On-Premise vs Cloud: Generative AI TCO (2026 Edition) · at high utilisation: ~6× vs cloud GPU instances, ~17× vs a hosted reasoning-model API · in one configuration, owning won above ~5.3 hours of use a day', eo(seg(lt, 1, 1.5)));
+};
+S.own = (lt) => {
+  const a = eo(seg(lt, .05, .45));
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(520, 520);
+  rr(-120, -160, 240, 300, 18); ctx.fillStyle = C.card; ctx.fill(); ctx.strokeStyle = C.gold; ctx.lineWidth = 3; ctx.stroke(); ctx.restore();
+  txt('◊', 520, 510, { font: '110px ' + SERIF, color: C.gold, align: 'center', alpha: a }); txt('your model', 520, 610, { font: '26px ' + MONO, color: C.soft, align: 'center', alpha: a });
+  const m = eio(seg(lt, .5, 1.3)); txt('→', lerp(760, 880, m), 540, { font: '90px ' + SERIF, color: C.gold, align: 'center', alpha: m });
+  const b = eo(seg(lt, .8, 1.3)); ctx.save(); ctx.globalAlpha = b; rr(1040, 360, 520, 320, 16); ctx.fillStyle = '#0f0d13'; ctx.fill(); ctx.strokeStyle = C.line; ctx.lineWidth = 3; ctx.stroke();
+  rr(990, 680, 620, 30, 10); ctx.fillStyle = '#1d1a22'; ctx.fill(); ctx.restore();
+  txt('runs on your machine', 1300, 500, { font: '32px ' + SANS, align: 'center', alpha: b }); txt('offline · private', 1300, 550, { font: '26px ' + SANS, color: C.soft, align: 'center', alpha: b });
+  pill('no meter', 1300, 780, { align: 'center', alpha: eo(seg(lt, 1.4, 1.8)), color: C.good, bg: 'rgba(95,191,127,.12)', font: '600 30px ' + SANS, h: 62 });
+};
+const STAGES = ['Prove', 'Own', 'Shape', 'Carry', 'Remember', 'Run', 'Connect'];
+function pipeline(lt, y, o = {}) {
+  const x0 = 230, x1 = 1690, p = eio(seg(lt, .5, 3.0));
+  ctx.save(); ctx.strokeStyle = C.line; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  const g = ctx.createLinearGradient(x0, 0, x1, 0); g.addColorStop(0, C.gold); g.addColorStop(1, C.gold2); ctx.strokeStyle = g; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(lerp(x0, x1, p), y); ctx.stroke(); ctx.restore();
+  STAGES.forEach((s, i) => { const x = lerp(x0, x1, i / 6), on = p >= i / 6 - .001, a = on ? 1 : .35;
+    ctx.save(); ctx.beginPath(); ctx.arc(x, y, 34, 0, 7); ctx.fillStyle = on ? '#2a2110' : C.card; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = on ? C.gold2 : C.line; ctx.stroke(); ctx.restore();
+    if (on) dot(x, y, 9, C.gold2, .9);
+    txt(s, x, y + 82, { font: (on ? '600 ' : '') + '30px ' + SANS, color: on ? C.ink : C.soft, align: 'center', alpha: a }); });
+}
+S.estate = (lt, d) => {
+  eyebrow('Part two · the estate', 120, 190, eo(seg(lt, .1, .5)));
+  txt('Forge is one door.', 120, 290, { font: '64px ' + SERIF, alpha: eo(seg(lt, .15, .7)) });
+  txt('One pipeline. Seven stages.', 120, 370, { font: '52px ' + SERIF, color: C.gold, alpha: eo(seg(lt, .5, 1.1)) });
+  pipeline(lt, 560);
+  const c1 = eo(seg(lt, 2.2, 2.7)); txt('FallForge Mint', lerp(230, 1690, 1 / 6), 700, { font: 'italic 26px ' + SERIF, color: C.gold, align: 'center', alpha: c1 });
+  const c2 = eo(seg(lt, 3.2, 3.7)); txt('prefix caching, kept stable: ~' + F.foldcycle.prefillLatencyCutPct + '% less prefill time on a repeat', lerp(230, 1690, 5 / 6), 700, { font: 'italic 24px ' + SERIF, color: C.gold, align: 'center', alpha: c2 });
+  txt(F.router.addresses + ' capability addresses — a coverage gate proves every one routes to a real organ.', 120, 820, { font: '26px ' + SANS, color: C.soft, alpha: eo(seg(lt, 3.6, 4.1)) });
+  source('Seven-stage, 127-address capability basis: Thomas Frumkin’s MACCubeFACE · fold-cycle: standard prefix caching kept stable, vs a ' + F.foldcycle.controlSavingPct + '% control (kar-foldcycle results.json)', eo(seg(lt, 3, 3.5)));
+};
+S.trust = (lt, d) => {
+  eyebrow('The trust rail · witness', 120, 176, eo(seg(lt, .1, .5)));
+  txt('A gate that breaks the code to test the tests.', 120, 250, { font: '56px ' + SERIF, alpha: eo(seg(lt, .15, .7)) });
+  const suite = (x, y, w, title, tests, killed, total, surv, t0, t1) => {
+    const a = eo(seg(lt, t0, t0 + .5)); card(x, y, w, 430, { alpha: a, stroke: surv ? 'rgba(227,164,59,.6)' : 'rgba(95,191,127,.45)' });
+    txt(title, x + 40, y + 62, { font: '600 28px ' + SANS, alpha: a }); txt(tests, x + 40, y + 104, { font: '24px ' + SANS, color: C.good, alpha: a });
+    const ops = ['>=  →  >', '===  →  !==', '&&  →  ||', '<  →  <=', '+ 1  →  - 1', 'true  →  false'];
+    for (let k = 0; k < 6; k++) { const p = seg(lt, t0 + .6 + k * .32, t0 + 1.2 + k * .32); if (p <= 0) continue; const yy = y + 150 + k * 44;
+      const dead = !(surv && k === 5);
+      txt(ops[k], x + 40, yy + 16, { font: '24px ' + MONO, color: C.soft, alpha: a * eo(p) });
+      txt(dead ? 'KILLED' : 'SURVIVED', x + w - 40, yy + 16, { font: 'bold 24px ' + MONO, color: dead ? C.bad : C.amber, align: 'right', alpha: a * eo(seg(lt, t0 + 1 + k * .32, t0 + 1.3 + k * .32)) }); }
+    const fin = eo(seg(lt, t1, t1 + .5));
+    txt('killed ' + killed + ' / ' + total + '   ·   survivors ' + surv, x + 40, y + 410, { font: 'bold 27px ' + MONO, color: surv ? C.amber : C.good, alpha: fin });
+  };
+  suite(120, 310, 780, 'FallForge Mint — its own kernel', F.forgemint.tests + ' tests passing', F.forgemint.witness.killed, F.forgemint.witness.total, 0, .3, 2.6);
+  suite(1020, 310, 780, 'left-pad — not ours', F.leftpad.tests + ' tests passing', F.leftpad.killed, F.leftpad.total, F.leftpad.survivors, 3.4, 5.6);
+  txt('One line its green suite never pins — the witness gate found it.', 1060, 800, { font: 'italic 27px ' + SERIF, color: C.amber, alpha: eo(seg(lt, 6.0, 6.5)) });
+  source('witness mutation gate · FallForge Mint score ' + F.forgemint.witness.score + ' (commit ' + F.forgemint.witness.commit + ') · left-pad score ' + F.leftpad.score + ', witness-external.json', eo(seg(lt, 2.6, 3.1)));
+};
+S.fallos = (lt, d) => {
+  eyebrow('Remember · Run · fall-os', 120, 176, eo(seg(lt, .1, .5)));
+  txt('Hatch your own assistant. Level it into your own OS.', 120, 250, { font: '50px ' + SERIF, alpha: eo(seg(lt, .15, .7)) });
+  const z = lerp(1.0, 1.12, eio(seg(lt, .4, d)));
+  shot('fall-os', 260, 300, 1400, 540, { zoom: z, px: .2, py: .04, alpha: eo(seg(lt, .3, .9)), label: 'Live · fall-os' });
+  source('The Dreaming draws on Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC — “Dream State Architecture,” 2025 · assos by Thomas Frumkin', eo(seg(lt, 1.2, 1.7)));
+};
+S.dispatch = (lt, d) => {
+  eyebrow('Route · the dispatcher', 120, 176, eo(seg(lt, .1, .5)));
+  txt('Every job, in one of three honest states.', 120, 250, { font: '54px ' + SERIF, alpha: eo(seg(lt, .15, .7)) });
+  const D = F.dispatcher;
+  const cols = [
+    ['RUN THEMSELVES', D.auto, C.good, D.autoOrgans, 'safe, with a real handler'],
+    ['WAIT FOR A HUMAN KEY', D.behindKey, C.amber, ['the-wallet', 'konomium-vault', 'kcc-mint', 'fallaccount-engine', 'fallforge', 'fall-federate', 'meshos', 'mesh-and-pub', 'signals-feed'], 'money · publishing · irreversible — by design'],
+    ['HONESTLY TO-DO', D.todo, C.soft, ['kar-warden', 'forge-studio', 'the-assembly', 'si-didy-run', 'fallbrain', 'liveware-core', 'sovereign-browser', 'kar-wisp'], 'safe, no handler wired yet'],
+  ];
+  cols.forEach(([title, n, col, organs, sub], i) => {
+    const x = 120 + i * 570, a = eo(seg(lt, .4 + i * .9, .9 + i * .9));
+    card(x, 300, 540, 540, { alpha: a, stroke: col === C.soft ? C.line : col });
+    txt((i === 1 ? '🔒 ' : '') + title, x + 36, 358, { font: '600 24px ' + SANS, color: col, alpha: a });
+    txt(String(Math.round(n * eo(seg(lt, .6 + i * .9, 1.4 + i * .9)))), x + 36, 470, { font: 'bold 110px ' + SERIF, color: col, alpha: a });
+    txt(sub, x + 36, 515, { font: '21px ' + SANS, color: C.soft, alpha: a });
+    organs.forEach((o, k) => { const ya = eo(seg(lt, 1.0 + i * .9 + k * .07, 1.3 + i * .9 + k * .07)); txt(o, x + 36 + (k % 2) * 250, 568 + Math.floor(k / 2) * 44, { font: '22px ' + MONO, color: C.ink, alpha: a * ya }); });
+  });
+  source('Measured from the dispatcher registry (' + D.organs + ' organs) · shown live on capability-router · dual-map-gate draws on Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC — “From GEP Stabilization to Dual-Map Ethical Reasoning,” v0.2', eo(seg(lt, 3, 3.5)));
+};
+const DOORS = [['sovereign-foundry', 'the front door'], ['fallforgemint', 'own a proven model'], ['fall-os', 'your own OS'], ['capability-router', 'route every job'], ['fall-federate', 'join peer-to-peer'], ['forgegrowth', 'growth that can’t lie'], ['meshos', 'no server between'], ['witness', 'the trust rail'], ['kar-foldcycle', 'run cheap']];
+function estateMap(a, cx = 1330, cy = 560, R = 290) {
+  DOORS.slice(1).forEach(([n, s], i) => { const ang = -Math.PI / 2 + i * (2 * Math.PI / 8), x = cx + Math.cos(ang) * R * 1.28, y = cy + Math.sin(ang) * R;
+    ctx.save(); ctx.globalAlpha = a * .8; ctx.strokeStyle = 'rgba(212,160,23,.45)'; ctx.lineWidth = 2; ctx.setLineDash([6, 8]); ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y); ctx.stroke(); ctx.restore();
+    dot(x, y, 8, C.gold2, a); txt(n, x, y - 22, { font: '600 23px ' + SANS, align: 'center', alpha: a }); txt(s, x, y + 38, { font: '19px ' + SANS, color: C.soft, align: 'center', alpha: a }); });
+  ctx.save(); ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(cx, cy, 92, 0, 7); ctx.fillStyle = '#231b0c'; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = C.gold2; ctx.shadowColor = 'rgba(255,182,72,.5)'; ctx.shadowBlur = 40; ctx.stroke(); ctx.restore();
+  txt('sovereign', cx, cy - 6, { font: '600 25px ' + SANS, align: 'center', alpha: a, color: C.gold2 }); txt('foundry', cx, cy + 26, { font: '600 25px ' + SANS, align: 'center', alpha: a, color: C.gold2 });
+}
+S.mesh = (lt, d) => {
+  eyebrow('Connect · the mesh', 120, 176, eo(seg(lt, .1, .5)));
+  txt('Peer to peer. No server between.', 120, 250, { font: '54px ' + SERIF, alpha: eo(seg(lt, .15, .7)) * (1 - seg(lt, 2.7, 3.1)) });
+  txt('And one front door ties it together.', 120, 250, { font: '54px ' + SERIF, color: C.gold, alpha: eo(seg(lt, 3.0, 3.5)) });
+  const m = 1 - seg(lt, 2.6, 3.0);
+  if (m > 0) { const N = [[300, 560, 'A'], [640, 440, 'B'], [980, 560, 'C']];
+    ctx.save(); ctx.globalAlpha = m * eo(seg(lt, .3, .8)); ctx.strokeStyle = 'rgba(212,160,23,.6)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(300, 560); ctx.lineTo(640, 440); ctx.lineTo(980, 560); ctx.stroke(); ctx.restore();
+    N.forEach(([x, y, l]) => { dot(x, y, 16, C.gold2, m); txt(l, x, y + 62, { font: '600 28px ' + SANS, align: 'center', alpha: m }); });
+    const p = (lt * .7) % 1, px = p < .5 ? lerp(300, 640, p * 2) : lerp(640, 980, (p - .5) * 2), py = p < .5 ? lerp(560, 440, p * 2) : lerp(440, 560, (p - .5) * 2); dot(px, py, 7, C.ink, m);
+    ctx.save(); ctx.globalAlpha = m * .8; rr(590, 650, 100, 90, 10); ctx.strokeStyle = C.soft; ctx.lineWidth = 3; ctx.stroke(); ctx.strokeStyle = C.bad; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(570, 630); ctx.lineTo(710, 760); ctx.stroke(); ctx.restore();
+    txt('no server', 640, 800, { font: '22px ' + SANS, color: C.bad, align: 'center', alpha: m });
+    txt('fall-federate /join — two parties, real WebRTC', 1120, 450, { font: '26px ' + SANS, alpha: m * eo(seg(lt, .8, 1.3)) });
+    txt('mechanism proven · next: a second human on another machine', 1120, 492, { font: '22px ' + SANS, color: C.soft, alpha: m * eo(seg(lt, 1, 1.5)) });
+    txt('meshos — relaying proven across three nodes', 1120, 580, { font: '26px ' + SANS, alpha: m * eo(seg(lt, 1.3, 1.8)) }); }
+  const a = eo(seg(lt, 3.0, 3.8)); if (a > 0) { estateMap(a, 1100, 575, 250); txt('sovereign-foundry · composed, not merged · MIT', 120, 894, { font: '21px ' + SANS, color: C.soft, alpha: a }); }
+};
+S.thesis = (lt, d) => {
+  eyebrow('The thesis', 120, 176, eo(seg(lt, .1, .5)));
+  txt('The tails are the signal.', 120, 250, { font: '56px ' + SERIF, alpha: eo(seg(lt, .15, .7)) });
+  const base = 700, cx = W / 2, gen = eio(seg(lt, .4, 3.2)), sig = lerp(260, 120, gen);
+  const curve = (s, col, lw, a) => { ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.beginPath();
+    for (let x = 260; x <= W - 260; x += 4) { const y = base - 300 * Math.exp(-Math.pow((x - cx) / s, 2) / 2); x === 260 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); } ctx.stroke(); ctx.restore(); };
+  curve(260, 'rgba(143,135,120,.5)', 3, eo(seg(lt, .3, .8)));
+  curve(sig, C.soft, 4, eo(seg(lt, .4, .9)) * (1 - seg(lt, 3.6, 4.2) * .4));
+  txt('generation ' + (1 + Math.round(gen * 4)) + ' — trained on its own output', cx, base + 58, { font: '24px ' + SANS, color: C.soft, align: 'center', alpha: eo(seg(lt, .5, 1)) * (1 - seg(lt, 3.3, 3.7)) });
+  const m = eo(seg(lt, 3.3, 4.3));
+  for (let k = 0; k < 44; k++) { const side = k % 2 ? 1 : -1, r1 = ((k * 97) % 100) / 100, r2 = ((k * 57) % 100) / 100;
+    const x = cx + side * lerp(330, 620, r1), y = base - lerp(8, 80, r2) - 40 * Math.exp(-Math.pow((x - cx) / 260, 2) / 2); dot(x, y, 4.5, C.gold2, m * (.6 + .4 * Math.sin(lt * 3 + k))); }
+  txt('Every node on the mesh is a tail — the signal a monolith averages away.', cx, base + 58, { font: 'italic 30px ' + SERIF, color: C.gold, align: 'center', alpha: m });
+  txt('Provable AI is the moat: a receipt that can fail, re-runnable by anyone.', cx, 830, { font: '30px ' + SERIF, align: 'center', alpha: eo(seg(lt, 5.2, 5.8)) });
+  source('Model collapse: Shumailov et al., Nature 2024 (arXiv:2305.17493) — tails vanish first · the mesh-of-tails reading is our thesis', eo(seg(lt, .8, 1.3)));
+};
+S.end = (lt, d) => {
+  const a = eo(seg(lt, .05, .6));
+  txt('◊', W / 2, 300, { font: '80px ' + SERIF, color: C.gold, align: 'center', alpha: a });
+  txt('AI Native Solutions', W / 2, 420, { font: 'bold 92px ' + SERIF, align: 'center', grad: true, alpha: a });
+  txt('Own it. Prove it.', W / 2, 510, { font: '54px ' + SERIF, align: 'center', alpha: eo(seg(lt, .4, 1)) });
+  txt('www.ai-nativesolutions.com', W / 2, 590, { font: '34px ' + SANS, color: C.gold2, align: 'center', alpha: eo(seg(lt, .7, 1.2)) });
+  txt('fallforgemint · fall-os · capability-router · fall-federate · sovereign-foundry · forgegrowth', W / 2, 670, { font: '24px ' + MONO, color: C.soft, align: 'center', alpha: eo(seg(lt, .9, 1.4)) });
+  const c = eo(seg(lt, 1.1, 1.6));
+  txt(F.credits.konomi + ' · ' + F.credits.forge + ' · MIT', W / 2, 752, { font: '20px ' + SANS, color: C.soft, align: 'center', alpha: c });
+  txt('Draws on Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC —', W / 2, 786, { font: '19px ' + SANS, color: C.soft, align: 'center', alpha: c });
+  txt('“Dream State Architecture,” 2025 · “From GEP Stabilization to Dual-Map Ethical Reasoning,” Derivation v0.2', W / 2, 812, { font: '19px ' + SANS, color: C.soft, align: 'center', alpha: c });
+  txt('Seven-stage basis: Thomas Frumkin’s MACCubeFACE · every figure measured or cited — sources at ai-nativesolutions.com/explainer.html', W / 2, 846, { font: '19px ' + SANS, color: C.soft, align: 'center', alpha: c });
+};
+
+// ── compose one frame ────────────────────────────────────────────────────────────────────────────
+function draw(t) {
+  background(t); chrome(t);
+  const i = TL.scenes.findIndex(s => t >= s.start && t < s.end), idx = i < 0 ? TL.scenes.length - 1 : i, s = TL.scenes[idx];
+  const lt = t - s.start, d = s.end - s.start, FA = .28;
+  const fin = idx === 0 ? 1 : eo(seg(lt, 0, FA)), fout = idx === TL.scenes.length - 1 ? 1 - seg(t, TL.duration - .6, TL.duration) : 1 - seg(lt, d - FA, d);
+  ctx.save(); ctx.globalAlpha = Math.min(fin, fout); ctx.translate(0, (1 - fin) * 14); S[s.id](lt, d, t); ctx.restore();
+  captions(t);
+}
+window.FILM = { draw, W, H, FPS, duration: TL.duration };
+function drawMap() {
+  background(20); txt('◊', 120, 78, { font: '34px ' + SERIF, color: C.gold }); txt('AI Native Solutions', 160, 76, { font: 'bold 26px ' + SERIF, color: C.ink });
+  txt('THE ESTATE MAP', W - 120, 76, { font: '600 20px ' + SANS, color: C.soft, align: 'right' });
+  txt('One front door. Every door behind it is live.', W / 2, 170, { font: '54px ' + SERIF, align: 'center' });
+  estateMap(1, W / 2, 520, 250);
+  const x0 = 330, x1 = 1590, y = 900; ctx.save(); ctx.strokeStyle = 'rgba(212,160,23,.55)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke(); ctx.restore();
+  STAGES.forEach((s, i) => { const x = lerp(x0, x1, i / 6); dot(x, y, 9, C.gold2); txt(s, x, y + 46, { font: '600 24px ' + SANS, align: 'center' }); });
+  txt('the seven stages every job moves through', W / 2, y - 26, { font: '21px ' + SANS, color: C.soft, align: 'center' });
+}
+window.drawMap = drawMap;
+
+// ── modes ────────────────────────────────────────────────────────────────────────────────────────
+if (q.has('map')) { drawMap(); window.__ready = true; }
+else if (q.has('still')) { draw(parseFloat(q.get('still'))); window.__ready = true; }
+else if (q.has('encode')) { window.__ready = true; }
+else {
+  draw(0.01);
+  const btn = document.getElementById('play'); btn.style.display = 'flex';
+  const audio = new Audio('out/film-audio.wav');
+  btn.onclick = () => { btn.style.display = 'none'; audio.currentTime = 0; audio.play(); const loop = () => { draw(Math.min(audio.currentTime, TL.duration - 0.001)); if (!audio.ended) requestAnimationFrame(loop); else { btn.style.display = 'flex'; } }; requestAnimationFrame(loop); };
+}
+
+// ── deterministic encode: every frame drawn at exact t = i/30, H.264 + AAC via WebCodecs ──────────
+window.runEncode = async (bitrate = 4_000_000) => {
+  const N = Math.round(TL.duration * FPS); let vDesc = null, aDesc = null, batch = [], bytes = 0;
+  const flush = async () => { if (batch.length) { const out = batch; batch = []; bytes = 0; await window.__push(JSON.stringify(out)); } };   // detach BEFORE awaiting: chunks emitted during the await must land in the new batch, not be wiped
+  const b64 = (u8) => { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); };
+  const venc = new VideoEncoder({ output: (chunk, meta) => { if (meta && meta.decoderConfig && meta.decoderConfig.description && !vDesc) vDesc = b64(new Uint8Array(meta.decoderConfig.description)); const u = new Uint8Array(chunk.byteLength); chunk.copyTo(u); batch.push(['v', b64(u), chunk.timestamp, chunk.type === 'key' ? 1 : 0]); bytes += u.length; }, error: (e) => { window.__err = String(e); } });
+  venc.configure({ codec: 'avc1.640028', width: W, height: H, bitrate, bitrateMode: 'variable', framerate: FPS, avc: { format: 'avc' }, latencyMode: 'quality', hardwareAcceleration: 'prefer-software' });
+  for (let i = 0; i < N; i++) {
+    draw(i / FPS);
+    const f = new VideoFrame(cv, { timestamp: Math.round(i * 1e6 / FPS), duration: Math.round(1e6 / FPS) });
+    venc.encode(f, { keyFrame: i % (FPS * 2) === 0 }); f.close();
+    while (venc.encodeQueueSize > 2) await new Promise(r => setTimeout(r, 1));
+    if (bytes > 2e6) await flush();
+    if (i % 150 === 0) await window.__progress(i, N);
+  }
+  await venc.flush(); await flush();
+  // audio: parse our own 16-bit PCM WAV (no resampling), AAC-LC 48 kHz mono
+  const buf = new Uint8Array(await (await fetch('out/film-audio.wav')).arrayBuffer()), dv = new DataView(buf.buffer);
+  let o = 12, dataOff = 0, dataLen = 0; while (o < buf.length) { const id = String.fromCharCode(...buf.subarray(o, o + 4)), sz = dv.getUint32(o + 4, true); if (id === 'data') { dataOff = o + 8; dataLen = sz; break; } o += 8 + sz + (sz & 1); }
+  const n = dataLen / 2, pcm = new Float32Array(n); for (let i = 0; i < n; i++) pcm[i] = dv.getInt16(dataOff + i * 2, true) / 32768;
+  const aenc = new AudioEncoder({ output: (chunk, meta) => { if (meta && meta.decoderConfig && meta.decoderConfig.description && !aDesc) aDesc = b64(new Uint8Array(meta.decoderConfig.description)); const u = new Uint8Array(chunk.byteLength); chunk.copyTo(u); batch.push(['a', b64(u), chunk.timestamp, 1]); }, error: (e) => { window.__err = String(e); } });
+  aenc.configure({ codec: 'mp4a.40.2', sampleRate: 48000, numberOfChannels: 1, bitrate: 128000 });
+  const BLK = 4800; for (let i = 0; i < n; i += BLK) { const part = pcm.subarray(i, Math.min(n, i + BLK)); aenc.encode(new AudioData({ format: 'f32-planar', sampleRate: 48000, numberOfFrames: part.length, numberOfChannels: 1, timestamp: Math.round(i * 1e6 / 48000), data: part })); }
+  await aenc.flush(); await flush();
+  return { frames: N, vDesc, aDesc, err: window.__err || null };
+};
+</script>
+</body>
+</html>

@@ -18,7 +18,7 @@ The differentiator is **provable AI**: where the industry certifies AI with anot
 ## Key pages
 
 - [The film, the brochure and the images](https://www.ai-nativesolutions.com/explainer.html) — a 90-second film (FallForge Mint, then the whole estate and how it connects), the 2026-09 prospectus, designed visuals, and a source for every number
-- [FallForge Mint + the sizer](https://sjgant80-hub.github.io/fallforgemint/) — describe a job and get the SMALLEST open-weight model that clears the bar (~1B to ~200B, never an upsell), mint it from your own examples, prove it on held-out data it never saw, and download a signed scorecard that can say you lost
+- [FallForge Mint + the sizer](https://sjgant80-hub.github.io/fallforgemint/) — describe a job and get the SMALLEST open-weight model that should clear the bar (~1B to ~200B, never an upsell), mint it from your own examples, prove it on held-out data it never saw, and download a signed scorecard that can say you lost
 - [sovereign-foundry](https://sjgant80-hub.github.io/sovereign-foundry/) — the front door: seven stages (Prove, Own, Shape, Carry, Remember, Run, Connect), each a live door
 - [fall-os](https://sjgant80-hub.github.io/fall-os/) — hatch your own assistant (a Didy) and level it into your own operating system, on your own models
 - [capability-router](https://sjgant80-hub.github.io/capability-router/) — 127 capability addresses and a coverage gate; the dispatcher places every step in one of three honest states (7 run themselves, 9 wait for a human key, 8 to-do)

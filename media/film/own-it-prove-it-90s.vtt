@@ -17,134 +17,134 @@ Your CFO wants the bill down.
 Your engineers want proof it won't break.
 
 5
-00:00:10.500 --> 00:00:13.634
-FallForge Mint starts with the question nobody asks:
+00:00:10.500 --> 00:00:12.882
+FallForge Mint starts with one question:
 
 6
-00:00:13.634 --> 00:00:14.961
+00:00:12.882 --> 00:00:14.192
 which model is enough?
 
 7
-00:00:14.961 --> 00:00:19.059
-The sizer picks the smallest open-weight model that clears your bar.
+00:00:14.192 --> 00:00:18.777
+The sizer suggests the smallest open-weight model that should clear your bar.
 
 8
-00:00:19.059 --> 00:00:21.450
+00:00:18.777 --> 00:00:21.140
 A one-billion answer says one billion.
 
 9
-00:00:21.550 --> 00:00:23.966
+00:00:21.240 --> 00:00:23.679
 Mint it from a few of your own examples.
 
 10
-00:00:23.966 --> 00:00:27.831
-Then it tries to beat the base model on examples it's never seen
+00:00:23.679 --> 00:00:27.887
+Then it tries to beat the base model on examples kept out of its spec
 
 11
-00:00:27.831 --> 00:00:29.380
+00:00:27.887 --> 00:00:29.450
 and it can say you lost.
 
 12
-00:00:29.480 --> 00:00:31.080
+00:00:29.550 --> 00:00:31.150
 You get a signed scorecard.
 
 13
-00:00:31.080 --> 00:00:34.576
+00:00:31.150 --> 00:00:34.646
 The held-out answers weren't in the spec we gave the model.
 
 14
-00:00:34.576 --> 00:00:35.920
+00:00:34.646 --> 00:00:35.990
 Anyone can re-run it.
 
 15
-00:00:36.020 --> 00:00:39.977
+00:00:36.090 --> 00:00:40.047
 At high use, owning can run six to seventeen times cheaper.
 
 16
-00:00:39.977 --> 00:00:42.760
+00:00:40.047 --> 00:00:42.830
 When renting wins, it says keep renting.
 
 17
-00:00:42.860 --> 00:00:43.641
+00:00:42.930 --> 00:00:43.711
 One file.
 
 18
-00:00:43.641 --> 00:00:44.769
+00:00:43.711 --> 00:00:44.839
 Your machine.
 
 19
-00:00:44.769 --> 00:00:45.650
+00:00:44.839 --> 00:00:45.720
 No meter.
 
 20
-00:00:45.750 --> 00:00:49.252
+00:00:45.820 --> 00:00:49.322
 And Forge is one door into a whole sovereign estate.
 
 21
-00:00:49.252 --> 00:00:51.170
+00:00:49.322 --> 00:00:51.240
 Seven stages, one pipeline.
 
 22
-00:00:51.270 --> 00:00:53.177
-Everything rides a trust rail
+00:00:51.340 --> 00:00:53.370
+Gated builds ride a trust rail:
 
 23
-00:00:53.177 --> 00:00:55.676
-a gate that tries to break every test.
+00:00:53.370 --> 00:00:55.792
+it breaks the code to test the tests.
 
 24
-00:00:55.676 --> 00:00:59.590
+00:00:55.792 --> 00:00:59.690
 It even found a line left-pad's passing tests don't check.
 
 25
-00:00:59.690 --> 00:01:03.574
+00:00:59.790 --> 00:01:03.674
 In fall-os, you hatch your own assistant and level it into your own
 
 26
-00:01:03.574 --> 00:01:04.660
+00:01:03.674 --> 00:01:04.760
 operating system.
 
 27
-00:01:04.760 --> 00:01:06.727
+00:01:04.860 --> 00:01:06.827
 The dispatcher routes every job:
 
 28
-00:01:06.727 --> 00:01:10.968
+00:01:06.827 --> 00:01:11.068
 seven organs run themselves, nine wait for a human key, and eight are
 
 29
-00:01:10.968 --> 00:01:12.420
+00:01:11.068 --> 00:01:12.520
 honestly marked to-do.
 
 30
-00:01:12.520 --> 00:01:15.334
+00:01:12.620 --> 00:01:15.434
 Peers connect directly, no server between
 
 31
-00:01:15.334 --> 00:01:18.110
+00:01:15.434 --> 00:01:18.210
 and sovereign-foundry ties it together.
 
 32
-00:01:18.210 --> 00:01:21.303
+00:01:18.310 --> 00:01:21.403
 Models trained on their own output lose the tails.
 
 33
-00:01:21.303 --> 00:01:23.902
+00:01:21.403 --> 00:01:24.002
 A mesh of real people is the clean signal.
 
 34
-00:01:23.902 --> 00:01:25.920
+00:01:24.002 --> 00:01:26.020
 Owned, provable AI is the moat.
 
 35
-00:01:26.020 --> 00:01:27.809
+00:01:26.120 --> 00:01:27.909
 AI Native Solutions.
 
 36
-00:01:27.809 --> 00:01:28.435
+00:01:27.909 --> 00:01:28.535
 Own it.
 
 37
-00:01:28.435 --> 00:01:29.590
+00:01:28.535 --> 00:01:29.690
 Prove it.
 

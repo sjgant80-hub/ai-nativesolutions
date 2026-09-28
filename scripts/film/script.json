@@ -1,0 +1,104 @@
+{
+  "voice": "Microsoft Hazel Desktop",
+  "rate": 1,
+  "scenes": [
+    {
+      "id": "bill",
+      "part": 1,
+      "min": 5.2,
+      "text": "Your team rents a giant AI model by the token — to do the same small job, over and over.",
+      "say": "Your team rents a giant A.I. model by the token, to do the same small job over and over."
+    },
+    {
+      "id": "argument",
+      "part": 1,
+      "min": 4.4,
+      "text": "Your CFO wants the bill down. Your engineers want proof it won't break.",
+      "say": "Your C.F.O. wants the bill down. Your engineers want proof it won't break."
+    },
+    {
+      "id": "sizer",
+      "part": 1,
+      "min": 8,
+      "text": "FallForge Mint starts with one question: which model is enough? The sizer suggests the smallest open-weight model that should clear your bar. A one-billion answer says one billion.",
+      "say": "Fall Forge Mint starts with one question. Which model is enough? The sizer suggests the smallest open-weight model that should clear your bar. A one billion answer says one billion."
+    },
+    {
+      "id": "prove",
+      "part": 1,
+      "min": 7,
+      "text": "Mint it from a few of your own examples. Then it tries to beat the base model on examples kept out of its spec — and it can say you lost.",
+      "say": "Mint it from a few of your own examples. Then it tries to beat the base model on examples kept out of its spec, and it can say you lost."
+    },
+    {
+      "id": "receipt",
+      "part": 1,
+      "min": 6,
+      "text": "You get a signed scorecard. The held-out answers weren't in the spec we gave the model. Anyone can re-run it.",
+      "say": "You get a signed scorecard. The held-out answers weren't in the spec we gave the model. Anyone can re-run it."
+    },
+    {
+      "id": "rent",
+      "part": 1,
+      "min": 5.6,
+      "text": "At high use, owning can run six to seventeen times cheaper. When renting wins, it says keep renting.",
+      "say": "At high use, owning can run six to seventeen times cheaper. When renting wins, it says keep renting."
+    },
+    {
+      "id": "own",
+      "part": 1,
+      "min": 3,
+      "text": "One file. Your machine. No meter.",
+      "say": "One file. Your machine. No meter."
+    },
+    {
+      "id": "estate",
+      "part": 2,
+      "min": 4.6,
+      "text": "And Forge is one door into a whole sovereign estate. Seven stages, one pipeline.",
+      "say": "And Forge is one door into a whole sovereign estate. Seven stages, one pipeline."
+    },
+    {
+      "id": "trust",
+      "part": 2,
+      "min": 6,
+      "text": "Gated builds ride a trust rail: it breaks the code to test the tests. It even found a line left-pad's passing tests don't check.",
+      "say": "Gated builds ride a trust rail. It breaks the code to test the tests. It even found a line left pad's passing tests don't check."
+    },
+    {
+      "id": "fallos",
+      "part": 2,
+      "min": 4.6,
+      "text": "In fall-os, you hatch your own assistant and level it into your own operating system.",
+      "say": "In fall O S, you hatch your own assistant and level it into your own operating system."
+    },
+    {
+      "id": "dispatch",
+      "part": 2,
+      "min": 6.4,
+      "text": "The dispatcher routes every job: seven organs run themselves, nine wait for a human key, and eight are honestly marked to-do.",
+      "say": "The dispatcher routes every job. Seven organs run themselves, nine wait for a human key, and eight are honestly marked to do."
+    },
+    {
+      "id": "mesh",
+      "part": 2,
+      "min": 4.6,
+      "text": "Peers connect directly, no server between — and sovereign-foundry ties it together.",
+      "say": "Peers connect directly, with no server between. And sovereign foundry ties it all together."
+    },
+    {
+      "id": "thesis",
+      "part": 2,
+      "min": 7.2,
+      "text": "Models trained on their own output lose the tails. A mesh of real people is the clean signal. Owned, provable AI is the moat.",
+      "say": "Models trained on their own output lose the tails. A mesh of real people is the clean signal. Owned, provable A.I. is the moat."
+    },
+    {
+      "id": "end",
+      "part": 2,
+      "min": 5,
+      "text": "AI Native Solutions. Own it. Prove it.",
+      "say": "A.I. Native Solutions. Own it. Prove it."
+    }
+  ]
+}
