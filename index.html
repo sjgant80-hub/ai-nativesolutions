@@ -67,7 +67,7 @@
         {
           "@type": "Question",
           "name": "How do we know an AI model's test result wasn't rigged?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Every FallForge scorecard is signed and self-hashed, so nobody can edit the numbers unnoticed. It records that the held-out answers were not in the spec given to the model (they are hash-disjoint), and the evaluation is deterministic, so anyone can re-run it in their browser. It is allowed to say the model lost — and it does." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Every FallForge scorecard is signed and self-hashed, so nobody can edit the numbers unnoticed. It records that the held-out answers were not in the spec given to the model (they are hash-disjoint), and the evaluation is deterministic, so anyone can re-run it in their browser — or on a clean GitHub runner with the CI re-run rail, which rebuilds the model, runs the held-out set again and fails the job on any mismatch. It is allowed to say the model lost — and it does." }
         },
         {
           "@type": "Question",
@@ -390,9 +390,9 @@ footer .credit{flex-basis:100%;margin:4px 0 0;font-size:.95em;line-height:1.5}
       post waits behind a human key.</p></a>
   </div>
   <div class="states">
-    <div class="state live"><b>Live now</b><ul><li>FallForge Mint + the sizer</li><li>fall-os, capability-router, sovereign-foundry</li><li>fall-federate /join, meshos</li><li>forgegrowth, witness, kar-foldcycle</li></ul></div>
+    <div class="state live"><b>Live now</b><ul><li>FallForge Mint + the sizer + the CI re-run rail</li><li>fall-os, capability-router, sovereign-foundry</li><li>fall-federate /join, meshos</li><li>forgegrowth, witness, kar-foldcycle</li></ul></div>
     <div class="state human"><b>Proven — needs a human</b><ul><li>fall-federate across two machines: a second person</li><li>witness in an outside team's CI: a willing maintainer</li></ul></div>
-    <div class="state next"><b>Next</b><ul><li>One-click CI re-run of any scorecard</li><li>A marketplace of pre-minted, proven models</li></ul></div>
+    <div class="state next"><b>Next</b><ul><li>A marketplace of pre-minted, proven models</li></ul></div>
   </div>
 </div></section>
 
@@ -481,7 +481,9 @@ footer .credit{flex-basis:100%;margin:4px 0 0;font-size:.95em;line-height:1.5}
     <details><summary>How do we know an AI model's test result wasn't rigged?</summary>
       <p>Every scorecard is signed and self-hashed, so nobody can edit the numbers unnoticed. It records that the
       held-out answers were not in the spec given to the model — they're hash-disjoint — and the evaluation is
-      deterministic, so anyone can re-run it in their browser. It's allowed to say the model lost, and it does.
+      deterministic, so anyone can re-run it in their browser — or on a clean GitHub runner with the
+      <a href="https://sjgant80-hub.github.io/fallforgemint/#rerun">CI re-run rail</a>, which rebuilds the model, runs the held-out set
+      again and fails the job on any mismatch. It's allowed to say the model lost, and it does.
       <a href="https://sjgant80-hub.github.io/fallforgemint/#verify">Check a real one →</a></p></details>
     <details><summary>What happens when AI is trained on AI-generated content?</summary>
       <p>It degrades. Shumailov et al. (Nature, 2024) found that training on model-generated content causes

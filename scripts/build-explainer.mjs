@@ -14,13 +14,18 @@ for (const k of ['forgemint', 'foldcycle', 'router', 'dispatcher', 'leftpad', 'c
 }
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const link = (url, text) => '<a href="' + esc(url) + '">' + esc(text) + '</a>';
-const R = F.realReceipt, W = F.forgemint.witness, D = F.dispatcher, L = F.leftpad, C = F.citations;
+const R = F.realReceipt, W = F.forgemint.witness, D = F.dispatcher, L = F.leftpad, C = F.citations, RR = F.forgemint.rerun;
+// the rail's proof runs must be real GitHub Actions run links — refuse to draw the table from anything else
+const RUN = /^https:\/\/github\.com\/sjgant80-hub\/fallforgemint(?:-rerun)?\/actions\/runs\/[1-9][0-9]{0,19}$/;
+if (!RR || ![RR.genuine, RR.tampered, RR.forged].every((x) => x && RUN.test(x.run) && x.label && x.outcome)) { console.error('REFUSED: facts.json forgemint.rerun needs genuine/tampered/forged, each a real Actions run link'); process.exit(1); }
 const rows = [
-  ['FallForge Mint kernel — mutation gate', W.killed + ' / ' + W.total + ' killed · 0 survivors · score ' + W.score, 'Measured: ' + F.forgemint.how + ' · ' + link(F.forgemint.url, 'live')],
+  ['FallForge Mint kernel — mutation gate', W.killed + ' / ' + W.total + ' killed · ' + W.survivors + ' survivors' + (W.baselined ? ' (' + W.baselined + ' equivalent mutant baselined with a written reason)' : '') + ' · score ' + W.score, 'Measured: ' + F.forgemint.how + ' · ' + link(F.forgemint.url, 'live')],
   ['FallForge Mint kernel — tests', F.forgemint.tests + ' passing', 'Measured: node --test on commit ' + W.commit],
   ['A real signed receipt (review-1b, ' + R.task + ')', R.vsBase.node + '/' + R.probes + ' vs its base ' + R.vsBase.model + ' ' + R.vsBase.base + '/' + R.probes + ' → ' + R.vsBase.verdict, 'Measured: ' + R.how],
   ['…and the same node against a model ~7× its size', R.vsBigger.node + '/' + R.probes + ' vs ' + R.vsBigger.model + ' ' + R.vsBigger.other + '/' + R.probes + ' → ' + R.vsBigger.verdict, 'The receipt is allowed to say it lost — and does'],
   ['The held-out claim on every scorecard', 'narrow-true', esc(F.forgemint.heldOutClaim) + ' It makes no claim that the grader was isolated from the answers.'],
+  ['The CI re-run rail — a shared scorecard, re-run in the open', RR.genuine.label + ' passes · ' + RR.tampered.label + ' and ' + RR.forged.label + ' fail',
+    'Real GitHub Actions runs: ' + [RR.genuine, RR.tampered, RR.forged].map((x) => link(x.run, x.label + ' → ' + x.outcome)).join(' · ') + '. ' + esc(RR.how) + ' · ' + link(RR.url, 'live') + ' · ' + link(RR.template, 'run it yourself')],
   ['Fold-cycle — prefill latency cut', '~' + F.foldcycle.prefillLatencyCutPct + '%', 'Measured (control ' + F.foldcycle.controlSavingPct + '%): ' + F.foldcycle.how + ' · ' + link(F.foldcycle.url, 'live')],
   ['Fold-cycle — embedding calls avoided', '~' + F.foldcycle.embeddingCallsAvoidedPct + '%', 'Measured (capacity-pooling). Balance condition: ' + F.foldcycle.balanceCondition],
   ['capability-router — addresses / gate', F.router.addresses + ' addresses · ' + F.router.witness, 'Measured: ' + F.router.how + ' · ' + link(F.router.url, 'live')],

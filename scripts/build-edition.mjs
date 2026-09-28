@@ -16,7 +16,7 @@ const R = F.realReceipt, W = F.forgemint.witness, D = F.dispatcher, L = F.leftpa
 const fig = (img, alt, cap) => `<figure class="fig"><img src="media/images/${img}" alt="${esc(alt)}" width="1920" height="1080" loading="lazy">${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`;
 
 const rows = [
-  ['FallForge Mint kernel — mutation gate', `${W.killed} / ${W.total} killed · 0 survivors · score ${W.score}`, 'measured, commit ' + W.commit],
+  ['FallForge Mint kernel — mutation gate', `${W.killed} / ${W.total} killed · ${W.survivors} survivors${W.baselined ? ` (${W.baselined} equivalent mutant baselined with a written reason)` : ""} · score ${W.score}`, 'measured, commit ' + W.commit],
   ['A real signed receipt — review-1b vs its base', `${R.vsBase.node}/${R.probes} vs ${R.vsBase.base}/${R.probes} → ${R.vsBase.verdict}`, 'measured, shipped receipt'],
   ['review-1b vs ' + R.vsBigger.model, `${R.vsBigger.node}/${R.probes} vs ${R.vsBigger.other}/${R.probes} → ${R.vsBigger.verdict}`, 'measured — the receipt says it lost'],
   ['Fold-cycle — prefill latency cut', `~${F.foldcycle.prefillLatencyCutPct}% (control ${F.foldcycle.controlSavingPct}%)`, 'measured, kar-foldcycle'],
@@ -44,7 +44,7 @@ ${fig('sizer-ladder.jpg', 'The sizer ladder from about 1 billion to about 200 bi
 <h3>2 · Mint it, then prove it — on examples it never saw</h3>
 <p>A few of your own examples become a private, reproducible model recipe. Some are held out; the minted model and its base both answer them, and the answers are graded deterministically. A real signed receipt from the estate: <b>${esc(R.node)}</b>, a code-review node, scored <b>${R.vsBase.node}/${R.probes}</b> against its base ${esc(R.vsBase.model)}'s ${R.vsBase.base}/${R.probes} — <b>${R.vsBase.verdict}</b>, certified. Against ${esc(R.vsBigger.model)}, a model about seven times its size, it scored ${R.vsBigger.node}/${R.probes} to ${R.vsBigger.other}/${R.probes} — <b>${R.vsBigger.verdict}</b> — and the receipt says so.</p>
 ${fig('scorecard-real-receipt.jpg', 'A real signed receipt: review-1b 9 of 16 versus its base 4 of 16, BEATS; versus qwen2.5 7B 11 of 16, LOSES', '')}
-<div class="box"><b>What the scorecard proves — and what it doesn't.</b> It is signed and self-hashed, so nobody can edit the numbers unnoticed. It names its key class — software Ed25519, which proves the numbers are unedited since signing, not who ran the evaluation. Its held-out claim is narrow and true: <em>“${esc(F.forgemint.heldOutClaim)}”</em> It makes no claim that the grader was isolated from the answers. A one-click CI re-run is next.</div>
+<div class="box"><b>What the scorecard proves — and what it doesn't.</b> It is signed and self-hashed, so nobody can edit the numbers unnoticed. It names its key class — software Ed25519, which proves the numbers are unedited since signing, not who ran the evaluation. Its held-out claim is narrow and true: <em>“${esc(F.forgemint.heldOutClaim)}”</em> It makes no claim that the grader was isolated from the answers. ${esc(F.forgemint.rerun.line)}</div>
 
 <h3>3 · What owning saves — and when it doesn't</h3>
 <p>${esc(C.ownVsRent.claim)} (${esc(C.ownVsRent.source)}.) FallForge Mint's calculator applies this to your own volume — and returns “keep renting” when renting is genuinely the better deal.</p>

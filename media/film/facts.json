@@ -42,15 +42,37 @@
       }
     ],
     "witness": {
-      "killed": 224,
-      "total": 225,
-      "score": 0.996,
+      "killed": 336,
+      "total": 337,
+      "score": 0.997,
       "survivors": 0,
-      "commit": "7a2989b"
+      "baselined": 1,
+      "commit": "6b65c22"
     },
-    "tests": 46,
+    "tests": 62,
     "heldOutClaim": "The held-out answers were not in the spec given to the model (hash-disjoint); anyone can re-run it.",
-    "how": "witness mutation gate + node:test on fallforgemint kernel.mjs at commit 7a2989b, 2026-09-28"
+    "how": "witness mutation gate + node:test on fallforgemint kernel.mjs at commit 6b65c22 (CI gate run 36433175232), 2026-09-28; the one mutant not killed is argued equivalent and baselined with a written reason",
+    "rerun": {
+      "url": "https://sjgant80-hub.github.io/fallforgemint/#rerun",
+      "template": "https://github.com/sjgant80-hub/fallforgemint-rerun",
+      "line": "Anyone can now re-run a shared scorecard on a clean GitHub runner with the CI re-run rail: it recomputes every recorded number, rebuilds the model with Ollama, runs the held-out set again, and fails the job on any mismatch.",
+      "genuine": {
+        "label": "the genuine scorecard",
+        "outcome": "REPRODUCED",
+        "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36432124174"
+      },
+      "tampered": {
+        "label": "an edited hit count",
+        "outcome": "TAMPERED",
+        "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36432136763"
+      },
+      "forged": {
+        "label": "a re-hashed, re-signed forgery",
+        "outcome": "DID NOT REPRODUCE",
+        "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36432148743"
+      },
+      "how": "fallforgemint rerun/proof, 2026-09-28: genuine.json minted in CI (run 36431565425), 4/5 vs base 0/5, REPRODUCED on four runner CPU types and from the template repo; tampered.json and forged.json derived in the open by make-tampered.mjs"
+    }
   },
   "foldcycle": {
     "url": "https://sjgant80-hub.github.io/kar-foldcycle/",
@@ -153,7 +175,7 @@
   },
   "honesty": {
     "live": [
-      "fallforgemint + the sizer",
+      "fallforgemint + the sizer + the CI re-run rail",
       "fall-os",
       "capability-router",
       "fall-federate /join",
@@ -167,7 +189,6 @@
       "witness in one external team's CI (needs a willing maintainer)"
     ],
     "next": [
-      "one-click CI re-run of a scorecard",
       "the marketplace of pre-minted, proven models"
     ]
   },

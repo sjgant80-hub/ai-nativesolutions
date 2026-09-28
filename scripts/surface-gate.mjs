@@ -77,6 +77,15 @@ for (const f of SITE) {
 // 4b · the explainer carries the narrow-true held-out claim, verbatim from the facts file
 if (!visible(read('explainer.html')).includes(F.forgemint.heldOutClaim)) fail('explainer.html', 'the narrow-true held-out claim is missing or reworded');
 
+// 4c · the CI re-run rail: its proof runs are real GitHub Actions run links (never a placeholder), and the explainer links them
+const RR = F.forgemint.rerun, RUN = /^https:\/\/github\.com\/sjgant80-hub\/fallforgemint(?:-rerun)?\/actions\/runs\/[1-9][0-9]{0,19}$/;
+if (!RR) fail('media/film/facts.json', 'forgemint.rerun (the CI re-run rail) is missing');
+else for (const k of ['genuine', 'tampered', 'forged']) {
+  const x = RR[k];
+  if (!x || !RUN.test(x.run)) fail('media/film/facts.json', 'forgemint.rerun.' + k + ' is not a GitHub Actions run link');
+  else if (!read('explainer.html').includes('href="' + x.run + '"')) fail('explainer.html', 'the ' + k + ' re-run proof is not linked');
+}
+
 // 5 · the front door's figures agree with the facts file
 const idx = visible(read('index.html')), R = F.realReceipt, D = F.dispatcher;
 // whole phrases, not bare fractions — "9/16" alone also appears in the second clause, so a changed first score would slip past
