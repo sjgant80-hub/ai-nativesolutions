@@ -1,0 +1,49 @@
+<!doctype html>
+<!-- The source of media/images/scorecard-trust-rail.jpg (the film's "03 · THE RECEIPT" still), rendered at 1920x1080 by
+     scripts/render-stills.mjs. {{HELD_OUT}} is filled from media/film/facts.json; the right panel is a capture of the
+     live FallForge Mint re-run card (media/shots/fallforgemint-rerun.jpg). Regenerate both when the product changes. -->
+<html lang="en"><meta charset="utf-8"><title>03 · The receipt</title>
+<style>
+  :root{--bg:#0b0a0f;--ink:#ece6da;--muted:#8f8a84;--gold:#d9a520;--green:#4cc38a;--red:#f06b61;--panel:#141218}
+  *{box-sizing:border-box}
+  html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink)}
+  body{background:
+    radial-gradient(1100px 520px at 50% -60px, rgba(217,165,32,.13), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.022) 0 1px, transparent 1px 60px), var(--bg);
+    font-family:"Segoe UI",system-ui,sans-serif;position:relative}
+  .brand{position:absolute;left:120px;top:48px;font:700 30px Georgia,serif;letter-spacing:.2px}
+  .brand b{color:var(--gold);font-weight:400;margin-right:18px}
+  .part{position:absolute;right:120px;top:56px;font-size:20px;color:#a39d95;letter-spacing:.6px}
+  .eyebrow{position:absolute;left:120px;top:153px;font-size:22px;color:var(--gold);letter-spacing:.4px;font-weight:500}
+  h1{position:absolute;left:118px;top:188px;margin:0;font:400 62px Georgia,serif;letter-spacing:-.4px}
+  .card{position:absolute;left:120px;top:300px;width:900px;height:540px;border:1px solid rgba(217,165,32,.28);border-radius:18px;background:rgba(20,18,24,.92);padding:34px 50px}
+  .row{display:grid;grid-template-columns:210px 1fr;font:26px/54px Consolas,"Cascadia Mono",monospace}
+  .row .k{color:#b9b3aa}.row .v{color:var(--ink)}.row .g{color:var(--green)}
+  .quote{margin-top:24px;font:italic 29px/40px Georgia,serif;color:var(--gold)}
+  .shot{position:absolute;left:1080px;top:300px;width:720px;height:540px;border:2px solid rgba(217,165,32,.75);border-radius:18px;overflow:hidden;background:#0d0c11}
+  .shot img{position:absolute;width:1040px;left:-170px;top:-36px}
+  .pill{position:absolute;border-radius:40px;background:#16131b;font-size:26px;padding:7px 28px;white-space:nowrap}
+  .live{left:1102px;top:277px;border:2px solid var(--gold);color:var(--gold)}
+  .bad{left:1150px;top:748px;border:2px solid var(--red);color:var(--red);background:rgba(22,19,27,.96)}
+  .foot{position:absolute;left:120px;top:872px;font-size:22px;color:var(--muted)}
+  .foot b{color:#c9c3b9;font-weight:500}
+</style>
+<div class="brand"><b>◇</b>AI Native Solutions</div>
+<div class="part">PART ONE · FALLFORGE MINT</div>
+<div class="eyebrow">03 · THE RECEIPT</div>
+<h1>A scorecard anyone can check.</h1>
+<div class="card">
+  <div class="row"><span class="k">kind</span><span class="v">fallforgemint-scorecard</span></div>
+  <div class="row"><span class="k">verdict</span><span class="g">BEATS &nbsp;|&nbsp; LOSES &nbsp;|&nbsp; TIES</span></div>
+  <div class="row"><span class="k">keyClass</span><span class="v">software-ed25519</span></div>
+  <div class="row"><span class="k">held-out</span><span class="g">hash-disjoint ✓</span></div>
+  <div class="row"><span class="k">rerun</span><span class="g">a real CI run — link bound ✓</span></div>
+  <div class="row"><span class="k">hash</span><span class="v">sha-256 over every field above</span></div>
+  <div class="quote">“{{HELD_OUT}}”</div>
+</div>
+<div class="shot"><img src="../../media/shots/fallforgemint-rerun.jpg" alt=""></div>
+<div class="pill live">Live · re-run it on a clean GitHub runner</div>
+<div class="pill bad">✗ TAMPERED — a borrowed CI link fails</div>
+<div class="foot">A software key proves the numbers are unedited — not who ran it. &nbsp;<b>CI re-run: live</b> — the run it names must have made this exact scorecard.</div>
+</html>
