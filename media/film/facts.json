@@ -42,36 +42,36 @@
       }
     ],
     "witness": {
-      "killed": 336,
-      "total": 337,
+      "killed": 376,
+      "total": 377,
       "score": 0.997,
       "survivors": 0,
       "baselined": 1,
-      "commit": "6b65c22"
+      "commit": "a8923da"
     },
-    "tests": 62,
+    "tests": 71,
     "heldOutClaim": "The held-out answers were not in the spec given to the model (hash-disjoint); anyone can re-run it.",
-    "how": "witness mutation gate + node:test on fallforgemint kernel.mjs at commit 6b65c22 (CI gate run 36433175232), 2026-09-28; the one mutant not killed is argued equivalent and baselined with a written reason",
+    "how": "witness mutation gate + node:test on fallforgemint kernel.mjs at commit a8923da (CI gate run 36440631318), 2026-09-28; the one mutant not killed is argued equivalent and baselined with a written reason",
     "rerun": {
       "url": "https://sjgant80-hub.github.io/fallforgemint/#rerun",
       "template": "https://github.com/sjgant80-hub/fallforgemint-rerun",
-      "line": "Anyone can now re-run a shared scorecard on a clean GitHub runner with the CI re-run rail: it recomputes every recorded number, rebuilds the model with Ollama, runs the held-out set again, and fails the job on any mismatch.",
+      "line": "Anyone can now re-run a shared scorecard on a clean GitHub runner with the CI re-run rail: it recomputes every recorded number, checks that the CI run a scorecard names really made that exact scorecard, rebuilds the model with Ollama, runs the held-out set again, and fails the job on any mismatch.",
       "genuine": {
         "label": "the genuine scorecard",
-        "outcome": "REPRODUCED",
-        "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36432124174"
+        "outcome": "link BOUND, REPRODUCED",
+        "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36439560027"
       },
       "tampered": {
         "label": "an edited hit count",
         "outcome": "TAMPERED",
-        "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36432136763"
+        "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36439601785"
       },
       "forged": {
-        "label": "a re-hashed, re-signed forgery",
-        "outcome": "DID NOT REPRODUCE",
-        "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36432148743"
+        "label": "a re-hashed, re-signed forgery carrying the genuine run's link",
+        "outcome": "TAMPERED on the link",
+        "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/36439573329"
       },
-      "how": "fallforgemint rerun/proof, 2026-09-28: genuine.json minted in CI (run 36431565425), 4/5 vs base 0/5, REPRODUCED on four runner CPU types and from the template repo; tampered.json and forged.json derived in the open by make-tampered.mjs"
+      "how": "fallforgemint rerun/proof, 2026-09-28: genuine.json minted in CI (run 36431565425), 4/5 vs base 0/5; the forgery recomputes every number but the run it names made a different scorecard; tampered.json and forged.json derived in the open by make-tampered.mjs. GitHub keeps a run's upload about 90 days; after that the rail confirms only that the named run was the rail and was running when the scorecard was stamped, and says so"
     }
   },
   "foldcycle": {
