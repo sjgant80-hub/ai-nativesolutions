@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0a0f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230b0a0f%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2720%27 fill=%27%23d4a017%27 text-anchor=%27middle%27%3E%E2%97%8A%3C/text%3E%3C/svg%3E">
+<title>AI Native Solutions — software your firm owns</title>
+<meta name="description" content="AI-first software for businesses, built to be owned: runs on your machines, your data never leaves, and the machinery is proven before it ships. Walk the live builds before we ever speak.">
+<meta property="og:title" content="AI Native Solutions — software your firm owns">
+<meta property="og:description" content="Own it once instead of renting it forever. Walk a 100-person AI-first company running live in your browser — then talk to us.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ai-nativesolutions.com">
+<meta property="og:image" content="https://www.ai-nativesolutions.com/media/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.ai-nativesolutions.com/media/og-card.jpg">
+<link rel="canonical" href="https://www.ai-nativesolutions.com/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.ai-nativesolutions.com/#org",
+      "name": "AI Native Solutions",
+      "url": "https://www.ai-nativesolutions.com/",
+      "description": "AI-first business software you own: it runs on your machines, your data never leaves your control, and the machinery is proven before it ships.",
+      "founder": { "@type": "Person", "name": "Simon Gant" },
+      "sameAs": ["https://github.com/sjgant80-hub"],
+      "email": "ainativesolutions@gmail.com",
+      "areaServed": "GB",
+      "knowsAbout": ["Sovereign AI", "On-premise AI", "Provable AI", "AI audit trail", "EU AI Act evidence", "Owned software", "Client-side AI", "AI confidentiality", "Sovereign agent architecture", "Peer-to-peer AI", "WebGPU compute", "Local-first cryptography"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.ai-nativesolutions.com/#site",
+      "url": "https://www.ai-nativesolutions.com/",
+      "name": "AI Native Solutions",
+      "publisher": { "@id": "https://www.ai-nativesolutions.com/#org" }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.ai-nativesolutions.com/#film",
+      "name": "Own it. Prove it. — FallForge Mint and the sovereign estate",
+      "description": "A 90-second film: FallForge Mint suggests the smallest open-weight model that should clear your bar, mints it from your own examples, proves it on held-out examples that weren't in its spec with a signed scorecard that can say you lost, and shows when owning beats renting — then the sovereign estate and how it connects.",
+      "thumbnailUrl": "https://www.ai-nativesolutions.com/media/film/poster.jpg",
+      "uploadDate": "2026-09-28",
+      "duration": "PT1M30S",
+      "contentUrl": "https://www.ai-nativesolutions.com/media/film/own-it-prove-it-90s.mp4",
+      "embedUrl": "https://www.ai-nativesolutions.com/explainer.html#film",
+      "publisher": { "@id": "https://www.ai-nativesolutions.com/#org" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.ai-nativesolutions.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which open-weight AI model does my business actually need?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Usually a smaller one than you are renting. Describe the job — the kind of work, the shape of the answer, how strict it must be and where it will run — and the FallForge Mint sizer recommends the smallest open-weight model that should clear the bar, from about 1 billion to about 200 billion parameters, with every factor shown. It is a starting point you then prove on your own data, not a benchmark." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it cheaper to own an AI model than to rent one?",
+          "acceptedAnswer": { "@type": "Answer", "text": "At high use, usually. In Lenovo's 2026 total-cost-of-ownership study, owned inference ran around 6 times cheaper per million tokens than cloud GPU instances and around 17 times cheaper than a hosted reasoning-model API. At low use, renting can win. The own-vs-rent calculator tells you which side you are on — including when to keep renting." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do we know an AI model's test result wasn't rigged?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Every FallForge scorecard is signed and self-hashed, so nobody can edit the numbers unnoticed. It records that the held-out answers were not in the spec given to the model (they are hash-disjoint), and the evaluation is deterministic, so anyone can re-run it in their browser — or on a clean GitHub runner with the CI re-run rail, which rebuilds the model, runs the held-out set again and fails the job on any mismatch. It is allowed to say the model lost — and it does." }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens when AI is trained on AI-generated content?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It degrades. Shumailov et al. (Nature, 2024) found that training on model-generated content causes irreversible defects in which the tails of the original data distribution disappear. Our view is that people doing real work on their own nodes are exactly those tails — the signal worth keeping in owned, provable models." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are AI chatbot conversations privileged in court?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. In United States v. Heppner (S.D.N.Y., 2026) a US federal court ruled that a chief executive's conversations with a public AI assistant were protected by neither attorney-client privilege nor the work-product doctrine, and the files became evidence. Anything typed into a rented chatbot can be discoverable and sits on the vendor's servers. AI that runs inside your own perimeter avoids that third-party disclosure. This is information, not legal advice." }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the EU AI Act require, and when?",
+          "acceptedAnswer": { "@type": "Answer", "text": "From 2 August 2026, providers of higher-risk AI systems must keep automatic logs and evidence of what their systems did, among other obligations. Owned, on-premise AI with a signed, tamper-evident audit trail produces that record by design — we build the audit trail in from the start." }
+        },
+        {
+          "@type": "Question",
+          "name": "Should a business own or rent its AI software?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Own it. Rented AI means a monthly bill forever, your data on someone else's servers, and a tool the vendor can price up or switch off. Owned software runs on your machines, keeps your data inside your walls, and is yours once — the routine work runs itself while a named person still holds every money, legal and judgment decision." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can AI software keep client data on-premise and offline?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The tools are single files that run entirely in your browser, keep data in local storage, and work offline after first load — nothing is sent to a server. That suits firms whose client data cannot legally live on someone else's infrastructure, such as claims practices, accountants, brokers, letting agents and adviser firms." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you prove an AI system actually works?",
+          "acceptedAnswer": { "@type": "Answer", "text": "With a signed, deterministic proof — a mutation-tested gate and a hash-chained receipt — never one AI grading another. Every build runs live before we speak and prints its own limitations on the page. If a receipt doesn't show the model beats your baseline, you don't pay." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{--bg:#0b0a0f;--bg2:#100d15;--card:#141218;--ink:#e2d9c8;--gold:#d4a017;--gold2:#ffb648;--line:#2b251f;--soft:#8f8778}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Georgia,"Iowan Old Style",serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:0 22px}
+a{color:var(--gold)}
+
+header{padding:20px 0;border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:baseline;gap:22px;flex-wrap:wrap}
+.mark{font-weight:bold;font-size:1.05em;letter-spacing:.02em}
+.mark span{color:var(--gold)}
+.nav a{color:var(--soft);text-decoration:none;font-size:.9em}
+.nav a:hover{color:var(--gold)}
+.nav .cta{margin-left:auto;color:var(--gold)}
+
+.hero{padding:88px 0 60px;background:radial-gradient(60% 45% at 50% 0%,rgba(212,160,23,.09),transparent 70%)}
+.hero h1{font-size:clamp(2rem,5.4vw,3.4rem);line-height:1.12;margin:0 0 18px;letter-spacing:-.015em}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:1.14em;max-width:620px;color:var(--ink);margin:0 0 30px}
+.hero .sub{color:var(--soft);font-size:.98em}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;padding:13px 24px;border-radius:9px;text-decoration:none;font-size:1em;transition:.15s}
+.btn.solid{background:linear-gradient(96deg,var(--gold),var(--gold2));color:#161006;font-weight:bold}
+.btn.solid:hover{filter:brightness(1.08)}
+.btn.ghost{border:1px solid var(--line);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--gold)}
+
+section{padding:58px 0;border-top:1px solid var(--line)}
+h2{font-size:1.5rem;color:var(--gold);margin:0 0 8px;letter-spacing:-.01em}
+.lede{color:var(--soft);max-width:640px;margin:0 0 26px}
+
+.proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.pcard{background:linear-gradient(180deg,var(--bg2),var(--card));border:1px solid var(--line);border-radius:12px;padding:18px 20px;transition:border-color .15s;display:block;text-decoration:none;color:var(--ink)}
+.pcard:hover{border-color:var(--gold)}
+.pcard.nolink{cursor:default}
+.pcard.nolink:hover{border-color:var(--line)}
+.pcard b{color:var(--gold);font-size:1.04em}
+.pcard p{margin:7px 0 0;font-size:.9em;color:var(--soft)}
+
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.tier{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+.tier h3{margin:0 0 6px;font-size:1.06em;color:var(--gold)}
+.tier p{font-size:.92em;color:var(--soft);margin:0 0 12px}
+.tier a{font-size:.92em}
+
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px}
+.rule{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 17px;font-size:.92em}
+.rule b{color:var(--gold);display:block;margin-bottom:4px}
+
+.faq{display:grid;gap:12px;margin-top:8px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:2px 18px}
+.faq summary{cursor:pointer;padding:15px 0;font-weight:bold;color:var(--gold);list-style:none;font-size:1.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";float:right;color:var(--soft);font-weight:normal}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 16px;color:var(--soft);font-size:.94em}
+.faq details p a{color:var(--gold)}
+
+.estate-door{display:block;background:linear-gradient(120deg,rgba(212,160,23,.1),rgba(212,160,23,.03));border:1px solid var(--gold);border-radius:14px;padding:28px 30px;text-decoration:none;color:var(--ink);transition:.15s}
+.estate-door:hover{background:linear-gradient(120deg,rgba(212,160,23,.16),rgba(212,160,23,.05))}
+.estate-door b{font-size:1.35em;color:var(--gold)}
+.estate-door p{margin:8px 0 0;color:var(--soft)}
+.estate-door .num{color:var(--ink);font-variant-numeric:tabular-nums}
+
+.contact{text-align:center;padding:70px 0}
+.contact h2{margin-bottom:14px}
+.contact p{color:var(--soft);max-width:520px;margin:0 auto 26px}
+
+.filmbox{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.filmbox video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+.fig{margin:22px 0 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.fig img{display:block;width:100%;height:auto}
+.src{color:var(--soft);font-size:.9em;font-style:italic}
+.states{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:18px}
+.state{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 17px;font-size:.92em}
+.state b{display:block;margin-bottom:6px}
+.state ul{margin:0;padding-left:18px;color:var(--soft)}
+.state.live{border-color:rgba(95,191,127,.5)}.state.live b{color:#5fbf7f}
+.state.human{border-color:rgba(227,164,59,.55)}.state.human b{color:#e3a43b}
+.state.next b{color:var(--soft)}
+
+footer{border-top:1px solid var(--line);padding:26px 0 46px;color:var(--soft);font-size:.82em}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--soft)}
+footer .k{margin-left:auto}
+footer .credit{flex-basis:100%;margin:4px 0 0;font-size:.95em;line-height:1.5}
+@media(prefers-reduced-motion:no-preference){
+  .hero h1,.hero p,.btns{animation:rise .6s ease both}
+  .hero p{animation-delay:.08s}.btns{animation-delay:.16s}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <span class="mark">AI <span>Native</span> Solutions</span>
+  <a href="#film">The film</a>
+  <a href="#proof">See it running</a>
+  <a href="#why">Why own it now</a>
+  <a href="#forge">Own a model</a>
+  <a href="#connects">How it connects</a>
+  <a href="#sovereign">The architecture</a>
+  <a href="#offer">What we build</a>
+  <a href="#how">How we work</a>
+  <a href="os.html">We run ourselves</a>
+  <a href="konomi.html">What is Konomi?</a>
+  <a href="estate.html">The estate</a>
+  <a class="cta" href="mailto:ainativesolutions@gmail.com">Talk to us</a>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <h1>Software your firm <em>owns</em>.<br>Built AI-first. Proven before it ships.</h1>
+  <p>We build business software the way it should have been built all along: it runs on your
+  machines, your data never leaves your control, the routine work runs itself — and you pay
+  once, instead of renting forever.</p>
+  <p class="sub">Don't take our word for any of it. Everything we make runs live, in the open,
+  before we ever speak.</p>
+  <div class="btns">
+    <a class="btn solid" href="https://sjgant80-hub.github.io/fallcorp-demo/">Watch a 100-person firm run →</a>
+    <a class="btn ghost" href="#film">▶ Watch the 90-second film</a>
+    <a class="btn ghost" href="estate.html">Enter the estate</a>
+  </div>
+</div></div>
+
+<section id="film"><div class="wrap">
+  <h2>Ninety seconds: own it, prove it</h2>
+  <p class="lede">FallForge Mint sizes, mints and proves a private AI model on your own data — then the whole
+  estate it opens into, and how it connects. Every product on screen is the live build; every number is
+  measured or cited.</p>
+  <div class="filmbox">
+    <video controls preload="metadata" playsinline poster="media/film/poster.jpg" aria-label="Own it. Prove it. — a 90-second film about FallForge Mint and the sovereign estate">
+      <source src="media/film/own-it-prove-it-90s.mp4?v=2026-09-28-rail" type="video/mp4">
+      <track kind="captions" srclang="en" label="English" src="media/film/own-it-prove-it-90s.vtt?v=2026-09-28-rail" default>
+      <a href="media/film/own-it-prove-it-90s.mp4?v=2026-09-28-rail">Download the film (MP4)</a>
+    </video>
+  </div>
+  <p class="lede" style="margin-top:14px"><a href="explainer.html">The brochure, the images, the transcript and a source for every number →</a></p>
+</div></section>
+
+<section id="proof"><div class="wrap">
+  <h2>See it running first</h2>
+  <p class="lede">Most vendors show you slides. We show you working systems — and every demo
+  prints its own current limitations on the page, because a demo that hides where it's weak
+  shouldn't be trusted where it's strong.</p>
+  <div class="proof">
+    <a class="pcard" href="https://sjgant80-hub.github.io/fallcorp/"><b>The company, designed</b>
+      <p>A 100-person claims firm rebuilt AI-first, seat by seat: 90 automated seats, 10 humans
+      holding exactly the doors that must be human — money, legal, judgment, client trust.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/fallcorp-demo/"><b>The company, running</b>
+      <p>A fictional working day playing live in your browser: deadlines computed, invoices that
+      reconcile to themselves, settlements split to the exact penny, double-bookings refused.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/fallforce/verticals.html"><b>The regulated shelf</b>
+      <p>Tools for firms whose client data cannot legally live on someone else's servers —
+      claims practices, accountants, brokers, letting agents, adviser firms.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/fallforce/stack.html"><b>The owned stack</b>
+      <p>CRM, invoicing, scheduling, documents, e-sign, automation — the subscriptions your
+      business rents today, rebuilt as software you own once.</p></a>
+  </div>
+</div></section>
+
+<section id="why"><div class="wrap">
+  <h2>Why own it — and why now</h2>
+  <p class="lede">Two things changed in 2026 that turned "own your software" from a preference into a
+  liability question. Both point the same way: the AI your firm relies on belongs on your machines — and
+  it should be able to prove what it did. Every claim below opens a working build you can walk.</p>
+  <div class="proof">
+    <a class="pcard" href="https://sjgant80-hub.github.io/perimeter/"><b>Your prompts are discoverable</b>
+      <p>In <em>United States v. Heppner</em> (2026) a federal court ruled a chief executive's conversations
+      with a public AI assistant were not privileged — and the government kept the files. Anything your team
+      types into a rented chatbot can become evidence, sit on a vendor's servers, and train its next model.
+      Software that runs inside your walls can't.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/agent-proof/"><b>Regulation now wants a receipt</b>
+      <p>From 2 August 2026 the EU AI Act requires higher-risk AI to keep automatic logs and evidence of what
+      it did. We build that record in from the start: a signed, tamper-evident audit trail of every decision,
+      checked deterministically — never one AI grading another. Proof, not a promise.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/mint-a-node/"><b>Own the model, not the meter</b>
+      <p>Bring one repetitive task your team feeds an AI. We mint you an owned model that runs on your own
+      hardware and comes with a signed receipt proving it beats your current baseline — and if the receipt
+      doesn't say it beats it, you don't pay.</p></a>
+  </div>
+</div></section>
+
+<section id="forge"><div class="wrap">
+  <h2>Own the AI you're renting — sized, minted, proven</h2>
+  <p class="lede">For the engineering lead tired of arguing with the finance director about the AI bill. Bring one
+  repetitive job and a few real examples; walk out owning the smallest model that does it — with a receipt that
+  could have said it failed.</p>
+  <div class="how">
+    <div class="rule"><b>1 · Size it.</b> The sizer suggests the smallest open-weight model that should clear your bar — from
+    ~1B to ~200B, across Llama, Qwen, Phi, Gemma and Mistral — and shows every factor. A 1B answer says 1B. It never
+    upsells.</div>
+    <div class="rule"><b>2 · Mint it.</b> A few of your own examples become a private model recipe — deterministic,
+    reproducible, and yours.</div>
+    <div class="rule"><b>3 · Prove it.</b> It races the base model on held-out examples that weren't in its spec. A real signed
+    receipt: <em>review-1b</em> scored 9/16 against its base's 4/16 — and 9/16 against a model ~7× its size, which
+    scored 11/16. The receipt said so.</div>
+    <div class="rule"><b>4 · Own it.</b> One file on your own machine, offline, no meter. The scorecard goes with it:
+    the held-out answers weren't in the spec the model was given, and anyone can re-run it.</div>
+  </div>
+  <figure class="fig"><img src="media/images/sizer-ladder.jpg" alt="The sizer ladder from about 1 billion to about 200 billion parameters, recommending Llama 3.2 1B for a short-label classification job" loading="lazy" width="1920" height="1080"></figure>
+  <p class="lede" style="margin-top:18px">Owning isn't always cheaper, and it says so. At high use, owned inference ran
+  ~6× cheaper than cloud GPU instances and ~17× cheaper than a hosted reasoning-model API; at low use, renting can
+  win — and the calculator tells you which side you're on. <span class="src">Source: Lenovo Press LP2368,
+  On-Premise vs Cloud: Generative AI TCO (2026 Edition).</span></p>
+  <div class="btns">
+    <a class="btn solid" href="https://sjgant80-hub.github.io/fallforgemint/#sizer">Size your model →</a>
+    <a class="btn ghost" href="https://sjgant80-hub.github.io/fallforgemint/#verify">Re-check a real receipt</a>
+  </div>
+</div></section>
+
+<section id="sovereign"><div class="wrap">
+  <h2>The architecture underneath</h2>
+  <p class="lede">Every build sits on one architecture: software that carries its own identity, its own
+  limits, and its own proof — so it runs on your machines, offline, with nothing in the middle to breach.
+  These are the parts. Each one is a working build you can open, and none of it depends on a cloud account.</p>
+  <div class="proof">
+    <a class="pcard" href="https://sjgant80-hub.github.io/the-wallet/"><b>Identity you generate, not rent</b>
+      <p>An Ed25519 keypair created on the device itself — no identity provider, no password, no login for
+      anyone to breach. Cloning the software makes a separate tenant; there is no shared account to contaminate.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/openkonomi/"><b>Agents that cannot overrun</b>
+      <p>Every action is checked against a capability and a budget before it runs. An agent cannot act
+      outside its grant or spend past its limit — refused by construction, not asked nicely by a policy.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/perimeter/"><b>Sealed, and inside your walls</b>
+      <p>Anything that leaves is encrypted first — AES-256-GCM, in the browser. And a prompt to a public AI
+      tool isn't privileged; it can become an exhibit. Software in your own perimeter never sends it.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/meshos/"><b>Peer-to-peer, no server between</b>
+      <p>Sites sync directly over an encrypted WebRTC mesh — no central server to breach, meter, subpoena or
+      switch off. Proven relaying across three separate nodes.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/agent-proof/"><b>A receipt that can say FAILS</b>
+      <p>Every action appends to a signed, tamper-evident hash-chain, checked deterministically — never one
+      AI grading another. Alter one entry and verification catches exactly which.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/witness/"><b>Rules the agent can't rewrite</b>
+      <p>The core limits are baked into the code and mutation-tested before anything ships — a prompt
+      injection or a runaway agent can't move them.</p></a>
+    <div class="pcard nolink"><b>Distributed browser compute</b>
+      <p>Heavy parallel work spread across ordinary browsers over WebGPU and coordinated peer-to-peer over
+      WebRTC — a compute swarm with no cluster to rent.</p></div>
+  </div>
+  <div style="margin-top:18px">
+    <a class="estate-door" href="https://sjgant80-hub.github.io/sovereign-demo/">
+      <b>Walk the whole architecture, live →</b>
+      <p>An example company runs one real action through the stack, in your own browser: an identity it
+      generates, a grant it can't exceed, a payload it seals, a peer it syncs to with no server, and a
+      receipt you can <em>try to forge</em> and watch get rejected — with a live counter proving nothing
+      left the page. Real cryptography, not a slideshow.</p>
+    </a>
+    <a class="estate-door" href="https://sjgant80-hub.github.io/fallkit/" style="margin-top:12px">
+      <b>Map your own stack →</b>
+      <p>Paste the tools your firm already pays for and see, in ten seconds, which you could own and run
+      yourself, which are a partial fit, and where there's honestly no equivalent yet. Names only —
+      nothing leaves your browser, and there's no price attached.</p>
+    </a>
+  </div>
+  <p class="lede" style="margin-top:22px">Start from your own stack map above — then it becomes a custom build,
+  scoped to your process and yours once it ships.
+  <a href="mailto:ainativesolutions@gmail.com?subject=Sovereign%20architecture%20—%20custom%20build">Talk to us about a custom build →</a></p>
+</div></section>
+
+<section id="connects"><div class="wrap">
+  <h2>How it all connects</h2>
+  <p class="lede">Every job moves through seven stages — Prove, Own, Shape, Carry, Remember, Run, Connect — and one
+  front door ties the live builds together. Each card opens the real thing.</p>
+  <figure class="fig"><img src="media/images/estate-map.jpg" alt="The estate map: sovereign-foundry at the centre, with fallforgemint, fall-os, capability-router, fall-federate, forgegrowth, meshos, witness and kar-foldcycle around it, over the seven stages" loading="lazy" width="1920" height="1080"></figure>
+  <div class="proof" style="margin-top:18px">
+    <a class="pcard" href="https://sjgant80-hub.github.io/sovereign-foundry/"><b>sovereign-foundry — the front door</b>
+      <p>The seven stages, each one a live door. Composed, not merged — and contribution is recorded on a signed,
+      conserved ledger with no money out.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/fallforgemint/"><b>FallForge Mint + the sizer — own</b>
+      <p>Size, mint and prove a private model on your own data, with a scorecard anyone can re-run.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/fall-os/"><b>fall-os — your own operating system</b>
+      <p>Hatch an empty Didy — your own assistant — and level it up: memory, recall, the forge, the mint, the
+      dreaming, and finally the mesh. Your models, on your machine.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/capability-router/"><b>capability-router — route every job</b>
+      <p>127 capability addresses and a coverage gate, so no job falls through a silent gap. The dispatcher puts
+      every step in one of three honest states: 7 run themselves, 9 wait for a human key by design, 8 are marked
+      to-do.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/fall-federate/join/"><b>fall-federate /join — connect</b>
+      <p>Two parties join peer-to-peer over a real WebRTC link, with no server between. The mechanism is proven; the
+      next step is a second person on a second machine.</p></a>
+    <a class="pcard" href="https://sjgant80-hub.github.io/forgegrowth/"><b>forgegrowth — growth that can't lie</b>
+      <p>Turns a real scorecard into launch copy: every number cites the receipt or is refused, and every external
+      post waits behind a human key.</p></a>
+  </div>
+  <div class="states">
+    <div class="state live"><b>Live now</b><ul><li>FallForge Mint (<a href="https://github.com/sjgant80-hub/fallforgemint/releases/tag/v1.0.0">launched, v1.0.0</a>) + the sizer + the CI re-run rail</li><li>fall-os, capability-router, sovereign-foundry</li><li>fall-federate /join, meshos</li><li>forgegrowth, witness, kar-foldcycle</li></ul></div>
+    <div class="state human"><b>Proven — needs a human</b><ul><li>fall-federate across two machines: a second person</li><li>witness in an outside team's CI: a willing maintainer</li></ul></div>
+    <div class="state next"><b>Next</b><ul><li>A marketplace of pre-minted, proven models</li></ul></div>
+  </div>
+</div></section>
+
+<section id="thesis"><div class="wrap">
+  <h2>Why small, owned, provable AI wins</h2>
+  <p class="lede">Four reasons. Three are sourced; the fourth is our thesis, and labelled as one.</p>
+  <div class="proof">
+    <div class="pcard nolink"><b>Small models are enough for most agent work</b>
+      <p>Small language models are “sufficiently powerful, inherently more suitable, and necessarily more economical
+      for many invocations in agentic systems.” <span class="src">NVIDIA Research, arXiv:2506.02153 (2025).</span></p></div>
+    <div class="pcard nolink"><b>Owning is cheaper — when you use it</b>
+      <p>At high utilisation, owned inference ran ~6–17× cheaper per million tokens than renting; at low use, renting
+      wins. We show you which side you're on. <span class="src">Lenovo Press LP2368 (2026).</span></p></div>
+    <div class="pcard nolink"><b>Models fed on their own output lose the tails</b>
+      <p>Training on model-generated content causes irreversible defects “where tails of the original content
+      distribution disappear.” <span class="src">Shumailov et al., Nature 2024 (arXiv:2305.17493).</span></p></div>
+    <div class="pcard nolink"><b>Our thesis: the mesh of tails is the clean signal</b>
+      <p>Every person doing real work on their own node is a tail a monolith averages away. Keep that signal in owned,
+      provable models and the frontier ends up needing what the mesh knows. A receipt that can fail — re-runnable by
+      anyone, with no AI grading another AI — is how anyone trusts it.</p></div>
+  </div>
+</div></section>
+
+<section id="offer"><div class="wrap">
+  <h2>What we build</h2>
+  <p class="lede">One ladder, from a single proven model to a firm that mostly runs itself. Every rung ships with
+  its proof.</p>
+  <div class="tiers">
+    <div class="tier"><h3>Mint — own one proven model</h3>
+      <p>Size it, mint it and prove it yourself with FallForge Mint, or have us mint and prove it against your own
+      baseline. If the receipt doesn't show it beats your baseline, you don't pay.</p>
+      <a href="https://sjgant80-hub.github.io/fallforgemint/">Start with the sizer →</a></div>
+    <div class="tier"><h3>Foundry — your own sovereign stack</h3>
+      <p>Owned tools and the whole stack your business rents today, replaced line by line and installed on your own
+      hardware — your minted models, the signed audit ledger and the mutation gate, with a named person on every
+      money, legal and judgment door.</p>
+      <a href="https://sjgant80-hub.github.io/fallforce/stack.html">See the stack maths →</a></div>
+    <div class="tier"><h3>Sovereign Care — we keep it true</h3>
+      <p>Your firm, rebuilt AI-first and then kept sharp: a discovery that produces your real numbers, a configured
+      build validated side by side against your process, and we re-prove and re-mint as your work changes.</p>
+      <a href="mailto:ainativesolutions@gmail.com?subject=Discovery%20call">Start a discovery conversation →</a></div>
+  </div>
+  <div class="tiers" style="margin-top:14px">
+    <div class="tier"><h3>Partners</h3>
+      <p>Agencies and consultancies can put their own brand on the proof rail — minting and proving models for their
+      clients, with the same receipts underneath.</p>
+      <a href="mailto:ainativesolutions@gmail.com?subject=Partnering">Talk about partnering →</a></div>
+    <div class="tier"><h3>Next: a marketplace of proven models</h3>
+      <p>Pre-minted, pre-proven models you can own outright — each carrying its own verifiable proof, with the people
+      who built it credited along the way. Not open yet; we'll say so plainly when it is.</p>
+      <a href="estate.html">Browse the live builds →</a></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <h2>How we work</h2>
+  <p class="lede">Four rules, kept in the software itself — not in a policy document.</p>
+  <div class="how">
+    <div class="rule"><b>Machines run the routine.</b> Intake, drafting, scheduling, tracking,
+    totalling — the work that fills a firm's day runs continuously and automatically.</div>
+    <div class="rule"><b>Humans hold the doors.</b> Moving money, signing legal instruments,
+    judgment calls, and client trust always stop and wait for a named person. Nothing signs itself.</div>
+    <div class="rule"><b>The maths is proven, not promised.</b> The engines that compute deadlines
+    and money are tested to a standard most software never faces — and where they have limits,
+    the limits are stated on the page.</div>
+    <div class="rule"><b>You own it.</b> Source in your hands, running on your infrastructure.
+    It cannot be price-raised, discontinued, or switched off by anyone but you.</div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>Questions firms actually ask</h2>
+  <p class="lede">Plain answers, with the facts and the live builds behind them.</p>
+  <div class="faq">
+    <details open><summary>Which open-weight AI model does my business actually need?</summary>
+      <p>Usually a smaller one than you're renting. Describe the job — the kind of work, the shape of the answer, how
+      strict it must be and where it will run — and the sizer recommends the smallest open-weight model that should
+      clear the bar, from about 1 billion to about 200 billion parameters, with every factor shown. It's a starting
+      point you then prove on your own data, not a benchmark.
+      <a href="https://sjgant80-hub.github.io/fallforgemint/#sizer">Size yours →</a></p></details>
+    <details><summary>Is it cheaper to own an AI model than to rent one?</summary>
+      <p>At high use, usually. In Lenovo's 2026 total-cost-of-ownership study, owned inference ran around 6× cheaper per
+      million tokens than cloud GPU instances and around 17× cheaper than a hosted reasoning-model API. At low use,
+      renting can win. The own-vs-rent calculator tells you which side you're on — including when to keep renting.
+      <a href="https://sjgant80-hub.github.io/fallforgemint/#calc">Run your numbers →</a></p></details>
+    <details><summary>How do we know an AI model's test result wasn't rigged?</summary>
+      <p>Every scorecard is signed and self-hashed, so nobody can edit the numbers unnoticed. It records that the
+      held-out answers were not in the spec given to the model — they're hash-disjoint — and the evaluation is
+      deterministic, so anyone can re-run it in their browser — or on a clean GitHub runner with the
+      <a href="https://sjgant80-hub.github.io/fallforgemint/#rerun">CI re-run rail</a>, which rebuilds the model, runs the held-out set
+      again and fails the job on any mismatch. It's allowed to say the model lost, and it does.
+      <a href="https://sjgant80-hub.github.io/fallforgemint/#verify">Check a real one →</a></p></details>
+    <details><summary>What happens when AI is trained on AI-generated content?</summary>
+      <p>It degrades. Shumailov et al. (Nature, 2024) found that training on model-generated content causes
+      irreversible defects in which the tails of the original data disappear. Our view: people doing real work on
+      their own nodes are exactly those tails — the signal worth keeping in owned, provable models.
+      <a href="explainer.html#facts">Every source →</a></p></details>
+    <details><summary>Are AI chatbot conversations privileged in court?</summary>
+      <p>No. In <em>United States v. Heppner</em> (S.D.N.Y., 2026) a US federal court ruled that a chief
+      executive's conversations with a public AI assistant were protected by neither attorney-client
+      privilege nor the work-product doctrine, and the files became evidence. Anything typed into a rented
+      chatbot can be discoverable and sits on the vendor's servers. AI that runs inside your own perimeter
+      avoids that third-party disclosure. This is information, not legal advice.
+      <a href="https://sjgant80-hub.github.io/perimeter/">See the full argument →</a></p></details>
+    <details><summary>What does the EU AI Act require, and when?</summary>
+      <p>From 2 August 2026, providers of higher-risk AI systems must keep automatic logs and evidence of
+      what their systems did, among other obligations. Owned, on-premise AI with a signed, tamper-evident
+      audit trail produces that record by design — we build the audit trail in from the start.
+      <a href="https://sjgant80-hub.github.io/agent-proof/">See the audit trail →</a></p></details>
+    <details><summary>Should a business own or rent its AI software?</summary>
+      <p>Own it. Rented AI means a monthly bill forever, your data on someone else's servers, and a tool the
+      vendor can price up or switch off. Owned software runs on your machines, keeps your data inside your
+      walls, and is yours once — the routine work runs itself while a named person still holds every money,
+      legal and judgment decision.</p></details>
+    <details><summary>Can AI software keep client data on-premise and offline?</summary>
+      <p>Yes. The tools are single files that run entirely in your browser, keep data in local storage, and
+      work offline after first load — nothing is sent to a server. That suits firms whose client data cannot
+      legally live on someone else's infrastructure, such as claims practices, accountants, brokers, letting
+      agents and adviser firms.</p></details>
+    <details><summary>How do you prove an AI system actually works?</summary>
+      <p>With a signed, deterministic proof — a mutation-tested gate and a hash-chained receipt — never one
+      AI grading another. Every build runs live before we speak and prints its own limitations on the page.
+      If a receipt doesn't show the model beats your baseline, you don't pay.
+      <a href="https://sjgant80-hub.github.io/mint-a-node/">Mint a proven model →</a></p></details>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <a class="estate-door" href="estate.html">
+    <b>Enter the estate →</b>
+    <p>Everything above is drawn from a working software estate of
+    <span class="num"><!--N-PUBLIC-->1,547<!--/N-PUBLIC--></span> public builds —
+    <span class="num"><!--N-LIVE-->467<!--/N-LIVE--></span> of them live right now, each one a page
+    you can open, use, and read the source of. Built on <a href="konomi.html">Konomi</a>
+    (Thomas Frumkin's architecture) — one small part of what it can do. Counted from the index on
+    <span class="num"><!--GENERATED-->2026-09-28<!--/GENERATED--></span>, never typed by hand.</p>
+  </a>
+</div></section>
+
+<div class="contact"><div class="wrap">
+  <h2>Talk to us</h2>
+  <p>Walk the builds first. Then, if it looks like your firm, the next step is a short
+  discovery conversation — no deck, no pressure, your real numbers.</p>
+  <a class="btn solid" href="mailto:ainativesolutions@gmail.com?subject=Discovery%20conversation">ainativesolutions@gmail.com</a>
+</div></div>
+
+<footer><div class="wrap">
+  <span>© AI Native Solutions</span>
+  <a href="https://github.com/sjgant80-hub">GitHub</a>
+  <a href="estate.html">The estate</a>
+  <a href="explainer.html">The film &amp; brochure</a>
+  <span class="k">Sovereign software. You own it. · Powered by the <a href="konomi.html">Konomi architecture</a>, created by Thomas Frumkin</span>
+<!--CREDIT-DREAM-->
+  <p class="credit">The dreaming layer draws on dream-state design Gary W. Floyd shared with the estate: Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC — “Dream State Architecture: GEP-Guided Memory Consolidation and Entropy Regulation in Artificial Consciousness Systems,” 2025.</p>
+<!--/CREDIT-DREAM-->
+</div></footer>
+
+</body>
+</html>
