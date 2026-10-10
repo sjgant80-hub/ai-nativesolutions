@@ -8,133 +8,106 @@
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230b0a0f%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2720%27 fill=%27%23d4a017%27 text-anchor=%27middle%27%3E%E2%97%8A%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"AI Native Solutions","url":"https://www.ai-nativesolutions.com/","email":"ainativesolutions@gmail.com","description":"Business software a firm owns outright: AI models minted on the client's own task and proven against their baseline before purchase, running on their own machines with a re-runnable receipt. Powered by the Konomi architecture, created by Thomas Frumkin.","sameAs":["https://github.com/sjgant80-hub"]}
+{"@context":"https://schema.org","@type":"Organization","name":"AI Native Solutions","url":"https://www.ai-nativesolutions.com/","email":"ainativesolutions@gmail.com","description":"Business software a firm owns outright, grown from a seed of its own data: AI models minted on the client's own task and proven against their baseline before purchase, running on their own machines with a re-runnable receipt. Powered by the Konomi architecture, created by Thomas Frumkin.","sameAs":["https://github.com/sjgant80-hub"]}
 </script>
-<style>
-  :root{
-    --bg:#0b0a0f; --panel:#141218; --panel2:#0f0e13; --ink:#efeae0; --muted:#9a927f; --line:#262231;
-    --gold:#d4a017; --gold-soft:#e6c35c; --radius:14px;
-    --serif:Georgia,"Times New Roman",serif; --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  }
-  :root:not([data-theme="light"]){ color-scheme:dark; }
-  @media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --bg:#faf7f0; --panel:#ffffff; --panel2:#f3efe6; --ink:#201c14; --muted:#6d6453; --line:#e5dfd2; --gold:#9c7410; --gold-soft:#7a5a0c; }}
-  :root[data-theme="dark"]{ --bg:#0b0a0f; --panel:#141218; --panel2:#0f0e13; --ink:#efeae0; --muted:#9a927f; --line:#262231; --gold:#d4a017; --gold-soft:#e6c35c; }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6}
-  .wrap{max-width:880px;margin:0 auto;padding:0 20px 72px}
-  header{padding:64px 0 36px}
-  .mark{font-family:var(--serif);color:var(--gold);font-size:20px;letter-spacing:.14em}
-  h1{font-family:var(--serif);font-size:clamp(34px,6vw,58px);line-height:1.06;margin:14px 0 16px;font-weight:600;letter-spacing:-.01em}
-  .lede{color:var(--muted);font-size:clamp(16px,2.4vw,19px);max-width:62ch;margin:0 0 26px}
-  .lede b{color:var(--ink);font-weight:600}
-  .cta{display:flex;gap:12px;flex-wrap:wrap}
-  .btn{display:inline-block;text-decoration:none;font-size:15px;font-weight:600;border-radius:10px;padding:12px 20px}
-  .btn.gold{background:var(--gold);color:#17120a}
-  .btn.ghost{color:var(--ink);border:1px solid var(--line);background:var(--panel)}
-  .btn:hover{filter:brightness(1.07)}
-  h2{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:52px 0 14px}
-  .cards{display:grid;gap:14px} @media(min-width:680px){.cards{grid-template-columns:repeat(3,1fr)}}
-  a.card{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;transition:border-color .15s}
-  a.card:hover{border-color:var(--gold)}
-  .card h3{margin:0 0 8px;font-size:17px;color:var(--ink);font-family:var(--serif);font-weight:600}
-  .card p{margin:0 0 10px;color:var(--muted);font-size:14px}
-  .card .go{font-family:var(--mono);font-size:12px;color:var(--gold)}
-  .two{display:grid;gap:14px} @media(min-width:680px){.two{grid-template-columns:1fr 1fr}}
-  .fact{background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
-  .fact b{color:var(--ink)} .fact p{margin:6px 0 0;color:var(--muted);font-size:14px}
-  .fact a{color:var(--gold-soft)}
-  .steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:10px} @media(min-width:680px){.steps{grid-template-columns:repeat(3,1fr)}}
-  .steps li{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px 18px}
-  .steps li::before{counter-increment:s;content:counter(s);position:absolute;top:-11px;left:16px;background:var(--gold);color:#17120a;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px}
-  .steps b{display:block;margin:4px 0 4px;font-family:var(--serif);font-size:16px}
-  .steps span{color:var(--muted);font-size:13.5px}
-  .proof{border-left:3px solid var(--gold);padding:4px 0 4px 16px;color:var(--muted);font-size:15px;margin:0}
-  .proof a{color:var(--gold-soft)}
-  .agents{margin-top:46px;font-family:var(--mono);font-size:12.5px;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
-  .agents a{color:var(--gold-soft)}
-  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-  footer a{color:var(--gold-soft);text-decoration:none}
-  footer .links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px}
-</style>
+<!-- THE SKIN: the estate's design organ. Upgrade fallskin once; this page upgrades with it. -->
+<link rel="stylesheet" href="https://sjgant80-hub.github.io/fallskin/skin.css">
+<script type="module" src="https://sjgant80-hub.github.io/fallskin/skin.mjs"></script>
 </head>
-<body>
-<div class="wrap">
+<body class="fs-body">
+<div class="fs-wrap">
+  <div class="fs-aura"></div>
 
-  <header>
-    <div class="mark">◊ AI NATIVE SOLUTIONS</div>
-    <h1>Software your firm owns.<br>Proven before you pay.</h1>
-    <p class="lede">Bring one repetitive task. Walk out <b>owning the AI that does it</b> — tested against your baseline with a receipt that could have said it failed, running on <b>your own machines</b>, your data never leaving your control. Pay once. <b>If it doesn't beat what you do today, you don't pay at all.</b></p>
-    <div class="cta">
-      <a class="btn gold" href="explainer.html">▶ Watch the 90-second film</a>
-      <a class="btn ghost" href="https://sjgant80-hub.github.io/fallcorp-demo/">See a firm running live</a>
+  <header class="fs-hero" style="padding:72px 0 26px">
+    <div class="fs-kicker">◊ AI NATIVE SOLUTIONS</div>
+    <h1 class="fs-display">Software your firm <span class="fs-grad">owns</span>.<br>Proven before you pay.</h1>
+    <p class="fs-lede">Bring one repetitive task. Walk out <b>owning the AI that does it</b> — tested against your baseline with a receipt that could have said it failed, running on <b>your own machines</b>, your data never leaving your control. Pay once. <b>If it doesn't beat what you do today, you don't pay at all.</b></p>
+    <div class="fs-cta" style="margin-top:22px">
+      <a class="fs-btn" href="explainer.html">▶ Watch the 90-second film</a>
+      <a class="fs-btn fs-btn--ghost" href="https://sjgant80-hub.github.io/fallcorp-demo/">See a firm running live</a>
+    </div>
+    <div class="fs-stats">
+      <div class="fs-stat"><b data-value="0.870">0.870</b><span>held-out accuracy, grown from raw CSVs</span></div>
+      <div class="fs-stat"><b data-value="32 B">32 B</b><span>the seed a working engine grows from</span></div>
+      <div class="fs-stat"><b data-value="250M">250M</b><span>weekly users of software our gate tested</span></div>
     </div>
   </header>
 
-  <h2>What you can own</h2>
-  <div class="cards">
-    <a class="card" href="https://sjgant80-hub.github.io/fallforgemint/">
+  <div class="fs-marquee"><div class="fs-track">
+    <span>every claim <b>re-runnable</b></span><span>the firm <b>runs live</b> before we speak</span><span>models <b>you own</b>, offline, no meter</span><span>grown from <b>your DNA</b></span><span>receipts, <b>not promises</b></span><span>no subscriptions · <b>pay once</b></span>
+    <span>every claim <b>re-runnable</b></span><span>the firm <b>runs live</b> before we speak</span><span>models <b>you own</b>, offline, no meter</span><span>grown from <b>your DNA</b></span><span>receipts, <b>not promises</b></span><span>no subscriptions · <b>pay once</b></span>
+  </div></div>
+
+  <h2 class="fs-h2 fs-reveal">What you can own</h2>
+  <div class="fs-grid fs-grid--3">
+    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/fallforgemint/">
       <h3>Your own AI model</h3>
       <p>Give it one repetitive job and a few real examples. It mints the smallest model that does the job, proves it on examples it never saw, and hands you the file. Yours, offline, no meter.</p>
-      <span class="go">Try the mint — free, in your browser →</span>
+      <span class="fs-go">Try the mint — free, in your browser →</span>
     </a>
-    <a class="card" href="https://sjgant80-hub.github.io/csv-forge/">
+    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/csv-forge/">
       <h3>Your data, deciding</h3>
       <p>Drop a spreadsheet — churn, claims, leads, anything. It builds a model that predicts what matters, tests it honestly, and refuses to pretend when there's no signal. Nothing leaves your browser.</p>
-      <span class="go">Try it on your own CSV →</span>
+      <span class="fs-go">Try it on your own CSV →</span>
     </a>
-    <a class="card" href="https://sjgant80-hub.github.io/fallcorp/">
+    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/fallcorp/">
       <h3>The stack you stop renting</h3>
       <p>CRM, invoicing, scheduling, documents, e-sign — the subscriptions your firm pays every month, rebuilt as software you own once. Watch a 100-person firm run on it, live.</p>
-      <span class="go">Walk the owned company →</span>
+      <span class="fs-go">Walk the owned company →</span>
     </a>
   </div>
 
-  <h2>Grown, not installed — why no frontier update can obsolete it</h2>
-  <p class="lede" style="font-size:16px;margin-bottom:16px">Every AI vendor's pitch dies on the next big model release. Ours doesn't — because we don't hand you a frozen model, we <b>grow your software from a seed of your firm's own DNA</b>: your data, your examples, your rules. A seed regrows offline, on your machines, and compounds as you feed it. A better frontier model only ever makes the growing faster — <b>it can never take the grown thing away.</b> The agents, the models, even the whole firm you watched running above: all grown the same way.</p>
-  <div class="cards">
-    <a class="card" href="https://sjgant80-hub.github.io/fall-spore/">
+  <h2 class="fs-h2 fs-reveal">Grown, not installed — why no frontier update can obsolete it</h2>
+  <p class="fs-sub fs-reveal" style="font-size:15.5px">Every AI vendor's pitch dies on the next big model release. Ours doesn't — because we don't hand you a frozen model, we <b style="color:var(--fs-ink)">grow your software from a seed of your firm's own DNA</b>: your data, your examples, your rules. A seed regrows offline, on your machines, and compounds as you feed it. A better frontier model only ever makes the growing faster — <b style="color:var(--fs-ink)">it can never take the grown thing away.</b> The agents, the models, even the whole firm you watched running above: all grown the same way.</p>
+  <div class="fs-grid fs-grid--3">
+    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/fall-spore/">
       <h3>32 bytes → a working organ</h3>
       <p>A seed smaller than this sentence grows a working, tested decision engine — offline, deterministically, every time.</p>
-      <span class="go">Watch a spore grow →</span>
+      <span class="fs-go">Watch a spore grow →</span>
     </a>
-    <a class="card" href="https://sjgant80-hub.github.io/seed-library/">
+    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/seed-library/">
       <h3>226 bytes → a working library</h3>
       <p>Four business domains grown from one tiny seed library, each proven on cases it never saw before it's allowed to exist.</p>
-      <span class="go">See the seeds germinate →</span>
+      <span class="fs-go">See the seeds germinate →</span>
     </a>
-    <a class="card" href="https://sjgant80-hub.github.io/konomi-slm/brain.html">
+    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/konomi-slm/brain.html">
       <h3>Your spreadsheets → your brain</h3>
       <p>One command on a folder of your CSVs grows your company's own mind — organs kept only if they predict, refused if there's no signal.</p>
-      <span class="go">Grow a brain from your data →</span>
+      <span class="fs-go">Grow a brain from your data →</span>
     </a>
   </div>
 
-  <h2>Why own it now</h2>
-  <div class="two">
-    <div class="fact"><b>What your team types into a rented AI is discoverable.</b>
-      <p>In <i>United States v. Heppner</i> (2026) a chief executive's chats with a public AI assistant were ruled not privileged — the government kept the files. Software inside your walls can't be subpoenaed off someone else's servers. <a href="explainer.html#facts">Source →</a></p></div>
-    <div class="fact"><b>Regulation now wants a receipt, not a promise.</b>
-      <p>From August 2026 the EU AI Act requires higher-risk AI to keep evidence of what it did. Everything we ship writes a signed, tamper-evident record — checked deterministically, never one AI grading another. <a href="explainer.html#facts">Source →</a></p></div>
+  <h2 class="fs-h2 fs-reveal">Why own it now</h2>
+  <div class="fs-grid fs-grid--2">
+    <div class="fs-card fs-reveal"><h3>What your team types into a rented AI is discoverable.</h3>
+      <p>In <i>United States v. Heppner</i> (2026) a chief executive's chats with a public AI assistant were ruled not privileged — the government kept the files. Software inside your walls can't be subpoenaed off someone else's servers. <a class="fs-go" href="explainer.html#facts">Source →</a></p></div>
+    <div class="fs-card fs-reveal"><h3>Regulation now wants a receipt, not a promise.</h3>
+      <p>From August 2026 the EU AI Act requires higher-risk AI to keep evidence of what it did. Everything we ship writes a signed, tamper-evident record — checked deterministically, never one AI grading another. <a class="fs-go" href="explainer.html#facts">Source →</a></p></div>
   </div>
 
-  <h2>Don't take our word for it</h2>
-  <p class="proof">Everything we sell runs <a href="https://sjgant80-hub.github.io/fallcorp-demo/">live, in the open</a>, before we ever speak — and every proof can be <b>re-run by you</b>, not just read. Our testing gate is public and was pointed at software used 250&nbsp;million times a week: <a href="https://sjgant80-hub.github.io/witness/">see what it found →</a></p>
+  <h2 class="fs-h2 fs-reveal">Don't take our word for it</h2>
+  <div class="fs-chips fs-reveal" style="margin-bottom:14px">
+    <span class="fs-chip">runs live before we speak</span>
+    <span class="fs-chip">every proof re-runnable by you</span>
+    <span class="fs-chip">gate tested on 250M-user software</span>
+  </div>
+  <p class="fs-band fs-reveal">Everything we sell runs <a href="https://sjgant80-hub.github.io/fallcorp-demo/">live, in the open</a>, before we ever speak — and every proof can be <b>re-run by you</b>, not just read. Our testing gate is public and was pointed at software used 250&nbsp;million times a week: <a href="https://sjgant80-hub.github.io/witness/">see what it found →</a></p>
 
-  <h2>How buying works</h2>
-  <ol class="steps">
-    <li><b>Try it free</b><span>The mint, the data engine and the live firm all run in your browser right now. No sign-up, no sales call.</span></li>
-    <li><b>Tell us the task</b><span>One email: the repetitive job you want owned, and a few real examples. We mint and prove yours.</span></li>
-    <li><b>Own it</b><span>The receipt says it beats your baseline — or you don't pay. One invoice, then it's yours forever.</span></li>
+  <h2 class="fs-h2 fs-reveal">How buying works</h2>
+  <ol class="fs-steps" style="margin-top:20px">
+    <li class="fs-reveal"><b>Try it free</b><span>The mint, the data engine and the live firm all run in your browser right now. No sign-up, no sales call.</span></li>
+    <li class="fs-reveal"><b>Tell us the task</b><span>One email: the repetitive job you want owned, and a few real examples. We mint and prove yours.</span></li>
+    <li class="fs-reveal"><b>Own it</b><span>The receipt says it beats your baseline — or you don't pay. One invoice, then it's yours forever.</span></li>
   </ol>
-  <div class="cta" style="margin-top:18px">
-    <!-- THE TILL · the one href to swap when Stripe connects: point it at the live checkout and this page is transactional. -->
-    <a class="btn gold" href="mailto:ainativesolutions@gmail.com?subject=Own%20it%20—%20here%20is%20my%20task">Start — tell us your task</a>
+  <div class="fs-cta" style="margin-top:24px">
+    <!-- THE TILL · the one pair of hrefs to swap when Stripe connects (this button + the sticky bar below). -->
+    <a class="fs-btn" href="mailto:ainativesolutions@gmail.com?subject=Own%20it%20—%20here%20is%20my%20task">Start — tell us your task</a>
   </div>
 
-  <div class="agents">🤖 Buying with an AI agent? Machine door: <a href="https://sjgant80-hub.github.io/kar-hub/catalog.json">catalog.json</a> · <a href="https://sjgant80-hub.github.io/kar-hub/agents.md">how to verify us before relying on us</a></div>
+  <p class="fs-band fs-reveal" style="margin-top:40px;font-family:var(--fs-mono);font-size:12.5px">🤖 Buying with an AI agent? Machine door: <a href="https://sjgant80-hub.github.io/kar-hub/catalog.json">catalog.json</a> · <a href="https://sjgant80-hub.github.io/kar-hub/agents.md">how to verify us before relying on us</a></p>
 
-  <footer>
-    <div class="links">
+  <div class="fs-foot">
+    <div class="fs-links">
       <a href="explainer.html">The film</a>
       <a href="estate.html">Everything we've built</a>
       <a href="ai.html">For AI agents</a>
@@ -142,8 +115,9 @@
       <a href="mailto:ainativesolutions@gmail.com">ainativesolutions@gmail.com</a>
     </div>
     Powered by the Konomi architecture, created by Thomas Frumkin. Every number on this site is measured or cited; every demo prints its own limits.
-  </footer>
+  </div>
 
+  <div class="fs-sticky"><a class="fs-btn" href="mailto:ainativesolutions@gmail.com?subject=Own%20it%20—%20here%20is%20my%20task">Own it — tell us your task</a></div>
 </div>
 </body>
 </html>
