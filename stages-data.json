@@ -19,7 +19,7 @@
       "machinery": "the si-didy operator: crawl the estate, compose, validate, mint",
       "does": "runs nightly — crawls the estate, mints sovereign builds into the catalogue with savings-math. This one genuinely operates today." },
     { "n": 4, "seat": "Delivery agent", "state": "BUILT",
-      "machinery": "the signed-door executor + the invoiceTotals kernel + the baby-KCC ledger",
+      "machinery": "the signed-door executor + the invoiceTotals kernel + the activity ledger",
       "does": "auto-delivers the file on purchase, prepares the invoice for the human to sign, keeps the ledger",
       "waiting": "a first real sale to fulfil — the machinery is proven, the customer is next." },
     { "n": 5, "seat": "Learning loop", "state": "BUILT",

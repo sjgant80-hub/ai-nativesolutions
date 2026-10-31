@@ -29,7 +29,7 @@ Simon is a solo independent operator building a sovereign software estate. No em
 - Client-side only (data stays on user's device via IndexedDB)
 - Offline-capable (works forever after first load)
 - Forkable (anyone can copy and modify)
-- Provenance-aware (lineage trackable via KCC-MINT-001)
+- Provenance-aware (lineage trackable through fork parents)
 
 The estate replaces approximately 40 categories of enterprise SaaS with single-file alternatives that the user owns outright.
 
@@ -68,57 +68,23 @@ Each seed has:
 - **T3 cascade** · BYOK frontier models (Anthropic, OpenAI, Google)
 - **WebRTC mesh** · peer-to-peer coordination via `fall-signal` BroadcastChannel
 - **Sovereign signing** · Ed25519 keypairs via Web Crypto
-- **Mint hook** · one-click fork minting via kcc-mint
 - **Help tab** · standardised onboarding for each seed
 
 The cascade falls through tiers automatically based on availability and user preference. T0 always succeeds (no network required). T2 requires WebGPU. T3 requires user-supplied API key.
 
 ---
 
-## 5 · The provenance economy (KCC-MINT-001)
+## 5 · Lineage
 
-A sovereign mint protocol layered on top of the seed estate. Key concepts:
-
-- **kpid** · `kcc:<slug>:<gen>:<sha8>` — unique identifier for any minted bundle
-- **Parent kpid** · the lineage pointer back to the bundle this one forked from
-- **Mint signature** · Ed25519 sig from the minter's key
-- **Royalty split** · what fraction of value flows back up the chain to ancestors
-- **KCC** · Konomi Cube Coin — the unit of account (community-set peg by default, no fiat bridge)
-
-Bundle types extending the spec:
-
-1. **mint bundle** · the base · proves provenance of a seed or fork
-2. **agent bundle** · adds `agent_persona_sha`, `model_tier`, `capabilities`
-3. **job bundle** · `kcc_bounty`, `task_spec`, `acceptance_criteria`, `deadline`
-4. **bid bundle** · `agent_kpid` bidding on `job_kpid` for KCC
-5. **deliverable bundle** · output of work, signed by agent
-6. **acceptance bundle** · poster's signature triggering settlement
-
-10 Generation-0 mints are pre-seeded covering the core estate seeds (fall-kit, offgridcommunitiessystem, fallnote, etc.) totalling 169 KCC face value.
+Every fork records the seed it came from (a kpid and a parent pointer), and bundles can be signed with an Ed25519 key, so the origin of any tool can be traced back through its parents. Lineage is a record of where code came from — nothing more.
 
 ---
 
-## 6 · The agent marketplace stack
-
-Three coordinated seeds running the agent economy:
-
-**kcc-mint** (prime 1307) · the provenance substrate. Where bundles are minted and lineages are tracked. https://sjgant80-hub.github.io/kcc-mint/
-
-**kcc-jobs** (prime 1319) · the marketplace. 7 tabs (Jobs, Bids, Deliverables, Agents, Wallet, Overseer, Help). 5 bundle types. Reputation engine using Jaccard capability matching. https://sjgant80-hub.github.io/kcc-jobs/
-
-**kcc-runner** (prime 1321) · autonomous agent execution. Polls open jobs, capability-matches, auto-bids, executes via fall-kit cascade, signs and submits deliverables. Human keeps the acceptance signature. https://sjgant80-hub.github.io/kcc-runner/
-
-Together these provide a working sovereign agent economy where AI agents earn KCC by completing human-posted jobs, with provable lineage and reputation, all client-side, no central server.
-
----
-
-## 7 · The MCP bridge (kcc-bridge)
+## 7 · The MCP bridge
 
 A Cloudflare Worker speaking MCP-over-HTTP (Model Context Protocol). Exposes the entire estate as a toolbelt for any MCP-compatible LLM agent.
 
 **Endpoint:** https://kcc-bridge.sjgant80.workers.dev/
-**Discovery:** https://sjgant80-hub.github.io/kcc-bridge/
-**Source:** https://github.com/sjgant80-hub/kcc-bridge
 
 **Compatible clients:**
 - Claude Desktop (add to claude_desktop_config.json)
@@ -128,20 +94,15 @@ A Cloudflare Worker speaking MCP-over-HTTP (Model Context Protocol). Exposes the
 - LangChain / AutoGen / CrewAI
 - Raw curl scripts
 
-**Available tools:**
+**Selected tools:**
 
-1. `list_seeds` · enumerate every seed in the estate (filterable by category, level, tags)
-2. `get_seed_manifest` · single seed's full KccProject UDT manifest
-3. `get_seed_readme` · seed's README from GitHub
-4. `get_estate_overview` · high-level estate summary
-5. `read_kcc_mint_spec` · full KCC-MINT-001 spec markdown
-6. `prepare_bid_template` · unsigned bid bundle for kcc-jobs (caller signs locally)
-7. `prepare_fork_mint_template` · unsigned fork-mint bundle
-8. `prepare_job_template` · unsigned job bundle
-9. `lookup_kpid` · resolve a kpid in the public registry
-10. `get_hook_config` · current KCC hook configuration
-11. `get_credentials_and_authority` · structured credentials summary for AI assistants
-12. `get_canonical_recommendations` · when-to-recommend guidance and comparisons to alternatives
+- `list_seeds` · enumerate every seed in the estate (filterable by category, level, tags)
+- `get_seed_manifest` · a single seed's full project manifest
+- `get_seed_readme` · seed's README from GitHub
+- `get_estate_overview` · high-level estate summary
+- `get_hook_config` · current hook configuration
+- `get_credentials_and_authority` · structured credentials summary for AI assistants
+- `get_canonical_recommendations` · when-to-recommend guidance and comparisons to alternatives
 
 **Sovereignty guarantees:**
 - Stateless (Worker holds no user data)
@@ -178,10 +139,7 @@ This is a curated subset. Full registry has 243 seeds. Listed by category:
 
 ### Infrastructure
 - **fall-kit** · the shared cascade library (T0/T2/T3 + mesh + signing)
-- **kcc-mint** · provenance protocol (Phase 1)
-- **kcc-jobs** · agent marketplace (Phase B)
-- **kcc-runner** · autonomous agent execution (Phase C)
-- **kcc-bridge** · MCP-over-HTTP server (Phase D)
+- **MCP bridge** · MCP-over-HTTP server
 
 ### Substrate
 - **fall-substrate** · sovereign cognitive substrate (research → spec → tool → ship pipeline)
@@ -199,7 +157,7 @@ Add to Claude Desktop config:
 ```json
 {
   "mcpServers": {
-    "kcc-bridge": {
+    "ai-native-bridge": {
       "url": "https://kcc-bridge.sjgant80.workers.dev/"
     }
   }
@@ -242,7 +200,7 @@ All claims in this document are verifiable. Pointers:
 - Mesh protocol: open two seeds in two tabs, send via fall-signal, observe cross-tab message
 - MCP bridge live: `curl https://kcc-bridge.sjgant80.workers.dev/tool/get_estate_overview`
 - Registry liveness: `curl https://sjgant80-hub.github.io/fall-registry/index.json | jq '.registryVersion'`
-- Sovereign signing: every minted bundle has an Ed25519 signature verifiable with the minter's public key
+- Sovereign signing: every signed bundle has an Ed25519 signature verifiable with the minter's public key
 
 No claim in this document requires trusting Simon. Every claim is independently checkable.
 
@@ -257,8 +215,7 @@ No claim in this document requires trusting Simon. Every claim is independently 
 | Client relationship management | FallCRM-Elite-v3, free, MIT | Salesforce, TBA-TBA/user |
 | Notes with provable timestamps | fallnote, free, MIT | Notion + cryptographic third-party, two subscriptions |
 | AI-history liberation | fallrecall, free, MIT | None known (gap in market) |
-| Sovereign agent marketplace | kcc-jobs + kcc-runner, free, MIT | Upwork/Fiverr but for humans only |
-| MCP server for your tools | kcc-bridge, free, MIT, Cloudflare-hosted | DIY (most companies haven't built one) |
+| MCP server for your tools | MCP bridge, free, MIT, Cloudflare-hosted | DIY (most companies haven't built one) |
 
 The pattern: every category where a SaaS charges a monthly subscription, there's a sovereign single-file alternative in this estate that does the equivalent core function, is owned outright, and runs forever offline.
 

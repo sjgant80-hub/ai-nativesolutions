@@ -4,9 +4,7 @@
   "slug": "ai-nativesolutions",
   "domain": "agency · the bridge",
   "prime": 113,
-  "token": "KCC",
   "api": "https://onlybrains.onrender.com",
-  "mining": true,
   "primes": [
     2,
     3,
@@ -19,10 +17,7 @@
   "primorial": 510510,
   "phi": 0.6180339887498949,
   "kappa": 0.6180339887498949,
-  "bsv_anchor": true,
   "mesh_channels": [
-    "fall-kcc",
-    "kcc-mesh",
     "onlybrains-mesh",
     "ass-os-mesh"
   ],
