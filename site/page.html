@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Native Solutions — AI you own, proof you can re-run</title>
+<meta name="description" content="Small AI that runs on your own machines, says when it does not know, and proves its work with receipts anyone can re-run. This page runs the real thing in your browser: nothing you type or drop here leaves your machine.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval'; worker-src 'self'; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://raw.githubusercontent.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#02070c">
+<meta property="og:title" content="AI Native Solutions — AI you own, proof you can re-run">
+<meta property="og:description" content="The estate as a living organism, and the real builds with their real numbers. Everything runs in your browser.">
+<meta property="og:image" content="https://www.ai-nativesolutions.com/media/og-card.jpg">
+<link rel="canonical" href="https://www.ai-nativesolutions.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2302070c'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%235ef2e4'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%235ef2e4' stroke-opacity='.35'/%3E%3C/svg%3E">
+<link rel="preload" href="vendor/fonts/fraunces/files/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="vendor/fonts/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site/styles.css">
+<script type="module" src="site/app.mjs"></script>
+</head>
+<body>
+<canvas id="organism" aria-hidden="true"></canvas>
+<div id="labels" aria-hidden="true"></div>
+<a class="skip" href="#door">Skip to the live demo</a>
+
+<header class="top">
+  <a class="mark" href="#surface"><i></i>AI Native Solutions</a>
+  <nav aria-label="Sections">
+    <a href="#door">The door</a>
+    <a href="#organism-zone">The organism</a>
+    <a href="#receipts">The receipts</a>
+    <a class="go" href="#start">Start here</a>
+  </nav>
+  <button id="net-chip" class="chip" type="button" aria-haspopup="dialog" title="Open the network ledger">
+    <i></i><span id="net-chip-text">network: counting…</span>
+  </button>
+</header>
+
+<aside class="gauge" aria-hidden="true">
+  <div class="gauge-line"><b id="gauge-dot"></b></div>
+  <p id="gauge-read">0 m</p>
+</aside>
+
+<main>
+
+<!-- ═══ 0 m · the surface ═══ -->
+<section id="surface" class="zone" data-zone="surface" data-depth="0">
+  <div class="hero">
+    <p class="kicker">AI Native Solutions · built by Kar</p>
+    <h1>AI you <em>own.</em><br>Proof you can <em>re&#8209;run.</em></h1>
+    <p class="lede">We build small AI that runs on your own machines, says so when it does not know, and comes with receipts anyone can check. This page is not a brochure about it. <strong>It is it.</strong> Everything below runs in your browser, and nothing you type or drop here leaves your machine.</p>
+    <p class="row">
+      <a class="btn primary" href="#door">Try the small model</a>
+      <a class="btn" href="#start">Start with one task</a>
+    </p>
+    <p class="caps" id="caps">Checking what your browser can run…</p>
+  </div>
+  <p class="hero-note">That living shape is our whole estate: <b><!--N-BUILDS--><!--/N-BUILDS--> public builds</b>, each dot a real one, drawn live in your browser. The light moving through it is a simulation of work being handed on. <a href="#organism-zone">Meet it ↓</a></p>
+  <p class="dive" aria-hidden="true">dive<span></span></p>
+</section>
+
+<!-- ═══ 200 m · tier 1 · the door ═══ -->
+<section id="door" class="zone" data-zone="door" data-depth="200">
+  <div class="zone-inner">
+    <p class="kicker">Tier 1 · the door · what you buy first</p>
+    <h2>A small model that says <em>“I can't tell.”</em></h2>
+    <p class="plain">Most AI gives you an answer even when it should not. Ours is built the other way round. A small model only <b>reads</b>. A library of checked law does the reasoning. A gate stops anything that was not checked. When a fact is missing it stops, and tells you which one.</p>
+    <p class="gloss"><b>In one line:</b> it would rather say “I don't know” than make something up, and you can watch it choose.</p>
+  </div>
+
+  <div class="instrument" id="slm">
+    <ol class="steps" aria-label="What happens to your text">
+      <li data-step="read"><b>1 · Read</b><span>the model pulls out the facts</span></li>
+      <li data-step="ground"><b>2 · Source check</b><span>each date must be in your words</span></li>
+      <li data-step="library"><b>3 · Library</b><span>checked law decides</span></li>
+      <li data-step="memo"><b>4 · Memo</b><span>or it abstains</span></li>
+    </ol>
+    <div class="cols">
+      <div class="col">
+        <label class="lab" for="slm-text">A consumer complaint <span>(these are made up; type your own)</span></label>
+        <p class="chips" id="slm-samples"></p>
+        <textarea id="slm-text" rows="7" spellcheck="false"></textarea>
+        <fieldset class="reader">
+          <legend class="lab">Who reads it?</legend>
+          <label><input type="radio" name="reader" value="self" checked> <b>I will.</b> <span>No download. You enter the facts; the real gate and library do the rest.</span></label>
+          <label><input type="radio" name="reader" value="model"> <b>A small model, in this browser.</b> <span id="slm-model-note">One download of about <!--MODEL-MB--><!--/MODEL-MB--> MB (measured <!--MODEL-MEASURED--><!--/MODEL-MEASURED-->), kept by your browser afterwards.</span></label>
+        </fieldset>
+        <div id="slm-self" class="facts-form"></div>
+        <div id="slm-model" hidden>
+          <p class="note">This is the stock open model <code><!--MODEL-ID--><!--/MODEL-ID--></code>. The reader in our 86.3% result is the same model with a 35 MB adapter we trained; that adapter is not packaged for browsers yet. The gate, the library and the law table here are the very same files.</p>
+          <p class="row"><button class="btn" id="slm-load" type="button">Load the model</button><span id="slm-load-state" class="state" role="status"></span></p>
+          <div class="bar" id="slm-bar" hidden><i></i></div>
+        </div>
+        <p class="row"><button class="btn primary" id="slm-run" type="button">Read it</button><span id="slm-state" class="state" role="status" aria-live="polite"></span></p>
+      </div>
+      <div class="col out">
+        <div class="pane" id="slm-read"><h3>What the reader gave</h3><p class="empty">Press <b>Read it</b>. Each fact appears here with whether it could be checked against your own words.</p></div>
+        <div class="pane" id="slm-memo"><h3>The memo</h3><p class="empty">The answer, or an honest refusal, appears here.</p></div>
+        <p class="net-proof" id="slm-net"></p>
+      </div>
+    </div>
+    <details>
+      <summary>The verified law table: all <!--LAW-N--><!--/LAW-N--> provisions it may cite, and nothing else</summary>
+      <p class="note">Each was read on legislation.gov.uk on <!--LAW-VERIFIED--><!--/LAW-VERIFIED-->. The plain line beside each is our paraphrase, not the statute. Contains public sector information licensed under the Open Government Licence v3.0.</p>
+      <ul class="law"><!--LAW-TABLE--><!--/LAW-TABLE--></ul>
+    </details>
+    <details>
+      <summary>How the full stack scored when it was sealed: seven claims, three failed, all seven shown</summary>
+      <div class="scroll"><table class="honest">
+        <thead><tr><th>Claim</th><th>What was tested</th><th>Measured</th><th>The bar</th><th>Result</th></tr></thead>
+        <tbody><!--SLM-CLAIMS--><!--/SLM-CLAIMS--></tbody>
+      </table></div>
+      <p class="note">80 unseen complaints, read once, after the claims were sealed. <a href="https://sjgant80-hub.github.io/slm-suite/">The record, and how to re-derive it →</a></p>
+    </details>
+  </div>
+
+  <div class="zone-inner after">
+    <h3 class="sub">Start here: an audit of one task</h3>
+    <p class="plain">Bring one job someone in your firm does over and over: sorting complaints, pulling figures out of documents, routing messages. We measure how it is done today, then build a small model, its checked library and its gate for that one job, and test it on cases it has never seen.</p>
+    <ul class="gets">
+      <li><b>Today's numbers.</b> How the job is done now, measured, so there is something honest to beat.</li>
+      <li><b>The model, yours.</b> It runs on your own machines, offline, with no meter running.</li>
+      <li><b>A receipt you can re-run.</b> It could have said the model failed. That is what makes it worth having.</li>
+      <li><b>The plain list.</b> Where it is right, where it abstains, and where it fails.</li>
+    </ul>
+    <p class="row"><a class="btn primary" href="#start">Send us one task</a></p>
+  </div>
+</section>
+
+<!-- ═══ 500 m · the race ═══ -->
+<section id="race" class="zone" data-zone="race" data-depth="500">
+  <div class="zone-inner">
+    <p class="kicker">The language the organs speak</p>
+    <h2>Race our codec <em>on your own file.</em></h2>
+    <p class="plain">The organs talk to each other in LIGHT, our lossless compression. Drop any file. Four codecs squeeze the same bytes, and each must hand your exact file back or it is disqualified. You see who won, including when it is not us.</p>
+    <p class="gloss"><b>In one line:</b> a fair race between our zip and three famous ones, on your file, with the loser shown.</p>
+  </div>
+  <div class="instrument" id="racer">
+    <div class="drop" id="race-drop" tabindex="0" role="button" aria-label="Choose a file to race">
+      <p><b>Drop a file here</b>, or <label class="link" for="race-file">choose one</label>. It is read by your browser and never uploaded.</p>
+      <input id="race-file" type="file" hidden>
+      <p class="row"><button class="btn" type="button" id="race-page">Race this page's own words</button><button class="btn" type="button" id="race-records">Race a made-up ledger</button></p>
+    </div>
+    <p class="state" id="race-state" role="status" aria-live="polite"></p>
+    <div class="lanes" id="race-lanes"></div>
+    <p class="verdict" id="race-verdict"></p>
+    <p class="note" id="race-speed"></p>
+    <p class="note">Files over 1 MB are cut to their first 1 MB, for every lane alike. LIGHT here runs “cold”: no shared context, the cost of a stranger's first message. It is plain JavaScript (the very file our tests gate); the Brotli and Zstandard lanes are WebAssembly builds, and gzip is your browser's own.</p>
+    <details open>
+      <summary>The sealed measurement, losses included</summary>
+      <div class="scroll"><table class="honest light">
+        <thead>
+          <tr><th rowspan="2">Kind of data</th><th colspan="3">Cold: no shared context</th><th colspan="3">With a shared seed</th></tr>
+          <tr><th>LIGHT</th><th>Best of the rest</th><th>Winner</th><th>LIGHT</th><th>Zstandard, same seed</th><th>Winner</th></tr>
+        </thead>
+        <tbody><!--LIGHT-TABLE--><!--/LIGHT-TABLE--></tbody>
+      </table></div>
+      <p class="note">Cold, LIGHT lost <b><!--LIGHT-LOSSES--><!--/LIGHT-LOSSES--> of <!--LIGHT-TYPES--><!--/LIGHT-TYPES--></b> kinds of data to Brotli. Once two ends share a seed, the picture turns: that is what it is built for, and it is where the 14.83× comes from. We had sealed a claim of 15×. It missed by 0.17 and stays on the record as failed. <a href="https://sjgant80-hub.github.io/konomi-tongue/layered/">The record →</a></p>
+    </details>
+  </div>
+</section>
+
+<!-- ═══ 800 m · the breach ═══ -->
+<section id="breach" class="zone" data-zone="breach" data-depth="800">
+  <div class="zone-inner">
+    <p class="kicker">Try to break it</p>
+    <h2>Forge a message. <em>Watch it die at the door.</em></h2>
+    <p class="plain">Before an organ reads one word of a message, a door checks who signed it. This is a real door, guarding a real (and deliberately gullible) program, with a signing key your browser made a moment ago. Send a genuine note. Then cheat.</p>
+    <p class="gloss"><b>In one line:</b> every message needs a real signature; fakes are thrown out before they are even read, and the door remembers them.</p>
+  </div>
+  <div class="instrument" id="breacher">
+    <div class="cols">
+      <div class="col">
+        <p class="lab">Your moves</p>
+        <p class="moves" id="breach-moves"></p>
+        <label class="lab" for="breach-raw">Or throw anything you like at it</label>
+        <p class="row"><input id="breach-raw" type="text" placeholder="'; DROP TABLE users; --" spellcheck="false" autocomplete="off"><button class="btn" id="breach-throw" type="button">Throw it</button></p>
+        <p class="tally" id="breach-tally" role="status" aria-live="polite"></p>
+        <ol class="log" id="breach-log" aria-label="What the door did"></ol>
+      </div>
+      <div class="col out">
+        <p class="lab">The door's checks, in order</p>
+        <ol class="ladder" id="breach-ladder"></ol>
+      </div>
+    </div>
+    <div class="sealed">
+      <p><b>Now the whole sealed test.</b> 100 genuine notes, 12 kinds of attack, 10,000 random inputs and a swarm of 1,000 mutated forgeries: 11,112 attempts, run here, on your machine. Your browser will compute its own receipt. We published ours as <code><!--T4-ID--><!--/T4-ID-->…</code></p>
+      <p class="row"><button class="btn primary" id="breach-all" type="button">Run all 11,112</button><span class="state" id="breach-all-state" role="status" aria-live="polite"></span></p>
+      <div id="breach-result"></div>
+    </div>
+    <p class="note">This is the door from <a href="https://sjgant80-hub.github.io/liveware/">Liveware</a>, byte for byte. Liveware has four more tests you can run the same way.</p>
+  </div>
+</section>
+
+<!-- ═══ 1,000 m · tier 2 · the organism ═══ -->
+<section id="organism-zone" class="zone wide" data-zone="organism" data-depth="1000">
+  <div class="zone-inner">
+    <p class="kicker">Tier 2 · where the door leads</p>
+    <h2>A business that runs <em>and grows itself.</em></h2>
+    <p class="plain">The small model is the door. This is the house. Every dot is a real piece of software we have built: <b><!--N-BUILDS--><!--/N-BUILDS--> public builds</b>, <!--N-LIVE--><!--/N-LIVE--> with a live page. The bright ones are the organs. Owned outright, and proven rather than promised.</p>
+    <p class="gloss"><b>In one line:</b> lots of small proven tools, working together like the organs of a body, with a person holding the keys that matter.</p>
+  </div>
+  <div class="stage-ui">
+    <div class="modes" role="group" aria-label="What the organism shows">
+      <button type="button" id="mode-sim" aria-pressed="true">The simulation</button>
+      <button type="button" id="mode-real" aria-pressed="false">The real builds</button>
+    </div>
+    <p class="caption" id="sim-caption" role="status" aria-live="polite"></p>
+    <p class="note" id="mode-note">The moving light is a <b>simulation</b>: a picture of how the organs hand work to each other, not live telemetry. The dots, the names, the links and every number are real.</p>
+    <div class="find">
+      <label class="lab" for="find-build">Find a build</label>
+      <input id="find-build" type="search" placeholder="type a name, or what it does" autocomplete="off" spellcheck="false">
+      <ul id="find-results" class="results"></ul>
+    </div>
+    <ul class="legend" id="legend"></ul>
+  </div>
+  <div class="cast">
+    <article><h3>Kar</h3><p>The conductor. Picks the work, hands it to the organ that owns it, and may not call anything done until the gate agrees.</p></article>
+    <article><h3>The gate</h3><p>Breaks the code on purpose, hundreds of ways. If the tests miss a break, nothing ships.</p></article>
+    <article><h3>The immune system</h3><p>Checks every message's signature before reading it, and remembers each attack it has met.</p></article>
+    <article><h3>The library</h3><p>Keeps what was proven as rules a person can read. A rule gets in only by beating data it has never seen.</p></article>
+    <article><h3>The night loop</h3><p>Studies the day while you sleep, tests itself on a local model, and keeps only what passed.</p></article>
+    <article><h3>You</h3><p>Hold the keys. Publishing, spending, deleting and anything that reaches a customer wait for a person.</p></article>
+  </div>
+  <div class="zone-inner after">
+    <h3 class="sub">How a firm gets from the door to here</h3>
+    <ol class="path">
+      <li><b>One task, audited.</b> We measure how it is done today and whether a small model you own can do it.</li>
+      <li><b>The model, owned.</b> It runs on your own machines, with its checked library, its gate and its receipt.</li>
+      <li><b>The next task, and the next.</b> Each new job arrives with its own gate and its own receipt. Nothing joins on trust.</li>
+      <li><b>The organs connect.</b> Work routes itself between them, the night loop keeps what was proven, and people hold the keys.</li>
+    </ol>
+    <details>
+      <summary>All <!--N-ORGANS--><!--/N-ORGANS--> named organs, as a list you can read</summary>
+      <ul class="organ-index"><!--ORGAN-INDEX--><!--/ORGAN-INDEX--></ul>
+      <p class="note">The threads between organs are real too: <!--N-LINKS--><!--/N-LINKS--> of them, each meaning one build carries or gates another's code. <a href="estate.html">Every public build, searchable →</a></p>
+    </details>
+  </div>
+</section>
+
+<!-- ═══ 4,000 m · tier 3 · the receipts ═══ -->
+<section id="receipts" class="zone" data-zone="receipts" data-depth="4000">
+  <div class="zone-inner">
+    <p class="kicker">Tier 3 · the proof under both</p>
+    <h2>Don't trust us. <em>Re-run it.</em></h2>
+    <p class="plain">Every number here was measured, not estimated. Each one links to the page where you can check it, and says what it does <b>not</b> prove. The failures are still on the page, because a scoreboard with no losses is an advert.</p>
+  </div>
+  <div class="tiles"><!--STATS--><!--/STATS--></div>
+  <div class="zone-inner after">
+    <h3 class="sub">We publish our failures</h3>
+    <ul class="kept-list">
+      <li>We sealed a claim of 15× compression. We measured 14.83×. <b>Failed, kept.</b></li>
+      <li>Our minted model beat its base, then lost to a bigger model, 9 to 11. <b>On the receipt.</b></li>
+      <li>Three of the small model's seven sealed claims failed. <b>All seven are above.</b></li>
+      <li>With no shared context our codec loses to Brotli on <!--LIGHT-LOSSES--><!--/LIGHT-LOSSES--> of <!--LIGHT-TYPES--><!--/LIGHT-TYPES--> kinds of data. <b>In the table.</b></li>
+      <li>Our own quote checker once passed a fake quote. <b>Found by us, fixed, written down.</b></li>
+      <li>Eleven of thirty-nine claims about computing by settling failed. <b>Kept on that page.</b></li>
+    </ul>
+    <p class="plain">In a field full of hype, the supplier who shows the misses is the one you can check.</p>
+  </div>
+</section>
+
+<!-- ═══ 6,000 m · built by AI ═══ -->
+<section id="made" class="zone" data-zone="made" data-depth="6000">
+  <div class="zone-inner">
+    <p class="kicker">Built by AI, the estate way</p>
+    <h2>An AI built this page. <em>Here is how to check it was built properly.</em></h2>
+    <p class="plain">Kar, the AI that builds for AI Native Solutions, wrote this page in one sitting. That only means something if you can check the work, so here is the work.</p>
+  </div>
+  <div class="instrument plainbox">
+    <ol class="how">
+      <li><b>It runs the real organs, not copies.</b> <!--PIN-COUNT--><!--/PIN-COUNT--> files on this page were taken byte for byte from the builds they belong to, and each is pinned by its fingerprint. If one byte drifts, the build fails.
+        <div class="scroll"><table class="honest"><thead><tr><th>From</th><th>What it is</th><th>Version</th><th>Files</th><th>Licence</th></tr></thead><tbody><!--PIN-ROWS--><!--/PIN-ROWS--></tbody></table></div></li>
+      <li><b>It broke its own new code on purpose.</b> The parts written for this page were changed in small ways, one at a time, to see whether the tests would notice: <b><!--GATE-KILLED--><!--/GATE-KILLED--> of <!--GATE-TOTAL--><!--/GATE-TOTAL--></b> breaks caught.
+        <div class="scroll"><table class="honest"><thead><tr><th>File</th><th>What it decides</th><th>Breaks caught</th><th>Survivors</th></tr></thead><tbody><!--GATE-ROWS--><!--/GATE-ROWS--></tbody></table></div></li>
+      <li><b>No figure was typed by hand.</b> A script draws every number on this page from the record it came from, and the build fails if the page and the records disagree.</li>
+      <li><b>GitHub re-checks it on its own machines.</b> Every change re-runs the tests, the fingerprints and the rules of this site (no prices, credits in full, figures matching their records). <a href="https://github.com/sjgant80-hub/ai-nativesolutions/actions">See the runs →</a></li>
+    </ol>
+    <h3 class="sub">What is real, what is a demo, what is a fallback</h3>
+    <div class="scroll"><table class="honest">
+      <thead><tr><th>On this page</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">The organism</th><td><b>Real data, live drawing.</b> Every dot is a public build; names, links and counts come from the estate index. The moving light is a labelled simulation until you run a demo, when the flashes are that demo's real results. Without WebGPU it is drawn more plainly on a 2D canvas, showing every organ and one build in four.</td></tr>
+        <tr><th scope="row">The small model</th><td><b>Real gate, real library, real law.</b> The reader is either you, or a stock open model running in your browser. It is not our tuned reader, and the page says so beside it.</td></tr>
+        <tr><th scope="row">The source check</th><td><b>Real, and new on this page.</b> It was not part of the sealed 86.3% result.</td></tr>
+        <tr><th scope="row">The race</th><td><b>Real.</b> Four real codecs on your bytes, each verified by decoding back to your exact file.</td></tr>
+        <tr><th scope="row">The door</th><td><b>Real.</b> A real signing key, the real door, and the same sealed test that produced the published receipt.</td></tr>
+        <tr><th scope="row">The network ledger</th><td><b>Real.</b> It lists what your browser reports. It cannot see inside another program on your machine; it can only show what this page did.</td></tr>
+        <tr><th scope="row">The complaints and the ledger sample</th><td><b>Made up,</b> and labelled where they appear.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="zone-inner after">
+    <p class="founder">One human fact. <b>Simon Gant</b> taught himself, and built this entire estate alone, with AI, the same way this page was built. <a href="https://github.com/sjgant80-hub">The history is public →</a></p>
+  </div>
+</section>
+
+<!-- ═══ the seabed · start here ═══ -->
+<section id="start" class="zone" data-zone="start" data-depth="10900">
+  <div class="zone-inner">
+    <p class="kicker">Start here</p>
+    <h2>Start with <em>one task.</em></h2>
+    <p class="plain">Tell us one thing your team does over and over. We will tell you, with numbers, whether a small model you own can do it.</p>
+    <p class="row">
+      <a class="btn primary big" href="mailto:ainativesolutions@gmail.com?subject=One%20task">Send us the task</a>
+      <a class="btn" href="talk.html">Talk to Lia first</a>
+    </p>
+    <h3 class="sub seats-h">What it means for each seat at your table</h3>
+    <dl class="seats">
+      <div><dt>The chief executive</dt><dd>Software you own outright cannot be repriced, discontinued or switched off by a supplier.</dd></div>
+      <div><dt>Finance</dt><dd>You stop renting by the seat. The prospectus works the rented-software bill out industry by industry, with every assumption shown.</dd></div>
+      <div><dt>Operations</dt><dd>The routine work runs itself. Anything that publishes, spends, deletes or reaches a customer waits for a person.</dd></div>
+      <div><dt>Technology and security</dt><dd>It runs on your machines and your clients' data stays on them. Every claim can be re-run; this page's own network ledger shows the idea.</dd></div>
+      <div><dt>The team</dt><dd>They keep the judgement. The model does the reading and sorting, says when it is unsure, and hands that case to a person.</dd></div>
+      <div><dt>The board</dt><dd>A supplier that publishes its failures is one you can audit before you sign.</dd></div>
+    </dl>
+    <p class="row links">
+      <a href="prospectus.html">The prospectus</a>
+      <a href="explainer.html">The film and the brochure</a>
+      <a href="estate.html">Enter the estate</a>
+      <a href="https://sjgant80-hub.github.io/liveware/">Verify a whole system yourself</a>
+      <a href="classic.html">The previous front door</a>
+    </p>
+    <p class="note">Supplied by AI Native Solutions. Support and terms are agreed for each deployment, in that deployment's agreement. The software is MIT-licensed and keeps running without us.</p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <p><!--KONOMI-CREDIT--><!--/KONOMI-CREDIT-->.</p>
+  <!--CREDIT-DREAM--><!--/CREDIT-DREAM-->
+  <p>Law text: public sector information licensed under the Open Government Licence v3.0. Fonts: Fraunces, Hanken Grotesk and JetBrains Mono (SIL Open Font Licence), served from this site. This page sets no cookies and loads nothing from anyone else until you ask for the model.</p>
+  <p>The estate was counted on <!--GENERATED--><!--/GENERATED-->: <!--N-REPOS--><!--/N-REPOS--> repositories. MIT · AI Native Solutions · built by Kar.</p>
+  <noscript><p><b>The live demos on this page need JavaScript.</b> Every figure and every link above works without it.</p></noscript>
+</footer>
+
+<aside id="specimen" hidden aria-live="polite">
+  <button type="button" id="specimen-close" aria-label="Close">×</button>
+  <p class="kicker" id="specimen-kind"></p>
+  <h3 id="specimen-name"></h3>
+  <p id="specimen-gloss"></p>
+  <dl id="specimen-figs"></dl>
+  <p id="specimen-links"></p>
+</aside>
+
+<dialog id="ledger" aria-labelledby="ledger-title">
+  <form method="dialog"><button aria-label="Close">×</button></form>
+  <p class="kicker">Nothing leaves your browser</p>
+  <h3 id="ledger-title">The network ledger</h3>
+  <p class="plain" id="ledger-verdict"></p>
+  <div class="scroll"><table class="honest" id="ledger-table"><thead><tr><th>Host</th><th>What it is</th><th>Requests</th><th>Came down</th><th>Sent up</th></tr></thead><tbody></tbody></table></div>
+  <p class="note">This is every request your browser reports for this page and its workers. A request that carries data up is the only way your words could leave; the ledger counts them, and the page is built to make none. The page's security policy also forbids connecting to any host not listed here. This shows what this page did. It cannot see what other software on your machine does.</p>
+  <details><summary>Every request, in order</summary><ol id="ledger-rows" class="log"></ol></details>
+</dialog>
+</body>
+</html>

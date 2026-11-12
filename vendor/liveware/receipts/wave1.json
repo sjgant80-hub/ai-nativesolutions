@@ -1,0 +1,61 @@
+{
+ "kind": "liveware.receipts",
+ "wave": 1,
+ "sealedAt": "f33dcd154e7a87c8f2cb0ce167f8c4dcc7c62335",
+ "T1": {
+  "record": {
+   "test": "T1",
+   "version": "1",
+   "inputs_sha256": "66b9ef9d7db19fd366011936c80bc17ea489e87487e4dd7875c3bba316f36a67",
+   "outputs_sha256": "ae02f60a1e39c7318dab9e48a8e684306bcaf1f62901f3ed72141b6645bf29f7",
+   "verdict": "pass",
+   "params": {
+    "signerSeed": "07*32"
+   }
+  },
+  "id": "75b8e52bfc298862050b3b0d67207c2d9b0486a0494e8c1a7bbef0374cb97370"
+ },
+ "T4": {
+  "record": {
+   "test": "T4",
+   "version": "1",
+   "inputs_sha256": "bc4e46e4575c2d239f7c7f2bfa6f8ff00ae5cbeebbbd8030e45aae22564df0e0",
+   "outputs_sha256": "a2d189dafa710923aa06e74d9a59f366b3a2e1d1f0f8daf3c884b757366a959c",
+   "verdict": "pass",
+   "params": {
+    "fuzzSeed": 4242,
+    "swarmSeed": 77
+   }
+  },
+  "id": "24d8f269d2e7d4abebbc115edaf115ddbe125fa448ba9377065f6d61d18bcd0b"
+ },
+ "T5": {
+  "record": {
+   "test": "T5",
+   "version": "1",
+   "inputs_sha256": "fd828c8c53fbc6ac278b96dac979b16db10de136a0d0a6ed3e2de19dd057370c",
+   "outputs_sha256": "4fc9d8328ae05437054bc92e0b57ef8cc96d96ba81cfe78d93b7900bb049d1e9",
+   "verdict": "pass",
+   "params": {
+    "gzip": 9,
+    "zstd": 19,
+    "brotli": "q11"
+   }
+  },
+  "id": "6a36e47a4383bf5b533a4fe13455773e1ff376449019741722c5c6ef2f6a9aa3"
+ },
+ "T6": {
+  "record": {
+   "test": "T6",
+   "version": "1",
+   "inputs_sha256": "b5e14417986c542f4aa5e0d792f4fe3952c2d433f8c4c38762e108e563a5d515",
+   "outputs_sha256": "0634b52fd9a2f277d3b7f48a7226c1e6d4549fadef56ece9db8245bbeef6af95",
+   "verdict": "pass",
+   "params": {
+    "keysA": "01*32",
+    "keysB": "02*32"
+   }
+  },
+  "id": "7aca9c45157b888f8b9b74c13ed6f301d1e5347caf380a553c5d0324d12a41ca"
+ }
+}

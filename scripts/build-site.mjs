@@ -33,23 +33,13 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const GARY_DREAM = JSON.parse(readFileSync(join(here, '..', 'media', 'film', 'facts.json'), 'utf8')).credits.garyDream;
 if (!/Lumiea Systems Research Division/.test(GARY_DREAM || '')) { console.error('REFUSED: facts.json credits.garyDream is missing or not in full form'); process.exit(1); }
 
-// ── the numbers, injected into the landing between markers ──
-const landingPath = join(here, '..', 'index.html');
-let landing = readFileSync(landingPath, 'utf8');
-const stamp = (key, value) => {
-  const OPEN = '<!--' + key + '-->', CLOSE = '<!--/' + key + '-->';
-  const a = landing.indexOf(OPEN), b = landing.indexOf(CLOSE);
-  if (a < 0 || b < 0) { console.error('REFUSED: marker ' + key + ' missing from index.html'); process.exit(1); }
-  landing = landing.slice(0, a + OPEN.length) + value + landing.slice(b);
-};
-stamp('N-PUBLIC', pub.length.toLocaleString('en-GB'));
-stamp('N-LIVE', live.length.toLocaleString('en-GB'));
-stamp('GENERATED', String(idx.generated || '').slice(0, 10));
-writeFileSync(landingPath, landing);
+// (The front door itself is drawn by scripts/build-front.mjs from site/page.html since 2026-11-12; this script keeps the
+// estate portal below.)
+
 
 // ── the portal: flagships curated (real links only), the whole live estate searchable ──
 const FLAGSHIPS = [
-  { name: 'fallcorp', line: 'The konomified company — a 100-person firm designed AI-first, seat by seat, with the human doors named' },
+  { name: 'fallcorp', line: 'The AI-first company — a 100-person firm designed AI-first, seat by seat, with the human doors named' },
   { name: 'fallcorp-demo', line: 'Northgate Claims — that company RUNNING: a fictional working day, live in your browser' },
   { name: 'fallforce', line: 'FallForce — the whole owned stack: CRM flagship, the catalogue, the regulated shelf' },
   { name: 'fallworld', line: 'Fall World — the estate as a place: install a didy, fit tools, play the ladder' },
@@ -127,4 +117,4 @@ draw('');
 </script>
 </body></html>`;
 writeFileSync(join(here, '..', 'estate.html'), portal);
-console.log(`landing stamped (${pub.length} public · ${live.length} live) · estate.html generated (${(portal.length / 1024).toFixed(0)}KB, ${data.length} builds)`);
+console.log(`estate.html generated (${pub.length} public · ${live.length} live) (${(portal.length / 1024).toFixed(0)}KB, ${data.length} builds)`);

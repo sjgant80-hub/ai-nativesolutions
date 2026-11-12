@@ -1,0 +1,902 @@
+{
+ "kind": "konomi-tongue.layered.record",
+ "v": 1,
+ "dry": false,
+ "sealed": [
+  {
+   "path": "layered/CLAIMS.md",
+   "commit": "fc3a4ccb3f89a289e043c6ba62f7544c99e5cd9c"
+  },
+  {
+   "path": "layered/STACKED-CLAIMS.md",
+   "commit": "9c887a494fb6404d9197b7d7ee11b9cd63b0e8dc"
+  },
+  {
+   "path": "layered/SEAL2.md",
+   "commit": "867175ccc8e4966cafe95e0c24a4bb93bd5293b7"
+  }
+ ],
+ "cut": "2026-11-05T12:00:00.000Z",
+ "end": "2026-11-10T04:13:56.000Z",
+ "ran": "2026-11-10T05:12:13.776Z",
+ "node": "v25.7.0",
+ "snapshot": "5b52a33963badf470bd2e18451a9752c532af55e08af8f2a861a2425fa469958",
+ "packs": {
+  "records": "64dfdf979ebce8b864d62e3a58845dea53db2470d297f3a1e484325294514121",
+  "prose": "07bc5620e4f7a043c9b3720540d9e14ea5be2700c1f13eb6ca3d1c467c6d7163"
+ },
+ "types": [
+  {
+   "key": "agent",
+   "raw": 147776,
+   "items": 93,
+   "seedBytes": 3723775,
+   "seedId": "8cd23caa",
+   "ladder": {
+    "1": {
+     "frame": 97629,
+     "checked": 93,
+     "identical": 93,
+     "median": 1.444
+    },
+    "3": {
+     "frame": 84244,
+     "checked": 93,
+     "identical": 93,
+     "median": 1.559
+    },
+    "7": {
+     "frame": 76952,
+     "checked": 93,
+     "identical": 93,
+     "median": 1.714
+    },
+    "15": {
+     "frame": 69364,
+     "checked": 93,
+     "identical": 93,
+     "median": 1.834
+    },
+    "31": {
+     "frame": 40354,
+     "checked": 93,
+     "identical": 93,
+     "median": 3.488
+    }
+   },
+   "alone": {
+    "5": {
+     "frame": 85988,
+     "checked": 93,
+     "identical": 93,
+     "median": 1.601
+    },
+    "9": {
+     "frame": 71762,
+     "checked": 93,
+     "identical": 93,
+     "median": 1.766
+    },
+    "17": {
+     "frame": 89891,
+     "checked": 93,
+     "identical": 93,
+     "median": 1.629
+    }
+   },
+   "grow": {
+    "0": {
+     "frame": 69523,
+     "checked": 93,
+     "identical": 93,
+     "median": 1.822,
+     "seedBytes": 0
+    },
+    "65536": {
+     "frame": 46087,
+     "checked": 93,
+     "identical": 93,
+     "median": 3.111,
+     "seedBytes": 65202
+    },
+    "262144": {
+     "frame": 43273,
+     "checked": 93,
+     "identical": 93,
+     "median": 3.284,
+     "seedBytes": 261926
+    },
+    "1048576": {
+     "frame": 40987,
+     "checked": 93,
+     "identical": 93,
+     "median": 3.474,
+     "seedBytes": 1046581
+    },
+    "4194304": {
+     "frame": 40354,
+     "checked": 93,
+     "identical": 93,
+     "median": 3.488,
+     "seedBytes": 3723775
+    }
+   },
+   "baselines": {
+    "gzip9": 78987,
+    "brotli11": 64082,
+    "zstd19": 78863,
+    "deflateSeed": 62970,
+    "zstdSeed": 51169,
+    "lightV1": 55176,
+    "lightV1Identical": 93
+   },
+   "drift": {
+    "refused": 93,
+    "other": 0,
+    "fallback": 93
+   },
+   "corrupt": {
+    "tried": 93,
+    "refused": 93,
+    "exact": 0,
+    "other": 0
+   },
+   "pair": {
+    "items": 93,
+    "third": 31,
+    "first": 3.227,
+    "middle": 3.594,
+    "last": 3.644,
+    "firstBytes": [
+     54925,
+     17018
+    ],
+    "lastBytes": [
+     49555,
+     13600
+    ],
+    "identical": 93,
+    "coldOk": 93,
+    "sharedAtEnd": 147776,
+    "sameId": true
+   },
+   "t": "T1",
+   "label": "agent logs",
+   "privacy": "private",
+   "counts": {
+    "contextCandidates": 3243,
+    "heldCandidates": 157,
+    "droppedPrivate": 0,
+    "droppedDuplicate": 1491,
+    "droppedCapContext": 0,
+    "droppedCapHeld": 0,
+    "contextItems": 1816,
+    "contextBytes": 3723775,
+    "heldItems": 93,
+    "heldBytes": 147776
+   }
+  },
+  {
+   "key": "memory",
+   "raw": 250608,
+   "items": 25,
+   "seedBytes": 2227103,
+   "seedId": "729ccfc6",
+   "ladder": {
+    "1": {
+     "frame": 161072,
+     "checked": 25,
+     "identical": 25,
+     "median": 1.49
+    },
+    "3": {
+     "frame": 120205,
+     "checked": 25,
+     "identical": 25,
+     "median": 1.765
+    },
+    "7": {
+     "frame": 110735,
+     "checked": 25,
+     "identical": 25,
+     "median": 1.9
+    },
+    "15": {
+     "frame": 96231,
+     "checked": 25,
+     "identical": 25,
+     "median": 2.189
+    },
+    "31": {
+     "frame": 69326,
+     "checked": 25,
+     "identical": 25,
+     "median": 3.437
+    }
+   },
+   "alone": {
+    "5": {
+     "frame": 138480,
+     "checked": 25,
+     "identical": 25,
+     "median": 1.672
+    },
+    "9": {
+     "frame": 98848,
+     "checked": 25,
+     "identical": 25,
+     "median": 2.117
+    },
+    "17": {
+     "frame": 156230,
+     "checked": 25,
+     "identical": 25,
+     "median": 1.574
+    }
+   },
+   "grow": {
+    "0": {
+     "frame": 96271,
+     "checked": 25,
+     "identical": 25,
+     "median": 2.185,
+     "seedBytes": 0
+    },
+    "65536": {
+     "frame": 78923,
+     "checked": 25,
+     "identical": 25,
+     "median": 3.012,
+     "seedBytes": 64086
+    },
+    "262144": {
+     "frame": 73646,
+     "checked": 25,
+     "identical": 25,
+     "median": 3.228,
+     "seedBytes": 261254
+    },
+    "1048576": {
+     "frame": 69969,
+     "checked": 25,
+     "identical": 25,
+     "median": 3.395,
+     "seedBytes": 1047921
+    },
+    "4194304": {
+     "frame": 69326,
+     "checked": 25,
+     "identical": 25,
+     "median": 3.437,
+     "seedBytes": 2227103
+    }
+   },
+   "baselines": {
+    "gzip9": 117025,
+    "brotli11": 99167,
+    "zstd19": 113328,
+    "deflateSeed": 105048,
+    "zstdSeed": 82453,
+    "lightV1": 89657,
+    "lightV1Identical": 25
+   },
+   "drift": {
+    "refused": 25,
+    "other": 0,
+    "fallback": 25
+   },
+   "corrupt": {
+    "tried": 25,
+    "refused": 25,
+    "exact": 0,
+    "other": 0
+   },
+   "t": "T2",
+   "label": "memory journal",
+   "privacy": "private",
+   "counts": {
+    "contextCandidates": 372,
+    "heldCandidates": 25,
+    "droppedPrivate": 0,
+    "droppedDuplicate": 0,
+    "droppedCapContext": 0,
+    "droppedCapHeld": 0,
+    "contextItems": 372,
+    "contextBytes": 2227103,
+    "heldItems": 25,
+    "heldBytes": 250608
+   }
+  },
+  {
+   "key": "callbook",
+   "raw": 20209,
+   "items": 8,
+   "seedBytes": 23249,
+   "seedId": "a98cacf3",
+   "ladder": {
+    "1": {
+     "frame": 13632,
+     "checked": 8,
+     "identical": 8,
+     "median": 1.478
+    },
+    "3": {
+     "frame": 11668,
+     "checked": 8,
+     "identical": 8,
+     "median": 1.725
+    },
+    "7": {
+     "frame": 10208,
+     "checked": 8,
+     "identical": 8,
+     "median": 1.975
+    },
+    "15": {
+     "frame": 9258,
+     "checked": 8,
+     "identical": 8,
+     "median": 2.181
+    },
+    "31": {
+     "frame": 1363,
+     "checked": 8,
+     "identical": 8,
+     "median": 14.371
+    }
+   },
+   "alone": {
+    "5": {
+     "frame": 11350,
+     "checked": 8,
+     "identical": 8,
+     "median": 1.78
+    },
+    "9": {
+     "frame": 9692,
+     "checked": 8,
+     "identical": 8,
+     "median": 2.081
+    },
+    "17": {
+     "frame": 12636,
+     "checked": 8,
+     "identical": 8,
+     "median": 1.603
+    }
+   },
+   "grow": {
+    "0": {
+     "frame": 9255,
+     "checked": 8,
+     "identical": 8,
+     "median": 2.181,
+     "seedBytes": 0
+    },
+    "65536": {
+     "frame": 1363,
+     "checked": 8,
+     "identical": 8,
+     "median": 14.371,
+     "seedBytes": 23249
+    },
+    "262144": {
+     "frame": 1363,
+     "checked": 8,
+     "identical": 8,
+     "median": 14.371,
+     "seedBytes": 23249
+    },
+    "1048576": {
+     "frame": 1363,
+     "checked": 8,
+     "identical": 8,
+     "median": 14.371,
+     "seedBytes": 23249
+    },
+    "4194304": {
+     "frame": 1363,
+     "checked": 8,
+     "identical": 8,
+     "median": 14.371,
+     "seedBytes": 23249
+    }
+   },
+   "baselines": {
+    "gzip9": 10284,
+    "brotli11": 8453,
+    "zstd19": 10373,
+    "deflateSeed": 2002,
+    "zstdSeed": 2042,
+    "lightV1": 7649,
+    "lightV1Identical": 8
+   },
+   "drift": {
+    "refused": 8,
+    "other": 0,
+    "fallback": 8
+   },
+   "corrupt": {
+    "tried": 8,
+    "refused": 8,
+    "exact": 0,
+    "other": 0
+   },
+   "t": "T3",
+   "label": "call book",
+   "privacy": "private",
+   "counts": {
+    "contextCandidates": 9,
+    "heldCandidates": 8,
+    "droppedPrivate": 0,
+    "droppedDuplicate": 0,
+    "droppedCapContext": 0,
+    "droppedCapHeld": 0,
+    "contextItems": 9,
+    "contextBytes": 23249,
+    "heldItems": 8,
+    "heldBytes": 20209
+   }
+  },
+  {
+   "key": "records",
+   "raw": 125606,
+   "items": 29,
+   "seedBytes": 4182330,
+   "seedId": "0d3731b9",
+   "ladder": {
+    "1": {
+     "frame": 76628,
+     "checked": 29,
+     "identical": 29,
+     "median": 1.5
+    },
+    "3": {
+     "frame": 47682,
+     "checked": 29,
+     "identical": 29,
+     "median": 1.768
+    },
+    "7": {
+     "frame": 36310,
+     "checked": 29,
+     "identical": 29,
+     "median": 2.188
+    },
+    "15": {
+     "frame": 30178,
+     "checked": 29,
+     "identical": 29,
+     "median": 2.619
+    },
+    "31": {
+     "frame": 14838,
+     "checked": 29,
+     "identical": 29,
+     "median": 20.873
+    }
+   },
+   "alone": {
+    "5": {
+     "frame": 48113,
+     "checked": 29,
+     "identical": 29,
+     "median": 1.958
+    },
+    "9": {
+     "frame": 31514,
+     "checked": 29,
+     "identical": 29,
+     "median": 2.433
+    },
+    "17": {
+     "frame": 73361,
+     "checked": 29,
+     "identical": 29,
+     "median": 1.64
+    }
+   },
+   "grow": {
+    "0": {
+     "frame": 30240,
+     "checked": 29,
+     "identical": 29,
+     "median": 2.609,
+     "seedBytes": 0
+    },
+    "65536": {
+     "frame": 16406,
+     "checked": 29,
+     "identical": 29,
+     "median": 19,
+     "seedBytes": 64350
+    },
+    "262144": {
+     "frame": 15935,
+     "checked": 29,
+     "identical": 29,
+     "median": 18.759,
+     "seedBytes": 260891
+    },
+    "1048576": {
+     "frame": 15598,
+     "checked": 29,
+     "identical": 29,
+     "median": 19.247,
+     "seedBytes": 1023664
+    },
+    "4194304": {
+     "frame": 14838,
+     "checked": 29,
+     "identical": 29,
+     "median": 20.873,
+     "seedBytes": 4182330
+    }
+   },
+   "baselines": {
+    "gzip9": 35166,
+    "brotli11": 29437,
+    "zstd19": 34573,
+    "deflateSeed": 21190,
+    "zstdSeed": 17179,
+    "lightV1": 28058,
+    "lightV1Identical": 29
+   },
+   "drift": {
+    "refused": 29,
+    "other": 0,
+    "fallback": 29
+   },
+   "corrupt": {
+    "tried": 29,
+    "refused": 29,
+    "exact": 0,
+    "other": 0
+   },
+   "pair": {
+    "items": 29,
+    "third": 9,
+    "first": 4.219,
+    "middle": 15.456,
+    "last": 6.384,
+    "firstBytes": [
+     16071,
+     3809
+    ],
+    "lastBytes": [
+     40338,
+     6319
+    ],
+    "identical": 29,
+    "coldOk": 29,
+    "sharedAtEnd": 125606,
+    "sameId": true
+   },
+   "t": "T4",
+   "label": "structured records",
+   "privacy": "public",
+   "counts": {
+    "contextCandidates": 2913,
+    "heldCandidates": 29,
+    "droppedPrivate": 136,
+    "droppedDuplicate": 46,
+    "droppedCapContext": 2334,
+    "droppedCapHeld": 0,
+    "contextItems": 397,
+    "contextBytes": 4182330,
+    "heldItems": 29,
+    "heldBytes": 125606
+   }
+  },
+  {
+   "key": "prose",
+   "raw": 61763,
+   "items": 9,
+   "seedBytes": 3472449,
+   "seedId": "e910f515",
+   "ladder": {
+    "1": {
+     "frame": 39631,
+     "checked": 9,
+     "identical": 9,
+     "median": 1.578
+    },
+    "3": {
+     "frame": 29398,
+     "checked": 9,
+     "identical": 9,
+     "median": 1.974
+    },
+    "7": {
+     "frame": 26520,
+     "checked": 9,
+     "identical": 9,
+     "median": 2.174
+    },
+    "15": {
+     "frame": 22970,
+     "checked": 9,
+     "identical": 9,
+     "median": 2.518
+    },
+    "31": {
+     "frame": 15288,
+     "checked": 9,
+     "identical": 9,
+     "median": 3.843
+    }
+   },
+   "alone": {
+    "5": {
+     "frame": 32740,
+     "checked": 9,
+     "identical": 9,
+     "median": 1.845
+    },
+    "9": {
+     "frame": 23790,
+     "checked": 9,
+     "identical": 9,
+     "median": 2.408
+    },
+    "17": {
+     "frame": 38141,
+     "checked": 9,
+     "identical": 9,
+     "median": 1.631
+    }
+   },
+   "grow": {
+    "0": {
+     "frame": 23002,
+     "checked": 9,
+     "identical": 9,
+     "median": 2.514,
+     "seedBytes": 0
+    },
+    "65536": {
+     "frame": 17547,
+     "checked": 9,
+     "identical": 9,
+     "median": 3.323,
+     "seedBytes": 64843
+    },
+    "262144": {
+     "frame": 16153,
+     "checked": 9,
+     "identical": 9,
+     "median": 3.56,
+     "seedBytes": 261533
+    },
+    "1048576": {
+     "frame": 15381,
+     "checked": 9,
+     "identical": 9,
+     "median": 3.641,
+     "seedBytes": 1048148
+    },
+    "4194304": {
+     "frame": 15288,
+     "checked": 9,
+     "identical": 9,
+     "median": 3.843,
+     "seedBytes": 3472449
+    }
+   },
+   "baselines": {
+    "gzip9": 27123,
+    "brotli11": 22633,
+    "zstd19": 26759,
+    "deflateSeed": 23215,
+    "zstdSeed": 18391,
+    "lightV1": 19767,
+    "lightV1Identical": 9
+   },
+   "drift": {
+    "refused": 9,
+    "other": 0,
+    "fallback": 9
+   },
+   "corrupt": {
+    "tried": 9,
+    "refused": 9,
+    "exact": 0,
+    "other": 0
+   },
+   "pair": {
+    "items": 9,
+    "third": 3,
+    "first": 2.64,
+    "middle": 3.282,
+    "last": 3.722,
+    "firstBytes": [
+     12434,
+     4710
+    ],
+    "lastBytes": [
+     31306,
+     8411
+    ],
+    "identical": 9,
+    "coldOk": 9,
+    "sharedAtEnd": 61763,
+    "sameId": true
+   },
+   "t": "T5",
+   "label": "prose",
+   "privacy": "public",
+   "counts": {
+    "contextCandidates": 1524,
+    "heldCandidates": 10,
+    "droppedPrivate": 92,
+    "droppedDuplicate": 1,
+    "droppedCapContext": 0,
+    "droppedCapHeld": 0,
+    "contextItems": 1432,
+    "contextBytes": 3472449,
+    "heldItems": 9,
+    "heldBytes": 61763
+   }
+  }
+ ],
+ "stacked": {
+  "libraryRules": [
+   {
+    "when": [
+     "firms"
+    ],
+    "then": "verticals",
+    "receipt": "7f853e6a"
+   }
+  ],
+  "counts": {
+   "cases": 1760,
+   "skippedPrivate": 50,
+   "train": 1060,
+   "held": 344,
+   "finalA": 177,
+   "finalB": 179,
+   "measuredSlice": "final-B",
+   "families": 15,
+   "baseline": "scaffold"
+  },
+  "s1": {
+   "rules": 0,
+   "identical": 0,
+   "settled": 0,
+   "agree": 0,
+   "twice": true,
+   "nonRuleLabels": 0,
+   "nonRuleTried": 179,
+   "frameBytes": 0,
+   "ruleBytes": 0
+  },
+  "s3": {
+   "cases": 179,
+   "resolved": 179,
+   "fetchCalls": 0,
+   "sameAsLibrary": 179
+  },
+  "s4": {
+   "byDepth": [
+    {
+     "depth": 0,
+     "answered": 0,
+     "right": 0
+    }
+   ]
+  },
+  "s5": {
+   "proposed": {
+    "library": 1,
+    "7b": 57,
+    "mined": 39
+   },
+   "dropped": 97,
+   "stack": 0,
+   "receipts": 0,
+   "unreceipted": 0,
+   "calls7b": 12,
+   "model7b": "qwen2.5:7b",
+   "why7b": null,
+   "droppedWhy": {
+    "final exam": 2,
+    "held-out": 95
+   }
+  },
+  "rules": [],
+  "rulesWithheld": 0
+ },
+ "gate": {
+  "clean": true,
+  "killed": 349,
+  "total": 349
+ },
+ "verdicts": [
+  {
+   "id": "L1",
+   "held": true,
+   "measured": "agent every layer set lossless on 93; memory every layer set lossless on 25; callbook every layer set lossless on 8; records every layer set lossless on 29; prose every layer set lossless on 9; mutation gate 349/349 clean"
+  },
+  {
+   "id": "L2",
+   "held": true,
+   "measured": "agent 93/93; memory 25/25; callbook 8/8; records 29/29; prose 9/9"
+  },
+  {
+   "id": "L3",
+   "held": true,
+   "measured": "callbook 1.482× → 1.732× → 1.980× → 2.183× → 14.827×; records 1.639× → 2.634× → 3.459× → 4.162× → 8.465×"
+  },
+  {
+   "id": "S2",
+   "held": true,
+   "measured": "S2 is L3, one measurement: callbook 1.482× → 1.732× → 1.980× → 2.183× → 14.827×; records 1.639× → 2.634× → 3.459× → 4.162× → 8.465×"
+  },
+  {
+   "id": "L4",
+   "held": true,
+   "measured": "agent D1 93 + full 93 of 93; memory D1 25 + full 25 of 25; callbook D1 8 + full 8 of 8; records D1 29 + full 29 of 29; prose D1 9 + full 9 of 9"
+  },
+  {
+   "id": "L5",
+   "held": true,
+   "measured": "agent drift refused 93/93, fallback 93, changed byte: 93 refused, 0 exact, 0 other; memory drift refused 25/25, fallback 25, changed byte: 25 refused, 0 exact, 0 other; callbook drift refused 8/8, fallback 8, changed byte: 8 refused, 0 exact, 0 other; records drift refused 29/29, fallback 29, changed byte: 29 refused, 0 exact, 0 other; prose drift refused 9/9, fallback 9, changed byte: 9 refused, 0 exact, 0 other"
+  },
+  {
+   "id": "L7",
+   "held": false,
+   "measured": "agent full 3.662× vs product 2.941×; memory full 3.615× vs product 4.073×; callbook full 14.827× vs product 3.160×; records full 8.465× vs product 10.659×; prose full 4.040× vs product 4.404×"
+  },
+  {
+   "id": "L8",
+   "held": false,
+   "measured": "agent 3.662×; memory 3.615×; callbook 14.827×; records 8.465×; prose 4.040×"
+  },
+  {
+   "id": "L9",
+   "held": true,
+   "measured": "agent 40354 bytes, below all 5; memory 69326 bytes, below all 5; callbook 1363 bytes, below all 5; records 14838 bytes, below all 5; prose 15288 bytes, below all 5"
+  },
+  {
+   "id": "L10",
+   "held": true,
+   "measured": "agent 40354 vs LIGHT v1 55176; memory 69326 vs LIGHT v1 89657; callbook 1363 vs LIGHT v1 7649; records 14838 vs LIGHT v1 28058; prose 15288 vs LIGHT v1 19767"
+  },
+  {
+   "id": "L11",
+   "held": true,
+   "measured": "agent 2.126× → 3.206× → 3.415× → 3.605× → 3.662×; memory 2.603× → 3.175× → 3.403× → 3.582× → 3.615×; callbook 2.184× → 14.827× → 14.827× → 14.827× → 14.827×; records 4.154× → 7.656× → 7.882× → 8.053× → 8.465×; prose 2.685× → 3.520× → 3.824× → 4.016× → 4.040×"
+  },
+  {
+   "id": "L12",
+   "held": true,
+   "measured": "agent D1 1.514×; memory D1 1.556×; callbook D1 1.482×; records D1 1.639×; prose D1 1.558×"
+  },
+  {
+   "id": "S1",
+   "held": false,
+   "measured": "0/0 frames byte-identical; 0/0 settlings agree with the library; twice the same: true; non-rule frames that gave a label: 0"
+  },
+  {
+   "id": "S3",
+   "held": true,
+   "measured": "179/179 cases settled; calls out of the node: 0"
+  },
+  {
+   "id": "S4",
+   "held": false,
+   "measured": "right on FINAL-B by depth: 0 (a stack of 0 rules)"
+  },
+  {
+   "id": "S5",
+   "held": true,
+   "measured": "97 proposed (library 1, 7b 57, mined 39); 97 dropped; stack 0, with receipts 0"
+  },
+  {
+   "id": "S6",
+   "held": true,
+   "measured": "agent first third 3.227× → last third 3.644×, round-trips 93/93; records first third 4.219× → last third 6.384×, round-trips 29/29; prose first third 2.640× → last third 3.722×, round-trips 9/9"
+  }
+ ]
+}

@@ -6,9 +6,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20' }
+        with: { node-version: '22' }
       - name: proof-of-play — the operating-board gate
         run: node --test stages.test.mjs
+      - name: the front door runs the estate's real kernels, byte for byte (pinned by hash)
+        run: node scripts/vendor-site.mjs --check
+      - name: the front door's own kernels — tests
+        run: node --test site/kernel/estate.test.mjs site/kernel/ground.test.mjs site/kernel/netwatch.test.mjs site/kernel/race.test.mjs site/page.test.mjs
+      - name: the front door is drawn from its records (fixpoint)
+        run: node scripts/build-front.mjs --check
       - name: the film package is drawn from its facts file (fixpoint)
         run: |
           node scripts/build-explainer.mjs
@@ -20,3 +26,5 @@ jobs:
         run: |
           git clone --depth 1 --branch v0.6 https://github.com/sjgant80-hub/witness.git /tmp/witness
           node /tmp/witness/witness.mjs mutate stages.mjs --timeout 60000 --cap 400 --test node --test stages.test.mjs
+      - name: witness — the front door's kernels, broken on purpose, re-derived on this runner
+        run: node scripts/gate-site.mjs /tmp/witness/witness.mjs --verify

@@ -1,0 +1,56 @@
+{
+  "name": "@bokuweb/zstd-wasm",
+  "version": "0.0.27",
+  "repository": "ssh://git@github.com/bokuweb/zstd-wasm.git",
+  "author": "<bokuweb12@gmail.com>",
+  "license": "MIT",
+  "main": "dist/common/index.node.js",
+  "browser": "dist/web/index.web.js",
+  "types": "dist/web/index.web.d.ts",
+  "scripts": {
+    "largefile": "yes \"Hello\" | head -n 40000000 > ./test/large-file",
+    "tsc": "tsc -p tsconfig.json --skipLibCheck",
+    "copy:wasm:web": "cp -r ./lib/zstd.wasm dist/web",
+    "copy:wasm:common": "cp -r ./lib/zstd.wasm dist/common",
+    "copy:wasm:esm": "cp -r ./lib/zstd.wasm dist/esm",
+    "tsc:web": "tsc -p tsconfig.web.json --skipLibCheck",
+    "tsc:common": "tsc -p tsconfig.node.common.json --skipLibCheck",
+    "tsc:esm": "tsc -p tsconfig.node.esm.json --skipLibCheck",
+    "build:web": "npm run tsc:web && npm run copy:wasm:web",
+    "build:common": "npm run tsc:common && npm run copy:wasm:common",
+    "build:esm": "npm run tsc:esm && npm run copy:wasm:esm",
+    "build:deno": "node tools/deno.js && sed -e 's/module.exports = /export default /' lib/wasm/zstd.js > deno/zstd.deno.js",
+    "benchmark": "npx ts-node ./benchmark/index.ts",
+    "build:js": "npm run clean && npm run build:web && npm run build:common && npm run build:esm",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build:js",
+    "build:wasm": "sh build.sh",
+    "build:all": "npm run build:wasm && npm run build:js",
+    "test": "npm run largefile && jest && rm ./test/large-file"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/benchmark": "2.1.5",
+    "@types/jest": "28.1.8",
+    "@types/node": "20.12.4",
+    "benchmark": "2.1.4",
+    "glob-all": "3.3.1",
+    "jest": "28.1.3",
+    "prettier": "3.2.5",
+    "text-encoding": "0.7.0",
+    "ts-jest": "28.0.8",
+    "typescript": "5.7"
+  },
+  "dependencies": {},
+  "exports": {
+    "node": "./dist/common/index.node.js",
+    "require": "./dist/common/index.node.js",
+    "browser": "./dist/web/index.web.js",
+    "default": "./dist/common/index.node.js"
+  }
+}

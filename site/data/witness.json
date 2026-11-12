@@ -1,0 +1,42 @@
+{
+  "_rule": "The mutation gate on the front door's own kernels (witness v0.6, uncapped). Re-derived on GitHub's runner on every push; the front door prints these numbers.",
+  "witness": "v0.6",
+  "kernels": [
+    {
+      "file": "site/kernel/estate.mjs",
+      "what": "the organism: which family a build is in, its shape and real links, where each cell starts, the simulation's script, what the pointer is on",
+      "sha256": "f971da2204579e10ba8147e700334397f72963e3cd8ddd5d6432284aa0463140",
+      "testSha256": "6044146b6f37ab27f35b54cb46317b8668fc3efc41d290e83376c1d5b4be8f6d",
+      "killed": 60,
+      "total": 60,
+      "survivors": []
+    },
+    {
+      "file": "site/kernel/ground.mjs",
+      "what": "the source check: a date, a price or a credit-card payment the reader gives must be in the visitor's own words",
+      "sha256": "47c295c1ff6870ccf98c8255629b577d5de81fee026fbfed21c0881e3fa13def",
+      "testSha256": "1d1a8a2c87939bf81b3867224174af21739a76648359c23298a3610473f0ee76",
+      "killed": 42,
+      "total": 42,
+      "survivors": []
+    },
+    {
+      "file": "site/kernel/netwatch.mjs",
+      "what": "the network ledger: who the page talked to, and whether anything was sent up",
+      "sha256": "83a9c45711241b24d21e1327cc34b14ba9efb2039a3f84e9d726d5b82052ecf7",
+      "testSha256": "9215636e44e62cfe70d18b3e61da40017c50e2c02a70e5d8d60a8d8ab88dfef4",
+      "killed": 34,
+      "total": 34,
+      "survivors": []
+    },
+    {
+      "file": "site/kernel/race.mjs",
+      "what": "the compression race: the placing, the verdict sentence and the sealed table, losses included",
+      "sha256": "b73b5dc89a2f23389aafbf442cda8ea5ffab888101337da1b8bbed78cd56a3cb",
+      "testSha256": "42912df1d48328e6308c948e76bb2926ca996a179423056aa054ad9ddff45adf",
+      "killed": 58,
+      "total": 58,
+      "survivors": []
+    }
+  ]
+}

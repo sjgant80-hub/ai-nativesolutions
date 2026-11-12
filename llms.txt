@@ -26,7 +26,8 @@ The differentiator is **provable AI**: where the industry certifies AI with anot
 - [forgegrowth](https://sjgant80-hub.github.io/forgegrowth/) — growth copy that cites the receipt or is refused; every external post waits behind a human key
 - [Prospectus, 2026-09 edition](https://www.ai-nativesolutions.com/prospectus.html) ([PDF](https://www.ai-nativesolutions.com/fall-os-prospectus.pdf)) and [the deck](https://www.ai-nativesolutions.com/deck.html) ([PDF](https://www.ai-nativesolutions.com/fall-os-deck.pdf))
 
-- [Landing page](https://www.ai-nativesolutions.com/) — software your firm owns, built AI-first, proven before it ships
+- [The front door](https://www.ai-nativesolutions.com/) — a living page that runs the estate in the visitor's own browser: the whole public estate drawn as one organism (every dot a real build), a small-model reader with a source check, a verified law library and a gate that abstains, a compression race on the visitor's own file, a signed door to attack (with the sealed 11,112-attempt test, reproducing the published receipt), nine measured figures each with its receipt and what it does not prove, and a network ledger showing that nothing is sent up
+- [The previous front door](https://www.ai-nativesolutions.com/classic.html) — software your firm owns, built AI-first, proven before it ships
 - [Perimeter](https://sjgant80-hub.github.io/perimeter/) — why public-AI prompts are discoverable (the Heppner argument) and what sovereign AI fixes
 - [Agent-Proof](https://sjgant80-hub.github.io/agent-proof/) — deterministic policy gate + hash-chained audit trail for AI agents; a receipt that can say FAILS; no LLM judge
 - [Mint a node](https://sjgant80-hub.github.io/mint-a-node/) — bring one repetitive task, get an owned model + a signed receipt proving it beats your baseline, or you don't pay

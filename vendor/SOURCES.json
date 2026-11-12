@@ -1,0 +1,95 @@
+{
+  "_rule": "Every file here is taken byte for byte from the source named and pinned by SHA-256. Edit the source repo, never these copies.",
+  "sources": [
+    {
+      "id": "slm-suite",
+      "repo": "sjgant80-hub/slm-suite",
+      "commit": "ba01d2f02bb4302300e4fa0015b9d95a39641111",
+      "licence": "MIT",
+      "what": "the SLM stack: the gate, the memo, and the UK consumer-claim library with its verified provisions",
+      "files": {
+        "stack/gate.mjs": "d14c92fc7a9a684a8cbcdd73c35dd4f4a4d4010df92db6004c65360f4189f4bf",
+        "stack/memo.mjs": "b907ccd3ca5ca6d666eed741a80796987710b8241738410d6994a8b493959d87",
+        "verticals/legal/library.mjs": "20af78802a7d50e564a51ec9e197ac3d0bc4845fb8a84646a7ec3285b240fa7a",
+        "verticals/legal/vertical.mjs": "3536f9d43864efd88f881f3030d51e6cffc7a442d9c505ef7670737359a37a12",
+        "verticals/legal/law.json": "37d7ed10e560afcd3aaa7183231a2ddd96edd247cdb50e9327f53f321fe13eac",
+        "data/record.json": "b772f46c76ba1c5a76690c07d4783612d73d74091707b3140ef9f5c438f399fc"
+      }
+    },
+    {
+      "id": "konomi-tongue",
+      "repo": "sjgant80-hub/konomi-tongue",
+      "commit": "d5f961486b470c0c02e96c7cd7efe49eedac71ed",
+      "licence": "MIT",
+      "what": "LIGHT, layered: the five-layer lossless codec",
+      "files": {
+        "layered/src/fold.mjs": "fa06321c2394eb6436c317ea712d24f8f5376d6f8e1d81eeca6e4233e3a5ec9e",
+        "light/sha256.mjs": "cf60afffd36df071b277da214ed61a7b3f4923e443bfadb06656bb7da4756bc1",
+        "layered/data/record.json": "34436e7241efa3e3f57bb03e0bed2df6bfc66acd12f3e169a8fde71e5745d365"
+      }
+    },
+    {
+      "id": "liveware",
+      "repo": "sjgant80-hub/liveware",
+      "commit": "48205c71f6ba923182beaccf51fc656b4174b785",
+      "licence": "MIT",
+      "what": "the signed-packet door, the immune library, the referee and the sealed attack test (Wave 1, T4)",
+      "files": {
+        "src/wave1.mjs": "8e7f98ab5d825e59c6063f119395e9e4ac3796c594b7af955a94089a5ce0b46b",
+        "src/door.mjs": "abb343228344dad7089f6e3cbd8fe46301be21fece7d8828f9d8b470812b52ce",
+        "src/receipt.mjs": "60f1ca5b335b08e76fb56cf157e7102f6f9e45b119d69a8e191cab66053971ff",
+        "src/seed.mjs": "28ce15f5fb568f89a2dfe33db9940072af57b6ac2155fb32fdc20e6de5847d46",
+        "src/compress.mjs": "a2cd6e3ddda396a26bd41ba435205b845bfb73c088ea09d1164b553af86fc836",
+        "src/mesh.mjs": "7bf69a44ecf77b02009d874bdabf2477d61adec1f4fbabe464f2e64625b0904c",
+        "src/rng.mjs": "8e72439cd67e38d70e397253981a4c19037ab35f6fdc89f24758e2645f0b69e7",
+        "vendor/fall-kit/core/identity.mjs": "429caa25bf0e104f6a664224d81fd8215d2f6c79aad3323a8acb476f85a3856e",
+        "vendor/fall-kit/core/antibody.mjs": "cb507411787cc6bb07891acd24c5d9ee8de85b762706205154fe9ac1d6dd1514",
+        "vendor/fall-kit/core/vendor/light/sha256.mjs": "cf60afffd36df071b277da214ed61a7b3f4923e443bfadb06656bb7da4756bc1",
+        "vendor/fall-kit/core/vendor/light/packet.mjs": "d565bdabdbfc063bf952d1e20cdb14c5564041667c60a560a56f930aff6e5245",
+        "vendor/fall-kit/core/vendor/light/codec.mjs": "4f018272a05989fe8fbd0f675e0460b35365710a174a88dbf628165ef21f431d",
+        "vendor/fall-kit/core/vendor/sync/crdt.mjs": "992f47d8b805a2af0e8694e2d72066f6e42407cddc8f54acb47ce81cf9ac2b77",
+        "receipts/wave1.json": "1bb59d942e2c5d9c58971365482bc5435a9e7014c6d81feedcf688ce68137380"
+      }
+    },
+    {
+      "id": "brotli-wasm",
+      "version": "3.0.1",
+      "from": "https://cdn.jsdelivr.net/npm/brotli-wasm@3.0.1/",
+      "licence": "Apache-2.0",
+      "what": "Brotli compiled to WebAssembly (the race baseline)",
+      "files": {
+        "pkg.web/brotli_wasm.js": "cd7c6ad22230d9ad5618f4bc5b1a032677a18bcc9c7abecba6d5439beff031bc",
+        "pkg.web/brotli_wasm_bg.wasm": "9ef0a025046bf7d87b7cdb8eac3f73a5c8fea2f1adb848cc9768345573fcd8a9",
+        "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      }
+    },
+    {
+      "id": "zstd-wasm",
+      "version": "0.0.27",
+      "from": "https://cdn.jsdelivr.net/npm/@bokuweb/zstd-wasm@0.0.27/",
+      "licence": "MIT",
+      "what": "Zstandard compiled to WebAssembly (the race baseline)",
+      "files": {
+        "dist/web/zstd.js": "22e49b83d2677c31722aaf7bfbcdc7ae6231325ad933b648d32c93fc564afe02",
+        "dist/common/zstd.wasm": "80260eee5795ee8072bb5821e203730c74dca3909938f5ac1128da67f96223df",
+        "package.json": "cea034cdb2870fc3c57820d0ddf4d82994bc6fe55ea4f4ea3f57da7ca20a0268"
+      }
+    },
+    {
+      "id": "fonts",
+      "version": "fontsource 5.2",
+      "from": "https://cdn.jsdelivr.net/npm/",
+      "licence": "OFL-1.1",
+      "what": "Fraunces, Hanken Grotesk and JetBrains Mono (variable, latin), served from this site so no font host is called",
+      "files": {
+        "fraunces/files/fraunces-latin-full-normal.woff2": "7e744849028e2219e2aa1bc467dc4032980dc4487c9c3da3010081cd72d3b103",
+        "fraunces/files/fraunces-latin-full-italic.woff2": "04a14ea380db53a35a3ec651934b21061234685bb604d30aac82663b5d9e539b",
+        "hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2": "e9201eddf1d41d0b62253295d869ce3cf65768f7102b797f02c7f8c876b4a9d5",
+        "jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2": "18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e",
+        "fraunces/LICENSE": "cd3384cafac6f2bddc3955273958a2e029f97027c8037ac539ef5744a77b579e",
+        "hanken-grotesk/LICENSE": "f45f60ca871850c58d8dc9c973bd6fcad40c137e9d037172b961e8ca68c87ef7",
+        "jetbrains-mono/LICENSE": "403581b69dac5cff4079205e01c6b467e56af449ecbd7247693ddb1baafa005b"
+      }
+    }
+  ]
+}

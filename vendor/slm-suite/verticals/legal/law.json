@@ -1,0 +1,22 @@
+{
+ "note": "The verified table: every provision the legal associate may cite. Each was read on legislation.gov.uk (latest revised version) on 2026-11-09; the 'says' line is this repository's own plain paraphrase, not the statute's text. Contains public sector information licensed under the Open Government Licence v3.0.",
+ "licence": "Open Government Licence v3.0 (https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)",
+ "verified": "2026-11-09",
+ "provisions": [
+  { "id": "cra-s9", "cite": "Consumer Rights Act 2015, s. 9", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/9", "says": "Goods must be of satisfactory quality." },
+  { "id": "cra-s19-14", "cite": "Consumer Rights Act 2015, s. 19(14)", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/19", "says": "Goods that fail to conform within six months beginning with the day they were delivered are taken not to have conformed on delivery, unless shown otherwise." },
+  { "id": "cra-s20", "cite": "Consumer Rights Act 2015, s. 20", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/20", "says": "Rejecting goods ends the contract and entitles the consumer to a refund." },
+  { "id": "cra-s22", "cite": "Consumer Rights Act 2015, s. 22(3)", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/22", "says": "The short-term right to reject lasts until the end of 30 days beginning with the first day after delivery (and ownership or possession passing)." },
+  { "id": "cra-s23", "cite": "Consumer Rights Act 2015, s. 23", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/23", "says": "The consumer may require the trader to repair or replace the goods." },
+  { "id": "cra-s24", "cite": "Consumer Rights Act 2015, s. 24(5)", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/24", "says": "After one repair or one replacement fails, the consumer may require a price reduction or use the final right to reject." },
+  { "id": "cra-s24-10", "cite": "Consumer Rights Act 2015, s. 24(10)", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/24", "says": "No deduction for use may be made from the refund if the final right to reject is used within the first six months (motor vehicles excepted)." },
+  { "id": "cra-s49", "cite": "Consumer Rights Act 2015, s. 49", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/49", "says": "A service must be performed with reasonable care and skill." },
+  { "id": "cra-s55", "cite": "Consumer Rights Act 2015, s. 55", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/55", "says": "The consumer may require the trader to perform the service again." },
+  { "id": "cra-s56", "cite": "Consumer Rights Act 2015, s. 56", "url": "https://www.legislation.gov.uk/ukpga/2015/15/section/56", "says": "If repeat performance is impossible or not done in a reasonable time, the consumer may require a price reduction." },
+  { "id": "ccr-reg29", "cite": "Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013, reg. 29", "url": "https://www.legislation.gov.uk/uksi/2013/3134/regulation/29", "says": "A consumer may cancel a distance contract within the cancellation period without giving a reason." },
+  { "id": "ccr-reg30", "cite": "Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013, reg. 30(3)", "url": "https://www.legislation.gov.uk/uksi/2013/3134/regulation/30", "says": "For goods, the cancellation period ends at the end of 14 days after the day the goods come into the consumer's physical possession." },
+  { "id": "ccr-reg34", "cite": "Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013, reg. 34", "url": "https://www.legislation.gov.uk/uksi/2013/3134/regulation/34", "says": "On cancellation the trader must refund the consumer, including the standard delivery charge." },
+  { "id": "cca-s75", "cite": "Consumer Credit Act 1974, s. 75", "url": "https://www.legislation.gov.uk/ukpga/1974/39/section/75", "says": "The card issuer is jointly liable for the supplier's breach where a single item's cash price is over £100 and not more than £30,000 (s. 75(3)(b))." },
+  { "id": "la-s5", "cite": "Limitation Act 1980, s. 5", "url": "https://www.legislation.gov.uk/ukpga/1980/58/section/5", "says": "A claim founded on simple contract must be brought within six years from the date the cause of action accrued." }
+ ]
+}

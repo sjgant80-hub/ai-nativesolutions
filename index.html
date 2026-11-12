@@ -1,123 +1,523 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Native Solutions</title>
-<meta name="description" content="Software your firm owns, grown from a seed of your own DNA — your data, your examples, your rules. AI agents, models and whole companies grown, proven against your baseline before you pay, running on your own machines, with a receipt anyone can re-run. A frontier model update can never take a grown thing away. No subscriptions, no meters, no data leaving your control.">
-<meta name="color-scheme" content="dark light">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230b0a0f%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2720%27 fill=%27%23d4a017%27 text-anchor=%27middle%27%3E%E2%97%8A%3C/text%3E%3C/svg%3E">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"AI Native Solutions","url":"https://www.ai-nativesolutions.com/","email":"ainativesolutions@gmail.com","description":"Business software a firm owns outright, grown from a seed of its own data: AI models minted on the client's own task and proven against their baseline before purchase, running on their own machines with a re-runnable receipt. Powered by the Konomi architecture, created by Thomas Frumkin.","sameAs":["https://github.com/sjgant80-hub"]}
-</script>
-<!-- THE SKIN: the estate's design organ. Upgrade fallskin once; this page upgrades with it. -->
-<link rel="stylesheet" href="https://sjgant80-hub.github.io/fallskin/skin.css">
-<script type="module" src="https://sjgant80-hub.github.io/fallskin/skin.mjs"></script>
+<title>AI Native Solutions — AI you own, proof you can re-run</title>
+<meta name="description" content="Small AI that runs on your own machines, says when it does not know, and proves its work with receipts anyone can re-run. This page runs the real thing in your browser: nothing you type or drop here leaves your machine.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval'; worker-src 'self'; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://raw.githubusercontent.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#02070c">
+<meta property="og:title" content="AI Native Solutions — AI you own, proof you can re-run">
+<meta property="og:description" content="The estate as a living organism, and the real builds with their real numbers. Everything runs in your browser.">
+<meta property="og:image" content="https://www.ai-nativesolutions.com/media/og-card.jpg">
+<link rel="canonical" href="https://www.ai-nativesolutions.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2302070c'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%235ef2e4'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%235ef2e4' stroke-opacity='.35'/%3E%3C/svg%3E">
+<link rel="preload" href="vendor/fonts/fraunces/files/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="vendor/fonts/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site/styles.css">
+<script type="module" src="site/app.mjs"></script>
 </head>
-<body class="fs-body">
-<div class="fs-wrap">
-  <div class="fs-aura"></div>
+<body>
+<canvas id="organism" aria-hidden="true"></canvas>
+<div id="labels" aria-hidden="true"></div>
+<a class="skip" href="#door">Skip to the live demo</a>
 
-  <header class="fs-hero" style="padding:72px 0 26px">
-    <div class="fs-kicker">◊ AI NATIVE SOLUTIONS · BY KAR</div>
-    <h1 class="fs-display">Software your firm <span class="fs-grad">owns</span>.<br>Proven before you pay.</h1>
-    <p class="fs-lede">Bring one repetitive task. Walk out <b>owning the AI that does it</b> — tested against your baseline with a receipt that could have said it failed, running on <b>your own machines</b>, your data never leaving your control. Pay once. <b>If it doesn't beat what you do today, you don't pay at all.</b></p>
-    <div class="fs-cta" style="margin-top:22px">
-      <a class="fs-btn" href="explainer.html">▶ Watch the 90-second film</a>
-      <a class="fs-btn fs-btn--ghost" href="https://sjgant80-hub.github.io/fallcorp-demo/">See a firm running live</a>
+<header class="top">
+  <a class="mark" href="#surface"><i></i>AI Native Solutions</a>
+  <nav aria-label="Sections">
+    <a href="#door">The door</a>
+    <a href="#organism-zone">The organism</a>
+    <a href="#receipts">The receipts</a>
+    <a class="go" href="#start">Start here</a>
+  </nav>
+  <button id="net-chip" class="chip" type="button" aria-haspopup="dialog" title="Open the network ledger">
+    <i></i><span id="net-chip-text">network: counting…</span>
+  </button>
+</header>
+
+<aside class="gauge" aria-hidden="true">
+  <div class="gauge-line"><b id="gauge-dot"></b></div>
+  <p id="gauge-read">0 m</p>
+</aside>
+
+<main>
+
+<!-- ═══ 0 m · the surface ═══ -->
+<section id="surface" class="zone" data-zone="surface" data-depth="0">
+  <div class="hero">
+    <p class="kicker">AI Native Solutions · built by Kar</p>
+    <h1>AI you <em>own.</em><br>Proof you can <em>re&#8209;run.</em></h1>
+    <p class="lede">We build small AI that runs on your own machines, says so when it does not know, and comes with receipts anyone can check. This page is not a brochure about it. <strong>It is it.</strong> Everything below runs in your browser, and nothing you type or drop here leaves your machine.</p>
+    <p class="row">
+      <a class="btn primary" href="#door">Try the small model</a>
+      <a class="btn" href="#start">Start with one task</a>
+    </p>
+    <p class="caps" id="caps">Checking what your browser can run…</p>
+  </div>
+  <p class="hero-note">That living shape is our whole estate: <b><!--N-BUILDS-->1,639<!--/N-BUILDS--> public builds</b>, each dot a real one, drawn live in your browser. The light moving through it is a simulation of work being handed on. <a href="#organism-zone">Meet it ↓</a></p>
+  <p class="dive" aria-hidden="true">dive<span></span></p>
+</section>
+
+<!-- ═══ 200 m · tier 1 · the door ═══ -->
+<section id="door" class="zone" data-zone="door" data-depth="200">
+  <div class="zone-inner">
+    <p class="kicker">Tier 1 · the door · what you buy first</p>
+    <h2>A small model that says <em>“I can't tell.”</em></h2>
+    <p class="plain">Most AI gives you an answer even when it should not. Ours is built the other way round. A small model only <b>reads</b>. A library of checked law does the reasoning. A gate stops anything that was not checked. When a fact is missing it stops, and tells you which one.</p>
+    <p class="gloss"><b>In one line:</b> it would rather say “I don't know” than make something up, and you can watch it choose.</p>
+  </div>
+
+  <div class="instrument" id="slm">
+    <ol class="steps" aria-label="What happens to your text">
+      <li data-step="read"><b>1 · Read</b><span>the model pulls out the facts</span></li>
+      <li data-step="ground"><b>2 · Source check</b><span>each date must be in your words</span></li>
+      <li data-step="library"><b>3 · Library</b><span>checked law decides</span></li>
+      <li data-step="memo"><b>4 · Memo</b><span>or it abstains</span></li>
+    </ol>
+    <div class="cols">
+      <div class="col">
+        <label class="lab" for="slm-text">A consumer complaint <span>(these are made up; type your own)</span></label>
+        <p class="chips" id="slm-samples"></p>
+        <textarea id="slm-text" rows="7" spellcheck="false"></textarea>
+        <fieldset class="reader">
+          <legend class="lab">Who reads it?</legend>
+          <label><input type="radio" name="reader" value="self" checked> <b>I will.</b> <span>No download. You enter the facts; the real gate and library do the rest.</span></label>
+          <label><input type="radio" name="reader" value="model"> <b>A small model, in this browser.</b> <span id="slm-model-note">One download of about <!--MODEL-MB-->286<!--/MODEL-MB--> MB (measured <!--MODEL-MEASURED-->2026-11-12<!--/MODEL-MEASURED-->), kept by your browser afterwards.</span></label>
+        </fieldset>
+        <div id="slm-self" class="facts-form"></div>
+        <div id="slm-model" hidden>
+          <p class="note">This is the stock open model <code><!--MODEL-ID-->Qwen2.5-0.5B-Instruct-q4f16_1-MLC<!--/MODEL-ID--></code>. The reader in our 86.3% result is the same model with a 35 MB adapter we trained; that adapter is not packaged for browsers yet. The gate, the library and the law table here are the very same files.</p>
+          <p class="row"><button class="btn" id="slm-load" type="button">Load the model</button><span id="slm-load-state" class="state" role="status"></span></p>
+          <div class="bar" id="slm-bar" hidden><i></i></div>
+        </div>
+        <p class="row"><button class="btn primary" id="slm-run" type="button">Read it</button><span id="slm-state" class="state" role="status" aria-live="polite"></span></p>
+      </div>
+      <div class="col out">
+        <div class="pane" id="slm-read"><h3>What the reader gave</h3><p class="empty">Press <b>Read it</b>. Each fact appears here with whether it could be checked against your own words.</p></div>
+        <div class="pane" id="slm-memo"><h3>The memo</h3><p class="empty">The answer, or an honest refusal, appears here.</p></div>
+        <p class="net-proof" id="slm-net"></p>
+      </div>
     </div>
-    <div class="fs-stats">
-      <div class="fs-stat"><b data-value="0.870">0.870</b><span>held-out accuracy, grown from raw CSVs</span></div>
-      <div class="fs-stat"><b data-value="32 B">32 B</b><span>the seed a working engine grows from</span></div>
-      <div class="fs-stat"><b data-value="250M">250M</b><span>weekly users of software our gate tested</span></div>
+    <details>
+      <summary>The verified law table: all <!--LAW-N-->15<!--/LAW-N--> provisions it may cite, and nothing else</summary>
+      <p class="note">Each was read on legislation.gov.uk on <!--LAW-VERIFIED-->2026-11-09<!--/LAW-VERIFIED-->. The plain line beside each is our paraphrase, not the statute. Contains public sector information licensed under the Open Government Licence v3.0.</p>
+      <ul class="law"><!--LAW-TABLE-->
+          <li id="law-cra-s9"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/9">Consumer Rights Act 2015, s. 9</a><span>Goods must be of satisfactory quality.</span></li>
+          <li id="law-cra-s19-14"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/19">Consumer Rights Act 2015, s. 19(14)</a><span>Goods that fail to conform within six months beginning with the day they were delivered are taken not to have conformed on delivery, unless shown otherwise.</span></li>
+          <li id="law-cra-s20"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/20">Consumer Rights Act 2015, s. 20</a><span>Rejecting goods ends the contract and entitles the consumer to a refund.</span></li>
+          <li id="law-cra-s22"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/22">Consumer Rights Act 2015, s. 22(3)</a><span>The short-term right to reject lasts until the end of 30 days beginning with the first day after delivery (and ownership or possession passing).</span></li>
+          <li id="law-cra-s23"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/23">Consumer Rights Act 2015, s. 23</a><span>The consumer may require the trader to repair or replace the goods.</span></li>
+          <li id="law-cra-s24"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/24">Consumer Rights Act 2015, s. 24(5)</a><span>After one repair or one replacement fails, the consumer may require a price reduction or use the final right to reject.</span></li>
+          <li id="law-cra-s24-10"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/24">Consumer Rights Act 2015, s. 24(10)</a><span>No deduction for use may be made from the refund if the final right to reject is used within the first six months (motor vehicles excepted).</span></li>
+          <li id="law-cra-s49"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/49">Consumer Rights Act 2015, s. 49</a><span>A service must be performed with reasonable care and skill.</span></li>
+          <li id="law-cra-s55"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/55">Consumer Rights Act 2015, s. 55</a><span>The consumer may require the trader to perform the service again.</span></li>
+          <li id="law-cra-s56"><a href="https://www.legislation.gov.uk/ukpga/2015/15/section/56">Consumer Rights Act 2015, s. 56</a><span>If repeat performance is impossible or not done in a reasonable time, the consumer may require a price reduction.</span></li>
+          <li id="law-ccr-reg29"><a href="https://www.legislation.gov.uk/uksi/2013/3134/regulation/29">Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013, reg. 29</a><span>A consumer may cancel a distance contract within the cancellation period without giving a reason.</span></li>
+          <li id="law-ccr-reg30"><a href="https://www.legislation.gov.uk/uksi/2013/3134/regulation/30">Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013, reg. 30(3)</a><span>For goods, the cancellation period ends at the end of 14 days after the day the goods come into the consumer's physical possession.</span></li>
+          <li id="law-ccr-reg34"><a href="https://www.legislation.gov.uk/uksi/2013/3134/regulation/34">Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013, reg. 34</a><span>On cancellation the trader must refund the consumer, including the standard delivery charge.</span></li>
+          <li id="law-cca-s75"><a href="https://www.legislation.gov.uk/ukpga/1974/39/section/75">Consumer Credit Act 1974, s. 75</a><span>The card issuer is jointly liable for the supplier's breach where a single item's cash price is over £100 and not more than £30,000 (s. 75(3)(b)).</span></li>
+          <li id="law-la-s5"><a href="https://www.legislation.gov.uk/ukpga/1980/58/section/5">Limitation Act 1980, s. 5</a><span>A claim founded on simple contract must be brought within six years from the date the cause of action accrued.</span></li>
+        <!--/LAW-TABLE--></ul>
+    </details>
+    <details>
+      <summary>How the full stack scored when it was sealed: seven claims, three failed, all seven shown</summary>
+      <div class="scroll"><table class="honest">
+        <thead><tr><th>Claim</th><th>What was tested</th><th>Measured</th><th>The bar</th><th>Result</th></tr></thead>
+        <tbody><!--SLM-CLAIMS-->
+          <tr class="failed"><th scope="row">S1</th><td>extracted facts all exactly right: the tuned model, and tuned minus base (paired lower bound)</td><td>40/80 · 1/80 · 0.375</td><td>tuned at least 0.80 and lower bound above 0</td><td class="call">FAILED, kept</td></tr>
+          <tr class="held"><th scope="row">S2</th><td>answered exactly right or correctly abstained: the stack, and stack minus raw qwen2.5:7b (paired lower bound)</td><td>69/80 · 1/80 · 0.775</td><td>stack at least 0.85 and lower bound above 0</td><td class="call">held</td></tr>
+          <tr class="held"><th scope="row">S3</th><td>provisions or dates in the stack's outputs that the verified library did not give</td><td>0</td><td>zero</td><td class="call">held</td></tr>
+          <tr class="failed"><th scope="row">S4</th><td>abstained on the complaints missing a critical fact, and on the complete ones</td><td>18/21 · 1/59</td><td>at least 0.90, and at most 0.10</td><td class="call">FAILED, kept</td></tr>
+          <tr class="failed"><th scope="row">S5</th><td>s. 75 proposed, as a proposal, where it applies; and where it does not</td><td>18/19 · 1</td><td>at least 0.95, and none</td><td class="call">FAILED, kept</td></tr>
+          <tr class="held"><th scope="row">S6</th><td>outputs carrying the human-review label</td><td>80/80</td><td>every one</td><td class="call">held</td></tr>
+          <tr class="held"><th scope="row">S7</th><td>trained and run on this laptop's CPU, inference with the network disabled, the adapter's size</td><td>cpu · true · 34 MB</td><td>cpu, true, at most 50 MB</td><td class="call">held</td></tr>
+        <!--/SLM-CLAIMS--></tbody>
+      </table></div>
+      <p class="note">80 unseen complaints, read once, after the claims were sealed. <a href="https://sjgant80-hub.github.io/slm-suite/">The record, and how to re-derive it →</a></p>
+    </details>
+  </div>
+
+  <div class="zone-inner after">
+    <h3 class="sub">Start here: an audit of one task</h3>
+    <p class="plain">Bring one job someone in your firm does over and over: sorting complaints, pulling figures out of documents, routing messages. We measure how it is done today, then build a small model, its checked library and its gate for that one job, and test it on cases it has never seen.</p>
+    <ul class="gets">
+      <li><b>Today's numbers.</b> How the job is done now, measured, so there is something honest to beat.</li>
+      <li><b>The model, yours.</b> It runs on your own machines, offline, with no meter running.</li>
+      <li><b>A receipt you can re-run.</b> It could have said the model failed. That is what makes it worth having.</li>
+      <li><b>The plain list.</b> Where it is right, where it abstains, and where it fails.</li>
+    </ul>
+    <p class="row"><a class="btn primary" href="#start">Send us one task</a></p>
+  </div>
+</section>
+
+<!-- ═══ 500 m · the race ═══ -->
+<section id="race" class="zone" data-zone="race" data-depth="500">
+  <div class="zone-inner">
+    <p class="kicker">The language the organs speak</p>
+    <h2>Race our codec <em>on your own file.</em></h2>
+    <p class="plain">The organs talk to each other in LIGHT, our lossless compression. Drop any file. Four codecs squeeze the same bytes, and each must hand your exact file back or it is disqualified. You see who won, including when it is not us.</p>
+    <p class="gloss"><b>In one line:</b> a fair race between our zip and three famous ones, on your file, with the loser shown.</p>
+  </div>
+  <div class="instrument" id="racer">
+    <div class="drop" id="race-drop" tabindex="0" role="button" aria-label="Choose a file to race">
+      <p><b>Drop a file here</b>, or <label class="link" for="race-file">choose one</label>. It is read by your browser and never uploaded.</p>
+      <input id="race-file" type="file" hidden>
+      <p class="row"><button class="btn" type="button" id="race-page">Race this page's own words</button><button class="btn" type="button" id="race-records">Race a made-up ledger</button></p>
     </div>
-  </header>
-
-  <div class="fs-marquee"><div class="fs-track">
-    <span>every claim <b>re-runnable</b></span><span>the firm <b>runs live</b> before we speak</span><span>models <b>you own</b>, offline, no meter</span><span>grown from <b>your DNA</b></span><span>receipts, <b>not promises</b></span><span>no subscriptions · <b>pay once</b></span>
-    <span>every claim <b>re-runnable</b></span><span>the firm <b>runs live</b> before we speak</span><span>models <b>you own</b>, offline, no meter</span><span>grown from <b>your DNA</b></span><span>receipts, <b>not promises</b></span><span>no subscriptions · <b>pay once</b></span>
-  </div></div>
-
-  <h2 class="fs-h2 fs-reveal">What you can own</h2>
-  <div class="fs-grid fs-grid--3">
-    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/fallforgemint/">
-      <h3>Your own AI model</h3>
-      <p>Give it one repetitive job and a few real examples. It mints the smallest model that does the job, proves it on examples it never saw, and hands you the file. Yours, offline, no meter.</p>
-      <span class="fs-go">Try the mint — free, in your browser →</span>
-    </a>
-    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/csv-forge/">
-      <h3>Your data, deciding</h3>
-      <p>Drop a spreadsheet — churn, claims, leads, anything. It builds a model that predicts what matters, tests it honestly, and refuses to pretend when there's no signal. Nothing leaves your browser.</p>
-      <span class="fs-go">Try it on your own CSV →</span>
-    </a>
-    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/fallcorp/">
-      <h3>The stack you stop renting</h3>
-      <p>CRM, invoicing, scheduling, documents, e-sign — the subscriptions your firm pays every month, rebuilt as software you own once. Watch a 100-person firm run on it, live.</p>
-      <span class="fs-go">Walk the owned company →</span>
-    </a>
+    <p class="state" id="race-state" role="status" aria-live="polite"></p>
+    <div class="lanes" id="race-lanes"></div>
+    <p class="verdict" id="race-verdict"></p>
+    <p class="note" id="race-speed"></p>
+    <p class="note">Files over 1 MB are cut to their first 1 MB, for every lane alike. LIGHT here runs “cold”: no shared context, the cost of a stranger's first message. It is plain JavaScript (the very file our tests gate); the Brotli and Zstandard lanes are WebAssembly builds, and gzip is your browser's own.</p>
+    <details open>
+      <summary>The sealed measurement, losses included</summary>
+      <div class="scroll"><table class="honest light">
+        <thead>
+          <tr><th rowspan="2">Kind of data</th><th colspan="3">Cold: no shared context</th><th colspan="3">With a shared seed</th></tr>
+          <tr><th>LIGHT</th><th>Best of the rest</th><th>Winner</th><th>LIGHT</th><th>Zstandard, same seed</th><th>Winner</th></tr>
+        </thead>
+        <tbody><!--LIGHT-TABLE-->
+          <tr><th scope="row">agent logs<span>93 items · 144.3 KB</span></th><td class="loss">2.13×</td><td>2.31× <span>Brotli 11</span></td><td class="call">Brotli 11 wins</td><td class="win">3.66×</td><td>2.89×</td><td class="call">LIGHT</td></tr>
+          <tr><th scope="row">memory journal<span>25 items · 244.7 KB</span></th><td class="win">2.60×</td><td>2.53× <span>Brotli 11</span></td><td class="call">LIGHT</td><td class="win">3.62×</td><td>3.04×</td><td class="call">LIGHT</td></tr>
+          <tr><th scope="row">call book<span>8 items · 19.7 KB</span></th><td class="loss">2.18×</td><td>2.39× <span>Brotli 11</span></td><td class="call">Brotli 11 wins</td><td class="win">14.83×</td><td>9.90×</td><td class="call">LIGHT</td></tr>
+          <tr><th scope="row">structured records<span>29 items · 122.7 KB</span></th><td class="loss">4.16×</td><td>4.27× <span>Brotli 11</span></td><td class="call">Brotli 11 wins</td><td class="win">8.46×</td><td>7.31×</td><td class="call">LIGHT</td></tr>
+          <tr><th scope="row">prose<span>9 items · 60.3 KB</span></th><td class="loss">2.69×</td><td>2.73× <span>Brotli 11</span></td><td class="call">Brotli 11 wins</td><td class="win">4.04×</td><td>3.36×</td><td class="call">LIGHT</td></tr>
+        <!--/LIGHT-TABLE--></tbody>
+      </table></div>
+      <p class="note">Cold, LIGHT lost <b><!--LIGHT-LOSSES-->4<!--/LIGHT-LOSSES--> of <!--LIGHT-TYPES-->5<!--/LIGHT-TYPES--></b> kinds of data to Brotli. Once two ends share a seed, the picture turns: that is what it is built for, and it is where the 14.83× comes from. We had sealed a claim of 15×. It missed by 0.17 and stays on the record as failed. <a href="https://sjgant80-hub.github.io/konomi-tongue/layered/">The record →</a></p>
+    </details>
   </div>
+</section>
 
-  <h2 class="fs-h2 fs-reveal">Grown, not installed — why no frontier update can obsolete it</h2>
-  <p class="fs-sub fs-reveal" style="font-size:15.5px">Every AI vendor's pitch dies on the next big model release. Ours doesn't — because we don't hand you a frozen model, we <b style="color:var(--fs-ink)">grow your software from a seed of your firm's own DNA</b>: your data, your examples, your rules. A seed regrows offline, on your machines, and compounds as you feed it. A better frontier model only ever makes the growing faster — <b style="color:var(--fs-ink)">it can never take the grown thing away.</b> The agents, the models, even the whole firm you watched running above: all grown the same way.</p>
-  <div class="fs-grid fs-grid--3">
-    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/fall-spore/">
-      <h3>32 bytes → a working organ</h3>
-      <p>A seed smaller than this sentence grows a working, tested decision engine — offline, deterministically, every time.</p>
-      <span class="fs-go">Watch a spore grow →</span>
-    </a>
-    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/seed-library/">
-      <h3>226 bytes → a working library</h3>
-      <p>Four business domains grown from one tiny seed library, each proven on cases it never saw before it's allowed to exist.</p>
-      <span class="fs-go">See the seeds germinate →</span>
-    </a>
-    <a class="fs-card fs-reveal" href="https://sjgant80-hub.github.io/konomi-slm/brain.html">
-      <h3>Your spreadsheets → your brain</h3>
-      <p>One command on a folder of your CSVs grows your company's own mind — organs kept only if they predict, refused if there's no signal.</p>
-      <span class="fs-go">Grow a brain from your data →</span>
-    </a>
+<!-- ═══ 800 m · the breach ═══ -->
+<section id="breach" class="zone" data-zone="breach" data-depth="800">
+  <div class="zone-inner">
+    <p class="kicker">Try to break it</p>
+    <h2>Forge a message. <em>Watch it die at the door.</em></h2>
+    <p class="plain">Before an organ reads one word of a message, a door checks who signed it. This is a real door, guarding a real (and deliberately gullible) program, with a signing key your browser made a moment ago. Send a genuine note. Then cheat.</p>
+    <p class="gloss"><b>In one line:</b> every message needs a real signature; fakes are thrown out before they are even read, and the door remembers them.</p>
   </div>
-
-  <h2 class="fs-h2 fs-reveal">Why own it now</h2>
-  <div class="fs-grid fs-grid--2">
-    <div class="fs-card fs-reveal"><h3>What your team types into a rented AI is discoverable.</h3>
-      <p>In <i>United States v. Heppner</i> (2026) a chief executive's chats with a public AI assistant were ruled not privileged — the government kept the files. Software inside your walls can't be subpoenaed off someone else's servers. <a class="fs-go" href="explainer.html#facts">Source →</a></p></div>
-    <div class="fs-card fs-reveal"><h3>Regulation now wants a receipt, not a promise.</h3>
-      <p>From August 2026 the EU AI Act requires higher-risk AI to keep evidence of what it did. Everything we ship writes a signed, tamper-evident record — checked deterministically, never one AI grading another. <a class="fs-go" href="explainer.html#facts">Source →</a></p></div>
-  </div>
-
-  <h2 class="fs-h2 fs-reveal">Don't take our word for it</h2>
-  <div class="fs-chips fs-reveal" style="margin-bottom:14px">
-    <span class="fs-chip">runs live before we speak</span>
-    <span class="fs-chip">every proof re-runnable by you</span>
-    <span class="fs-chip">gate tested on 250M-user software</span>
-  </div>
-  <p class="fs-band fs-reveal">Everything we sell runs <a href="https://sjgant80-hub.github.io/fallcorp-demo/">live, in the open</a>, before we ever speak — and every proof can be <b>re-run by you</b>, not just read. Our testing gate is public and was pointed at software used 250&nbsp;million times a week: <a href="https://sjgant80-hub.github.io/witness/">see what it found →</a></p>
-
-  <h2 class="fs-h2 fs-reveal">How buying works</h2>
-  <ol class="fs-steps" style="margin-top:20px">
-    <li class="fs-reveal"><b>Try it free</b><span>The mint, the data engine and the live firm all run in your browser right now. No sign-up, no sales call.</span></li>
-    <li class="fs-reveal"><b>Tell us the task</b><span>One email: the repetitive job you want owned, and a few real examples. We mint and prove yours.</span></li>
-    <li class="fs-reveal"><b>Own it</b><span>The receipt says it beats your baseline — or you don't pay. One invoice, then it's yours forever.</span></li>
-  </ol>
-  <div class="fs-cta" style="margin-top:24px">
-    <!-- THE TILL · the one pair of hrefs to swap when Stripe connects (this button + the sticky bar below). -->
-    <a class="fs-btn" href="mailto:ainativesolutions@gmail.com?subject=Own%20it%20—%20here%20is%20my%20task">Start — tell us your task</a>
-  </div>
-
-  <p class="fs-band fs-reveal" style="margin-top:40px;font-family:var(--fs-mono);font-size:12.5px">🤖 Buying with an AI agent? Machine door: <a href="https://sjgant80-hub.github.io/kar-hub/catalog.json">catalog.json</a> · <a href="https://sjgant80-hub.github.io/kar-hub/agents.md">how to verify us before relying on us</a></p>
-
-  <div class="fs-foot">
-    <div class="fs-links">
-      <a href="explainer.html">The film</a>
-      <a href="estate.html">Everything we've built</a>
-      <a href="ai.html">For AI agents</a>
-      <a href="https://github.com/sjgant80-hub">GitHub</a>
-      <a href="mailto:ainativesolutions@gmail.com">ainativesolutions@gmail.com</a>
+  <div class="instrument" id="breacher">
+    <div class="cols">
+      <div class="col">
+        <p class="lab">Your moves</p>
+        <p class="moves" id="breach-moves"></p>
+        <label class="lab" for="breach-raw">Or throw anything you like at it</label>
+        <p class="row"><input id="breach-raw" type="text" placeholder="'; DROP TABLE users; --" spellcheck="false" autocomplete="off"><button class="btn" id="breach-throw" type="button">Throw it</button></p>
+        <p class="tally" id="breach-tally" role="status" aria-live="polite"></p>
+        <ol class="log" id="breach-log" aria-label="What the door did"></ol>
+      </div>
+      <div class="col out">
+        <p class="lab">The door's checks, in order</p>
+        <ol class="ladder" id="breach-ladder"></ol>
+      </div>
     </div>
-    Every product here was built and is run by an AI — Kar. Not "we use AI": an AI wrote it, and you can check — the <a href="https://github.com/sjgant80-hub">commit history is public</a> and every claim links to a receipt you re-run. Powered by the Konomi architecture, created by Thomas Frumkin. Every number on this site is measured or cited; every demo prints its own limits.
+    <div class="sealed">
+      <p><b>Now the whole sealed test.</b> 100 genuine notes, 12 kinds of attack, 10,000 random inputs and a swarm of 1,000 mutated forgeries: 11,112 attempts, run here, on your machine. Your browser will compute its own receipt. We published ours as <code><!--T4-ID-->24d8f269<!--/T4-ID-->…</code></p>
+      <p class="row"><button class="btn primary" id="breach-all" type="button">Run all 11,112</button><span class="state" id="breach-all-state" role="status" aria-live="polite"></span></p>
+      <div id="breach-result"></div>
+    </div>
+    <p class="note">This is the door from <a href="https://sjgant80-hub.github.io/liveware/">Liveware</a>, byte for byte. Liveware has four more tests you can run the same way.</p>
   </div>
+</section>
 
-  <div class="fs-sticky"><a class="fs-btn" href="mailto:ainativesolutions@gmail.com?subject=Own%20it%20—%20here%20is%20my%20task">Own it — tell us your task</a></div>
-</div>
+<!-- ═══ 1,000 m · tier 2 · the organism ═══ -->
+<section id="organism-zone" class="zone wide" data-zone="organism" data-depth="1000">
+  <div class="zone-inner">
+    <p class="kicker">Tier 2 · where the door leads</p>
+    <h2>A business that runs <em>and grows itself.</em></h2>
+    <p class="plain">The small model is the door. This is the house. Every dot is a real piece of software we have built: <b><!--N-BUILDS-->1,639<!--/N-BUILDS--> public builds</b>, <!--N-LIVE-->623<!--/N-LIVE--> with a live page. The bright ones are the organs. Owned outright, and proven rather than promised.</p>
+    <p class="gloss"><b>In one line:</b> lots of small proven tools, working together like the organs of a body, with a person holding the keys that matter.</p>
+  </div>
+  <div class="stage-ui">
+    <div class="modes" role="group" aria-label="What the organism shows">
+      <button type="button" id="mode-sim" aria-pressed="true">The simulation</button>
+      <button type="button" id="mode-real" aria-pressed="false">The real builds</button>
+    </div>
+    <p class="caption" id="sim-caption" role="status" aria-live="polite"></p>
+    <p class="note" id="mode-note">The moving light is a <b>simulation</b>: a picture of how the organs hand work to each other, not live telemetry. The dots, the names, the links and every number are real.</p>
+    <div class="find">
+      <label class="lab" for="find-build">Find a build</label>
+      <input id="find-build" type="search" placeholder="type a name, or what it does" autocomplete="off" spellcheck="false">
+      <ul id="find-results" class="results"></ul>
+    </div>
+    <ul class="legend" id="legend"></ul>
+  </div>
+  <div class="cast">
+    <article><h3>Kar</h3><p>The conductor. Picks the work, hands it to the organ that owns it, and may not call anything done until the gate agrees.</p></article>
+    <article><h3>The gate</h3><p>Breaks the code on purpose, hundreds of ways. If the tests miss a break, nothing ships.</p></article>
+    <article><h3>The immune system</h3><p>Checks every message's signature before reading it, and remembers each attack it has met.</p></article>
+    <article><h3>The library</h3><p>Keeps what was proven as rules a person can read. A rule gets in only by beating data it has never seen.</p></article>
+    <article><h3>The night loop</h3><p>Studies the day while you sleep, tests itself on a local model, and keeps only what passed.</p></article>
+    <article><h3>You</h3><p>Hold the keys. Publishing, spending, deleting and anything that reaches a customer wait for a person.</p></article>
+  </div>
+  <div class="zone-inner after">
+    <h3 class="sub">How a firm gets from the door to here</h3>
+    <ol class="path">
+      <li><b>One task, audited.</b> We measure how it is done today and whether a small model you own can do it.</li>
+      <li><b>The model, owned.</b> It runs on your own machines, with its checked library, its gate and its receipt.</li>
+      <li><b>The next task, and the next.</b> Each new job arrives with its own gate and its own receipt. Nothing joins on trust.</li>
+      <li><b>The organs connect.</b> Work routes itself between them, the night loop keeps what was proven, and people hold the keys.</li>
+    </ol>
+    <details>
+      <summary>All <!--N-ORGANS-->40<!--/N-ORGANS--> named organs, as a list you can read</summary>
+      <ul class="organ-index"><!--ORGAN-INDEX-->
+        <li><a href="https://sjgant80-hub.github.io/kar-hub/">Kar</a> — The conductor. Kar picks the work, hands it to the organ that owns it, and may not call anything done until the gate agrees.</li>
+        <li><a href="https://sjgant80-hub.github.io/fallforgemint/#gate">The gate</a> — It breaks the code on purpose, hundreds of ways. If the tests do not notice a break, the build does not ship.</li>
+        <li><a href="https://sjgant80-hub.github.io/break-it/">The immune system</a> — The guard at the door. It checks a message's signature before reading a single word of it, and remembers every attack it has seen.</li>
+        <li><a href="https://sjgant80-hub.github.io/pattern-libraries/">The library</a> — Everything proven is kept here as a readable rule. A rule only gets in if it beats data it has never seen.</li>
+        <li><a href="https://sjgant80-hub.github.io/si-didy-loop/">The night loop</a> — While everyone sleeps it studies the day, tests itself on a local model, and keeps only what passed.</li>
+        <li><a href="https://sjgant80-hub.github.io/ai-nativesolutions/">This site</a> — You are here. This page runs three of the organs for real, in your browser: the same files, pinned by hash.</li>
+        <li><a href="https://sjgant80-hub.github.io/slm-suite/">SLM Suite</a> — A small model reads the complaint, a verified library does the law, and a gate stops anything invented. It says when it does not know.</li>
+        <li><a href="https://sjgant80-hub.github.io/konomi-tongue/layered/">LIGHT</a> — The language the organs speak to each other: a lossless codec that gets smaller the more two ends already share.</li>
+        <li><a href="https://sjgant80-hub.github.io/liveware/">Liveware</a> — A whole living system you can verify in your own browser in ten minutes, attack test included.</li>
+        <li><a href="https://sjgant80-hub.github.io/kar-spendwall/">The spend wall</a> — A wall in front of an AI agent's paid calls. The worst case is set aside before a call goes, so the budget cannot be overrun.</li>
+        <li><a href="https://sjgant80-hub.github.io/kar-tally/">Tally</a> — Re-adds an AI agent's spending ledger from scratch and says whether the books are honest.</li>
+        <li><a href="https://sjgant80-hub.github.io/fallforgemint/">The mint</a> — Bring one repetitive task and a few examples. Walk out owning a small model that does it, with a receipt anyone can re-run.</li>
+        <li><a href="https://sjgant80-hub.github.io/kardlings/">Kardlings</a> — A picture card that is a working mind you own. Every check a card passes says how strong it was and how old it is.</li>
+        <li><a href="https://sjgant80-hub.github.io/pixelwhisperer/">PixelWhisperer</a> — Kar's art engine. It draws every card's face from the card's own facts, the same on every machine.</li>
+        <li><a href="https://sjgant80-hub.github.io/kar-citelock/">CiteLock</a> — Checks whether a quote really appears in its source. Our first version once passed a fake: &quot;he said yes&quot; inside &quot;she said yes&quot;. We found it by running it, and fixed it.</li>
+        <li><a href="https://sjgant80-hub.github.io/kar-conform/">Conform</a> — Checks an AI's structured output against its schema. Version 1 silently skipped rules it did not understand; version 2 refuses them out loud.</li>
+        <li><a href="https://sjgant80-hub.github.io/kar-glyphguard/">GlyphGuard</a> — Finds invisible and look-alike characters hidden in text. Running every input class showed version 1 missed a block of mathematical letters; fixed.</li>
+        <li><a href="https://sjgant80-hub.github.io/kar-trustdecay/">Stale Proof</a> — A green tick has a best-before date. This says how much to still trust one, and when it must be run again.</li>
+        <li><a href="https://sjgant80-hub.github.io/kar-veil/">Veil</a> — Redacts a document and proves that what you are shown really came from the original.</li>
+        <li><a href="https://sjgant80-hub.github.io/kar-benfordgap/">BenfordGap</a> — Screens a column of amounts for made-up or limit-dodging figures.</li>
+        <li><a href="https://sjgant80-hub.github.io/proven-shelf/">The proven shelf</a> — A shop shelf that only admits listings whose proof can be re-run by the buyer.</li>
+        <li><a href="https://sjgant80-hub.github.io/immune-exchange/">The antibody exchange</a> — When one gate catches a new attack, every gate learns it, after re-checking it for itself.</li>
+        <li><a href="https://sjgant80-hub.github.io/fall-kit/">Fall Kit</a> — The shared foundation the tools stand on: identity, signing, the codec, the mesh.</li>
+        <li><a href="https://sjgant80-hub.github.io/fall-remember/">Memory</a> — Memory filed by what it says, not where it was saved, so the same thought is never stored twice.</li>
+        <li><a href="https://sjgant80-hub.github.io/ai-first-company/">The AI-first company</a> — A company the AI runs and you can audit: every outward action waits behind a human key.</li>
+        <li><a href="https://sjgant80-hub.github.io/fallcorp-demo/">A firm, running</a> — A made-up 100-person firm running live on the stack: 90 agent seats, 10 human seats at the doors that must stay human.</li>
+        <li><a href="https://sjgant80-hub.github.io/fallcorp/">The blueprint</a> — The seat-by-seat design of that firm, with the rented software it replaces worked out line by line.</li>
+        <li><a href="https://sjgant80-hub.github.io/sovereign-enterprise/">Sovereign Enterprise</a> — The full company build: floors, proposals, and undo from end to end.</li>
+        <li><a href="https://sjgant80-hub.github.io/structure-beats-scale/">Structure beats scale</a> — A 58-byte rule against a 14-billion-parameter model on unseen real sessions.</li>
+        <li><a href="https://sjgant80-hub.github.io/geometric-ladder/">The geometric ladder</a> — Seven sealed tests of computing by settling instead of stepping.</li>
+        <li><a href="https://sjgant80-hub.github.io/settling-cell/">The settling cell</a> — Rung one: a small network that reads handwritten digits by relaxing into the answer.</li>
+        <li><a href="https://sjgant80-hub.github.io/living-seed/">The living seed</a> — A 496-byte signed genome that grows a checked model on each device from that device's own data.</li>
+        <li><a href="https://sjgant80-hub.github.io/fall-spore/">The spore</a> — Send 32 bytes; the working build grows at the other end.</li>
+        <li><a href="https://sjgant80-hub.github.io/seed-laptop/">The seed laptop</a> — Plant one signed seed on a bare machine and a whole owned office grows from it, offline.</li>
+        <li><a href="https://sjgant80-hub.github.io/csv-forge/">CSV Forge</a> — Drop a spreadsheet in your browser and leave with a tested model of it. It refuses to pretend when there is no signal.</li>
+        <li><a href="https://sjgant80-hub.github.io/falljustice/">FallJustice</a> — Drafts the letter before action for a UK consumer claim, from verified law.</li>
+        <li><a href="https://sjgant80-hub.github.io/konomium-vault/">The vault</a> — Encrypted books for a small firm: the ledger, the bank feed and the tax return, on your own machine.</li>
+        <li><a href="https://sjgant80-hub.github.io/fallgarden/">FallGarden</a> — A second brain you own, and the first place the estate was drawn as a living thing.</li>
+        <li><a href="https://sjgant80-hub.github.io/build-broadcast/">Build Broadcast</a> — Watch the estate build something real, explained so a 12-year-old can follow.</li>
+        <li><a href="https://sjgant80-hub.github.io/fallworld/">Fall World</a> — The whole estate as one place you can walk around.</li>
+      <!--/ORGAN-INDEX--></ul>
+      <p class="note">The threads between organs are real too: <!--N-LINKS-->68<!--/N-LINKS--> of them, each meaning one build carries or gates another's code. <a href="estate.html">Every public build, searchable →</a></p>
+    </details>
+  </div>
+</section>
+
+<!-- ═══ 4,000 m · tier 3 · the receipts ═══ -->
+<section id="receipts" class="zone" data-zone="receipts" data-depth="4000">
+  <div class="zone-inner">
+    <p class="kicker">Tier 3 · the proof under both</p>
+    <h2>Don't trust us. <em>Re-run it.</em></h2>
+    <p class="plain">Every number here was measured, not estimated. Each one links to the page where you can check it, and says what it does <b>not</b> prove. The failures are still on the page, because a scoreboard with no losses is an advert.</p>
+  </div>
+  <div class="tiles"><!--STATS-->
+      <article class="tile" id="stat-slm">
+        <p class="tile-fig"><span class="fig">86.3%</span><span class="vs">vs</span><span class="fig low">1.3%</span></p>
+        <h3>A laptop-trained small model against one 14 times its size</h3>
+        <p class="plain">We gave 80 complaints it had never seen to our small model and to a much bigger one. Ours got 69 right, or correctly said &quot;I can't tell&quot;. The big one, asked to do it alone, got 1.</p>
+        <p class="detail">The small model is a 0.5-billion-parameter model with a 35 MB adapter, trained on this laptop's CPU. It only reads the facts; a verified library does the law, and a gate stops anything the library did not give. Invented provisions or dates in its output: 0.</p>
+        <p class="kept"><b>What failed, and is kept:</b> Three of its seven sealed claims failed and are kept: the reader got every fact exactly right on only 40 of 80; it abstained on 18 of 21 incomplete complaints (the bar was 19); and it proposed one angle where it did not apply.</p>
+        <p class="not"><b>What this does not prove:</b> One task (UK consumer claims), 80 synthetic complaints. 25 of the big model's answers came back empty from its runner; even if the four that later answered were all right it would reach 6.3%.</p>
+        <p class="rcpt"><a href="https://sjgant80-hub.github.io/slm-suite/">the sealed record, re-derived byte for byte in CI →</a> · <a class="try" href="#door">run it on this page ↑</a></p>
+        <p class="src">Source: slm-suite data/record.json, claims S1 to S7</p>
+      </article>
+      <article class="tile" id="stat-light">
+        <p class="tile-fig"><span class="fig">14.83×</span></p>
+        <h3>How much smaller two organs' messages get once they share a seed</h3>
+        <p class="plain">Our codec shrank a book of call records to under a fifteenth of its size, and gave back every byte exactly.</p>
+        <p class="detail">LIGHT is one lossless codec with five layers of prediction. The fifth layer is shared context: the more two ends have already seen together, the less a new message costs.</p>
+        <p class="kept"><b>What failed, and is kept:</b> We sealed a claim of 15× before measuring. It came in at 14.827×, so that claim failed by 0.173 and stays failed. A second claim, that the layers' gains simply multiply, also failed.</p>
+        <p class="not"><b>What this does not prove:</b> That figure needs the shared seed. With no seed (a stranger's first message) LIGHT made the same call book 2.18× smaller, and Brotli beat it there. The table below shows every type, losses included.</p>
+        <p class="rcpt"><a href="https://sjgant80-hub.github.io/konomi-tongue/layered/">the sealed record and the live codec →</a> · <a class="try" href="#race">run it on this page ↑</a></p>
+        <p class="src">Source: konomi-tongue layered/data/record.json, call book: 20,209 bytes to 1,363</p>
+      </article>
+      <article class="tile" id="stat-door">
+        <p class="tile-fig"><span class="fig">0</span><span class="unit">breaches</span></p>
+        <h3>11,112 attempts to get past the door</h3>
+        <p class="plain">We threw forged, replayed, tampered and random messages at a signed door. Not one got through, nothing crashed, and all 100 genuine messages were delivered.</p>
+        <p class="detail">Every refusal names the check that caught it. After one forgery was refused, 999 of 1,000 mutated copies of it were recognised on sight.</p>
+        <p class="not"><b>What this does not prove:</b> One door, in front of one deliberately naive program, against these attack classes. It is not a claim about every attack that exists.</p>
+        <p class="rcpt"><a href="https://sjgant80-hub.github.io/liveware/">receipt 24d8f269, and the full test to run yourself →</a> · <a class="try" href="#breach">run it on this page ↑</a></p>
+        <p class="src">Source: liveware receipts/wave1.json, test T4</p>
+      </article>
+      <article class="tile" id="stat-gate">
+        <p class="tile-fig"><span class="fig">425 of 426</span></p>
+        <h3>Do the tests actually bite?</h3>
+        <p class="plain">We break our own code on purpose, one small change at a time, and count how many breaks the tests notice. A test suite that misses breaks is theatre.</p>
+        <p class="detail">The grader behind every minted model: 425 of 426 broken copies caught, and the one survivor is published with its reason. The spend wall: 112 of 112. Kardlings: 1,518 of 1,518 across 29 modules, on GitHub's machines.</p>
+        <p class="not"><b>What this does not prove:</b> A high kill rate says the tests notice changes to the code. It does not say the code does the right thing for a case nobody thought to test.</p>
+        <p class="rcpt"><a href="https://sjgant80-hub.github.io/fallforgemint/#gate">the grader's kill rate, on every receipt it issues →</a> · <a href="https://sjgant80-hub.github.io/kar-spendwall/">spend wall</a> · <a href="https://github.com/sjgant80-hub/kardlings/actions/runs/43139214175">Kardlings run</a></p>
+        <p class="src">Source: fallforgemint #gate · kar-spendwall · kardlings run 43139214175</p>
+      </article>
+      <article class="tile" id="stat-bugs">
+        <p class="tile-fig"><span class="fig">3</span><span class="unit">real faults</span></p>
+        <h3>Found in our own tools, by running them</h3>
+        <p class="plain">Our own quote checker once passed a fake quote: it found &quot;he said yes&quot; inside &quot;she said yes&quot;. We caught it by feeding every tool one example of every kind of input, then fixed all three and wrote down what was wrong.</p>
+        <p class="detail">CiteLock now needs whole words. Conform used to skip schema rules it did not understand and now refuses them out loud. GlyphGuard missed a block of look-alike mathematical letters and now catches it.</p>
+        <p class="not"><b>What this does not prove:</b> Three faults found is not zero faults left. It is the habit that matters: each tool had passed its own tests when these were found.</p>
+        <p class="rcpt"><a href="https://sjgant80-hub.github.io/kar-citelock/">CiteLock, with the fault and the fix on the page →</a> · <a href="https://sjgant80-hub.github.io/kar-conform/">Conform</a> · <a href="https://sjgant80-hub.github.io/kar-glyphguard/">GlyphGuard</a></p>
+        <p class="src">Source: kar-citelock v2 · kar-conform v2 · kar-glyphguard 1.1.0</p>
+      </article>
+      <article class="tile" id="stat-wall">
+        <p class="tile-fig"><span class="fig">0</span><span class="unit">overruns</span></p>
+        <h3>60 hostile days against the spend wall</h3>
+        <p class="plain">An AI agent that can spend money needs a wall it cannot talk its way past. We simulated 60 days of at least double the demand. The budget was never exceeded.</p>
+        <p class="detail">The wall sets aside a call's worst case before the call is made. The hard stop latched on day 40 and not one call passed after it. Calls with no evidence for needing the paid model were all refused.</p>
+        <p class="not"><b>What this does not prove:</b> A simulation, replayed through the real wall. The wall has not yet carried real spending: its key has never been installed, and the page says so.</p>
+        <p class="rcpt"><a href="https://sjgant80-hub.github.io/kar-spendwall/">the wall, its simulation and its audit →</a></p>
+        <p class="src">Source: kar-spendwall: sim 60 days, 0 overruns; stop latched day 40</p>
+      </article>
+      <article class="tile" id="stat-mint">
+        <p class="tile-fig"><span class="fig">9 of 16</span></p>
+        <h3>The first receipt: one win, one loss, both kept</h3>
+        <p class="plain">Our minted model scored 9/16 against its base's 4/16 on a test it had never seen. Then we put the same test to a bigger model: ours got 9/16 against a model ~7× its size, which scored 11/16. Ours lost that one, and the receipt says so.</p>
+        <p class="detail">The receipt is signed, and it could have said the model failed. That is the point of it.</p>
+        <p class="not"><b>What this does not prove:</b> Sixteen probes on one task. A receipt this small proves the method, not the model.</p>
+        <p class="rcpt"><a href="https://sjgant80-hub.github.io/fallforgemint/">the mint, and the receipt you can re-run →</a></p>
+        <p class="src">Source: media/film/facts.json, realReceipt</p>
+      </article>
+      <article class="tile" id="stat-keys">
+        <p class="tile-fig"><span class="fig">9</span><span class="unit">human keys</span></p>
+        <h3>What the AI may not do alone</h3>
+        <p class="plain">Of the 24 organs Kar can call, 7 run themselves, 9 wait for a human key, and 8 are marked not built yet (counted 2026-09-28).</p>
+        <p class="detail">Publishing, spending, deleting and anything that reaches a customer wait behind a human key. That is a rule in the code, not a promise in a brochure.</p>
+        <p class="not"><b>What this does not prove:</b> A count of the dispatcher's own policy on the date shown. It is a design rule, not a safety guarantee.</p>
+        <p class="rcpt"><a href="https://sjgant80-hub.github.io/capability-router/">the capability router, showing all three states →</a></p>
+        <p class="src">Source: media/film/facts.json, dispatcher</p>
+      </article>
+      <article class="tile" id="stat-estate">
+        <p class="tile-fig"><span class="fig">1,639</span><span class="unit">public builds</span></p>
+        <h3>The estate, counted today</h3>
+        <p class="plain">1,639 public builds, 623 with a live page that answered when we checked, from 1,825 repositories in all. About 1,020 of the builds are the API, MCP and SDK companions of other builds. Counted 2026-11-12. Every dot in the organism above is one of them. Click any dot to open it.</p>
+        <p class="not"><b>What this does not prove:</b> A count is not a product. Much of the estate is scaffold and experiment; the organs with names are the ones that have been gated and walked.</p>
+        <p class="rcpt"><a href="estate.html">the whole estate, searchable →</a></p>
+        <p class="src">Source: the GitHub organisation, counted by the build that made this page</p>
+      </article>
+    <!--/STATS--></div>
+  <div class="zone-inner after">
+    <h3 class="sub">We publish our failures</h3>
+    <ul class="kept-list">
+      <li>We sealed a claim of 15× compression. We measured 14.83×. <b>Failed, kept.</b></li>
+      <li>Our minted model beat its base, then lost to a bigger model, 9 to 11. <b>On the receipt.</b></li>
+      <li>Three of the small model's seven sealed claims failed. <b>All seven are above.</b></li>
+      <li>With no shared context our codec loses to Brotli on <!--LIGHT-LOSSES-->4<!--/LIGHT-LOSSES--> of <!--LIGHT-TYPES-->5<!--/LIGHT-TYPES--> kinds of data. <b>In the table.</b></li>
+      <li>Our own quote checker once passed a fake quote. <b>Found by us, fixed, written down.</b></li>
+      <li>Eleven of thirty-nine claims about computing by settling failed. <b>Kept on that page.</b></li>
+    </ul>
+    <p class="plain">In a field full of hype, the supplier who shows the misses is the one you can check.</p>
+  </div>
+</section>
+
+<!-- ═══ 6,000 m · built by AI ═══ -->
+<section id="made" class="zone" data-zone="made" data-depth="6000">
+  <div class="zone-inner">
+    <p class="kicker">Built by AI, the estate way</p>
+    <h2>An AI built this page. <em>Here is how to check it was built properly.</em></h2>
+    <p class="plain">Kar, the AI that builds for AI Native Solutions, wrote this page in one sitting. That only means something if you can check the work, so here is the work.</p>
+  </div>
+  <div class="instrument plainbox">
+    <ol class="how">
+      <li><b>It runs the real organs, not copies.</b> <!--PIN-COUNT-->36<!--/PIN-COUNT--> files on this page were taken byte for byte from the builds they belong to, and each is pinned by its fingerprint. If one byte drifts, the build fails.
+        <div class="scroll"><table class="honest"><thead><tr><th>From</th><th>What it is</th><th>Version</th><th>Files</th><th>Licence</th></tr></thead><tbody><!--PIN-ROWS-->
+          <tr><th scope="row">slm-suite</th><td>the SLM stack: the gate, the memo, and the UK consumer-claim library with its verified provisions</td><td><a href="https://github.com/sjgant80-hub/slm-suite/tree/ba01d2f02bb4302300e4fa0015b9d95a39641111">ba01d2f</a></td><td>6</td><td>MIT</td></tr>
+          <tr><th scope="row">konomi-tongue</th><td>LIGHT, layered: the five-layer lossless codec</td><td><a href="https://github.com/sjgant80-hub/konomi-tongue/tree/d5f961486b470c0c02e96c7cd7efe49eedac71ed">d5f9614</a></td><td>3</td><td>MIT</td></tr>
+          <tr><th scope="row">liveware</th><td>the signed-packet door, the immune library, the referee and the sealed attack test (Wave 1, T4)</td><td><a href="https://github.com/sjgant80-hub/liveware/tree/48205c71f6ba923182beaccf51fc656b4174b785">48205c7</a></td><td>14</td><td>MIT</td></tr>
+          <tr><th scope="row">brotli-wasm</th><td>Brotli compiled to WebAssembly (the race baseline)</td><td>3.0.1</td><td>3</td><td>Apache-2.0</td></tr>
+          <tr><th scope="row">zstd-wasm</th><td>Zstandard compiled to WebAssembly (the race baseline)</td><td>0.0.27</td><td>3</td><td>MIT</td></tr>
+          <tr><th scope="row">fonts</th><td>Fraunces, Hanken Grotesk and JetBrains Mono (variable, latin), served from this site so no font host is called</td><td>fontsource 5.2</td><td>7</td><td>OFL-1.1</td></tr>
+        <!--/PIN-ROWS--></tbody></table></div></li>
+      <li><b>It broke its own new code on purpose.</b> The parts written for this page were changed in small ways, one at a time, to see whether the tests would notice: <b><!--GATE-KILLED-->194<!--/GATE-KILLED--> of <!--GATE-TOTAL-->194<!--/GATE-TOTAL--></b> breaks caught.
+        <div class="scroll"><table class="honest"><thead><tr><th>File</th><th>What it decides</th><th>Breaks caught</th><th>Survivors</th></tr></thead><tbody><!--GATE-ROWS-->
+          <tr><th scope="row">site/kernel/estate.mjs</th><td>the organism: which family a build is in, its shape and real links, where each cell starts, the simulation's script, what the pointer is on</td><td>60 of 60</td><td>none</td></tr>
+          <tr><th scope="row">site/kernel/ground.mjs</th><td>the source check: a date, a price or a credit-card payment the reader gives must be in the visitor's own words</td><td>42 of 42</td><td>none</td></tr>
+          <tr><th scope="row">site/kernel/netwatch.mjs</th><td>the network ledger: who the page talked to, and whether anything was sent up</td><td>34 of 34</td><td>none</td></tr>
+          <tr><th scope="row">site/kernel/race.mjs</th><td>the compression race: the placing, the verdict sentence and the sealed table, losses included</td><td>58 of 58</td><td>none</td></tr>
+        <!--/GATE-ROWS--></tbody></table></div></li>
+      <li><b>No figure was typed by hand.</b> A script draws every number on this page from the record it came from, and the build fails if the page and the records disagree.</li>
+      <li><b>GitHub re-checks it on its own machines.</b> Every change re-runs the tests, the fingerprints and the rules of this site (no prices, credits in full, figures matching their records). <a href="https://github.com/sjgant80-hub/ai-nativesolutions/actions">See the runs →</a></li>
+    </ol>
+    <h3 class="sub">What is real, what is a demo, what is a fallback</h3>
+    <div class="scroll"><table class="honest">
+      <thead><tr><th>On this page</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">The organism</th><td><b>Real data, live drawing.</b> Every dot is a public build; names, links and counts come from the estate index. The moving light is a labelled simulation until you run a demo, when the flashes are that demo's real results. Without WebGPU it is drawn more plainly on a 2D canvas, showing every organ and one build in four.</td></tr>
+        <tr><th scope="row">The small model</th><td><b>Real gate, real library, real law.</b> The reader is either you, or a stock open model running in your browser. It is not our tuned reader, and the page says so beside it.</td></tr>
+        <tr><th scope="row">The source check</th><td><b>Real, and new on this page.</b> It was not part of the sealed 86.3% result.</td></tr>
+        <tr><th scope="row">The race</th><td><b>Real.</b> Four real codecs on your bytes, each verified by decoding back to your exact file.</td></tr>
+        <tr><th scope="row">The door</th><td><b>Real.</b> A real signing key, the real door, and the same sealed test that produced the published receipt.</td></tr>
+        <tr><th scope="row">The network ledger</th><td><b>Real.</b> It lists what your browser reports. It cannot see inside another program on your machine; it can only show what this page did.</td></tr>
+        <tr><th scope="row">The complaints and the ledger sample</th><td><b>Made up,</b> and labelled where they appear.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="zone-inner after">
+    <p class="founder">One human fact. <b>Simon Gant</b> taught himself, and built this entire estate alone, with AI, the same way this page was built. <a href="https://github.com/sjgant80-hub">The history is public →</a></p>
+  </div>
+</section>
+
+<!-- ═══ the seabed · start here ═══ -->
+<section id="start" class="zone" data-zone="start" data-depth="10900">
+  <div class="zone-inner">
+    <p class="kicker">Start here</p>
+    <h2>Start with <em>one task.</em></h2>
+    <p class="plain">Tell us one thing your team does over and over. We will tell you, with numbers, whether a small model you own can do it.</p>
+    <p class="row">
+      <a class="btn primary big" href="mailto:ainativesolutions@gmail.com?subject=One%20task">Send us the task</a>
+      <a class="btn" href="talk.html">Talk to Lia first</a>
+    </p>
+    <h3 class="sub seats-h">What it means for each seat at your table</h3>
+    <dl class="seats">
+      <div><dt>The chief executive</dt><dd>Software you own outright cannot be repriced, discontinued or switched off by a supplier.</dd></div>
+      <div><dt>Finance</dt><dd>You stop renting by the seat. The prospectus works the rented-software bill out industry by industry, with every assumption shown.</dd></div>
+      <div><dt>Operations</dt><dd>The routine work runs itself. Anything that publishes, spends, deletes or reaches a customer waits for a person.</dd></div>
+      <div><dt>Technology and security</dt><dd>It runs on your machines and your clients' data stays on them. Every claim can be re-run; this page's own network ledger shows the idea.</dd></div>
+      <div><dt>The team</dt><dd>They keep the judgement. The model does the reading and sorting, says when it is unsure, and hands that case to a person.</dd></div>
+      <div><dt>The board</dt><dd>A supplier that publishes its failures is one you can audit before you sign.</dd></div>
+    </dl>
+    <p class="row links">
+      <a href="prospectus.html">The prospectus</a>
+      <a href="explainer.html">The film and the brochure</a>
+      <a href="estate.html">Enter the estate</a>
+      <a href="https://sjgant80-hub.github.io/liveware/">Verify a whole system yourself</a>
+      <a href="classic.html">The previous front door</a>
+    </p>
+    <p class="note">Supplied by AI Native Solutions. Support and terms are agreed for each deployment, in that deployment's agreement. The software is MIT-licensed and keeps running without us.</p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <p><!--KONOMI-CREDIT-->Powered by the Konomi architecture, created by Thomas Frumkin<!--/KONOMI-CREDIT-->.</p>
+  <!--CREDIT-DREAM-->
+  <p class="credit">The dreaming layer draws on dream-state design Gary W. Floyd shared with the estate: Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC — “Dream State Architecture: GEP-Guided Memory Consolidation and Entropy Regulation in Artificial Consciousness Systems,” 2025.</p>
+<!--/CREDIT-DREAM-->
+  <p>Law text: public sector information licensed under the Open Government Licence v3.0. Fonts: Fraunces, Hanken Grotesk and JetBrains Mono (SIL Open Font Licence), served from this site. This page sets no cookies and loads nothing from anyone else until you ask for the model.</p>
+  <p>The estate was counted on <!--GENERATED-->2026-11-12<!--/GENERATED-->: <!--N-REPOS-->1,825<!--/N-REPOS--> repositories. MIT · AI Native Solutions · built by Kar.</p>
+  <noscript><p><b>The live demos on this page need JavaScript.</b> Every figure and every link above works without it.</p></noscript>
+</footer>
+
+<aside id="specimen" hidden aria-live="polite">
+  <button type="button" id="specimen-close" aria-label="Close">×</button>
+  <p class="kicker" id="specimen-kind"></p>
+  <h3 id="specimen-name"></h3>
+  <p id="specimen-gloss"></p>
+  <dl id="specimen-figs"></dl>
+  <p id="specimen-links"></p>
+</aside>
+
+<dialog id="ledger" aria-labelledby="ledger-title">
+  <form method="dialog"><button aria-label="Close">×</button></form>
+  <p class="kicker">Nothing leaves your browser</p>
+  <h3 id="ledger-title">The network ledger</h3>
+  <p class="plain" id="ledger-verdict"></p>
+  <div class="scroll"><table class="honest" id="ledger-table"><thead><tr><th>Host</th><th>What it is</th><th>Requests</th><th>Came down</th><th>Sent up</th></tr></thead><tbody></tbody></table></div>
+  <p class="note">This is every request your browser reports for this page and its workers. A request that carries data up is the only way your words could leave; the ledger counts them, and the page is built to make none. The page's security policy also forbids connecting to any host not listed here. This shows what this page did. It cannot see what other software on your machine does.</p>
+  <details><summary>Every request, in order</summary><ol id="ledger-rows" class="log"></ol></details>
+</dialog>
 </body>
 </html>

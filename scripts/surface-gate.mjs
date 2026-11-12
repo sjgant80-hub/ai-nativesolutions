@@ -28,6 +28,7 @@ const PRICE_EXEMPT = [
     reason: "§14 'Illustrative economics by industry' is a customer's CURRENT rented-software spend under stated assumptions — not a price we charge; kept as-is by Simon's decision, 2026-09-28" },
   { file: 'prospectus.html', phrase: 'A £500 laptop', reason: "the hardware-class floor in 'what it runs on' — the laptop a customer already owns, not a price we charge" },
   { file: 'deck.html', phrase: 'A £500 laptop', reason: "the hardware-class floor in 'what it runs on' — the laptop a customer already owns, not a price we charge" },
+  { file: 'index.html', phrase: 'cash price is over £100 and not more than £30,000', reason: "the statutory limits of Consumer Credit Act 1974 s. 75(3)(b), as paraphrased in the verified law table the front door shows — the law's own thresholds, not a price we charge" },
 ];
 for (const x of PRICE_EXEMPT) if (!x.reason || x.reason.length < 20) { console.error('REFUSED: a price exemption without an argued reason (' + x.file + ')'); process.exit(1); }
 const SITE = readdirSync(root).filter(x => x.endsWith('.html')).sort().concat(['llms.txt', 'llms-full.txt']);
@@ -42,6 +43,16 @@ for (const f of SITE) {
   let text = (f.endsWith('.html') ? visible(raw) : raw.replace(/\s+/g, ' ')) + ' ␞ ' + scripts;
   for (const [i, x] of PRICE_EXEMPT.entries()) if (x.file === f && x.phrase && text.includes(x.phrase)) { text = text.split(x.phrase).join(' '); exemptUsed.add(i); }
   for (const m of text.matchAll(PRICE)) fail(f, 'a price on the site: "' + text.slice(Math.max(0, m.index - 45), m.index + 30).replace(/\s+/g, ' ').trim() + '"');
+}
+// 1b · the living front door's own code and data (site/): the organism renders build descriptions from site/data, so the
+//      same rule holds there. vendor/ is other repositories' code, pinned by hash and checked in those repositories.
+const walkSite = (d) => readdirSync(join(root, d), { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walkSite(d + '/' + e.name) : /[.](mjs|json|html|css)$/.test(e.name) ? [d + '/' + e.name] : []));
+for (const f of existsSync(join(root, 'site')) ? walkSite('site') : []) {
+  if (f.endsWith('.test.mjs')) continue;
+  const text = read(f);
+  for (const m of text.matchAll(PRICE)) fail(f, 'a price in the front door code or data: "' + text.slice(Math.max(0, m.index - 45), m.index + 30).replace(/\s+/g, ' ').trim() + '"');
+  const leak = text.match(/.{0,30}◊\s*·\s*κ.{0,20}/);
+  if (leak) fail(f, 'internal shorthand in the front door code or data: "' + leak[0] + '"');
 }
 for (const [i, x] of PRICE_EXEMPT.entries()) if (!exemptUsed.has(i)) fail(x.file, 'STALE price exemption — it no longer matches anything, remove it: ' + (x.phrase || x.section.join(' … ')));
 

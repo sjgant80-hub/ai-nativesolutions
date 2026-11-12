@@ -1,0 +1,12 @@
+{
+  "_rule": "The open model the front door offers to load, and its real download size, measured from the hosts' own file listings on the date shown. Shown to the visitor BEFORE they choose to load it.",
+  "id": "Qwen2.5-0.5B-Instruct-q4f16_1-MLC",
+  "name": "Qwen2.5 0.5B Instruct (stock, 4-bit)",
+  "licence": "Apache-2.0",
+  "bytes": 299458978,
+  "parts": { "weights": 289693824, "program": 3762958, "library": 6002196 },
+  "measured": "2026-11-12",
+  "library": "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.79/lib/index.js",
+  "libraryVersion": "0.2.79",
+  "vramMB": 945
+}
