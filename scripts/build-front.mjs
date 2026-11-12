@@ -118,6 +118,12 @@ const lightTable = rows.map((r) => '\n          <tr><th scope="row">' + esc(r.la
   + '<td class="' + (r.seeded.lightWins ? 'win' : 'loss') + '">' + r.seeded.light.toFixed(2) + '×</td><td>' + r.seeded.zstd.toFixed(2) + '×</td>'
   + '<td class="call">' + (r.seeded.lightWins ? 'LIGHT' : 'Zstandard wins') + '</td></tr>').join('');
 const coldLosses = rows.filter((r) => !r.cold.lightWins).length;
+// the sealed headline (claim S2), in words, straight from the record: "69/80" becomes "69 of 80"
+const S2 = slmRecord.verdicts.find((v) => v.id === 'S2');
+const frac = /^[0-9]+[/][0-9]+$/;
+if (!S2 || !Array.isArray(S2.measured) || !frac.test(S2.measured[0]) || !frac.test(S2.measured[1])) refuse('the SLM record has no readable S2');
+const inWords = (s) => s.replace('/', ' of ');
+const slmHeadline = '<b>Measured, sealed:</b> the full stack was right, or rightly said it could not tell, on ' + inWords(S2.measured[0]) + ' complaints it had never seen. A model 14 times its size, asked to do it alone, managed ' + inWords(S2.measured[1]) + '.';
 const slmClaims = slmRecord.verdicts.map((v) => '\n          <tr class="' + (v.pass ? 'held' : 'failed') + '"><th scope="row">' + esc(v.id) + '</th><td>' + esc(v.what) + '</td><td>'
   + esc(Array.isArray(v.measured) ? v.measured.map((m) => (typeof m === 'number' && m > 1000 ? Math.round(m / 1048576) + ' MB' : m)).join(' · ') : v.measured) + '</td><td>' + esc(v.bar) + '</td><td class="call">' + (v.pass ? 'held' : 'FAILED, kept') + '</td></tr>').join('');
 const lawTable = law.provisions.map((p) => '\n          <li id="law-' + esc(p.id) + '"><a href="' + esc(p.url) + '">' + esc(p.cite) + '</a><span>' + esc(p.says) + '</span></li>').join('');
@@ -134,6 +140,7 @@ const BLOCKS = {
   'N-BUILDS': num(counted.builds), 'N-LIVE': num(counted.live), 'N-REPOS': num(estateRaw.repos), GENERATED: estateRaw.generated,
   'N-ORGANS': String(shape.organCount), 'N-LINKS': String(shape.links.length),
   'LIGHT-TABLE': lightTable + '\n        ', 'LIGHT-LOSSES': String(coldLosses), 'LIGHT-TYPES': String(rows.length),
+  'SLM-HEADLINE': slmHeadline,
   'SLM-CLAIMS': slmClaims + '\n        ', 'LAW-TABLE': lawTable + '\n        ', 'LAW-N': String(law.provisions.length), 'LAW-VERIFIED': esc(law.verified),
   'ORGAN-INDEX': organIndex + '\n      ', 'CREDIT-DREAM': dreamCredit,
   'MODEL-MB': String(Math.round(MODEL.bytes / 1048576)), 'MODEL-ID': esc(MODEL.id), 'MODEL-MEASURED': esc(MODEL.measured),

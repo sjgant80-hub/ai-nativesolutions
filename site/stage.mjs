@@ -39,11 +39,13 @@ export async function startStage() {
   let zone = 'surface', lit = new Set(castSet), focusNode = -1, hot = -1;
   O.onFrame(() => {
     for (let i = 0; i < K; i++) {
-      const on = lit.has(i) || i === hot || i === focusNode, t = tags[i];
+      const t = tags[i], want = lit.has(i) || i === hot || i === focusNode;
+      // a name stands on the far side of its organ from the heart, so names fan outwards instead of piling up;
+      // while the organism is still opening, a name waits until its organ has moved clear of the heart
+      const p = O.project(i), h = O.project(cast.heart >= 0 ? cast.heart : 0), left = i !== cast.heart && p.x < h.x;
+      const on = want && (i === cast.heart || i === hot || Math.hypot(p.x - h.x, p.y - h.y) > 42);
       if (on !== t._on) { t.classList.toggle('on', on); t._on = on; }
       if (!on) continue;
-      // a name stands on the far side of its organ from the heart, so names fan outwards instead of piling up
-      const p = O.project(i), h = O.project(cast.heart >= 0 ? cast.heart : 0), left = i !== cast.heart && p.x < h.x;
       if (left !== t._left) { t.classList.toggle('left', left); t._left = left; }
       const dy = i === cast.heart ? 16 : Math.max(-14, Math.min(8, (p.y - h.y) * 0.12)) - 7;
       t.style.transform = 'translate(' + (p.x + (left ? -13 : 13)).toFixed(1) + 'px,' + (p.y + dy).toFixed(1) + 'px)';

@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import E from './kernel/estate.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -57,6 +58,14 @@ test('every import in the front door resolves to a file in this repository; the 
   assert.match(model.library, /^https:\/\/cdn\.jsdelivr\.net\/npm\/@mlc-ai\/web-llm@\d+\.\d+\.\d+\/lib\/index\.js$/);   // an exact, pinned version
   assert.equal(model.bytes, model.parts.weights + model.parts.program + model.parts.library);
   assert.match(model.measured, /^\d{4}-\d{2}-\d{2}$/);
+});
+
+test('every module of the front door parses', () => {
+  // a browser shows a syntax error as a blank organism, not a failed build: so the build checks it
+  for (const f of code) {
+    const r = spawnSync(process.execPath, ['--check', join(root, f)], { encoding: 'utf8' });
+    assert.equal(r.status, 0, f + ' does not parse: ' + String(r.stderr).split('\n').slice(0, 4).join(' '));
+  }
 });
 
 test('every element the code reaches for is on the page', () => {

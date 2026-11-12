@@ -402,9 +402,10 @@ export async function createOrganism(opts) {
     device.pushErrorScope('validation');
     const U = GPUBufferUsage, HDR = 'rgba16float';
     const buf = (size, usage, data) => { const b = device.createBuffer({ size: Math.max(16, size), usage }); if (data) device.queue.writeBuffer(b, 0, data); return b; };
-    // the organism opens from a point: every cell starts near the centre and swims out to its place
+    // the organism opens like a flower: every cell starts half-way in and swims out to its place (half-unfurled, so it is
+    // recognisable from the first frame however slowly the frames come)
     const start = new Float32Array(N * 4);
-    for (let i = 0; i < N; i++) { const s = S.reduced || opts.settled ? 1 : 0.05; start[i * 4] = seeds[i * 4] * s + (rnd() - 0.5) * 6; start[i * 4 + 1] = seeds[i * 4 + 1] * s + (rnd() - 0.5) * 6; }
+    for (let i = 0; i < N; i++) { const s = S.reduced || opts.settled ? 1 : 0.5; start[i * 4] = seeds[i * 4] * s + (rnd() - 0.5) * 6; start[i * 4 + 1] = seeds[i * 4 + 1] * s + (rnd() - 0.5) * 6; }
     S.cpu.set(start); for (let i = 0; i < N; i++) { S.cpu[i * 4 + 2] = 0; S.cpu[i * 4 + 3] = 0; }
     const posBuf = [buf(N * 16, U.STORAGE | U.COPY_DST | U.COPY_SRC, start), buf(N * 16, U.STORAGE | U.COPY_DST | U.COPY_SRC, start)];
     const metaBuf = buf(N * 16, U.STORAGE | U.COPY_DST, meta);

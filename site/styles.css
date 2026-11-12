@@ -319,3 +319,7 @@ h3.seats-h { margin-top: 64px; }
 .seats dt { font: 500 10.5px/1.5 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--lume); }
 .seats dd { margin: 6px 0 0; color: var(--ink-2); font-size: .93rem; }
 #start .zone-inner { max-width: 60rem; }
+
+/* the sealed figure, said beside the demo it belongs to */
+.measured { margin: 20px 0 0; padding: 14px 16px; border: 1px solid var(--panel-edge); background: rgba(4, 16, 25, .6); color: var(--ink-2); font-size: .95rem; max-width: 41rem; }
+.measured b { color: var(--lume); }

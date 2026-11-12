@@ -65,6 +65,8 @@
     <h2>A small model that says <em>“I can't tell.”</em></h2>
     <p class="plain">Most AI gives you an answer even when it should not. Ours is built the other way round. A small model only <b>reads</b>. A library of checked law does the reasoning. A gate stops anything that was not checked. When a fact is missing it stops, and tells you which one.</p>
     <p class="gloss"><b>In one line:</b> it would rather say “I don't know” than make something up, and you can watch it choose.</p>
+    <p class="plain">The one below sorts UK consumer complaints, because that is the one we have sealed and measured. The same build fits any job where something is read, sorted and decided against rules you can write down: triaging claims, pulling figures out of documents, routing messages, checking forms.</p>
+    <p class="measured"><!--SLM-HEADLINE--><b>Measured, sealed:</b> the full stack was right, or rightly said it could not tell, on 69 of 80 complaints it had never seen. A model 14 times its size, asked to do it alone, managed 1 of 80.<!--/SLM-HEADLINE--> <a href="#stat-slm">The full result, with what failed ↓</a></p>
   </div>
 
   <div class="instrument" id="slm">
@@ -139,7 +141,7 @@
 
   <div class="zone-inner after">
     <h3 class="sub">Start here: an audit of one task</h3>
-    <p class="plain">Bring one job someone in your firm does over and over: sorting complaints, pulling figures out of documents, routing messages. We measure how it is done today, then build a small model, its checked library and its gate for that one job, and test it on cases it has never seen.</p>
+    <p class="plain">Bring one job someone in your firm does over and over: sorting complaints, pulling figures out of documents, routing messages. We measure how it is done today, then build a small model, its checked library and its gate for that one job, and test it on cases it has never seen. Your own documents, rules and wording are what go into its library.</p>
     <ul class="gets">
       <li><b>Today's numbers.</b> How the job is done now, measured, so there is something honest to beat.</li>
       <li><b>The model, yours.</b> It runs on your own machines, offline, with no meter running.</li>
