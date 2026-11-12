@@ -323,3 +323,9 @@ h3.seats-h { margin-top: 64px; }
 /* the sealed figure, said beside the demo it belongs to */
 .measured { margin: 20px 0 0; padding: 14px 16px; border: 1px solid var(--panel-edge); background: rgba(4, 16, 25, .6); color: var(--ink-2); font-size: .95rem; max-width: 41rem; }
 .measured b { color: var(--lume); }
+
+/* the buyer's questions, answered straight */
+.case { margin: 18px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px 34px; }
+.case div { padding-top: 12px; border-top: 1px solid var(--lume-line); }
+.case dt { color: var(--ink); font-weight: 600; font-size: .98rem; }
+.case dd { margin: 6px 0 0; color: var(--ink-2); font-size: .93rem; }
