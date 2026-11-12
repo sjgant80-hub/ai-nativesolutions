@@ -133,3 +133,13 @@ test('the built page is the template with every marker filled, and says the fact
   for (const id of ['surface', 'door', 'race', 'breach', 'organism-zone', 'receipts', 'made', 'start']) assert.ok(built.includes('id="' + id + '"'), 'zone ' + id);
   assert.match(text, /What this does not prove:/); assert.match(text, /What failed, and is kept:/); assert.match(text, /Simon Gant/);
 });
+
+test('a cold reader meets the plain meaning of "sealed" where the word first appears, and the three tiers are named at the top', { skip: built === null }, () => {
+  const text = built.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  const body = text.slice(text.indexOf('AI you own'));
+  const first = body.search(/sealed/i), defined = body.indexOf('Sealed means');
+  assert.ok(first >= 0 && defined >= 0, 'the page uses and defines "sealed"');
+  assert.ok(defined - first < 400, 'the definition is ' + (defined - first) + ' characters after the first use');
+  const tiers = body.indexOf('Three tiers below'), tier1 = body.indexOf('Tier 1');
+  assert.ok(tiers >= 0 && tiers < tier1, 'the tiers are named before the first tier');
+});

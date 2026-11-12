@@ -94,7 +94,7 @@ export async function startStage() {
       if (mid <= top) { metres = da; break; }
       if (mid < next) { metres = da + ((mid - top) / (next - top)) * (db - da); break; }
     }
-    read.textContent = Math.round(metres).toLocaleString('en-GB') + ' m';
+    read.textContent = 'depth ' + Math.round(metres).toLocaleString('en-GB') + ' m';
     dot.style.top = (d * 100).toFixed(2) + '%';
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
@@ -140,7 +140,7 @@ export async function startStage() {
   const setMode = (m) => {
     mode = m; bSim.setAttribute('aria-pressed', String(m === 'sim')); bReal.setAttribute('aria-pressed', String(m === 'real'));
     if (m === 'real') say('the real builds', N.toLocaleString('en-GB') + ' public builds. The ' + K + ' bright ones are the named organs. Click any dot, or search.');
-    else say('simulation', 'A picture of how the organs hand work to each other.');
+    else say('simulation', 'A picture of how the organs pass work to each other.');
   };
   bSim.addEventListener('click', () => setMode('sim')); bReal.addEventListener('click', () => setMode('real'));
   setMode('sim');

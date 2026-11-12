@@ -11,12 +11,13 @@ export function startLedger() {
   const ledger = N.createLedger(location.origin);
   const sentUp = new Set();
   let timer = 0;
-  const chip = document.getElementById('net-chip'), chipText = document.getElementById('net-chip-text');
+  const chip = document.getElementById('net-chip'), chipText = document.getElementById('net-chip-text'), chipShort = document.getElementById('net-chip-short');
   const dialog = document.getElementById('ledger');
   const draw = () => {
     timer = 0;
     const s = ledger.summary();
-    chipText.textContent = 'network: ' + s.total + ' down · ' + s.withBody + ' sent up';
+    chipText.textContent = 'network: ' + s.total + ' fetched · ' + s.withBody + ' sent up';
+    chipShort.textContent = s.withBody + ' sent up';
     chip.classList.toggle('bad', s.withBody > 0 || s.unknown > 0);
     if (!dialog.open) return;
     document.getElementById('ledger-verdict').textContent = N.verdict(s);
@@ -31,7 +32,7 @@ export function startLedger() {
     }));
     document.getElementById('ledger-rows').replaceChildren(...ledger.entries().filter((e) => e.party !== 'local').map((e) => {
       const li = document.createElement('li');
-      li.textContent = '#' + e.n + ' ' + (e.body ? 'SENT UP ' : 'down ') + e.method + ' ' + e.url.replace(location.origin, '') + (e.source === 'page' ? '' : '  [' + e.source + ']');
+      li.textContent = '#' + e.n + ' ' + (e.body ? 'SENT UP ' : 'fetched ') + e.method + ' ' + e.url.replace(location.origin, '') + (e.source === 'page' ? '' : '  [' + e.source + ']');
       if (e.body) li.style.color = 'var(--red)';
       return li;
     }));

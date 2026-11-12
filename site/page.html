@@ -25,19 +25,19 @@
 <header class="top">
   <a class="mark" href="#surface"><i></i>AI Native Solutions</a>
   <nav aria-label="Sections">
-    <a href="#door">The door</a>
-    <a href="#organism-zone">The organism</a>
-    <a href="#receipts">The receipts</a>
+    <a href="#door">Try it</a>
+    <a href="#organism-zone">The whole estate</a>
+    <a href="#receipts">The proof</a>
     <a class="go" href="#start">Start here</a>
   </nav>
   <button id="net-chip" class="chip" type="button" aria-haspopup="dialog" title="Open the network ledger">
-    <i></i><span id="net-chip-text">network: counting…</span>
+    <i></i><span id="net-chip-text">network ledger: counting…</span><span id="net-chip-short">counting…</span>
   </button>
 </header>
 
 <aside class="gauge" aria-hidden="true">
   <div class="gauge-line"><b id="gauge-dot"></b></div>
-  <p id="gauge-read">0 m</p>
+  <p id="gauge-read">depth 0 m</p>
 </aside>
 
 <main>
@@ -52,6 +52,7 @@
       <a class="btn primary" href="#door">Try the small model</a>
       <a class="btn" href="#start">Start with one task</a>
     </p>
+    <p class="tiers">Three tiers below: <b>1</b> the small model you can buy first, <b>2</b> the business it leads into, <b>3</b> the proof under both.<span class="gauge-note"> The depth on the left is only how far down the page you are.</span></p>
     <p class="caps" id="caps">Checking what your browser can run…</p>
   </div>
   <p class="hero-note">That living shape is our whole estate: <b><!--N-BUILDS--><!--/N-BUILDS--> public builds</b>, each dot a real one, drawn live in your browser. The light moving through it is a simulation of work being handed on. <a href="#organism-zone">Meet it ↓</a></p>
@@ -65,7 +66,7 @@
     <h2>A small model that says <em>“I can't tell.”</em></h2>
     <p class="plain">Most AI gives you an answer even when it should not. Ours is built the other way round. A small model only <b>reads</b>. A library of checked law does the reasoning. A gate stops anything that was not checked. When a fact is missing it stops, and tells you which one.</p>
     <p class="gloss"><b>In one line:</b> it would rather say “I don't know” than make something up, and you can watch it choose.</p>
-    <p class="plain">The one below sorts UK consumer complaints, because that is the one we have sealed and measured. The same build fits any job where something is read, sorted and decided against rules you can write down: triaging claims, pulling figures out of documents, routing messages, checking forms.</p>
+    <p class="plain">The one below sorts UK consumer complaints, because that is the one we have sealed and measured. (Sealed means the claims, the pass mark for each, and the test cases were written down and committed before the test was run, so the result could not be fitted to them afterwards.) The same build fits any job where something is read, sorted and decided against rules you can write down: triaging claims, pulling figures out of documents, routing messages, checking forms.</p>
     <p class="measured"><!--SLM-HEADLINE--><!--/SLM-HEADLINE--> <a href="#stat-slm">The full result, with what failed ↓</a></p>
   </div>
 
@@ -84,7 +85,7 @@
         <fieldset class="reader">
           <legend class="lab">Who reads it?</legend>
           <label><input type="radio" name="reader" value="self" checked> <b>I will.</b> <span>No download. You enter the facts; the real gate and library do the rest.</span></label>
-          <label><input type="radio" name="reader" value="model"> <b>A small model, in this browser.</b> <span id="slm-model-note">One download of about <!--MODEL-MB--><!--/MODEL-MB--> MB (measured <!--MODEL-MEASURED--><!--/MODEL-MEASURED-->), kept by your browser afterwards.</span></label>
+          <label><input type="radio" name="reader" value="model"> <b>A small model, in this browser.</b> <span id="slm-model-note">One download of about <!--MODEL-MB--><!--/MODEL-MB--> MB (measured <!--MODEL-MEASURED--><!--/MODEL-MEASURED-->), kept by your browser afterwards. If you clear your browser data, it downloads again.</span></label>
         </fieldset>
         <div id="slm-self" class="facts-form"></div>
         <div id="slm-model" hidden>
@@ -102,7 +103,7 @@
     </div>
     <details>
       <summary>The verified law table: all <!--LAW-N--><!--/LAW-N--> provisions it may cite, and nothing else</summary>
-      <p class="note">Each was read on legislation.gov.uk on <!--LAW-VERIFIED--><!--/LAW-VERIFIED-->. The plain line beside each is our paraphrase, not the statute. Contains public sector information licensed under the Open Government Licence v3.0.</p>
+      <p class="note">Each was read on legislation.gov.uk on <!--LAW-VERIFIED--><!--/LAW-VERIFIED-->. The plain line beside each is our paraphrase, not the statute. The table does not update itself: it changes only when a provision is re-read at the source and the gate passes again. The reader can cite nothing outside it. Contains public sector information licensed under the Open Government Licence v3.0.</p>
       <ul class="law"><!--LAW-TABLE--><!--/LAW-TABLE--></ul>
     </details>
     <details>
@@ -131,9 +132,9 @@
 <!-- ═══ 500 m · the race ═══ -->
 <section id="race" class="zone" data-zone="race" data-depth="500">
   <div class="zone-inner">
-    <p class="kicker">The language the organs speak</p>
+    <p class="kicker">The compression our tools talk in</p>
     <h2>Race our codec <em>on your own file.</em></h2>
-    <p class="plain">The organs talk to each other in LIGHT, our lossless compression. Drop any file. Four codecs squeeze the same bytes, and each must hand your exact file back or it is disqualified. You see who won, including when it is not us.</p>
+    <p class="plain">Our tools (the organs you will meet further down) talk to each other in LIGHT, our lossless compression. Drop any file. Four codecs squeeze the same bytes, and each must hand your exact file back or it is disqualified. You see who won, including when it is not us.</p>
     <p class="gloss"><b>In one line:</b> a fair race between our zip and three famous ones, on your file, with the loser shown.</p>
   </div>
   <div class="instrument" id="racer">
@@ -198,7 +199,7 @@
   <div class="zone-inner">
     <p class="kicker">Tier 2 · where the door leads</p>
     <h2>A business that runs <em>and grows itself.</em></h2>
-    <p class="plain">The small model is the door. This is the house. Every dot is a real piece of software we have built: <b><!--N-BUILDS--><!--/N-BUILDS--> public builds</b>, <!--N-LIVE--><!--/N-LIVE--> with a live page. The bright ones are the organs. Owned outright, and proven rather than promised.</p>
+    <p class="plain">The small model is the door. This is the house. Every dot is a real piece of software we have built: <b><!--N-BUILDS--><!--/N-BUILDS--> public builds</b>, <!--N-LIVE--><!--/N-LIVE--> with a live page that answered when we checked. Each one is named in the real-builds view below and in <a href="site/data/estate.json">the list itself</a>. The bright ones are the organs. Owned outright, and proven rather than promised.</p>
     <p class="gloss"><b>In one line:</b> lots of small proven tools, working together like the organs of a body, with a person holding the keys that matter.</p>
   </div>
   <div class="stage-ui">
@@ -207,7 +208,7 @@
       <button type="button" id="mode-real" aria-pressed="false">The real builds</button>
     </div>
     <p class="caption" id="sim-caption" role="status" aria-live="polite"></p>
-    <p class="note" id="mode-note">The moving light is a <b>simulation</b>: a picture of how the organs hand work to each other, not live telemetry. The dots, the names, the links and every number are real.</p>
+    <p class="note" id="mode-note">The moving light is a <b>simulation</b>: a picture of how the organs pass work to each other, not a live feed from them. The dots, the names, the links and every number are real.</p>
     <div class="find">
       <label class="lab" for="find-build">Find a build</label>
       <input id="find-build" type="search" placeholder="type a name, or what it does" autocomplete="off" spellcheck="false">
