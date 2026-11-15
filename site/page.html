@@ -129,6 +129,39 @@
   </div>
 </section>
 
+<!-- ═══ 350 m · DocDec · the same idea, for a company's documents ═══ -->
+<section id="docdec" class="zone" data-zone="docdec" data-depth="350">
+  <div class="zone-inner">
+    <p class="kicker">Tier 1 · the same idea, for your documents</p>
+    <h2>Your RAG invents. <em>DocDec cites — or says it doesn't know.</em></h2>
+    <p class="plain">Most companies built a “chat with our documents” tool in the last two years and were let down: it makes things up, can't show its sources, and sends the files to a cloud. DocDec answers from the documents themselves — it <b>cites the exact source</b>, or says <b>“that's not in your documents”</b> instead of inventing. It runs on your own machines; nothing leaves the building.</p>
+    <p class="gloss"><b>In one line:</b> a plain vector search returns its nearest guess for every question; DocDec grounds every answer in a real document, or abstains.</p>
+    <p class="measured">Measured against a real vector-RAG on a public benchmark — the before and after below run live in your browser. <a href="https://sjgant80-hub.github.io/docdecdemo/">The full interactive demo ↗</a></p>
+  </div>
+
+  <div class="instrument" id="docdec-box">
+    <div class="cols">
+      <div class="col">
+        <label class="lab">A question from the benchmark corpus <span>(Wikipedia on the Normans, Oxygen, and complexity theory)</span></label>
+        <p class="chips" id="docdec-chips"></p>
+        <label class="lab" for="docdec-ask">…or ask your own <span>(DocDec grounds it against those documents, live, no model)</span></label>
+        <p class="row"><input id="docdec-ask" type="text" placeholder="e.g. what is a Turing machine?" autocomplete="off" spellcheck="false"><button class="btn primary" id="docdec-run" type="button">Ask</button></p>
+        <p class="state" id="docdec-state" role="status" aria-live="polite">loading the benchmark…</p>
+      </div>
+      <div class="col out">
+        <div id="docdec-out"><p class="empty">Pick a benchmark question, or ask your own. DocDec's answer and a plain vector-RAG's appear side by side.</p></div>
+        <p class="net-proof" id="docdec-net"></p>
+      </div>
+    </div>
+    <details>
+      <summary>The numbers — measured, not asserted</summary>
+      <div class="scroll"><table class="honest"><tbody id="docdec-measured"></tbody></table></div>
+      <p class="note" id="docdec-source"></p>
+      <p class="note"><b>Two things are true by architecture, not tuning:</b> a plain vector-RAG never abstains — it returns a nearest chunk for every question — and DocDec shows the source of every answer. How often each is right is measured above, failures kept. Grounding is a trade: DocDec misses some answerable questions by abstaining, and adversarial “unanswerable” questions can still fool it. Both are on the record. The production engine deepens the routing privately; what you see here — cite, or abstain — does not change.</p>
+    </details>
+  </div>
+</section>
+
 <!-- ═══ 500 m · the race ═══ -->
 <section id="race" class="zone" data-zone="race" data-depth="500">
   <div class="zone-inner">

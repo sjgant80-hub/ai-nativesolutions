@@ -26,6 +26,8 @@ const SOURCES = [
     files: ['src/wave1.mjs', 'src/door.mjs', 'src/receipt.mjs', 'src/seed.mjs', 'src/compress.mjs', 'src/mesh.mjs', 'src/rng.mjs',
       'vendor/fall-kit/core/identity.mjs', 'vendor/fall-kit/core/antibody.mjs', 'vendor/fall-kit/core/vendor/light/sha256.mjs',
       'vendor/fall-kit/core/vendor/light/packet.mjs', 'vendor/fall-kit/core/vendor/light/codec.mjs', 'vendor/fall-kit/core/vendor/sync/crdt.mjs', 'receipts/wave1.json'] },
+  { id: 'docdecdemo', repo: 'sjgant80-hub/docdecdemo', licence: 'MIT', what: 'DocDec: the grounded document router (cite the source or abstain) and its measured before/after demo data vs a vector-RAG on a public corpus',
+    files: ['kernel.mjs', 'demo-data.json'] },
 ];
 // third-party builds (downloaded once from the npm registry's CDN; pinned the same way)
 const THIRD = [
@@ -38,7 +40,7 @@ const THIRD = [
       '@fontsource-variable/hanken-grotesk@5.2.8/files/hanken-grotesk-latin-wght-normal.woff2', '@fontsource-variable/jetbrains-mono@5.2.8/files/jetbrains-mono-latin-wght-normal.woff2',
       '@fontsource-variable/fraunces@5.2.9/LICENSE', '@fontsource-variable/hanken-grotesk@5.2.8/LICENSE', '@fontsource-variable/jetbrains-mono@5.2.8/LICENSE'] },
 ];
-const LOCAL = { 'slm-suite': 'C:/Users/sjgan/slm-suite', 'konomi-tongue': 'C:/Users/sjgan/Downloads/konomi-tongue', liveware: 'C:/Users/sjgan/liveware' };
+const LOCAL = { 'slm-suite': 'C:/Users/sjgan/slm-suite', 'konomi-tongue': 'C:/Users/sjgan/Downloads/konomi-tongue', liveware: 'C:/Users/sjgan/liveware', docdecdemo: 'C:/Users/sjgan/docdecdemo' };
 const destOf = (id, f) => join(root, 'vendor', id, f.replace(/^@fontsource-variable\/([a-z-]+)@[\d.]+\//, '$1/'));
 
 if (process.argv.includes('--check')) {

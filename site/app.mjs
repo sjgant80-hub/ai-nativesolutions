@@ -34,5 +34,5 @@ const start = async (file, fn, hostId) => {
     if (host) host.insertAdjacentHTML('afterbegin', '<p class="state bad">This demo could not start in this browser (' + String(e && e.message ? e.message : e).replace(/[<>&]/g, '').slice(0, 140) + '). The figures and links on this page do not depend on it.</p>');
   }
 };
-await Promise.all([start('./door-demo.mjs', 'startDoor', 'slm'), start('./race-demo.mjs', 'startRace', 'racer'), start('./breach-demo.mjs', 'startBreach', 'breacher')]);
+await Promise.all([start('./door-demo.mjs', 'startDoor', 'slm'), start('./docdec-demo.mjs', 'startDocdec', 'docdec-box'), start('./race-demo.mjs', 'startRace', 'racer'), start('./breach-demo.mjs', 'startBreach', 'breacher')]);
 window.__site = { stage, net, caps };

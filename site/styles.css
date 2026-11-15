@@ -354,3 +354,24 @@ main { overflow-x: clip; }
 /* the answers stay legible over the organism: two columns at most, each on its own dark ground */
 .case { max-width: 780px; }
 .case div { padding: 12px 14px 14px; background: color-mix(in srgb, var(--abyss) 72%, transparent); }
+
+/* ── DocDec: the grounded before/after ── */
+#docdec-chips .chip[aria-pressed="true"] { border-color: var(--lume); color: var(--lume); }
+#docdec-ask { flex: 1; min-width: 0; padding: 10px 12px; background: color-mix(in srgb, var(--abyss) 60%, transparent); border: 1px solid var(--lume-line); border-radius: 8px; color: var(--ink); font: 400 .95rem var(--body); }
+#docdec-out .q { margin: 0 0 12px; font: 500 1.02rem/1.4 var(--display); color: var(--ink); }
+#docdec-out .q .free { display: block; margin-top: 4px; font: 400 .8rem var(--mono); letter-spacing: .04em; color: var(--ink-3); }
+.twin { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.twin .pane { margin: 0; border-top: 2px solid var(--lume-line); }
+.twin .pane.ground { border-top-color: var(--green); }
+.twin .pane.abstain { border-top-color: var(--amber); }
+.twin .pane.miss { border-top-color: var(--red); }
+.twin .pane h3 { margin: 0 0 4px; }
+.twin .tag { margin: 0 0 8px; font: 500 .78rem var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
+.pane.ground .tag { color: var(--green); } .pane.abstain .tag { color: var(--amber); } .pane.miss .tag { color: var(--red); }
+.twin .src { margin: 0 0 4px; font: 500 .9rem var(--mono); color: var(--lume); }
+.twin .say { margin: 0 0 4px; font: 500 1.05rem var(--display); color: var(--ink); }
+.twin .cite { margin: 0 0 6px; font: 400 .82rem var(--mono); color: var(--ink-2); }
+.twin .snip, .twin .why { margin: 0; font-size: .86rem; color: var(--ink-2); }
+#docdec-measured .good { color: var(--green); font: 600 .95rem var(--mono); text-align: center; }
+#docdec-measured .bad { color: var(--amber); font: 600 .95rem var(--mono); text-align: center; }
+@media (max-width: 760px) { .twin { grid-template-columns: 1fr; } }

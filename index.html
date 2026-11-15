@@ -153,6 +153,39 @@
   </div>
 </section>
 
+<!-- ═══ 350 m · DocDec · the same idea, for a company's documents ═══ -->
+<section id="docdec" class="zone" data-zone="docdec" data-depth="350">
+  <div class="zone-inner">
+    <p class="kicker">Tier 1 · the same idea, for your documents</p>
+    <h2>Your RAG invents. <em>DocDec cites — or says it doesn't know.</em></h2>
+    <p class="plain">Most companies built a “chat with our documents” tool in the last two years and were let down: it makes things up, can't show its sources, and sends the files to a cloud. DocDec answers from the documents themselves — it <b>cites the exact source</b>, or says <b>“that's not in your documents”</b> instead of inventing. It runs on your own machines; nothing leaves the building.</p>
+    <p class="gloss"><b>In one line:</b> a plain vector search returns its nearest guess for every question; DocDec grounds every answer in a real document, or abstains.</p>
+    <p class="measured">Measured against a real vector-RAG on a public benchmark — the before and after below run live in your browser. <a href="https://sjgant80-hub.github.io/docdecdemo/">The full interactive demo ↗</a></p>
+  </div>
+
+  <div class="instrument" id="docdec-box">
+    <div class="cols">
+      <div class="col">
+        <label class="lab">A question from the benchmark corpus <span>(Wikipedia on the Normans, Oxygen, and complexity theory)</span></label>
+        <p class="chips" id="docdec-chips"></p>
+        <label class="lab" for="docdec-ask">…or ask your own <span>(DocDec grounds it against those documents, live, no model)</span></label>
+        <p class="row"><input id="docdec-ask" type="text" placeholder="e.g. what is a Turing machine?" autocomplete="off" spellcheck="false"><button class="btn primary" id="docdec-run" type="button">Ask</button></p>
+        <p class="state" id="docdec-state" role="status" aria-live="polite">loading the benchmark…</p>
+      </div>
+      <div class="col out">
+        <div id="docdec-out"><p class="empty">Pick a benchmark question, or ask your own. DocDec's answer and a plain vector-RAG's appear side by side.</p></div>
+        <p class="net-proof" id="docdec-net"></p>
+      </div>
+    </div>
+    <details>
+      <summary>The numbers — measured, not asserted</summary>
+      <div class="scroll"><table class="honest"><tbody id="docdec-measured"></tbody></table></div>
+      <p class="note" id="docdec-source"></p>
+      <p class="note"><b>Two things are true by architecture, not tuning:</b> a plain vector-RAG never abstains — it returns a nearest chunk for every question — and DocDec shows the source of every answer. How often each is right is measured above, failures kept. Grounding is a trade: DocDec misses some answerable questions by abstaining, and adversarial “unanswerable” questions can still fool it. Both are on the record. The production engine deepens the routing privately; what you see here — cite, or abstain — does not change.</p>
+    </details>
+  </div>
+</section>
+
 <!-- ═══ 500 m · the race ═══ -->
 <section id="race" class="zone" data-zone="race" data-depth="500">
   <div class="zone-inner">
@@ -425,11 +458,12 @@
   </div>
   <div class="instrument plainbox">
     <ol class="how">
-      <li><b>It runs the real organs, not copies.</b> <!--PIN-COUNT-->36<!--/PIN-COUNT--> files on this page were taken byte for byte from the builds they belong to, and each is pinned by its fingerprint. If one byte drifts, the build fails.
+      <li><b>It runs the real organs, not copies.</b> <!--PIN-COUNT-->38<!--/PIN-COUNT--> files on this page were taken byte for byte from the builds they belong to, and each is pinned by its fingerprint. If one byte drifts, the build fails.
         <div class="scroll"><table class="honest"><thead><tr><th>From</th><th>What it is</th><th>Version</th><th>Files</th><th>Licence</th></tr></thead><tbody><!--PIN-ROWS-->
           <tr><th scope="row">slm-suite</th><td>the SLM stack: the gate, the memo, and the UK consumer-claim library with its verified provisions</td><td><a href="https://github.com/sjgant80-hub/slm-suite/tree/ba01d2f02bb4302300e4fa0015b9d95a39641111">ba01d2f</a></td><td>6</td><td>MIT</td></tr>
           <tr><th scope="row">konomi-tongue</th><td>LIGHT, layered: the five-layer lossless codec</td><td><a href="https://github.com/sjgant80-hub/konomi-tongue/tree/d5f961486b470c0c02e96c7cd7efe49eedac71ed">d5f9614</a></td><td>3</td><td>MIT</td></tr>
           <tr><th scope="row">liveware</th><td>the signed-packet door, the immune library, the referee and the sealed attack test (Wave 1, T4)</td><td><a href="https://github.com/sjgant80-hub/liveware/tree/48205c71f6ba923182beaccf51fc656b4174b785">48205c7</a></td><td>14</td><td>MIT</td></tr>
+          <tr><th scope="row">docdecdemo</th><td>DocDec: the grounded document router (cite the source or abstain) and its measured before/after demo data vs a vector-RAG on a public corpus</td><td><a href="https://github.com/sjgant80-hub/docdecdemo/tree/4c71a6846cd48ac9b3f83bc8ee2053b5153faea8">4c71a68</a></td><td>2</td><td>MIT</td></tr>
           <tr><th scope="row">brotli-wasm</th><td>Brotli compiled to WebAssembly (the race baseline)</td><td>3.0.1</td><td>3</td><td>Apache-2.0</td></tr>
           <tr><th scope="row">zstd-wasm</th><td>Zstandard compiled to WebAssembly (the race baseline)</td><td>0.0.27</td><td>3</td><td>MIT</td></tr>
           <tr><th scope="row">fonts</th><td>Fraunces, Hanken Grotesk and JetBrains Mono (variable, latin), served from this site so no font host is called</td><td>fontsource 5.2</td><td>7</td><td>OFL-1.1</td></tr>

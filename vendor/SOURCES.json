@@ -52,6 +52,17 @@
       }
     },
     {
+      "id": "docdecdemo",
+      "repo": "sjgant80-hub/docdecdemo",
+      "commit": "4c71a6846cd48ac9b3f83bc8ee2053b5153faea8",
+      "licence": "MIT",
+      "what": "DocDec: the grounded document router (cite the source or abstain) and its measured before/after demo data vs a vector-RAG on a public corpus",
+      "files": {
+        "kernel.mjs": "82c08ea2794cf57b112bd36e007bc119ea7462624446ee6077d711afff494c9e",
+        "demo-data.json": "04f533025f5be8e8e92dd4479f2d856487aac6cf4bebce765b822986db114b73"
+      }
+    },
+    {
       "id": "brotli-wasm",
       "version": "3.0.1",
       "from": "https://cdn.jsdelivr.net/npm/brotli-wasm@3.0.1/",
