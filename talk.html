@@ -436,15 +436,15 @@ Short replies by default. Generate artefacts in fenced markdown when appropriate
 // ════════════════════════════════════════════════════════════════
 function renderMarkdown(text) {
   // Fenced code / artefact
-  let cleaned = text.replace(/```(\w*)\n([\s\S]*?)```/g, '<<<ARTEFACT:TBA:TBA:ARTEFACT>>>');
+  let cleaned = text.replace(/```(\w*)\n([\s\S]*?)```/g, '<<<ARTEFACT:$1:$2:ARTEFACT>>>');
   cleaned = esc(cleaned);
   cleaned = cleaned
     .replace(/&lt;&lt;&lt;ARTEFACT:(\w*):([\s\S]*?):ARTEFACT&gt;&gt;&gt;/g, (_, lang, content) => renderArtefact(lang, content))
     .replace(/\[\[open:([a-z0-9-]+)\]\]/g, (_, slug) => `<a class="tool-cta" href="https://sjgant80-hub.github.io/${slug}/" target="_blank" rel="noopener">◊ Open ${slug} →</a>`)
-    .replace(/\*\*(.+?)\*\*/g, '<strong>TBA</strong>')
-    .replace(/\*(.+?)\*/g, '<em>TBA</em>')
-    .replace(/`([^`]+)`/g, '<code>TBA</code>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="TBA" target="_blank" rel="noopener">TBA</a>');
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   const blocks = cleaned.split(/\n\n+/).map(b => {
     if (b.startsWith('<div class="artefact"')) return b;
     if (/^[-*]\s/m.test(b)) {

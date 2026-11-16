@@ -754,9 +754,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Syne',sans-serif;min-hei
 <aside class="sidebar">
   <div class="pipeline-val" onclick="showPage('pipeline')">
     <div class="pv-label">Pipeline</div>
-    <div class="pv-amount" id="pipelineTotal">TBA</div>
+    <div class="pv-amount" id="pipelineTotal">—</div>
     <div class="pv-sub" id="pipelineCount">0 active deals</div>
-    <div class="pv-delta" id="pipelineDelta">▲ weighted: TBA</div>
+    <div class="pv-delta" id="pipelineDelta">▲ weighted: —</div>
   </div>
 
   <div class="nav-section">
@@ -809,9 +809,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Syne',sans-serif;min-hei
   </div>
 
   <div class="kpi-grid">
-    <div class="kpi"><div class="kpi-label">Pipeline Value</div><div class="kpi-value" id="kpi-pipeline">TBA</div><div class="kpi-sub">Active deals</div><div class="kpi-delta up" id="kpi-pipeline-delta">▲ —</div></div>
-    <div class="kpi"><div class="kpi-label">Weighted Forecast</div><div class="kpi-value" id="kpi-forecast">TBA</div><div class="kpi-sub">Probability-adjusted</div></div>
-    <div class="kpi"><div class="kpi-label">Won (MTD)</div><div class="kpi-value" id="kpi-won">TBA</div><div class="kpi-sub" id="kpi-won-sub">0 deals closed</div><div class="kpi-delta up" id="kpi-won-delta">▲ on target</div></div>
+    <div class="kpi"><div class="kpi-label">Pipeline Value</div><div class="kpi-value" id="kpi-pipeline">—</div><div class="kpi-sub">Active deals</div><div class="kpi-delta up" id="kpi-pipeline-delta">▲ —</div></div>
+    <div class="kpi"><div class="kpi-label">Weighted Forecast</div><div class="kpi-value" id="kpi-forecast">—</div><div class="kpi-sub">Probability-adjusted</div></div>
+    <div class="kpi"><div class="kpi-label">Won (MTD)</div><div class="kpi-value" id="kpi-won">—</div><div class="kpi-sub" id="kpi-won-sub">0 deals closed</div><div class="kpi-delta up" id="kpi-won-delta">▲ on target</div></div>
     <div class="kpi"><div class="kpi-label">Pending Tasks</div><div class="kpi-value" id="kpi-tasks">0</div><div class="kpi-sub" id="kpi-overdue-sub">0 overdue</div><div class="kpi-delta down" id="kpi-tasks-delta" style="display:none">▼ overdue items</div></div>
   </div>
 
@@ -2327,10 +2327,10 @@ async function callClaude(msg, key, agentTag='AI') {
 
 function formatAI(t) {
   return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/\*\*(.+?)\*\*/g,'<strong>TBA</strong>')
-    .replace(/`([^`]+)`/g,'<code>TBA</code>')
-    .replace(/^#+\s+(.+)$/gm,'<strong>TBA</strong>')
-    .replace(/^[*-] (.+)$/gm,'<li>TBA</li>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/^#+\s+(.+)$/gm,'<strong>$1</strong>')
+    .replace(/^[*-] (.+)$/gm,'<li>$1</li>')
     .replace(/(<li>.*<\/li>\n?)+/g,m=>`<ul>${m}</ul>`)
     .replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
 }
