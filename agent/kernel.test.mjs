@@ -163,3 +163,10 @@ test('an MCP door is either a hosted https endpoint or a command to run yourself
   assert.deepEqual(doors({ kind: 'mcp-stdio', command: '' }), ['an MCP door must be listed']);
   assert.deepEqual(doors({ kind: 'mcp-stdio', url: 'https://m.example/mcp' }), ['an MCP door must be listed']);
 });
+
+test('the licence expectation is carried into the facts for the receipt check to hold', () => {
+  assert.deepEqual(facts(agent({ licences: { default: 'MIT', except: { demo: 'none' } } })).licences, { default: 'MIT', except: { demo: 'none' } });
+  assert.deepEqual(facts(agent({ licences: { default: 'MIT', except: 'x' } })).licences, { default: 'MIT', except: {} });
+  assert.deepEqual(facts(agent({ licences: 7 })).licences, { default: '', except: {} });
+  assert.deepEqual(A.build(REAL).licences.except, { docdecdemo: 'none' });
+});

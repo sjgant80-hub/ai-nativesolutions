@@ -54,6 +54,8 @@ export function build(inputs) {
     notWhen: arr(a.notWhen).filter((x) => typeof x === 'string'),
     doors: arr(a.doors).filter(isObj),
     engage: str(a.engage),
+    // the licence each named product's repository must declare, held true by the live receipt check
+    licences: { default: str(isObj(a.licences) ? a.licences.default : ''), except: isObj(a.licences) && isObj(a.licences.except) ? a.licences.except : {} },
   };
 }
 

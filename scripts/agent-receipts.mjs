@@ -58,7 +58,7 @@ async function repo(name) {
       }
     }
     const failing = Object.entries(ci).filter(([, v]) => v.conclusion !== 'success');
-    return { name, public: m.private === false, defaultBranch: m.default_branch, ci, mutationGate, runConclusion: failing.length ? failing.map(([k, v]) => k + ': ' + v.conclusion).join('; ') : Object.keys(ci).length ? 'success' : null };
+    return { name, public: m.private === false, defaultBranch: m.default_branch, licence: m.license && m.license.spdx_id ? m.license.spdx_id : 'none', ci, mutationGate, runConclusion: failing.length ? failing.map(([k, v]) => k + ': ' + v.conclusion).join('; ') : Object.keys(ci).length ? 'success' : null };
   })();
   repos.set(name, p);
   return p;
@@ -69,7 +69,11 @@ async function item(kind, id, name, url, mustSay, extra) {
   const r = repoOf(url) ? await repo(repoOf(url)) : null;
   const v = A.receiptVerdict({ status: page.status, text: visible(page.text) + ' ' + page.text, mustSay, repoPrivate: r && r.public === false ? true : undefined, runConclusion: r ? r.runConclusion : undefined });
   const why = [...v.why, ...(r && r.error ? [r.error] : [])];
-  return { kind, id, name, url, status: page.status, ok: why.length === 0, why, ...(r && !r.error ? { repo: 'sjgant80-hub/' + r.name, ci: r.ci, mutationGate: r.mutationGate } : {}), ...(extra || {}) };
+  if (r && !r.error) {
+    const L = facts.licences || {}, want = (L.except && L.except[r.name]) || L.default;
+    if (want && r.licence !== want) why.push('its licence is ' + r.licence + ', the facts say ' + want);
+  }
+  return { kind, id, name, url, status: page.status, ok: why.length === 0, why, ...(r && !r.error ? { repo: 'sjgant80-hub/' + r.name, licence: r.licence, ci: r.ci, mutationGate: r.mutationGate } : {}), ...(extra || {}) };
 }
 
 async function mcpDoor(d) {
