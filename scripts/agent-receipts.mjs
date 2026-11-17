@@ -39,7 +39,8 @@ async function repo(name) {
     if (meta.status !== 200) return { name, error: 'GitHub answered ' + meta.status };
     const m = JSON.parse(meta.text);
     const wf = await get('https://api.github.com/repos/sjgant80-hub/' + name + '/actions/workflows?per_page=100', GH);
-    const flows = wf.status === 200 ? JSON.parse(wf.text).workflows.filter((w) => w.state === 'active') : [];
+    // this check's own workflow is the checker, not the product's build: its result never counts against a product
+    const flows = wf.status === 200 ? JSON.parse(wf.text).workflows.filter((w) => w.state === 'active' && w.path !== '.github/workflows/agent-receipts.yml') : [];
     const ci = {}; let mutationGate = false;
     for (const w of flows) {
       // the product's own state: its latest run on a push or a schedule. A run someone dispatched by hand is left out,
@@ -122,7 +123,8 @@ for (const g of facts.figures) {
 }
 for (const o of facts.offers) items.push(await item('offer', o.name, o.name, o.page, o.mustSay));
 for (const s of facts.security) items.push(await item('security', s.name, s.name, s.url, ''));
-for (const d of facts.doors) items.push(d.kind === 'mcp' ? await mcpDoor(d) : d.kind === 'mcp-stdio' ? await mcpStdioDoor(d) : await item('door', d.name, d.name, /^https:/.test(d.url) ? d.url : A.SITE + '/' + d.url.replace(/^\.?\//, ''), ''));
+// the receipts door is this check's own output, so it is not a receipt of itself
+for (const d of facts.doors.filter((x) => x.kind !== 'receipts')) items.push(d.kind === 'mcp' ? await mcpDoor(d) : d.kind === 'mcp-stdio' ? await mcpStdioDoor(d) : await item('door', d.name, d.name, /^https:/.test(d.url) ? d.url : A.SITE + '/' + d.url.replace(/^\.?\//, ''), ''));
 const warnings = [];
 for (const c of facts.citations) { const r = await get(c.source); if (r.status !== 200) warnings.push(c.topic + ': its source answered ' + r.status + ' to an automated request (not counted as a failure; open it yourself: ' + c.source + ')'); }
 

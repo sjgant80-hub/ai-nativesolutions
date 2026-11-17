@@ -1,0 +1,681 @@
+{
+ "checkedAt": "2026-11-17T00:44:02.685Z",
+ "facts": "agent-facts/1 as of 2026-11-17",
+ "ok": true,
+ "counts": {
+  "checked": 32,
+  "failed": 0,
+  "products": 23,
+  "withMutationGate": 22
+ },
+ "items": [
+  {
+   "kind": "figure",
+   "id": "slm",
+   "name": "A laptop-trained small model against one 14 times its size",
+   "url": "https://sjgant80-hub.github.io/slm-suite/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/slm-suite",
+   "ci": {
+    "proof": {
+     "conclusion": "success",
+     "at": "2026-11-10T12:36:19Z",
+     "run": "https://github.com/sjgant80-hub/slm-suite/actions/runs/42816890309"
+    }
+   },
+   "mutationGate": true,
+   "record": {
+    "url": "https://sjgant80-hub.github.io/slm-suite/data/record.json",
+    "has": "69/80",
+    "status": 200,
+    "ok": true
+   }
+  },
+  {
+   "kind": "figure",
+   "id": "light",
+   "name": "How much smaller two organs' messages get once they share a seed",
+   "url": "https://sjgant80-hub.github.io/konomi-tongue/layered/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/konomi-tongue",
+   "ci": {
+    "ci": {
+     "conclusion": "success",
+     "at": "2026-11-10T06:17:49Z",
+     "run": "https://github.com/sjgant80-hub/konomi-tongue/actions/runs/42767517753"
+    },
+    "curve": {
+     "conclusion": "success",
+     "at": "2026-11-10T06:18:06Z",
+     "run": "https://github.com/sjgant80-hub/konomi-tongue/actions/runs/42767517779"
+    },
+    "proof-of-play": {
+     "conclusion": "success",
+     "at": "2026-11-10T06:17:51Z",
+     "run": "https://github.com/sjgant80-hub/konomi-tongue/actions/runs/42767517916"
+    },
+    "layered": {
+     "conclusion": "success",
+     "at": "2026-11-10T06:32:17Z",
+     "run": "https://github.com/sjgant80-hub/konomi-tongue/actions/runs/42767517567"
+    },
+    "light": {
+     "conclusion": "success",
+     "at": "2026-11-10T06:26:04Z",
+     "run": "https://github.com/sjgant80-hub/konomi-tongue/actions/runs/42767517448"
+    }
+   },
+   "mutationGate": true,
+   "record": {
+    "url": "https://sjgant80-hub.github.io/konomi-tongue/layered/data/record.json",
+    "has": "14.827×",
+    "status": 200,
+    "ok": true
+   }
+  },
+  {
+   "kind": "figure",
+   "id": "door",
+   "name": "11,112 attempts to get past the door",
+   "url": "https://sjgant80-hub.github.io/liveware/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/liveware",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-04T19:11:01Z",
+     "run": "https://github.com/sjgant80-hub/liveware/actions/runs/41893864339"
+    }
+   },
+   "mutationGate": true,
+   "record": {
+    "url": "https://sjgant80-hub.github.io/liveware/receipts/wave1.json",
+    "has": "24d8f269",
+    "status": 200,
+    "ok": true
+   }
+  },
+  {
+   "kind": "figure",
+   "id": "gate",
+   "name": "Do the tests actually bite?",
+   "url": "https://sjgant80-hub.github.io/fallforgemint/#gate",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/fallforgemint",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-12T22:53:51Z",
+     "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/43323802786"
+    }
+   },
+   "mutationGate": true,
+   "record": null
+  },
+  {
+   "kind": "figure",
+   "id": "bugs",
+   "name": "Found in our own tools, by running them",
+   "url": "https://sjgant80-hub.github.io/kar-citelock/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-citelock",
+   "ci": {
+    "ci": {
+     "conclusion": "success",
+     "at": "2026-11-11T18:02:45Z",
+     "run": "https://github.com/sjgant80-hub/kar-citelock/actions/runs/43073668259"
+    }
+   },
+   "mutationGate": true,
+   "record": {
+    "url": "https://sjgant80-hub.github.io/kar-citelock/",
+    "has": "she said yes",
+    "status": 200,
+    "ok": true
+   }
+  },
+  {
+   "kind": "figure",
+   "id": "wall",
+   "name": "60 hostile days against the spend wall",
+   "url": "https://sjgant80-hub.github.io/kar-spendwall/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-spendwall",
+   "ci": {
+    "proof": {
+     "conclusion": "success",
+     "at": "2026-11-10T04:27:48Z",
+     "run": "https://github.com/sjgant80-hub/kar-spendwall/actions/runs/42755309513"
+    }
+   },
+   "mutationGate": true,
+   "record": null
+  },
+  {
+   "kind": "figure",
+   "id": "mint",
+   "name": "The first receipt: one win, one loss, both kept",
+   "url": "https://sjgant80-hub.github.io/fallforgemint/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/fallforgemint",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-12T22:53:51Z",
+     "run": "https://github.com/sjgant80-hub/fallforgemint/actions/runs/43323802786"
+    }
+   },
+   "mutationGate": true,
+   "record": null
+  },
+  {
+   "kind": "figure",
+   "id": "keys",
+   "name": "What the AI may not do alone",
+   "url": "https://sjgant80-hub.github.io/capability-router/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/capability-router",
+   "ci": {
+    "witness-gate": {
+     "conclusion": "success",
+     "at": "2026-09-28T06:46:10Z",
+     "run": "https://github.com/sjgant80-hub/capability-router/actions/runs/36388083522"
+    }
+   },
+   "mutationGate": true,
+   "record": {
+    "url": "https://sjgant80-hub.github.io/capability-router/",
+    "has": "wait for a human key",
+    "status": 200,
+    "ok": true
+   }
+  },
+  {
+   "kind": "offer",
+   "id": "An audit of one task",
+   "name": "An audit of one task",
+   "url": "https://www.ai-nativesolutions.com/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/ai-nativesolutions",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-17T00:40:12Z",
+     "run": "https://github.com/sjgant80-hub/ai-nativesolutions/actions/runs/43989377446"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "offer",
+   "id": "A department, one task at a time",
+   "name": "A department, one task at a time",
+   "url": "https://sjgant80-hub.github.io/liveware/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/liveware",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-04T19:11:01Z",
+     "run": "https://github.com/sjgant80-hub/liveware/actions/runs/41893864339"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "offer",
+   "id": "DocDec, for your documents",
+   "name": "DocDec, for your documents",
+   "url": "https://sjgant80-hub.github.io/docdecdemo/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/docdecdemo",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-16T17:46:35Z",
+     "run": "https://github.com/sjgant80-hub/docdecdemo/actions/runs/43921810946"
+    }
+   },
+   "mutationGate": false
+  },
+  {
+   "kind": "offer",
+   "id": "Sovereign AI-Security",
+   "name": "Sovereign AI-Security",
+   "url": "https://sjgant80-hub.github.io/sovereign-ai-security/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/sovereign-ai-security",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-16T23:05:05Z",
+     "run": "https://github.com/sjgant80-hub/sovereign-ai-security/actions/runs/43976020672"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "The signed-message door (BREAK IT)",
+   "name": "The signed-message door (BREAK IT)",
+   "url": "https://sjgant80-hub.github.io/break-it/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/break-it",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-04T19:32:35Z",
+     "run": "https://github.com/sjgant80-hub/break-it/actions/runs/41895759174"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "Liveware",
+   "name": "Liveware",
+   "url": "https://sjgant80-hub.github.io/liveware/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/liveware",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-04T19:11:01Z",
+     "run": "https://github.com/sjgant80-hub/liveware/actions/runs/41893864339"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "ScopeGuard",
+   "name": "ScopeGuard",
+   "url": "https://sjgant80-hub.github.io/kar-scopeguard/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-scopeguard",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-12T21:12:52Z",
+     "run": "https://github.com/sjgant80-hub/kar-scopeguard/actions/runs/43307403114"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "The mutation gate (witness)",
+   "name": "The mutation gate (witness)",
+   "url": "https://sjgant80-hub.github.io/witness/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/witness",
+   "ci": {
+    "ci": {
+     "conclusion": "success",
+     "at": "2026-11-10T23:36:35Z",
+     "run": "https://github.com/sjgant80-hub/witness/actions/runs/42904807336"
+    },
+    "landing": {
+     "conclusion": "success",
+     "at": "2026-11-01T06:29:51Z",
+     "run": "https://github.com/sjgant80-hub/witness/actions/runs/41281029361"
+    },
+    "skill": {
+     "conclusion": "success",
+     "at": "2026-11-10T21:25:30Z",
+     "run": "https://github.com/sjgant80-hub/witness/actions/runs/42904807231"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "GlyphGuard",
+   "name": "GlyphGuard",
+   "url": "https://sjgant80-hub.github.io/kar-glyphguard/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-glyphguard",
+   "ci": {
+    "ci": {
+     "conclusion": "success",
+     "at": "2026-11-11T04:34:55Z",
+     "run": "https://github.com/sjgant80-hub/kar-glyphguard/actions/runs/42960140188"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "Conform",
+   "name": "Conform",
+   "url": "https://sjgant80-hub.github.io/kar-conform/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-conform",
+   "ci": {
+    "ci": {
+     "conclusion": "success",
+     "at": "2026-11-11T18:01:28Z",
+     "run": "https://github.com/sjgant80-hub/kar-conform/actions/runs/43073678488"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "Canon",
+   "name": "Canon",
+   "url": "https://sjgant80-hub.github.io/kar-canon/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-canon",
+   "ci": {
+    "ci": {
+     "conclusion": "success",
+     "at": "2026-11-11T18:01:11Z",
+     "run": "https://github.com/sjgant80-hub/kar-canon/actions/runs/43073663571"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "CiteLock",
+   "name": "CiteLock",
+   "url": "https://sjgant80-hub.github.io/kar-citelock/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-citelock",
+   "ci": {
+    "ci": {
+     "conclusion": "success",
+     "at": "2026-11-11T18:02:45Z",
+     "run": "https://github.com/sjgant80-hub/kar-citelock/actions/runs/43073668259"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "Shingle",
+   "name": "Shingle",
+   "url": "https://sjgant80-hub.github.io/kar-shingle/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-shingle",
+   "ci": {
+    "ci": {
+     "conclusion": "success",
+     "at": "2026-11-11T18:01:21Z",
+     "run": "https://github.com/sjgant80-hub/kar-shingle/actions/runs/43073673154"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "Behavioural Entropy Signatures, inward",
+   "name": "Behavioural Entropy Signatures, inward",
+   "url": "https://sjgant80-hub.github.io/bes-inward/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/bes-inward",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-06T00:13:34Z",
+     "run": "https://github.com/sjgant80-hub/bes-inward/actions/runs/42134893094"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "Perimeter Post",
+   "name": "Perimeter Post",
+   "url": "https://sjgant80-hub.github.io/perimeter-post/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/perimeter-post",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-10-13T15:57:39Z",
+     "run": "https://github.com/sjgant80-hub/perimeter-post/actions/runs/38426449847"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "IsolationGate",
+   "name": "IsolationGate",
+   "url": "https://sjgant80-hub.github.io/kar-isolationgate/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-isolationgate",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-14T20:20:23Z",
+     "run": "https://github.com/sjgant80-hub/kar-isolationgate/actions/runs/43636936662"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "Sovereign by architecture",
+   "name": "Sovereign by architecture",
+   "url": "https://www.ai-nativesolutions.com/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/ai-nativesolutions",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-17T00:40:12Z",
+     "run": "https://github.com/sjgant80-hub/ai-nativesolutions/actions/runs/43989377446"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "AlertTriage",
+   "name": "AlertTriage",
+   "url": "https://sjgant80-hub.github.io/kar-alerttriage/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-alerttriage",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-16T22:27:29Z",
+     "run": "https://github.com/sjgant80-hub/kar-alerttriage/actions/runs/43970216729"
+    },
+    "triage": {
+     "conclusion": "success",
+     "at": "2026-11-16T22:30:21Z",
+     "run": "https://github.com/sjgant80-hub/kar-alerttriage/actions/runs/43970216666"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "security",
+   "id": "IR Helper",
+   "name": "IR Helper",
+   "url": "https://sjgant80-hub.github.io/kar-irhelper/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/kar-irhelper",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-16T23:04:48Z",
+     "run": "https://github.com/sjgant80-hub/kar-irhelper/actions/runs/43976011201"
+    },
+    "irhelper": {
+     "conclusion": "success",
+     "at": "2026-11-16T23:05:14Z",
+     "run": "https://github.com/sjgant80-hub/kar-irhelper/actions/runs/43976011204"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "door",
+   "id": "mcp-stdio",
+   "name": "The estate as an MCP server",
+   "url": "https://github.com/sjgant80-hub/kcc-bridge",
+   "command": "npx -y github:sjgant80-hub/kcc-bridge",
+   "ok": true,
+   "why": [],
+   "tools": [
+    "about",
+    "list_claims",
+    "verify_claim",
+    "list_offers",
+    "list_failures",
+    "list_security_tools",
+    "how_to_engage",
+    "list_seeds",
+    "get_seed_manifest",
+    "get_seed_readme",
+    "get_estate_overview",
+    "read_kcc_mint_spec",
+    "prepare_bid_template",
+    "prepare_fork_mint_template",
+    "prepare_job_template",
+    "lookup_kpid",
+    "get_hook_config",
+    "get_credentials_and_authority",
+    "get_canonical_recommendations"
+   ],
+   "serverVersion": "1.2.0",
+   "repo": "sjgant80-hub/kcc-bridge",
+   "ci": {
+    "ci": {
+     "conclusion": "success",
+     "at": "2026-11-17T00:35:15Z",
+     "run": "https://github.com/sjgant80-hub/kcc-bridge/actions/runs/43988752140"
+    },
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-17T00:34:54Z",
+     "run": "https://github.com/sjgant80-hub/kcc-bridge/actions/runs/43988752090"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "door",
+   "id": "This file as JSON",
+   "name": "This file as JSON",
+   "url": "https://www.ai-nativesolutions.com/agent/facts.json",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/ai-nativesolutions",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-17T00:40:12Z",
+     "run": "https://github.com/sjgant80-hub/ai-nativesolutions/actions/runs/43989377446"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "door",
+   "id": "Liveware",
+   "name": "Liveware",
+   "url": "https://sjgant80-hub.github.io/liveware/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/liveware",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-04T19:11:01Z",
+     "run": "https://github.com/sjgant80-hub/liveware/actions/runs/41893864339"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "door",
+   "id": "The front door",
+   "name": "The front door",
+   "url": "https://www.ai-nativesolutions.com/",
+   "status": 200,
+   "ok": true,
+   "why": [],
+   "repo": "sjgant80-hub/ai-nativesolutions",
+   "ci": {
+    "gate": {
+     "conclusion": "success",
+     "at": "2026-11-17T00:40:12Z",
+     "run": "https://github.com/sjgant80-hub/ai-nativesolutions/actions/runs/43989377446"
+    }
+   },
+   "mutationGate": true
+  },
+  {
+   "kind": "door",
+   "id": "The source on GitHub",
+   "name": "The source on GitHub",
+   "url": "https://github.com/sjgant80-hub",
+   "status": 200,
+   "ok": true,
+   "why": []
+  }
+ ],
+ "warnings": []
+}
