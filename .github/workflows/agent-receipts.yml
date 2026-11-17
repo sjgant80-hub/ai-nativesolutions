@@ -1,0 +1,31 @@
+name: agent-receipts
+# Every day, and on every change to the agent face: re-open every receipt, offer page, security tool page and door that
+# llms.txt, ai.html, agent/facts.json and the MCP server point other people's AI agents at. A page that stops answering,
+# a record that no longer holds its figure, a source gone private, a red CI run, or an MCP door without verify_claim
+# turns this job red, in public. Citations are checked for reachability only (some publishers refuse automated requests).
+# The job does not commit: agent/receipts.json in the repository is the result as of the date it states.
+on:
+  schedule: [{ cron: '17 6 * * *' }]
+  push:
+    paths: ['agent/**', 'llms.txt', 'llms-full.txt', 'ai.html', 'scripts/agent-receipts.mjs', 'site/data/stats.json', '.github/workflows/agent-receipts.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  receipts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: '22' }
+      - name: wait until GitHub Pages serves this commit's facts (a push is checked against what it published)
+        run: |
+          for i in $(seq 1 40); do
+            if curl -fsS https://www.ai-nativesolutions.com/agent/facts.json -o /tmp/live.json && cmp -s /tmp/live.json agent/facts.json; then echo "live facts match this commit"; exit 0; fi
+            sleep 15
+          done
+          echo "::warning::the live facts still differ from this commit after 10 minutes; checking what is live"
+      - name: re-open every receipt the agent face points at
+        env: { GITHUB_TOKEN: '${{ github.token }}' }
+        run: node scripts/agent-receipts.mjs --check

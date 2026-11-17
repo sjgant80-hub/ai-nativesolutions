@@ -28,3 +28,11 @@ jobs:
           node /tmp/witness/witness.mjs mutate stages.mjs --timeout 60000 --cap 400 --test node --test stages.test.mjs
       - name: witness — the front door's kernels, broken on purpose, re-derived on this runner
         run: node scripts/gate-site.mjs /tmp/witness/witness.mjs --verify
+      - name: the agent face — tests, and every agent-readable file is exactly what its records give
+        run: |
+          node --test agent/kernel.test.mjs
+          node scripts/build-agent.mjs --check
+      - name: witness — the agent face's kernel, broken on purpose; every break must be caught
+        run: |
+          node /tmp/witness/witness.mjs mutate agent/kernel.mjs --timeout 60000 --cap 100000 --test node --test agent/kernel.test.mjs > agent-gate.out 2>&1 || true
+          node -e "const b=require('fs').readFileSync('agent-gate.out','utf8');const j=JSON.parse(b.slice(b.indexOf('{'),b.lastIndexOf('}')+1));if(j.clean!==true||j.killed!==j.total||!(j.total>0)){console.error('::error::witness not clean on agent/kernel.mjs: '+j.killed+'/'+j.total);process.exit(1)}console.log('witness CLEAN agent/kernel.mjs '+j.killed+'/'+j.total)"

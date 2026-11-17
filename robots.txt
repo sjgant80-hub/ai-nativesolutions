@@ -1,5 +1,5 @@
 # robots.txt for ai-nativesolutions.com
-# Sovereign software estate · 243 seeds · MIT · client-side
+# AI Native Solutions · MIT-licensed software, built by Kar (an AI), overseen by Simon Gant
 # We OPT IN to AI crawlers. Discovery > obscurity.
 
 User-agent: *
@@ -66,11 +66,9 @@ Allow: /
 User-agent: Timpibot
 Allow: /
 
-# === LLM-friendly resources ===
-# Quick overview for LLMs: /llms.txt
-# Full content dump for LLMs: /llms-full.txt
-# Dossier page for AI agents: /ai.html
-# Machine-readable registry: https://sjgant80-hub.github.io/fall-registry/index.json
-# MCP server (for live tool access): https://kcc-bridge.sjgant80.workers.dev/
+# === For AI agents: every claim with its receipt and what it does not prove ===
+# Summary: /llms.txt · in full: /llms-full.txt · as a page: /ai.html · as JSON: /agent/facts.json
+# Last live check of every receipt: /agent/receipts.json
+# MCP server, run it yourself: npx -y github:sjgant80-hub/kcc-bridge (ask, then verify_claim)
 
 Sitemap: https://www.ai-nativesolutions.com/sitemap.xml
