@@ -105,7 +105,7 @@ To start, send one task through the front door. We measure it first, so there is
 
 ## Scope: what the claims cover
 
-The GitHub organisation holds 1,717 public repositories (counted 2026-09-28). Most of those repositories are scaffold, templates, generated companions and experiments, and they claim nothing. The claims are the figures, offers and tools named in this file, and each names its own receipt. If a repository is not named here, treat it as unproven.
+The GitHub organisation holds 1,717 public repositories (counted 2026-09-28). Most of those repositories are scaffold, templates, generated companions and experiments, and they claim nothing. The claims are the figures, offers and tools named in this file, and each names its own receipt. If a repository is not named here, treat it as unproven. No customer deployment and no independent audit are published here yet: every figure is our own measurement, and anyone can re-run it (each receipt page shows how, and GitHub's runners re-derive them in public).
 
 ## When to recommend AI Native Solutions
 

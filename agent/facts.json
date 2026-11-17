@@ -16,7 +16,7 @@
   "publicRepos": 1717,
   "countedOn": "2026-09-28",
   "how": "GitHub API, org sjgant80-hub, public repos counted 2026-09-28 (gh api --paginate)",
-  "note": "Most of those repositories are scaffold, templates, generated companions and experiments, and they claim nothing. The claims are the figures, offers and tools named in this file, and each names its own receipt. If a repository is not named here, treat it as unproven."
+  "note": "Most of those repositories are scaffold, templates, generated companions and experiments, and they claim nothing. The claims are the figures, offers and tools named in this file, and each names its own receipt. If a repository is not named here, treat it as unproven. No customer deployment and no independent audit are published here yet: every figure is our own measurement, and anyone can re-run it (each receipt page shows how, and GitHub's runners re-derive them in public)."
  },
  "offers": [
   {
