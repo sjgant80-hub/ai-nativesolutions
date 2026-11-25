@@ -122,12 +122,12 @@ h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4
 </nav>
 
 <main>
-  <div class="eyebrow">§ talk to the counterpart</div>
-  <h1>Lia · trained on the <em style="color:var(--gold);font-style:italic">whole estate.</em></h1>
-  <p class="lede">Lia is the AI counterpart for AI-Native Solutions. She knows every tool in the FallMarket catalog, the nine chambers of FallColony, all forty-six T1 autopilots, the workstation, the vertical seeds, and how they compose. Ask her anything about what the estate does, what fits your situation, or how to install any piece.</p>
+  <div class="eyebrow">Talk to Lia</div>
+  <h1>Ask Lia. <em style="color:var(--gold);font-style:italic">She knows what we build.</em></h1>
+  <p class="lede">Lia is our AI helper. She has read about every tool we have made. Ask her what a tool does, which one fits you, or how to set one up.</p>
 
   <div class="status-strip" id="statusStrip">
-    <span>◊ Estate loaded:</span>
+    <span>Loaded:</span>
     <span class="pill" id="pill-tools">— tools</span>
     <span class="pill" id="pill-autopilots">— autopilots</span>
     <span class="pill" id="pill-surfaces">— surfaces</span>
@@ -136,29 +136,29 @@ h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4
   </div>
 
   <div class="engine-toggle">
-    <span class="label">Engine</span>
+    <span class="label">Where Lia runs</span>
     <div class="opts">
-      <button data-engine="server" class="on" onclick="setEngine('server')" id="btn-server">Server (default · Simon's API)</button>
-      <button data-engine="webllm" onclick="setEngine('webllm')" id="btn-webllm">Local WebLLM (sovereign)</button>
-      <button data-engine="byok" onclick="setEngine('byok')" id="btn-byok">BYOK (your API key)</button>
+      <button data-engine="server" class="on" onclick="setEngine('server')" id="btn-server">On our server (the default)</button>
+      <button data-engine="webllm" onclick="setEngine('webllm')" id="btn-webllm">In your browser (nothing leaves)</button>
+      <button data-engine="byok" onclick="setEngine('byok')" id="btn-byok">With your own key</button>
     </div>
   </div>
 
   <div class="empty-greet" id="emptyGreet">
     <h3>Hi. I'm Lia.</h3>
-    <p>I've read the whole estate manifest — every listing on FallMarket, every autopilot manifest, every workstation surface. Ask me what fits, what installs, what replaces the SaaS you're paying for, or what any surface actually does.</p>
-    <p style="font-size:13.5px;color:var(--muted);margin-bottom:14px;">By default I run on Simon's API. Switch to <strong style="color:var(--gold)">Local WebLLM</strong> above if you want the whole conversation to stay on your device. <a href="#" id="disclosureMore" style="color:var(--gold);font-weight:500;">Sovereignty details ↓</a></p>
+    <p>I have read about every tool we have made. Ask me what fits you, what a tool does, or what it can replace.</p>
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:14px;">I start on our server, so what you type is sent there. Pick <strong style="color:var(--gold)">In your browser</strong> above to keep it all on your own computer. <a href="#" id="disclosureMore" style="color:var(--gold);font-weight:500;">More about this ↓</a></p>
     <div class="quick-chips" id="quickChips">
       <button data-q="I run a UK service firm (attorney/CPA/HR/IFA/clinic). Which vertical seed fits and what does it replace?">I run a UK service firm</button>
       <button data-q="I run a US service firm (attorney/CPA/HR/RIA/clinic). Which vertical seed fits and what does it replace?">I run a US service firm</button>
-      <button data-q="What are the seven-shape wellness tools (FallMirror, ShadowCompass) and how are they different from BetterHelp?">Wellness — FallMirror + ShadowCompass</button>
-      <button data-q="Walk me through FallMarket. How many listings, what kinds, and how do agents actually call them?">Explain FallMarket</button>
-      <button data-q="Walk me through FallColony's nine chambers and how agents work + transact there.">Explain FallColony</button>
-      <button data-q="What is the fall-autopilot-kit? How does the T1-T7 tier ladder work?">Explain the autopilot tiers</button>
-      <button data-q="How does FallCube demonstrate the sovereign fractal? What are the three flavors?">Explain FallCube</button>
-      <button data-q="I'm a developer. Show me the SDK/MCP/API trio pattern and how to install any piece.">I'm a developer</button>
-      <button data-q="I want to escape ChatGPT/Claude/Gemini memory lock-in. How does fallrecall work?">Escape SaaS AI lock-in</button>
-      <button data-q="Generate me a CUSTOM_STACK.md for my situation — I'll describe it in the next message and you draft the recommendation.">Generate my custom stack →</button>
+      <button data-q="What are the seven-shape wellness tools (FallMirror, ShadowCompass) and how are they different from BetterHelp?">Tools for wellbeing</button>
+      <button data-q="Walk me through FallMarket. How many listings, what kinds, and how do agents actually call them?">What is FallMarket?</button>
+      <button data-q="Walk me through FallColony's nine chambers and how agents work + transact there.">What is FallColony?</button>
+      <button data-q="What is the fall-autopilot-kit? How does the T1-T7 tier ladder work?">What are the autopilot levels?</button>
+      <button data-q="How does FallCube demonstrate the sovereign fractal? What are the three flavors?">What is FallCube?</button>
+      <button data-q="I'm a developer. Show me the SDK/MCP/API trio pattern and how to install any piece.">I write software</button>
+      <button data-q="I want to escape ChatGPT/Claude/Gemini memory lock-in. How does fallrecall work?">I want to leave the big AI apps</button>
+      <button data-q="Generate me a CUSTOM_STACK.md for my situation — I'll describe it in the next message and you draft the recommendation.">Make me a plan →</button>
     </div>
   </div>
 
@@ -166,13 +166,13 @@ h1 { font-family: 'Playfair Display'; font-weight: 700; font-size: clamp(28px, 4
 
   <div class="composer">
     <div class="input-row">
-      <textarea id="composer" placeholder="Tell me what you're trying to do, build, or escape from..." rows="2"></textarea>
+      <textarea id="composer" placeholder="Tell me what you want to do..." rows="2"></textarea>
       <button id="sendBtn" onclick="sendMessage()">Send →</button>
     </div>
   </div>
 
   <div class="honest-strip" id="disclosureBox" style="display:none;margin-top:24px;">
-    <strong>Honest disclosure.</strong> This chat has three engines. <strong>Server</strong> (default) uses Simon's Groq + Anthropic accounts so you don't need an API key — the conversation is not sovereign in that mode. <strong>Local WebLLM</strong> runs a ~1.9 GB Llama 3.2 3B model in your browser via WebGPU — first load takes a few minutes, cached forever, whole conversation stays on your device. <strong>BYOK</strong> uses your own OpenAI / Anthropic / Groq key stored in localStorage only. All estate tools are sovereign in every mode — this chat's engine is the only choice. Rate-limited to 50 messages per day per network on Server mode. Email works too: <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a>.
+    <strong>Where your words go.</strong> This chat can run three ways. <strong>On our server</strong> (the default): it uses our accounts with Groq and Anthropic, so you need no key. What you type is sent to them. <strong>In your browser</strong>: it loads a model of about 1.9 GB into this tab. The first load takes a few minutes. After that, nothing you type leaves your computer. <strong>With your own key</strong>: it uses your own OpenAI, Anthropic or Groq key, kept only in this browser. Our tools themselves always run on your own computer. Only this chat gives you the choice. On our server you can send 50 messages a day. Email works too: <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a>.
   </div>
 
   <div class="foot">
@@ -245,11 +245,11 @@ async function loadEstate() {
 function updateEnginePill() {
   const p = $('#pill-engine');
   if (engine === 'server') { p.textContent = 'server'; p.classList.remove('warn','err'); p.classList.add('pill'); }
-  if (engine === 'webllm') { p.textContent = webllmReady ? 'WebLLM local' : 'WebLLM (loading…)'; p.className = 'pill' + (webllmReady ? '' : ' warn'); }
-  if (engine === 'byok') { p.textContent = byokKey ? ('BYOK ' + byokProvider) : 'BYOK (key needed)'; p.className = 'pill' + (byokKey ? '' : ' err'); }
-  $('#foot-engine').textContent = engine === 'server' ? "Server engine · Groq Llama 3.3 70B + Claude Sonnet fallback via Simon's accounts" :
-    engine === 'webllm' ? "Local WebLLM · Llama 3.2 3B in your browser · nothing leaves your device" :
-    "BYOK · your API key stored in localStorage only · " + byokProvider;
+  if (engine === 'webllm') { p.textContent = webllmReady ? 'in your browser' : 'in your browser (loading…)'; p.className = 'pill' + (webllmReady ? '' : ' warn'); }
+  if (engine === 'byok') { p.textContent = byokKey ? ('your key: ' + byokProvider) : 'your key (needed)'; p.className = 'pill' + (byokKey ? '' : ' err'); }
+  $('#foot-engine').textContent = engine === 'server' ? "On our server · Groq Llama 3.3 70B, with Claude Sonnet as the back-up, on our accounts" :
+    engine === 'webllm' ? "In your browser · Llama 3.2 3B · nothing leaves your computer" :
+    "Your own key · kept only in this browser · " + byokProvider;
 }
 
 function setEngine(name) {
@@ -262,7 +262,7 @@ function setEngine(name) {
 }
 
 function promptByok() {
-  const p = prompt('BYOK provider (anthropic / openai / groq):', byokProvider);
+  const p = prompt('Whose key is it? (anthropic / openai / groq):', byokProvider);
   if (!p) return;
   byokProvider = p.toLowerCase().trim();
   const k = prompt('Paste your API key (stored in localStorage only, never sent to Simon):', byokKey);
@@ -271,7 +271,7 @@ function promptByok() {
   localStorage.setItem('lia-byok-provider', byokProvider);
   localStorage.setItem('lia-byok-key', byokKey);
   updateEnginePill();
-  toast('BYOK configured · ' + byokProvider);
+  toast('Your key is set · ' + byokProvider);
 }
 
 async function initWebLLM() {
@@ -492,7 +492,7 @@ function appendMessage(role, html, streamingFlag) {
   const chat = $('#chat');
   const div = document.createElement('div');
   div.className = 'msg ' + role + (streamingFlag ? ' streaming' : '');
-  div.innerHTML = (role === 'agent' ? '<div class="agent-name">◊ Lia</div>' : '') + html;
+  div.innerHTML = (role === 'agent' ? '<div class="agent-name">Lia</div>' : '') + html;
   chat.appendChild(div);
   window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   return div;
@@ -521,13 +521,13 @@ async function sendMessage(prefillText) {
       if (!webllmReady) throw new Error('WebLLM still loading · check top-right pill');
       await sendWebLLM(liveDiv);
     } else if (engine === 'byok') {
-      if (!byokKey) throw new Error('BYOK key not set · click BYOK button in engine bar');
+      if (!byokKey) throw new Error('Your key is not set. Press “With your own key” above.');
       await sendByok(liveDiv);
     } else {
       await sendServer(liveDiv);
     }
   } catch (e) {
-    liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div><p style="color:var(--danger)">Something went wrong: ' + esc(e.message) + '</p><p style="font-size:13px;color:var(--muted)">Try a different engine, or email <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a>.</p>';
+    liveDiv.innerHTML = '<div class="agent-name">Lia</div><p style="color:var(--danger)">Something went wrong: ' + esc(e.message) + '</p><p style="font-size:13px;color:var(--muted)">Try a different engine, or email <a href="mailto:ainativesolutions@gmail.com" style="color:var(--gold)">ainativesolutions@gmail.com</a>.</p>';
   }
   streaming = false; $('#sendBtn').disabled = false;
 }
@@ -539,7 +539,7 @@ async function sendServer(liveDiv) {
     body: JSON.stringify({ system: systemPrompt, messages, max_tokens: 2048 })});
   if (r.status === 429) {
     const j = await r.json();
-    liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div><p>' + esc(j.message || 'Rate-limited. Try again tomorrow, or switch to Local WebLLM above.') + '</p>';
+    liveDiv.innerHTML = '<div class="agent-name">Lia</div><p>' + esc(j.message || 'That is the limit for today. Try again tomorrow, or pick “In your browser” above.') + '</p>';
     return;
   }
   if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -563,13 +563,13 @@ async function sendServer(liveDiv) {
         const j = JSON.parse(data);
         if (j.type === 'content_block_delta') {
           const d = j.delta?.text || '';
-          if (d) { acc += d; liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div>' + renderMarkdown(acc) + '<span class="cursor"></span>'; window.scrollTo({ top: document.body.scrollHeight }); }
+          if (d) { acc += d; liveDiv.innerHTML = '<div class="agent-name">Lia</div>' + renderMarkdown(acc) + '<span class="cursor"></span>'; window.scrollTo({ top: document.body.scrollHeight }); }
         }
       } catch (e) {}
     }
   }
   liveDiv.classList.remove('streaming');
-  liveDiv.innerHTML = '<div class="agent-name">◊ Lia</div>' + renderMarkdown(acc);
+  liveDiv.innerHTML = '<div class="agent-name">Lia</div>' + renderMarkdown(acc);
   messages.push({ role: 'assistant', content: acc });
 }
 
@@ -581,10 +581,10 @@ async function sendWebLLM(liveDiv) {
   let acc = '';
   for await (const chunk of chat) {
     const d = chunk.choices[0]?.delta?.content || '';
-    if (d) { acc += d; liveDiv.innerHTML = '<div class="agent-name">◊ Lia · WebLLM</div>' + renderMarkdown(acc) + '<span class="cursor"></span>'; window.scrollTo({ top: document.body.scrollHeight }); }
+    if (d) { acc += d; liveDiv.innerHTML = '<div class="agent-name">Lia · WebLLM</div>' + renderMarkdown(acc) + '<span class="cursor"></span>'; window.scrollTo({ top: document.body.scrollHeight }); }
   }
   liveDiv.classList.remove('streaming');
-  liveDiv.innerHTML = '<div class="agent-name">◊ Lia · WebLLM</div>' + renderMarkdown(acc);
+  liveDiv.innerHTML = '<div class="agent-name">Lia · WebLLM</div>' + renderMarkdown(acc);
   messages.push({ role: 'assistant', content: acc });
 }
 
@@ -610,7 +610,7 @@ async function sendByok(liveDiv) {
     ? (j.content?.[0]?.text || '')
     : (j.choices?.[0]?.message?.content || '');
   liveDiv.classList.remove('streaming');
-  liveDiv.innerHTML = '<div class="agent-name">◊ Lia · BYOK ' + byokProvider + '</div>' + renderMarkdown(acc);
+  liveDiv.innerHTML = '<div class="agent-name">Lia · your key: ' + byokProvider + '</div>' + renderMarkdown(acc);
   messages.push({ role: 'assistant', content: acc });
 }
 

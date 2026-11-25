@@ -84,7 +84,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
 <h1>The estate</h1>
 <p class="sub">${live.length.toLocaleString('en-GB')} live builds of ${pub.length.toLocaleString('en-GB')} public repositories —
 this page is generated from the estate index of ${esc(String(idx.generated || '').slice(0, 10))}, never typed.
-Every link below answered a live check on ${esc(String(idx.verified || deadlist.verified || 'the last verification'))}. Programmatic companion surfaces (API/MCP/SDK mirrors) are not listed here.</p>
+Every link below answered a live check on ${esc(String(idx.verified || deadlist.verified || 'the last verification'))}. Helper builds, which let other programs use a main build, are not listed here.</p>
 
 <h2 style="color:var(--gold);font-size:1.05rem">Start here</h2>
 <div class="flag">
