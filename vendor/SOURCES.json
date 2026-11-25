@@ -63,6 +63,21 @@
       }
     },
     {
+      "id": "house-standard",
+      "repo": "sjgant80-hub/house-standard",
+      "commit": "aadb250f8b97b69e98dddb667fd6992a6633c389",
+      "licence": "MIT",
+      "what": "the house kit (the crystal, the token sheet, the motion), the ship gate, the reading-age check, and the results of the newest builds as read from their own pages",
+      "files": {
+        "kit/house.css": "b3d9ead1ae6ec44fd59ef733b60ab6b2326e0d9a8a6490773511a1f75efdba4a",
+        "kit/crystal.js": "c165c90a3b964c7025f8ac40bf928dac06e3b3932ed4f39fcbbbbbd0c2eb6d90",
+        "kit/house.js": "8afae023907be78426828a08a802e94d06eb3c3c0840d2f92cefc463f9a5e4d1",
+        "src/standard.mjs": "5452b429ff224d76ef7be9b0e82b04094f62b6aa32a390a94b8aee64631b5335",
+        "src/plain.mjs": "b770c689e5f3031737f51ef481793b178542bd73f40e5ada9a2d4de153d3d02e",
+        "data/flagships.json": "9e21c608af2db8a4c47e12e2adf60d1be2d005734d8cbbfe0674e3966cdfc1a2"
+      }
+    },
+    {
       "id": "brotli-wasm",
       "version": "3.0.1",
       "from": "https://cdn.jsdelivr.net/npm/brotli-wasm@3.0.1/",

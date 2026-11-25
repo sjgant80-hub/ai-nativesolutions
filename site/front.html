@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Native Solutions — AI you own</title>
+<meta name="description" content="Small AI that runs on your own computers. It says “I don’t know” when it doesn’t know, and it shows its work so you can check it. Try it on this page: nothing you type leaves your computer.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; connect-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#02070c">
+<meta property="og:title" content="AI Native Solutions — AI you own">
+<meta property="og:description" content="Small AI that runs on your own computers, tells the truth, and shows its work. Try it on the page.">
+<meta property="og:image" content="https://www.ai-nativesolutions.com/media/og-card.jpg">
+<link rel="canonical" href="https://www.ai-nativesolutions.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2302070c'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%235ef2e4'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%235ef2e4' stroke-opacity='.35'/%3E%3C/svg%3E">
+<link rel="preload" href="vendor/fonts/fraunces/files/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="vendor/fonts/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<!--HOUSE-STYLE--><!--/HOUSE-STYLE-->
+<style>
+/* this page's own few parts: the counter in the corner, the steps, and the question box */
+#net-chip{position:absolute;top:14px;right:14px;z-index:20;font:500 11.5px/1 var(--mono);color:var(--soft);background:rgba(4,11,19,.82);border:1px solid var(--line);border-radius:999px;padding:10px 14px;min-height:36px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;backdrop-filter:blur(8px)}
+#net-chip:hover{border-color:var(--cyan);color:var(--ink)}
+#net-chip i{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+#net-chip-short{display:none}
+@media (max-width:640px){#net-chip-text{display:none}#net-chip-short{display:inline}}
+.act .bad{color:var(--red)}
+.ask-score{font-size:14.5px;color:var(--soft);margin:18px 0 0;line-height:1.6}
+.glass .lab{font:500 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.glass .chip{font:500 13px/1.3 var(--body);color:var(--soft);background:rgba(2,7,12,.6);border:1px solid var(--line);border-radius:999px;padding:9px 14px;min-height:40px;cursor:pointer;text-align:left}
+.glass .chip:hover,.glass .chip[aria-pressed="true"]{border-color:var(--cyan);color:var(--ink)}
+.glass .state{font:500 13px/1.5 var(--mono);color:var(--muted);margin:8px 0 0;min-height:20px}
+.asked{font-family:var(--display);font-size:22px;margin:18px 0 12px}
+.twin{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:rgba(2,7,12,.5)}
+.card h4{font:600 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.card .what{font-weight:600;margin:0 0 8px}.card.yes .what{color:var(--cyan)}.card.no .what{color:var(--gold)}.card.wrong .what{color:var(--red)}
+.card .from{font-size:14px;color:var(--soft);margin:0;line-height:1.55}.card .where{font:500 12px/1.4 var(--mono);color:var(--muted);margin:10px 0 0}
+.kept{font-size:14px;color:var(--gold);margin:12px 0 0}
+dialog#ledger{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:16px;max-width:min(760px,92vw);padding:24px}
+dialog#ledger::backdrop{background:rgba(0,0,0,.6)}dialog#ledger form{text-align:right}dialog#ledger form button{background:none;border:0;color:var(--soft);font-size:22px;cursor:pointer;min-width:40px;min-height:40px}
+dialog#ledger table{border-collapse:collapse;width:100%;font:500 12.5px/1.5 var(--mono)}dialog#ledger th,dialog#ledger td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left}
+dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color:var(--soft)}dialog#ledger .log{font:500 12px/1.6 var(--mono);color:var(--soft);padding-left:20px}
+.more{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:28px 0 0}
+</style>
+<script type="module" src="site/front.mjs"></script>
+</head>
+<body>
+<button id="net-chip" type="button" aria-haspopup="dialog" title="See what this page sent and fetched"><i></i><span id="net-chip-text">counting…</span><span id="net-chip-short">counting…</span></button>
+
+<header class="hero" id="top">
+  <canvas id="crystal" role="img" aria-label="A crystal of 32 faces. Each lit face is one result we can prove: green when it passed, gold while it is still being tested, red when it failed."></canvas>
+  <div class="hero-shade"></div>
+  <div class="wrap">
+    <p class="eyebrow">AI Native Solutions</p>
+    <h1>AI you <em>own.</em></h1>
+    <p class="sub">It runs on your own computers. It says “I don’t know” when it doesn’t know. And it shows its work, so you can check it.</p>
+    <div class="cta"><a class="btn primary" href="#proof">See the proof →</a><a class="btn ghost" href="#try">Try it yourself</a></div>
+  </div>
+  <p class="facet" id="facet" aria-live="polite">Each lit face is one result. Point at one.</p>
+</header>
+
+<section class="pad" id="what">
+  <div class="wrap">
+    <p class="kline reveal">What we make</p>
+    <h2 class="claim reveal">Most AI guesses. <b>Ours checks.</b></h2>
+    <div class="acts">
+      <div class="act reveal"><span class="num">01</span><h3>You own it.</h3><p>It lives on your own computers. No one can switch it off. No one can change the deal.</p></div>
+      <div class="act reveal"><span class="num">02</span><h3>It tells the truth.</h3><p>When it does not know, it says “I can’t tell.” It does not make things up.</p></div>
+      <div class="act reveal"><span class="num">03</span><h3>You can check it.</h3><p>Each result on this page links to its proof. You can run the test again yourself.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad alt" id="proof">
+  <div class="wrap">
+    <p class="kline reveal">The proof</p>
+    <h2 class="claim reveal">Same AI. Same size. <b>We only added a checker.</b></h2>
+    <div class="stats"><!--RECEIPTS--><!--/RECEIPTS--></div>
+    <p class="lede reveal">We wrote down the pass marks before each test. A test that failed stays on its page, in red.</p>
+  </div>
+</section>
+
+<section class="pad" id="learns">
+  <div class="wrap">
+    <p class="kline reveal">It teaches itself</p>
+    <h2 class="claim reveal">It learns from its own work. <b>But only the work it can prove.</b></h2>
+    <div class="acts">
+      <div class="act reveal"><span class="num">01</span><h3>It works.</h3><p>It solves a hard sum one small step at a time.</p></div>
+      <div class="act reveal"><span class="num">02</span><h3>A checker marks each step.</h3><p>Right steps are kept. Wrong steps are thrown away.</p></div>
+      <div class="act reveal"><span class="num">03</span><h3>It studies the right ones.</h3><p>Then it takes a test it has never seen. We keep the new AI only if it does better.</p></div>
+    </div>
+    <div class="stats"><!--LOOP--><!--/LOOP--></div>
+  </div>
+</section>
+
+<section class="pad alt" id="builds">
+  <div class="wrap">
+    <p class="kline reveal">Five things we built</p>
+    <h2 class="claim reveal">Each one does a single job. <b>Each one shows its score.</b></h2>
+    <div class="acts"><!--BUILDS--><!--/BUILDS--></div>
+    <p class="lede reveal">These are the newest. We have made <!--N-BUILDS--><!--/N-BUILDS--> public builds in all. <a href="estate.html">See them all →</a></p>
+  </div>
+</section>
+
+<section class="pad" id="how">
+  <div class="wrap">
+    <p class="kline reveal">How it works</p>
+    <h2 class="claim reveal">Six parts. <b>A person is always the last one.</b></h2>
+    <div class="stack reveal">
+      <div class="srow" data-face="1" data-say="A small AI: it fits on a laptop"><div class="d">01</div><div class="nm"><b>A small AI</b><span>Small enough to run on a laptop. You own it.</span></div></div>
+      <div class="srow" data-face="1" data-say="A checker: code that marks each step"><div class="d">02</div><div class="nm"><b>A checker</b><span>Code that marks each step right or wrong. It is maths, not a guess.</span></div></div>
+      <div class="srow" data-face="1" data-say="A wall: what it cannot check, it will not answer"><div class="d">03</div><div class="nm"><b>A wall</b><span>What it cannot check, it will not answer. It says “I can’t tell.”</span></div></div>
+      <div class="srow" data-face="1" data-say="A memory: it uses again what it has proved"><div class="d">04</div><div class="nm"><b>A memory</b><span>It uses again what it has proved, so it does less work twice.</span><span class="tag cy"><!--REUSE--><!--/REUSE--></span></div></div>
+      <!--SCHOOL-ROW--><!--/SCHOOL-ROW-->
+      <div class="srow" data-face="1" data-say="A person: big changes wait for a human to say yes"><div class="d">06</div><div class="nm"><b>A person</b><span>Big changes wait for a human to say yes.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad alt proof" id="try">
+  <div class="wrap">
+    <h2 class="hl reveal"><span class="a">Don’t trust us.</span><br><span class="b">Try it.</span></h2>
+    <p class="sub2 reveal">Pick a question. A normal search always gives an answer, even when it has none. Ours can say “I can’t tell.”</p>
+    <div class="glass reveal" id="ask" style="text-align:left">
+      <p class="lab">Pick a question</p>
+      <p class="chips" id="ask-chips"></p>
+      <p class="state" id="ask-state" role="status" aria-live="polite">Getting the pages ready…</p>
+      <div id="ask-out"></div>
+      <p style="margin:18px 0 0"><button class="btn ghost" id="ask-next" type="button">Ask another one</button></p>
+      <p class="ask-score"><!--ASK-SCORE--><!--/ASK-SCORE--></p>
+      <p class="state" id="ask-net"></p>
+    </div>
+    <div class="more reveal"><a class="plink" href="deep.html#breach">Try to trick the door ↗</a><a class="plink" href="deep.html#race">Race our file squeezer ↗</a><a class="plink" href="deep.html#door">Give it a complaint to read ↗</a></div>
+    <details class="honest reveal"><summary>What this does — and doesn’t — claim</summary><div class="in">
+      <p><b>It is narrow on purpose.</b> It works where a computer can check the answer: sums, logic, and facts copied from a page. For the rest it says “I can’t tell.”</p>
+      <p><b>Copied is not the same as true.</b> If a page is wrong, an answer copied from it is wrong too. We mark which answers are proved and which are copied.</p>
+      <p><b>The question box is small, and it slips.</b> It knows <!--DOC-N--><!--/DOC-N--> short pieces of text: about the Normans, about oxygen, and about how hard some problems are. The twelve questions come from a public test set, spelled as that set spells them. In four of them ours is wrong. We kept those, and you can pick them.</p>
+      <p><b>Nothing is claimed early.</b> The learning test is still running. Its score goes on this page when it is done, pass or fail.</p>
+      <p><b>Some of our tests failed.</b> <!--FAILS--><!--/FAILS--></p>
+      <p><b>These scores were read on <!--READ-ON--><!--/READ-ON-->.</b> Each one comes from the page that proves it. This page does not change them.</p></div></details>
+  </div>
+</section>
+
+<section class="pad" id="start">
+  <div class="wrap">
+    <p class="kline reveal">Start here</p>
+    <h2 class="claim reveal">Start with <b>one job.</b></h2>
+    <p class="lede reveal">Tell us one job your team does again and again. We test if a small AI you own can do it. You get the numbers either way.</p>
+    <div class="cta reveal" style="margin:26px 0 34px"><a class="btn primary" href="mailto:ainativesolutions@gmail.com?subject=One%20job">Send us the job</a><a class="btn ghost" href="talk.html">Talk to Lia first</a></div>
+    <div class="stack reveal">
+      <div class="srow"><div class="d">1</div><div class="nm"><b>We measure today.</b><span>How long does the job take now? How often does it go wrong?</span></div></div>
+      <div class="srow"><div class="d">2</div><div class="nm"><b>We build one small AI.</b><span>It learns your own rules and your own words, for that one job.</span></div></div>
+      <div class="srow"><div class="d">3</div><div class="nm"><b>We test it on new work.</b><span>Work it has never seen. You get the full score: right, wrong, and “can’t tell”.</span></div></div>
+      <div class="srow"><div class="d">4</div><div class="nm"><b>You keep it.</b><span>It runs on your computers. It keeps working even if we are gone.</span></div></div>
+    </div>
+    <details class="honest reveal" style="max-width:none"><summary>What it means for each person at your table</summary><div class="in">
+      <p><b>The boss.</b> You own it. No one can raise the rent on it, or shut it down.</p>
+      <p><b>The money person.</b> You stop paying for each seat, each month. You pay once, for the work.</p>
+      <p><b>The person who runs the day.</b> The dull work runs by itself. Anything that sends, spends or deletes waits for a person.</p>
+      <p><b>The tech and safety person.</b> It runs on your computers. Your data stays there. You can run every test again.</p>
+      <p><b>The team.</b> They keep the thinking. The AI does the reading and sorting. When it is not sure, it hands the case to a person.</p>
+      <p><b>The board.</b> We show our failed tests. So you can check us before you sign.</p></div></details>
+    <details class="honest reveal" style="max-width:none"><summary>Questions buyers ask</summary><div class="in">
+      <p><b>What do we get?</b> A small AI for one job. The rules it works from. The checker that stops bad answers. And a test you can run again. All on your own computers.</p>
+      <p><b>What does it replace?</b> The hours a person spends reading and sorting. And the software you rent to help them. It does not replace their judgement.</p>
+      <p><b>Where does our data go?</b> Nowhere. The AI runs on your computers, with no link to the internet. Nothing is sent to us or to anyone else.</p>
+      <p><b>What about the rules we must follow?</b> Each answer says what it is based on. Each “can’t tell” says what was missing. So there is a record a person can check. Ask your own advisers if that meets the rules for your firm. We will show them anything they ask to see.</p>
+      <p><b>How do we roll it out?</b> One job first. We test it against how the job is done today. Then the next job.</p>
+      <p><b>Who looks after it?</b> AI Native Solutions does. The terms are agreed for each customer, in their own agreement. The code is yours to keep under the MIT licence.</p>
+      <p><b>What can go wrong?</b> A small AI can misread a fact. The checker catches a date or a sum that is not in the text. It cannot catch a judgement call. So a person still reads each result.</p>
+      <p><b>What does it cost?</b> You pay once, for the work. There is no monthly fee and no fee for each seat. <a href="prospectus.html">The long paper for buyers</a> shows the sums.</p></div></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap frow">
+    <div><div class="brand">AI Native Solutions</div><div class="fnote">Built by Kar. MIT licence, holder Simon Gant. Supplied by AI Native Solutions; support is agreed for each customer, in their own agreement.<br><!--KONOMI-CREDIT--><!--/KONOMI-CREDIT--><br>This page sets no cookies. It loads nothing from anyone else.</div></div>
+    <div class="taglist"><span>›</span> <a href="deep.html">The long version: every demo and number</a><br><span>›</span> <a href="explainer.html">The film and the brochure</a><br><span>›</span> <a href="estate.html">Every build we have made</a><br><span>›</span> <a href="credits/">Credits</a></div>
+  </div>
+  <noscript><p style="text-align:center;color:var(--soft)">The question box needs JavaScript. Every number and link on this page works without it.</p></noscript>
+</footer>
+
+<dialog id="ledger" aria-labelledby="ledger-title">
+  <form method="dialog"><button aria-label="Close">×</button></form>
+  <p class="kline">Nothing leaves this page</p>
+  <h3 id="ledger-title" style="font-family:var(--display);font-weight:500;font-size:26px;margin:6px 0 10px">What this page sent and fetched</h3>
+  <p id="ledger-verdict"></p>
+  <div class="scroll"><table id="ledger-table"><thead><tr><th>From</th><th>What it is</th><th>Asked for</th><th>Came down</th><th>Sent up</th></tr></thead><tbody></tbody></table></div>
+  <p class="note">This lists each thing your browser fetched for this page. “Sent up” counts anything that could carry your words away. This page is built to send none. It can only show what this page did, not other programs on your computer.</p>
+  <details><summary>Each one, in order</summary><ol id="ledger-rows" class="log"></ol></details>
+</dialog>
+</body>
+</html>

@@ -1,0 +1,414 @@
+{
+ "v": "house-standard-flagships/1",
+ "read": "2026-11-25",
+ "builds": [
+  {
+   "repo": "the-climb",
+   "name": "The Climb",
+   "verb": "It climbs.",
+   "line": "A problem it fails cold, broken into steps it can do. Each step checked.",
+   "live": "https://sjgant80-hub.github.io/the-climb/",
+   "commit": "ebe420b3a23fa6c894bbbeac8613b6f28edcb3d4",
+   "headline": {
+    "was": "36.5%",
+    "now": "70.8%",
+    "of": 96,
+    "label": "sealed problems right: at one try, then after the climb"
+   },
+   "extra": [],
+   "claims": {
+    "n": 8,
+    "pass": 7,
+    "fail": 1,
+    "sealing": 0,
+    "failed": [
+     {
+      "id": "C8",
+      "name": "Each pass squares what is left"
+     }
+    ]
+   },
+   "standard": {
+    "pass": true,
+    "rules": [
+     {
+      "id": "H1",
+      "pass": true,
+      "why": "crystal hero, 2 receipts, 8 stack rows, 6 controls on the glass, 11 expanders"
+     },
+     {
+      "id": "H2",
+      "pass": true,
+      "why": "538 words before any click (at most 1250); the longest paragraph is 26 words (at most 45)"
+     },
+     {
+      "id": "H3",
+      "pass": true,
+      "why": "2 of 2 receipts carry their source, or say they are still sealing"
+     },
+     {
+      "id": "H4",
+      "pass": true,
+      "why": "no placeholder on the page; no id used twice"
+     },
+     {
+      "id": "H5",
+      "pass": true,
+      "why": "39 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
+     },
+     {
+      "id": "H6",
+      "pass": true,
+      "why": "4 of 4 house colours, 3 of 3 house faces"
+     },
+     {
+      "id": "H7",
+      "pass": true,
+      "why": "the credit line is on the page; no price; no private shorthand"
+     }
+    ],
+    "viewWords": 538,
+    "longest": 26
+   },
+   "gate": {
+    "killed": 601,
+    "total": 610,
+    "clean": true
+   }
+  },
+  {
+   "repo": "the-crystal",
+   "name": "The Crystal",
+   "verb": "It crystallises.",
+   "line": "The answer grown from proven pieces. What cannot be proven dissolves.",
+   "live": "https://sjgant80-hub.github.io/the-crystal/",
+   "commit": "89880559b9984fe50e587f3908f13e669d99f591",
+   "headline": {
+    "was": "31.0%",
+    "now": "85.7%",
+    "of": 84,
+    "label": "sealed problems right: at one try, then as a crystal"
+   },
+   "extra": [
+    {
+     "key": "forged",
+     "value": "0",
+     "of": 26086,
+     "label": "forged replies that got past the check"
+    }
+   ],
+   "claims": {
+    "n": 7,
+    "pass": 7,
+    "fail": 0,
+    "sealing": 0,
+    "failed": []
+   },
+   "standard": {
+    "pass": true,
+    "rules": [
+     {
+      "id": "H1",
+      "pass": true,
+      "why": "crystal hero, 3 receipts, 7 stack rows, 6 controls on the glass, 10 expanders"
+     },
+     {
+      "id": "H2",
+      "pass": true,
+      "why": "493 words before any click (at most 1250); the longest paragraph is 18 words (at most 45)"
+     },
+     {
+      "id": "H3",
+      "pass": true,
+      "why": "3 of 3 receipts carry their source, or say they are still sealing"
+     },
+     {
+      "id": "H4",
+      "pass": true,
+      "why": "no placeholder on the page; no id used twice"
+     },
+     {
+      "id": "H5",
+      "pass": true,
+      "why": "30 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
+     },
+     {
+      "id": "H6",
+      "pass": true,
+      "why": "4 of 4 house colours, 3 of 3 house faces"
+     },
+     {
+      "id": "H7",
+      "pass": true,
+      "why": "the credit line is on the page; no price; no private shorthand"
+     }
+    ],
+    "viewWords": 493,
+    "longest": 18
+   },
+   "gate": {
+    "killed": 563,
+    "total": 567,
+    "clean": true
+   }
+  },
+  {
+   "repo": "the-verifier-set",
+   "name": "The Verifier Set",
+   "verb": "It refuses to lie.",
+   "line": "Checked against the arithmetic or the cited source, or not released.",
+   "live": "https://sjgant80-hub.github.io/the-verifier-set/",
+   "commit": "6b645d57435fad49341f6cc7ab06ca36f04a6474",
+   "headline": {
+    "was": "34",
+    "now": "139",
+    "of": 144,
+    "label": "sealed problems that came out as they should: unchecked, then checked"
+   },
+   "extra": [
+    {
+     "key": "unanswerable",
+     "value": "22",
+     "after": "0",
+     "of": 24,
+     "label": "confident numbers given to questions that have no answer: unchecked, then checked"
+    }
+   ],
+   "claims": {
+    "n": 12,
+    "pass": 12,
+    "fail": 0,
+    "sealing": 0,
+    "failed": []
+   },
+   "standard": {
+    "pass": true,
+    "rules": [
+     {
+      "id": "H1",
+      "pass": true,
+      "why": "crystal hero, 3 receipts, 12 stack rows, 6 controls on the glass, 10 expanders"
+     },
+     {
+      "id": "H2",
+      "pass": true,
+      "why": "796 words before any click (at most 1250); the longest paragraph is 20 words (at most 45)"
+     },
+     {
+      "id": "H3",
+      "pass": true,
+      "why": "3 of 3 receipts carry their source, or say they are still sealing"
+     },
+     {
+      "id": "H4",
+      "pass": true,
+      "why": "no placeholder on the page; no id used twice"
+     },
+     {
+      "id": "H5",
+      "pass": true,
+      "why": "41 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
+     },
+     {
+      "id": "H6",
+      "pass": true,
+      "why": "4 of 4 house colours, 3 of 3 house faces"
+     },
+     {
+      "id": "H7",
+      "pass": true,
+      "why": "the credit line is on the page; no price; no private shorthand"
+     }
+    ],
+    "viewWords": 796,
+    "longest": 20
+   },
+   "gate": {
+    "killed": 1039,
+    "total": 1041,
+    "clean": true
+   }
+  },
+  {
+   "repo": "the-seed",
+   "name": "The Seed",
+   "verb": "It grows itself.",
+   "line": "A handful of files that grows verified software, one cell at a time.",
+   "live": "https://sjgant80-hub.github.io/the-seed/",
+   "commit": "ae53731e9cd537c8ed52e488e4921551fbd19c23",
+   "headline": null,
+   "extra": [
+    {
+     "key": "sealed",
+     "value": "3",
+     "of": 5,
+     "label": "cells the model grew that proved themselves and were sealed"
+    },
+    {
+     "key": "dissolved",
+     "value": "2",
+     "of": 5,
+     "label": "cells that could not prove themselves and were dissolved"
+    }
+   ],
+   "claims": {
+    "n": 0,
+    "pass": 0,
+    "fail": 0,
+    "sealing": 0,
+    "failed": []
+   },
+   "standard": {
+    "pass": true,
+    "rules": [
+     {
+      "id": "H1",
+      "pass": true,
+      "why": "crystal hero, 5 receipts, 10 stack rows, 4 controls on the glass, 9 expanders"
+     },
+     {
+      "id": "H2",
+      "pass": true,
+      "why": "565 words before any click (at most 1250); the longest paragraph is 28 words (at most 45)"
+     },
+     {
+      "id": "H3",
+      "pass": true,
+      "why": "5 of 5 receipts carry their source, or say they are still sealing"
+     },
+     {
+      "id": "H4",
+      "pass": true,
+      "why": "no placeholder on the page; no id used twice"
+     },
+     {
+      "id": "H5",
+      "pass": true,
+      "why": "23 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
+     },
+     {
+      "id": "H6",
+      "pass": true,
+      "why": "4 of 4 house colours, 3 of 3 house faces"
+     },
+     {
+      "id": "H7",
+      "pass": true,
+      "why": "the credit line is left off, and the page says why: left off on the owner's instruction for this build, until he rules on it; no price; no private shorthand"
+     }
+    ],
+    "viewWords": 565,
+    "longest": 28
+   },
+   "gate": {
+    "killed": 142,
+    "total": 142,
+    "clean": true
+   }
+  },
+  {
+   "repo": "the-distillation",
+   "name": "The Distillation",
+   "verb": "It learns.",
+   "line": "Trained only on its own verified work. Tested cold on problems it never saw.",
+   "live": "https://sjgant80-hub.github.io/the-distillation/",
+   "commit": "bae43fcb3c9898a58c0d87dc4348f10d832fc767",
+   "headline": null,
+   "extra": [],
+   "claims": {
+    "n": 6,
+    "pass": 0,
+    "fail": 0,
+    "sealing": 6,
+    "failed": []
+   },
+   "standard": {
+    "pass": true,
+    "rules": [
+     {
+      "id": "H1",
+      "pass": true,
+      "why": "crystal hero, 3 receipts, 25 stack rows, 20 controls on the glass, 11 expanders"
+     },
+     {
+      "id": "H2",
+      "pass": true,
+      "why": "989 words before any click (at most 1250); the longest paragraph is 27 words (at most 45)"
+     },
+     {
+      "id": "H3",
+      "pass": true,
+      "why": "3 of 3 receipts carry their source, or say they are still sealing"
+     },
+     {
+      "id": "H4",
+      "pass": true,
+      "why": "no placeholder on the page; no id used twice"
+     },
+     {
+      "id": "H5",
+      "pass": true,
+      "why": "31 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
+     },
+     {
+      "id": "H6",
+      "pass": true,
+      "why": "4 of 4 house colours, 3 of 3 house faces"
+     },
+     {
+      "id": "H7",
+      "pass": true,
+      "why": "the credit line is on the page; no price; no private shorthand"
+     }
+    ],
+    "viewWords": 989,
+    "longest": 27
+   },
+   "gate": {
+    "killed": 277,
+    "total": 277,
+    "clean": true
+   }
+  }
+ ],
+ "reuse": {
+  "taken": 11886,
+  "worked": 793
+ },
+ "dev": {
+  "cold": {
+   "n": 89,
+   "base": {
+    "right": 31
+   },
+   "distilled": {
+    "right": 44
+   }
+  }
+ },
+ "loop": {
+  "v": "the-distillation-live/1",
+  "round": 1,
+  "stage": "harvest",
+  "harvest": {
+   "done": 300,
+   "total": 573,
+   "complete": 296,
+   "calls": 2297
+  },
+  "train": null,
+  "cold": {
+   "base": null,
+   "distilled": null
+  },
+  "verdict": null,
+  "done": false,
+  "failed": false,
+  "at": "2026-11-25T22:53:51.377Z"
+ },
+ "gate": {
+  "killed": 80,
+  "total": 80,
+  "clean": true
+ }
+}

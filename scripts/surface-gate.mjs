@@ -11,7 +11,7 @@ import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const OWNED = ['index.html', 'explainer.html', 'prospectus.html', 'deck.html'];
+const OWNED = ['index.html', 'deep.html', 'explainer.html', 'prospectus.html', 'deck.html'];
 const F = JSON.parse(readFileSync(join(root, 'media', 'film', 'facts.json'), 'utf8'));
 const fails = []; const fail = (f, m) => fails.push(f + ': ' + m);
 const read = (f) => readFileSync(join(root, f), 'utf8');
@@ -28,7 +28,7 @@ const PRICE_EXEMPT = [
     reason: "§14 'Illustrative economics by industry' is a customer's CURRENT rented-software spend under stated assumptions — not a price we charge; kept as-is by Simon's decision, 2026-09-28" },
   { file: 'prospectus.html', phrase: 'A £500 laptop', reason: "the hardware-class floor in 'what it runs on' — the laptop a customer already owns, not a price we charge" },
   { file: 'deck.html', phrase: 'A £500 laptop', reason: "the hardware-class floor in 'what it runs on' — the laptop a customer already owns, not a price we charge" },
-  { file: 'index.html', phrase: 'cash price is over £100 and not more than £30,000', reason: "the statutory limits of Consumer Credit Act 1974 s. 75(3)(b), as paraphrased in the verified law table the front door shows — the law's own thresholds, not a price we charge" },
+  { file: 'deep.html', phrase: 'cash price is over £100 and not more than £30,000', reason: "the statutory limits of Consumer Credit Act 1974 s. 75(3)(b), as paraphrased in the verified law table the front door shows — the law's own thresholds, not a price we charge" },
 ];
 for (const x of PRICE_EXEMPT) if (!x.reason || x.reason.length < 20) { console.error('REFUSED: a price exemption without an argued reason (' + x.file + ')'); process.exit(1); }
 const SITE = readdirSync(root).filter(x => x.endsWith('.html')).sort().concat(['llms.txt', 'llms-full.txt']);
@@ -103,10 +103,10 @@ else for (const k of ['genuine', 'tampered', 'forged']) {
 }
 
 // 5 · the front door's figures agree with the facts file
-const idx = visible(read('index.html')), R = F.realReceipt, D = F.dispatcher;
+const idx = visible(read('deep.html')), R = F.realReceipt, D = F.dispatcher;
 // whole phrases, not bare fractions — "9/16" alone also appears in the second clause, so a changed first score would slip past
 for (const want of [`scored ${R.vsBase.node}/${R.probes} against its base's ${R.vsBase.base}/${R.probes}`, `${R.vsBigger.node}/${R.probes} against a model ~7× its size, which scored ${R.vsBigger.other}/${R.probes}`, `${D.auto} run themselves`, `${D.behindKey} wait for a human key`, `${D.todo} are marked`])
-  if (!idx.includes(want)) fail('index.html', 'figure disagrees with facts.json (expected "' + want + '")');
+  if (!idx.includes(want)) fail('deep.html', 'figure disagrees with facts.json (expected "' + want + '")');
 
 if (fails.length) { console.error('SURFACE GATE FAILED — ' + fails.length + ' problem(s):\n  ' + fails.join('\n  ')); process.exit(1); }
 console.log('surface gate clean — ' + SITE.length + ' site files: no price anywhere (' + exemptUsed.size + ' argued exemptions applied), dream credit wherever dreaming is named; ' + OWNED.length + ' package pages: credits present, no private notation, proof language narrow-true, figures match facts.json, every same-repo link resolves');

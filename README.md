@@ -2,10 +2,17 @@
 
 **LIVE: https://www.ai-nativesolutions.com** (also https://sjgant80-hub.github.io/ai-nativesolutions/)
 
-The client-facing front door. It is not a brochure about the estate: it runs the estate, in the
-visitor's own browser, and nothing they type or drop leaves their machine.
+The client-facing site, in two pages:
 
-## What is on the front door
+- **The front door** (`index.html`): short, in plain words, on the house standard. A test holds it to two
+  checks from [the house standard](https://sjgant80-hub.github.io/house-standard/), vendored here: it is built the
+  house way, and a twelve-year-old can read it (school year 6 or below, short sentences, few long words, no trade
+  words). Every number on it is read from the page that proves it.
+- **The long version** (`deep.html`): it runs the estate in the visitor's own browser, every demo and every number.
+
+Nothing a visitor types or drops on either page leaves their machine.
+
+## What is on the long version
 
 | Section | What it is | What runs |
 |---|---|---|
@@ -18,13 +25,14 @@ visitor's own browser, and nothing they type or drop leaves their machine.
 
 ## How it is built
 
-- `site/page.html` is the template; **`node scripts/build-front.mjs`** draws `index.html` and
-  `site/data/bundle.mjs` from it and from the records. No figure is typed by hand; `--check` fails
+- **`node scripts/build-front.mjs`** draws both pages: `index.html` from `site/front.html`, and `deep.html` (with
+  `site/data/bundle.mjs`) from `site/page.html`, each from the records. No figure is typed by hand; `--check` fails
   the build if the page and the records disagree.
 - `node scripts/build-front.mjs --estate <estate-index.json>` refreshes `site/data/estate.json`
   (public, non-archived, non-fork builds only; a private build can never enter it).
 - `node scripts/vendor-site.mjs` vendors the real kernels byte for byte from their repositories
-  and pins each file by SHA-256 in `vendor/SOURCES.json`; `--check` verifies the pins.
+  and pins each file by SHA-256 in `vendor/SOURCES.json`; `--check` verifies the pins. To bring the front door's
+  numbers up to date: `node scripts/vendor-site.mjs --only house-standard`, then build.
 - `node scripts/gate-site.mjs <witness.mjs>` breaks the front door's own kernels on purpose
   (witness v0.6) and writes `site/data/witness.json`, which the page prints; CI re-derives it.
 - `node scripts/surface-gate.mjs` holds every page to the site's rules: no price anywhere,

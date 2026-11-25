@@ -5,6 +5,7 @@
 // repos gate.
 //
 //   node scripts/vendor-site.mjs            copy from the local checkouts named in LOCAL, write vendor/SOURCES.json
+//   node scripts/vendor-site.mjs --only <id> take one of the estate's sources again and leave every other pin as it is
 //   node scripts/vendor-site.mjs --check    every vendored file still matches its pin (CI runs this)
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -28,6 +29,8 @@ const SOURCES = [
       'vendor/fall-kit/core/vendor/light/packet.mjs', 'vendor/fall-kit/core/vendor/light/codec.mjs', 'vendor/fall-kit/core/vendor/sync/crdt.mjs', 'receipts/wave1.json'] },
   { id: 'docdecdemo', repo: 'sjgant80-hub/docdecdemo', licence: 'MIT', what: 'DocDec: the grounded document router (cite the source or abstain) and its measured before/after demo data vs a vector-RAG on a public corpus',
     files: ['kernel.mjs', 'demo-data.json'] },
+  { id: 'house-standard', repo: 'sjgant80-hub/house-standard', licence: 'MIT', what: 'the house kit (the crystal, the token sheet, the motion), the ship gate, the reading-age check, and the results of the newest builds as read from their own pages',
+    files: ['kit/house.css', 'kit/crystal.js', 'kit/house.js', 'src/standard.mjs', 'src/plain.mjs', 'data/flagships.json'] },
 ];
 // third-party builds (downloaded once from the npm registry's CDN; pinned the same way)
 const THIRD = [
@@ -40,7 +43,7 @@ const THIRD = [
       '@fontsource-variable/hanken-grotesk@5.2.8/files/hanken-grotesk-latin-wght-normal.woff2', '@fontsource-variable/jetbrains-mono@5.2.8/files/jetbrains-mono-latin-wght-normal.woff2',
       '@fontsource-variable/fraunces@5.2.9/LICENSE', '@fontsource-variable/hanken-grotesk@5.2.8/LICENSE', '@fontsource-variable/jetbrains-mono@5.2.8/LICENSE'] },
 ];
-const LOCAL = { 'slm-suite': 'C:/Users/sjgan/slm-suite', 'konomi-tongue': 'C:/Users/sjgan/Downloads/konomi-tongue', liveware: 'C:/Users/sjgan/liveware', docdecdemo: 'C:/Users/sjgan/docdecdemo' };
+const LOCAL = { 'slm-suite': 'C:/Users/sjgan/slm-suite', 'konomi-tongue': 'C:/Users/sjgan/Downloads/konomi-tongue', liveware: 'C:/Users/sjgan/liveware', docdecdemo: 'C:/Users/sjgan/docdecdemo', 'house-standard': 'C:/Users/sjgan/house-standard' };
 const destOf = (id, f) => join(root, 'vendor', id, f.replace(/^@fontsource-variable\/([a-z-]+)@[\d.]+\//, '$1/'));
 
 if (process.argv.includes('--check')) {
@@ -58,7 +61,11 @@ if (process.argv.includes('--check')) {
 }
 
 const out = { _rule: 'Every file here is taken byte for byte from the source named and pinned by SHA-256. Edit the source repo, never these copies.', sources: [] };
+const ONLY = process.argv.includes('--only') ? process.argv[process.argv.indexOf('--only') + 1] : null;
+if (ONLY !== null && !SOURCES.some((s) => s.id === ONLY)) { console.error('REFUSED: --only takes one of ' + SOURCES.map((s) => s.id).join(', ')); process.exit(1); }
+const kept = ONLY === null ? [] : JSON.parse(readFileSync(PINS, 'utf8')).sources;
 for (const s of SOURCES) {
+  if (ONLY !== null && s.id !== ONLY) { const was = kept.find((k) => k.id === s.id); if (was) out.sources.push(was); continue; }
   const dir = LOCAL[s.id];
   const commit = execFileSync('git', ['-C', dir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
   const files = {};
@@ -72,6 +79,7 @@ for (const s of SOURCES) {
   console.log('vendored ' + s.id + '@' + commit.slice(0, 7) + ' — ' + s.files.length + ' files');
 }
 for (const t of THIRD) {
+  if (ONLY !== null) { const was = kept.find((k) => k.id === t.id); if (was) out.sources.push(was); continue; }
   const files = {};
   for (const f of t.files) {
     const res = await fetch(t.base + f);

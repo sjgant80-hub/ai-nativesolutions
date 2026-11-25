@@ -1,4 +1,5 @@
-// site/page.test.mjs — the front door's own gate: what must be true of the page as a whole, checked from the files.
+// site/page.test.mjs — the gate of the long version (site/page.html, built as deep.html): what must be true of the page
+// as a whole, checked from the files. The short front door (site/front.html, built as index.html) has site/front.test.mjs.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
@@ -11,7 +12,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const json = (p) => JSON.parse(read(p));
 const page = read('site/page.html');
-const built = existsSync(join(root, 'index.html')) && read('index.html').includes('site/app.mjs') ? read('index.html') : existsSync(join(root, 'living.html')) ? read('living.html') : null;
+const built = existsSync(join(root, 'deep.html')) ? read('deep.html') : null;
 const code = readdirSync(join(root, 'site')).filter((f) => f.endsWith('.mjs') && !f.endsWith('.test.mjs')).map((f) => 'site/' + f)
   .concat(readdirSync(join(root, 'site', 'kernel')).filter((f) => f.endsWith('.mjs') && !f.endsWith('.test.mjs')).map((f) => 'site/kernel/' + f));
 const STATS = json('site/data/stats.json'), ORG = json('site/data/organs.json'), EST = json('site/data/estate.json');
@@ -70,7 +71,8 @@ test('every module of the front door parses', () => {
 
 test('every element the code reaches for is on the page', () => {
   const ids = new Set([...page.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
-  for (const f of code) for (const m of read(f).matchAll(/\$\('([^']+)'\)|getElementById\('([^']+)'\)/g)) {
+  // the short front door's own two modules reach for its own page: site/front.test.mjs holds them to it
+  for (const f of code.filter((x) => !/^site\/front(-ask)?\.mjs$/.test(x))) for (const m of read(f).matchAll(/\$\('([^']+)'\)|getElementById\('([^']+)'\)/g)) {
     const id = m[1] || m[2];
     assert.ok(ids.has(id) || /^(law-|stat-)/.test(id), f + ' looks for #' + id + ', which the page does not have');
   }

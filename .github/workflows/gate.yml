@@ -12,14 +12,14 @@ jobs:
       - name: the front door runs the estate's real kernels, byte for byte (pinned by hash)
         run: node scripts/vendor-site.mjs --check
       - name: the front door's own kernels — tests
-        run: node --test site/kernel/estate.test.mjs site/kernel/ground.test.mjs site/kernel/netwatch.test.mjs site/kernel/race.test.mjs site/page.test.mjs
+        run: node --test site/kernel/estate.test.mjs site/kernel/ground.test.mjs site/kernel/netwatch.test.mjs site/kernel/race.test.mjs site/page.test.mjs site/front.test.mjs
       - name: the front door is drawn from its records (fixpoint)
         run: node scripts/build-front.mjs --check
       - name: the film package is drawn from its facts file (fixpoint)
         run: |
           node scripts/build-explainer.mjs
           node scripts/build-edition.mjs
-          git diff --exit-code explainer.html prospectus.html deck.html index.html
+          git diff --exit-code explainer.html prospectus.html deck.html index.html deep.html
       - name: surface gate — no own pricing, credits present, proof language narrow-true, figures match facts, links resolve
         run: node scripts/surface-gate.mjs
       - name: witness — try to break the tests
