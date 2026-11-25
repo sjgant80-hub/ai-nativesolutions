@@ -37,12 +37,12 @@ export async function startDocdec({ net, signal } = {}) {
   const dd = m.docdec || {}, rag = m.vectorRag || {};
   const n = (m.counts && m.counts.eval) || (data.counts && data.counts.evalQuestions) || '—';
   $('docdec-measured').replaceChildren(
-    el('tr', {}, el('th', { textContent: 'on ' + n + ' eval questions' }), el('th', { textContent: 'DocDec (grounded)' }), el('th', { textContent: 'vector-RAG (top-1)' })),
-    el('tr', {}, el('td', { textContent: 'abstains when the docs don\'t answer' }), el('td', { className: 'good', textContent: pct(dd.groundedAbstention) }), el('td', { className: 'bad', textContent: pct(rag.groundedAbstention) })),
-    el('tr', {}, el('td', { textContent: 'invents an answer (hallucination)' }), el('td', { className: 'good', textContent: pct(dd.hallucinationRate) }), el('td', { className: 'bad', textContent: pct(rag.hallucinationRate) })),
-    el('tr', {}, el('td', { textContent: 'precision when it does answer' }), el('td', { className: 'good', textContent: pct(dd.precisionWhenAnswering) }), el('td', { className: 'bad', textContent: pct(rag.precisionWhenAnswering) })),
+    el('tr', {}, el('th', { textContent: 'on ' + n + ' eval questions' }), el('th', { textContent: 'DocDec' }), el('th', { textContent: 'a plain search' })),
+    el('tr', {}, el('td', { textContent: 'says it can\'t tell when the documents don\'t answer' }), el('td', { className: 'good', textContent: pct(dd.groundedAbstention) }), el('td', { className: 'bad', textContent: pct(rag.groundedAbstention) })),
+    el('tr', {}, el('td', { textContent: 'answers when the documents don\'t' }), el('td', { className: 'good', textContent: pct(dd.hallucinationRate) }), el('td', { className: 'bad', textContent: pct(rag.hallucinationRate) })),
+    el('tr', {}, el('td', { textContent: 'right, when it does answer' }), el('td', { className: 'good', textContent: pct(dd.precisionWhenAnswering) }), el('td', { className: 'bad', textContent: pct(rag.precisionWhenAnswering) })),
   );
-  $('docdec-source').textContent = m.corpus ? ('Measured on ' + m.corpus + ' — a public benchmark, not a client result.') : '';
+  $('docdec-source').textContent = m.corpus ? ('Measured on ' + m.corpus + ' — a public test set, not a client result.') : '';
 
   // render one question's before/after
   const out = $('docdec-out');
@@ -54,16 +54,16 @@ export async function startDocdec({ net, signal } = {}) {
       const r = D.top1(scored);
       const wrong = q.impossible === true; // the documents do not answer it
       ragCard = el('div', { className: 'pane ' + (wrong ? 'miss' : '') },
-        el('h3', {}, 'A plain vector-RAG'),
-        el('p', { className: 'tag', textContent: wrong ? 'answers anyway — and the documents don\'t support it' : 'returns its nearest chunk' }),
+        el('h3', {}, 'A plain search'),
+        el('p', { className: 'tag', textContent: wrong ? 'answers anyway — and the documents don\'t support it' : 'returns its nearest piece of text' }),
         el('p', { className: 'src', textContent: r.answer }),
         el('p', { className: 'snip', textContent: snippet(r.answer) }));
     } else {
-      ragCard = el('div', { className: 'pane' }, el('h3', {}, 'A plain vector-RAG'), el('p', { className: 'empty', textContent: 'The baseline needs a precomputed embedding, so it runs on the benchmark questions above, not free text.' }));
+      ragCard = el('div', { className: 'pane' }, el('h3', {}, 'A plain search'), el('p', { className: 'empty', textContent: 'The plain search needs each question prepared ahead of time, so it runs on the test-set questions above, not on typed text.' }));
     }
     const ddCard = dec.abstain
-      ? el('div', { className: 'pane abstain' }, el('h3', {}, 'DocDec'), el('p', { className: 'tag', textContent: 'abstains' }), el('p', { className: 'say', textContent: '“Not in your documents.”' }), el('p', { className: 'why', textContent: dec.why }))
-      : el('div', { className: 'pane ground' }, el('h3', {}, 'DocDec'), el('p', { className: 'tag', textContent: 'grounded + cited' }), el('p', { className: 'src', textContent: dec.answer }), el('p', { className: 'cite', textContent: 'on the terms: ' + dec.cite.join(', ') }), el('p', { className: 'snip', textContent: snippet(dec.answer, dec.cite) }));
+      ? el('div', { className: 'pane abstain' }, el('h3', {}, 'DocDec'), el('p', { className: 'tag', textContent: 'says it can\'t tell' }), el('p', { className: 'say', textContent: '“Not in your documents.”' }), el('p', { className: 'why', textContent: dec.why }))
+      : el('div', { className: 'pane ground' }, el('h3', {}, 'DocDec'), el('p', { className: 'tag', textContent: 'answers, with its source' }), el('p', { className: 'src', textContent: dec.answer }), el('p', { className: 'cite', textContent: 'on the terms: ' + dec.cite.join(', ') }), el('p', { className: 'snip', textContent: snippet(dec.answer, dec.cite) }));
     return el('div', { className: 'twin' }, ddCard, ragCard);
   };
 
@@ -71,7 +71,7 @@ export async function startDocdec({ net, signal } = {}) {
 
   // the benchmark questions, tagged by what they show
   const order = { win: 0, 'both-right': 1, 'dd-missed': 2, 'dd-hallucinated': 3 };
-  const label = { win: 'DocDec abstains · RAG invents', 'both-right': 'both answer · DocDec cites', 'dd-missed': 'DocDec misses (kept on the record)', 'dd-hallucinated': 'both fooled (adversarial, kept)' };
+  const label = { win: 'DocDec says it can\'t tell · the plain search answers anyway', 'both-right': 'both answer · DocDec shows its source', 'dd-missed': 'DocDec misses (kept on the record)', 'dd-hallucinated': 'both fooled by a trick question (kept)' };
   const qs = [...(data.demoQuestions || [])].sort((a, b) => (order[a.label] ?? 9) - (order[b.label] ?? 9));
   const chips = $('docdec-chips');
   chips.replaceChildren(...qs.map((q) => el('button', { type: 'button', className: 'chip', title: label[q.label] || '', onclick: () => { chips.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', 'false')); chips.lastClicked && null; q._b.setAttribute('aria-pressed', 'true'); show(q); } }, q.text.length > 54 ? q.text.slice(0, 51) + '…' : q.text)).map((b, i) => (qs[i]._b = b, b)));
@@ -86,10 +86,10 @@ export async function startDocdec({ net, signal } = {}) {
     // nothing and abstains. The full product adds the embedding veto (needs a model) to pick between close matches.
     const dec = D.route(D.tokens(text), DOCS, IDF, { minScore: gate.minScore || 1 });
     out.replaceChildren(el('p', { className: 'q', textContent: text },
-      el('span', { className: 'free', textContent: 'free text — DocDec only (the RAG baseline needs a precomputed embedding)' })),
+      el('span', { className: 'free', textContent: 'typed text — matched on its words alone. A document that shares a word is shown; that is a match, not yet an answer. The measured questions above use the full check.' })),
       dec.abstain
-        ? el('div', { className: 'twin' }, el('div', { className: 'pane abstain' }, el('h3', {}, 'DocDec'), el('p', { className: 'tag', textContent: 'abstains' }), el('p', { className: 'say', textContent: '“Not in your documents.”' }), el('p', { className: 'why', textContent: dec.why })))
-        : el('div', { className: 'twin' }, el('div', { className: 'pane ground' }, el('h3', {}, 'DocDec'), el('p', { className: 'tag', textContent: 'grounded + cited' }), el('p', { className: 'src', textContent: dec.answer }), el('p', { className: 'cite', textContent: 'on the terms: ' + dec.cite.join(', ') }), el('p', { className: 'snip', textContent: snippet(dec.answer, dec.cite) }))));
+        ? el('div', { className: 'twin' }, el('div', { className: 'pane abstain' }, el('h3', {}, 'DocDec'), el('p', { className: 'tag', textContent: 'no document matches' }), el('p', { className: 'say', textContent: '“Not in your documents.”' }), el('p', { className: 'why', textContent: dec.why })))
+        : el('div', { className: 'twin' }, el('div', { className: 'pane ground' }, el('h3', {}, 'DocDec'), el('p', { className: 'tag', textContent: 'a document matches your words' }), el('p', { className: 'src', textContent: dec.answer }), el('p', { className: 'cite', textContent: 'on the terms: ' + dec.cite.join(', ') }), el('p', { className: 'snip', textContent: snippet(dec.answer, dec.cite) }))));
     if (signal && signal.flare) signal.flare('ai-nativesolutions', dec.abstain ? 'amber' : 'lume');
   };
   run.addEventListener('click', askOne);

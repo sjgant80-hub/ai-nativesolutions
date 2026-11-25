@@ -67,7 +67,7 @@
     <h2>A small model that says <em>“I can't tell.”</em></h2>
     <p class="plain">Most AI gives you an answer even when it should not. Ours is built the other way round. A small model only <b>reads</b>. A library of checked law does the reasoning. A gate stops anything that was not checked. When a fact is missing it stops, and tells you which one.</p>
     <p class="gloss"><b>In one line:</b> it would rather say “I don't know” than make something up, and you can watch it choose.</p>
-    <p class="plain">The one below sorts UK consumer complaints, because that is the one we have sealed and measured. (Sealed means the claims, the pass mark for each, and the test cases were written down and committed before the test was run, so the result could not be fitted to them afterwards.) The same build fits any job where something is read, sorted and decided against rules you can write down: triaging claims, pulling figures out of documents, routing messages, checking forms.</p>
+    <p class="plain">The one below sorts UK consumer complaints, because that is the one we have sealed and measured. (Sealed means this: we wrote down the claims, the pass mark for each, and the test cases before we ran the test. So the result could not be made to fit afterwards.) The same build fits any job where something is read, sorted and decided by rules you can write down. Sorting claims. Pulling figures out of documents. Routing messages. Checking forms.</p>
     <p class="measured"><!--SLM-HEADLINE--><!--/SLM-HEADLINE--> <a href="#stat-slm">The full result, with what failed ↓</a></p>
   </div>
 
@@ -76,7 +76,7 @@
       <li data-step="read"><b>1 · Read</b><span>the model pulls out the facts</span></li>
       <li data-step="ground"><b>2 · Source check</b><span>each date must be in your words</span></li>
       <li data-step="library"><b>3 · Library</b><span>checked law decides</span></li>
-      <li data-step="memo"><b>4 · Memo</b><span>or it abstains</span></li>
+      <li data-step="memo"><b>4 · Memo</b><span>or it says it can't tell</span></li>
     </ol>
     <div class="cols">
       <div class="col">
@@ -90,7 +90,7 @@
         </fieldset>
         <div id="slm-self" class="facts-form"></div>
         <div id="slm-model" hidden>
-          <p class="note">This is the stock open model <code><!--MODEL-ID--><!--/MODEL-ID--></code>. The reader in our 86.3% result is the same model with a 35 MB adapter we trained; that adapter is not packaged for browsers yet. The gate, the library and the law table here are the very same files.</p>
+          <p class="note">This is the stock open model <code><!--MODEL-ID--><!--/MODEL-ID--></code>. The reader in our 86.3% result is the same model with a 35 MB add-on we trained; that add-on is not packaged for browsers yet. The gate, the library and the law table here are the very same files.</p>
           <p class="row"><button class="btn" id="slm-load" type="button">Load the model</button><span id="slm-load-state" class="state" role="status"></span></p>
           <div class="bar" id="slm-bar" hidden><i></i></div>
         </div>
@@ -119,12 +119,12 @@
 
   <div class="zone-inner after">
     <h3 class="sub">Start here: an audit of one task</h3>
-    <p class="plain">Bring one job someone in your firm does over and over: sorting complaints, pulling figures out of documents, routing messages. We measure how it is done today, then build a small model, its checked library and its gate for that one job, and test it on cases it has never seen. Your own documents, rules and wording are what go into its library.</p>
+    <p class="plain">Bring one job someone in your firm does over and over: sorting complaints, pulling figures out of documents, routing messages. We measure how it is done today. Then we build a small model for that one job, with its checked library and its gate. Then we test it on cases it has never seen. Your own documents, rules and wording are what go into its library.</p>
     <ul class="gets">
       <li><b>Today's numbers.</b> How the job is done now, measured, so there is something honest to beat.</li>
       <li><b>The model, yours.</b> It runs on your own machines, offline, with no meter running.</li>
       <li><b>A receipt you can re-run.</b> It could have said the model failed. That is what makes it worth having.</li>
-      <li><b>The plain list.</b> Where it is right, where it abstains, and where it fails.</li>
+      <li><b>The plain list.</b> Where it is right, where it says it can't tell, and where it fails.</li>
     </ul>
     <p class="row"><a class="btn primary" href="#start">Send us one task</a></p>
   </div>
@@ -134,23 +134,23 @@
 <section id="docdec" class="zone" data-zone="docdec" data-depth="350">
   <div class="zone-inner">
     <p class="kicker">Tier 1 · the same idea, for your documents</p>
-    <h2>Your RAG invents. <em>DocDec cites — or says it doesn't know.</em></h2>
-    <p class="plain">Most companies built a “chat with our documents” tool in the last two years and were let down: it makes things up, can't show its sources, and sends the files to a cloud. DocDec answers from the documents themselves — it <b>cites the exact source</b>, or says <b>“that's not in your documents”</b> instead of inventing. It runs on your own machines; nothing leaves the building.</p>
-    <p class="gloss"><b>In one line:</b> a plain vector search returns its nearest guess for every question; DocDec grounds every answer in a real document, or abstains.</p>
-    <p class="measured">Measured against a real vector-RAG on a public benchmark — the before and after below run live in your browser. <a href="https://sjgant80-hub.github.io/docdecdemo/">The full interactive demo ↗</a></p>
+    <h2>Your document search makes things up. <em>DocDec shows its source — or says it doesn't know.</em></h2>
+    <p class="plain">Many companies built a “chat with our documents” tool in the last two years, and many were let down. It makes things up. It can't show its sources. And it sends the files to someone else's computers. DocDec answers from the documents themselves — it <b>cites the exact source</b>, or says <b>“that's not in your documents”</b> instead of inventing. It runs on your own machines; nothing leaves the building.</p>
+    <p class="gloss"><b>In one line:</b> a plain search hands back its nearest guess for every question. DocDec ties every answer to a real document, or says it can't tell.</p>
+    <p class="measured">Measured against a real document search on a public test set. The before and after below run live in your browser. <a href="https://sjgant80-hub.github.io/docdecdemo/">The full interactive demo ↗</a></p>
   </div>
 
   <div class="instrument" id="docdec-box">
     <div class="cols">
       <div class="col">
-        <label class="lab">A question from the benchmark corpus <span>(Wikipedia on the Normans, Oxygen, and complexity theory)</span></label>
+        <label class="lab">A question from the public test set <span>(Wikipedia on the Normans, Oxygen, and complexity theory)</span></label>
         <p class="chips" id="docdec-chips"></p>
-        <label class="lab" for="docdec-ask">…or ask your own <span>(DocDec grounds it against those documents, live, no model)</span></label>
+        <label class="lab" for="docdec-ask">…or type your own words <span>(matched against those documents on the words alone: a match is not yet an answer)</span></label>
         <p class="row"><input id="docdec-ask" type="text" placeholder="e.g. what is a Turing machine?" autocomplete="off" spellcheck="false"><button class="btn primary" id="docdec-run" type="button">Ask</button></p>
-        <p class="state" id="docdec-state" role="status" aria-live="polite">loading the benchmark…</p>
+        <p class="state" id="docdec-state" role="status" aria-live="polite">loading the test set…</p>
       </div>
       <div class="col out">
-        <div id="docdec-out"><p class="empty">Pick a benchmark question, or ask your own. DocDec's answer and a plain vector-RAG's appear side by side.</p></div>
+        <div id="docdec-out"><p class="empty">Pick a test-set question, or type your own words. DocDec's answer and a plain search's appear side by side.</p></div>
         <p class="net-proof" id="docdec-net"></p>
       </div>
     </div>
@@ -158,7 +158,7 @@
       <summary>The numbers — measured, not asserted</summary>
       <div class="scroll"><table class="honest"><tbody id="docdec-measured"></tbody></table></div>
       <p class="note" id="docdec-source"></p>
-      <p class="note"><b>Two things are true by architecture, not tuning:</b> a plain vector-RAG never abstains — it returns a nearest chunk for every question — and DocDec shows the source of every answer. How often each is right is measured above, failures kept. Grounding is a trade: DocDec misses some answerable questions by abstaining, and adversarial “unanswerable” questions can still fool it. Both are on the record. The production engine deepens the routing privately; what you see here — cite, or abstain — does not change.</p>
+      <p class="note"><b>Two things are true by how each is built, not by tuning:</b> a plain search never holds back — it returns its nearest piece of text for every question — and DocDec shows the source of every answer. How often each is right is measured above, failures kept. There is a trade: DocDec misses some questions it could have answered, by holding back, and trick questions with no answer can still fool it. Both are on the record. The production engine deepens the routing privately; what you see here — cite, or abstain — does not change.</p>
     </details>
   </div>
 </section>
@@ -167,8 +167,8 @@
 <section id="race" class="zone" data-zone="race" data-depth="500">
   <div class="zone-inner">
     <p class="kicker">The compression our tools talk in</p>
-    <h2>Race our codec <em>on your own file.</em></h2>
-    <p class="plain">Our tools (the organs you will meet further down) talk to each other in LIGHT, our lossless compression. Drop any file. Four codecs squeeze the same bytes, and each must hand your exact file back or it is disqualified. You see who won, including when it is not us.</p>
+    <h2>Race our file squeezer <em>on your own file.</em></h2>
+    <p class="plain">Our tools (the organs you will meet further down) talk to each other in LIGHT. It squeezes data small and loses none of it. Drop any file. Four squeezers shrink the same bytes, and each must hand your exact file back or it is out. You see who won, including when it is not us.</p>
     <p class="gloss"><b>In one line:</b> a fair race between our zip and three famous ones, on your file, with the loser shown.</p>
   </div>
   <div class="instrument" id="racer">
@@ -181,7 +181,7 @@
     <div class="lanes" id="race-lanes"></div>
     <p class="verdict" id="race-verdict"></p>
     <p class="note" id="race-speed"></p>
-    <p class="note">Files over 1 MB are cut to their first 1 MB, for every lane alike. LIGHT here runs “cold”: no shared context, the cost of a stranger's first message. It is plain JavaScript (the very file our tests gate); the Brotli and Zstandard lanes are WebAssembly builds, and gzip is your browser's own.</p>
+    <p class="note">Files over 1 MB are cut to their first 1 MB, for every lane alike. LIGHT here runs “cold”: no shared context, the cost of a stranger's first message. It is plain JavaScript (the very file our tests gate). The Brotli and Zstandard lanes are builds made to run in a browser. Gzip is your browser's own.</p>
     <details open>
       <summary>The sealed measurement, losses included</summary>
       <div class="scroll"><table class="honest light">
@@ -288,7 +288,7 @@
       <li>We sealed a claim of 15× compression. We measured 14.83×. <b>Failed, kept.</b></li>
       <li>Our minted model beat its base, then lost to a bigger model, 9 to 11. <b>On the receipt.</b></li>
       <li>Three of the small model's seven sealed claims failed. <b>All seven are above.</b></li>
-      <li>With no shared context our codec loses to Brotli on <!--LIGHT-LOSSES--><!--/LIGHT-LOSSES--> of <!--LIGHT-TYPES--><!--/LIGHT-TYPES--> kinds of data. <b>In the table.</b></li>
+      <li>With no shared context our squeezer loses to Brotli on <!--LIGHT-LOSSES--><!--/LIGHT-LOSSES--> of <!--LIGHT-TYPES--><!--/LIGHT-TYPES--> kinds of data. <b>In the table.</b></li>
       <li>Our own quote checker once passed a fake quote. <b>Found by us, fixed, written down.</b></li>
       <li>Eleven of thirty-nine claims about computing by settling failed. <b>Kept on that page.</b></li>
     </ul>
@@ -306,9 +306,9 @@
   <div class="instrument plainbox">
     <ol class="how">
       <li><b>It runs the real organs, not copies.</b> <!--PIN-COUNT--><!--/PIN-COUNT--> files on this page were taken byte for byte from the builds they belong to, and each is pinned by its fingerprint. If one byte drifts, the build fails.
-        <div class="scroll"><table class="honest"><thead><tr><th>From</th><th>What it is</th><th>Version</th><th>Files</th><th>Licence</th></tr></thead><tbody><!--PIN-ROWS--><!--/PIN-ROWS--></tbody></table></div></li>
+        <details><summary>The list: each source, its version and its files</summary><div class="scroll"><table class="honest"><thead><tr><th>From</th><th>What it is</th><th>Version</th><th>Files</th><th>Licence</th></tr></thead><tbody><!--PIN-ROWS--><!--/PIN-ROWS--></tbody></table></div></details></li>
       <li><b>It broke its own new code on purpose.</b> The parts written for this page were changed in small ways, one at a time, to see whether the tests would notice: <b><!--GATE-KILLED--><!--/GATE-KILLED--> of <!--GATE-TOTAL--><!--/GATE-TOTAL--></b> breaks caught.
-        <div class="scroll"><table class="honest"><thead><tr><th>File</th><th>What it decides</th><th>Breaks caught</th><th>Survivors</th></tr></thead><tbody><!--GATE-ROWS--><!--/GATE-ROWS--></tbody></table></div></li>
+        <details><summary>The list: each file, and the breaks caught in it</summary><div class="scroll"><table class="honest"><thead><tr><th>File</th><th>What it decides</th><th>Breaks caught</th><th>Survivors</th></tr></thead><tbody><!--GATE-ROWS--><!--/GATE-ROWS--></tbody></table></div></details></li>
       <li><b>No figure was typed by hand.</b> A script draws every number on this page from the record it came from, and the build fails if the page and the records disagree.</li>
       <li><b>GitHub re-checks it on its own machines.</b> Every change re-runs the tests, the fingerprints and the rules of this site (no prices, credits in full, figures matching their records). <a href="https://github.com/sjgant80-hub/ai-nativesolutions/actions">See the runs →</a></li>
     </ol>
@@ -316,10 +316,10 @@
     <div class="scroll"><table class="honest">
       <thead><tr><th>On this page</th><th>What it is</th></tr></thead>
       <tbody>
-        <tr><th scope="row">The organism</th><td><b>Real data, live drawing.</b> Every dot is a public build; names, links and counts come from the estate index. The moving light is a labelled simulation until you run a demo, when the flashes are that demo's real results. Without WebGPU it is drawn more plainly on a 2D canvas, showing every organ and one build in four.</td></tr>
+        <tr><th scope="row">The organism</th><td><b>Real data, live drawing.</b> Every dot is a public build; names, links and counts come from the estate index. The moving light is a labelled simulation until you run a demo, when the flashes are that demo's real results. Where a browser cannot use the graphics card this way, it is drawn more plainly, showing every organ and one build in four.</td></tr>
         <tr><th scope="row">The small model</th><td><b>Real gate, real library, real law.</b> The reader is either you, or a stock open model running in your browser. It is not our tuned reader, and the page says so beside it.</td></tr>
         <tr><th scope="row">The source check</th><td><b>Real, and new on this page.</b> It was not part of the sealed 86.3% result.</td></tr>
-        <tr><th scope="row">The race</th><td><b>Real.</b> Four real codecs on your bytes, each verified by decoding back to your exact file.</td></tr>
+        <tr><th scope="row">The race</th><td><b>Real.</b> Four real squeezers on your bytes, each checked by turning its output back into your exact file.</td></tr>
         <tr><th scope="row">The door</th><td><b>Real.</b> A real signing key, the real door, and the same sealed test that produced the published receipt.</td></tr>
         <tr><th scope="row">The network ledger</th><td><b>Real.</b> It lists what your browser reports. It cannot see inside another program on your machine; it can only show what this page did.</td></tr>
         <tr><th scope="row">The complaints and the ledger sample</th><td><b>Made up,</b> and labelled where they appear.</td></tr>

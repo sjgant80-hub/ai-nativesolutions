@@ -98,7 +98,7 @@ const factText = {
   receipt: 'Our minted model scored ' + RR.vsBase.node + '/' + RR.probes + " against its base's " + RR.vsBase.base + '/' + RR.probes + ' on a test it had never seen. Then we put the same test to a bigger model: ours got '
     + RR.vsBigger.node + '/' + RR.probes + ' against a model ~7× its size, which scored ' + RR.vsBigger.other + '/' + RR.probes + '. Ours lost that one, and the receipt says so.',
   dispatcher: 'Of the ' + D.organs + ' organs Kar can call, ' + D.auto + ' run themselves, ' + D.behindKey + ' wait for a human key, and ' + D.todo + ' are marked not built yet (counted ' + F.asOf + ').',
-  estate: num(counted.builds) + ' public builds, ' + num(counted.live) + ' with a live page that answered when we checked, from ' + num(estateRaw.repos) + ' repositories in all. About ' + num(Math.round(companions / 10) * 10) + ' of the builds are the API, MCP and SDK companions of other builds. Counted ' + estateRaw.generated + '.',
+  estate: num(counted.builds) + ' public builds, ' + num(counted.live) + ' with a live page that answered when we checked, from ' + num(estateRaw.repos) + ' repositories in all. About ' + num(Math.round(companions / 10) * 10) + ' of the builds are helpers: each lets other programs use a main build. Counted ' + estateRaw.generated + '.',
 };
 const tile = (t) => {
   const figure = t.facts === 'estate' ? num(counted.builds) : t.figure;

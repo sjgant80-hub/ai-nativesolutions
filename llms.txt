@@ -27,13 +27,13 @@ To start, send one task through the front door. We measure it first, so there is
 ## Measured, with what each figure does not prove
 
 - **A laptop-trained small model against one 14 times its size: 86.3% against 1.3%.** We gave 80 complaints it had never seen to our small model and to a much bigger one. Ours got 69 right, or correctly said "I can't tell". The big one, asked to do it alone, got 1.
-  - Failed, and kept: Three of its seven sealed claims failed and are kept: the reader got every fact exactly right on only 40 of 80; it abstained on 18 of 21 incomplete complaints (the bar was 19); and it proposed one angle where it did not apply.
+  - Failed, and kept: Three of its seven sealed claims failed and are kept. The reader got every fact exactly right on only 40 of 80. It held back on 18 of 21 incomplete complaints, and the bar was 19. And it proposed one angle where it did not apply.
   - Does not prove: One task (UK consumer claims), 80 synthetic complaints. 25 of the big model's answers came back empty from its runner; even if the four that later answered were all right it would reach 6.3%.
   - Receipt: [the sealed record, re-derived byte for byte in CI](https://sjgant80-hub.github.io/slm-suite/) (slm-suite data/record.json, claims S1 to S7)
-- **How much smaller two organs' messages get once they share a seed: 14.83×.** Our codec shrank a book of call records to under a fifteenth of its size, and gave back every byte exactly.
+- **How much smaller two organs' messages get once they share a seed: 14.83×.** Our file squeezer shrank a book of call records to under a fifteenth of its size, and gave back every byte exactly.
   - Failed, and kept: We sealed a claim of 15× before measuring. It came in at 14.827×, so that claim failed by 0.173 and stays failed. A second claim, that the layers' gains simply multiply, also failed.
   - Does not prove: That figure needs the shared seed. With no seed (a stranger's first message) LIGHT made the same call book 2.18× smaller, and Brotli beat it there. Its record shows every type, losses included.
-  - Receipt: [the sealed record and the live codec](https://sjgant80-hub.github.io/konomi-tongue/layered/) (konomi-tongue layered/data/record.json, call book: 20,209 bytes to 1,363)
+  - Receipt: [the sealed record and the live squeezer](https://sjgant80-hub.github.io/konomi-tongue/layered/) (konomi-tongue layered/data/record.json, call book: 20,209 bytes to 1,363)
 - **11,112 attempts to get past the door: 0.** We threw forged, replayed, tampered and random messages at a signed door. Not one got through, nothing crashed, and all 100 genuine messages were delivered.
   - Does not prove: One door, in front of one deliberately naive program, against these attack classes. It is not a claim about every attack that exists.
   - Receipt: [receipt 24d8f269, and the full test to run yourself](https://sjgant80-hub.github.io/liveware/) (liveware receipts/wave1.json, test T4)

@@ -7,6 +7,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import E from './kernel/estate.mjs';
+import PLAIN from '../vendor/house-standard/src/plain.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(root, p), 'utf8');
@@ -134,6 +135,11 @@ test('the built page is the template with every marker filled, and says the fact
   assert.equal((built.match(/class="tile"/g) || []).length, STATS.tiles.length);
   for (const id of ['surface', 'door', 'race', 'breach', 'organism-zone', 'receipts', 'made', 'start']) assert.ok(built.includes('id="' + id + '"'), 'zone ' + id);
   assert.match(text, /What this does not prove:/); assert.match(text, /What failed, and is kept:/); assert.match(text, /Simon Gant/);
+});
+
+test('the long version is still plain: a twelve-year-old can read what greets them, by the reading-age check', { skip: built === null }, () => {
+  const r = PLAIN.check(built);
+  assert.equal(r.pass, true, r.rules.filter((x) => !x.pass).map((x) => x.id + ' ' + x.name + ': ' + x.why + (x.id === 'P3' ? ' — ' + r.measured.view.longestText : '')).join(' | '));
 });
 
 test('a cold reader meets the plain meaning of "sealed" where the word first appears, and the three tiers are named at the top', { skip: built === null }, () => {

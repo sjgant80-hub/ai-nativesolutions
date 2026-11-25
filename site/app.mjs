@@ -13,7 +13,7 @@ try { const a = navigator.gpu ? await navigator.gpu.requestAdapter() : null; cap
 try { await crypto.subtle.generateKey({ name: 'Ed25519' }, false, ['sign', 'verify']); caps.sign = true; } catch { caps.sign = false; }
 const yes = (t) => '<b>✓ ' + t + '</b>', no = (t) => '<s>✗ ' + t + '</s>';
 $('caps').innerHTML = 'Your browser can run: '
-  + (caps.gpu ? yes('the organism on your graphics card') : no('WebGPU, so the organism is drawn the plain way')) + ' · '
+  + (caps.gpu ? yes('the organism on your graphics card') : no('your graphics card this way, so the organism is drawn the plain way')) + ' · '
   + (caps.gpu ? yes('the small model') : no('the small model (you can still be the reader)')) + ' · '
   + (caps.sign ? yes('real signatures') : no('Ed25519 signatures, so the door demo is off')) + ' · ' + yes('the race');
 
