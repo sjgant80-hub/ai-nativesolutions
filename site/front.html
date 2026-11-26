@@ -44,7 +44,7 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
 <script type="module" src="site/front.mjs"></script>
 </head>
 <body>
-<button id="net-chip" type="button" aria-haspopup="dialog" title="See what this page sent and fetched"><i></i><span id="net-chip-text">counting…</span><span id="net-chip-short">counting…</span></button>
+<button id="net-chip" type="button" aria-haspopup="dialog" title="See what this page sent and fetched"><i></i><span id="net-chip-text">what this page sends</span><span id="net-chip-short">sent</span></button>
 
 <header class="hero" id="top">
   <canvas id="crystal" role="img" aria-label="A crystal of 32 faces. Each lit face is one result we can prove: green when it passed, gold while it is still being tested, red when it failed."></canvas>
@@ -133,10 +133,11 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
     <details class="honest reveal"><summary>What this does — and doesn’t — claim</summary><div class="in">
       <p><b>It is narrow on purpose.</b> It works where a computer can check the answer: sums, logic, and facts copied from a page. For the rest it says “I can’t tell.”</p>
       <p><b>Copied is not the same as true.</b> If a page is wrong, an answer copied from it is wrong too. We mark which answers are proved and which are copied.</p>
-      <p><b>The question box is small, and it slips.</b> It knows <!--DOC-N--><!--/DOC-N--> short pieces of text: about the Normans, about oxygen, and about how hard some problems are. The twelve questions come from a public test set, spelled as that set spells them. In four of them ours is wrong. We kept those, and you can pick them.</p>
+      <p><b>The question box is small, and it gets some wrong.</b> It knows <!--DOC-N--><!--/DOC-N--> short pieces of text: about the Normans, about oxygen, and about how hard some problems are. The twelve questions come from a public test set, spelled as that set spells them. In four of them ours is wrong. We kept those, and you can pick them.</p>
       <p><b>Nothing is claimed early.</b> <!--LEARN-LINE--><!--/LEARN-LINE--></p>
       <p><b>Some of our tests failed.</b> <!--FAILS--><!--/FAILS--></p>
-      <p><b>These scores were read on <!--READ-ON--><!--/READ-ON-->.</b> Each one comes from the page that proves it. This page does not change them.</p></div></details>
+      <p><b>The scores on this page were read on <!--READ-ON--><!--/READ-ON-->.</b> Each score comes from the page that proves it. We do not change a score here.</p>
+      <p><b>A simulated buyer walk.</b> A small AI on our own laptop read this page cold, as four buyers, and listed what was unclear. It is not a customer. What was real is fixed. <a href="site/data/walk.json">The record.</a></p></div></details>
   </div>
 </section>
 
@@ -144,7 +145,7 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
   <div class="wrap">
     <p class="kline reveal">Start here</p>
     <h2 class="claim reveal">Start with <b>one job.</b></h2>
-    <p class="lede reveal">Tell us one job your team does again and again. We test if a small AI you own can do it. You get the numbers either way.</p>
+    <p class="lede reveal">Tell us one job your team does again and again. Pick one with clear rules. We test if a small AI you own can do that job. You get the numbers either way.</p>
     <div class="cta reveal" style="margin:26px 0 34px"><a class="btn primary" href="mailto:ainativesolutions@gmail.com?subject=One%20job">Send us the job</a><a class="btn ghost" href="talk.html">Talk to Lia first</a></div>
     <div class="stack reveal">
       <div class="srow"><div class="d">1</div><div class="nm"><b>We measure today.</b><span>How long does the job take now? How often does it go wrong?</span></div></div>
@@ -155,7 +156,7 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
     <details class="honest reveal" style="max-width:none"><summary>What it means for each person at your table</summary><div class="in">
       <p><b>The boss.</b> You own it. No one can raise the rent on it, or shut it down.</p>
       <p><b>The money person.</b> You stop paying for each seat, each month. You pay once, for the work.</p>
-      <p><b>The person who runs the day.</b> The dull work runs by itself. Anything that sends, spends or deletes waits for a person.</p>
+      <p><b>The person who runs the day.</b> The dull work, like sorting and checking, runs by itself. Anything that sends, spends or deletes waits for a person.</p>
       <p><b>The tech and safety person.</b> It runs on your computers. Your data stays there. You can run every test again.</p>
       <p><b>The team.</b> They keep the thinking. The AI does the reading and sorting. When it is not sure, it hands the case to a person.</p>
       <p><b>The board.</b> We show our failed tests. So you can check us before you sign.</p></div></details>
@@ -165,9 +166,9 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
       <p><b>Where does our data go?</b> Nowhere. The AI runs on your computers, with no link to the internet. Nothing is sent to us or to anyone else.</p>
       <p><b>What about the rules we must follow?</b> Each answer says what it is based on. Each “can’t tell” says what was missing. So there is a record a person can check. Ask your own advisers if that meets the rules for your firm. We will show them anything they ask to see.</p>
       <p><b>How do we roll it out?</b> One job first. We test it against how the job is done today. Then the next job.</p>
-      <p><b>Who looks after it?</b> AI Native Solutions does. The terms are agreed for each customer, in their own agreement. The code is yours to keep under the MIT licence.</p>
+      <p><b>Who looks after it?</b> AI Native Solutions looks after it. The support terms are agreed with each customer, in their own agreement. The code is yours to keep under the MIT licence. That means you may use it, change it and share it.</p>
       <p><b>What can go wrong?</b> A small AI can misread a fact. The checker catches a date or a sum that is not in the text. It cannot catch a judgement call. So a person still reads each result.</p>
-      <p><b>What does it cost?</b> You pay once, for the work. There is no monthly fee and no fee for each seat. <a href="prospectus.html">The long paper for buyers</a> shows the sums.</p></div></details>
+      <p><b>What does it cost?</b> You pay once, for the work. There is no monthly fee and no fee for each seat. <a href="prospectus.html">The booklet</a> shows worked sums for six trades.</p></div></details>
   </div>
 </section>
 
@@ -185,7 +186,8 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
   <h3 id="ledger-title" style="font-family:var(--display);font-weight:500;font-size:26px;margin:6px 0 10px">What this page sent and fetched</h3>
   <p id="ledger-verdict"></p>
   <div class="scroll"><table id="ledger-table"><thead><tr><th>From</th><th>What it is</th><th>Asked for</th><th>Came down</th><th>Sent up</th></tr></thead><tbody></tbody></table></div>
-  <p class="note">This lists each thing your browser fetched for this page. “Sent up” counts anything that could carry your words away. This page is built to send none. It can only show what this page did, not other programs on your computer.</p>
+  <p class="note">This lists each thing your browser fetched for this page. “Sent up” counts anything that could carry your words away. This page is built to send none of your words anywhere.</p>
+  <p class="note">The list shows only what this page did. It cannot see other programs on your computer.</p>
   <details><summary>Each one, in order</summary><ol id="ledger-rows" class="log"></ol></details>
 </dialog>
 </body>

@@ -1,0 +1,48 @@
+{
+ "v": "ai-nativesolutions-walk/1",
+ "note": "A simulated walk, not a customer. On 26 November 2026 a small AI on our own laptop (qwen2.5:7b) read the front door cold, as four buyers, eight readings in all, and listed what was unclear. Kar checked each point against the page.",
+ "fixed": [
+  {
+   "gap": "The page text opened with a loading word, “counting… counting…”",
+   "fix": "the chip now says what it is before its count arrives"
+  },
+  {
+   "gap": "“The question box is small, and it slips” was vague",
+   "fix": "now “it gets some wrong”"
+  },
+  {
+   "gap": "“These scores… This page does not change them” did not say which scores",
+   "fix": "now “the scores on this page… we do not change a score here”"
+  },
+  {
+   "gap": "“The long paper for buyers shows the sums” was vague",
+   "fix": "now “the booklet shows worked sums for six trades”"
+  },
+  {
+   "gap": "“AI Native Solutions does.” read as an unfinished line, and “the terms” were not named",
+   "fix": "now “AI Native Solutions looks after it. The support terms are agreed with each customer”"
+  },
+  {
+   "gap": "The MIT licence was named but not explained",
+   "fix": "now “that means you may use it, change it and share it”"
+  },
+  {
+   "gap": "How to choose the first job was not said",
+   "fix": "now “pick one with clear rules”"
+  },
+  {
+   "gap": "The note on the list of fetches was unclear",
+   "fix": "now says the list shows only what this page did, and cannot see other programs"
+  }
+ ],
+ "notChanged": [
+  {
+   "gap": "“Don’t trust us. Try it.” was called abrupt",
+   "why": "it is the heading of the part where the visitor tries it; the page keeps it"
+  },
+  {
+   "gap": "The five build cards open with two-word lines such as “It climbs.”",
+   "why": "each card says what the build does in the sentence that follows"
+  }
+ ]
+}
