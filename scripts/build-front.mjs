@@ -224,7 +224,7 @@ const learnLine = L.headline
 const FRONT = {
   'HOUSE-STYLE': '<style>\n' + houseCss + '\n</style>',
   RECEIPTS: receipts + '\n    ', LOOP: loop + '\n    ', BUILDS: builds + '\n    ', 'SCHOOL-ROW': schoolRow,
-  REUSE: reuse + '% of the work used again', FAILS: fails, 'READ-ON': Number(day[3]) + ' ' + MONTHS[Number(day[2]) - 1] + ' ' + day[1],
+  REUSE: reuse + '% of its reading kept, in a speed test', FAILS: fails, 'READ-ON': Number(day[3]) + ' ' + MONTHS[Number(day[2]) - 1] + ' ' + day[1],
   'DOC-N': String(DOCDEC.counts.paragraphs), 'LEARN-LINE': learnLine, 'ASK-SCORE': askScore, 'N-BUILDS': num(counted.builds), 'KONOMI-CREDIT': esc(F.credits.konomi) + '.',
 };
 const front = fill('site/front.html', FRONT);

@@ -98,7 +98,7 @@ test('every number on the page is the one its record gives', () => {
     `${C.headline.was} → ${C.headline.now} right, on ${C.headline.of} problems.`,
     `${V.headline.was} → ${V.headline.now} right, of ${V.headline.of} problems.`,
     `${x(S, 'sealed').value} of ${x(S, 'sealed').of} pieces passed. ${x(S, 'dissolved').value} failed and were thrown away.`,
-    `${Math.round((100 * FL.reuse.taken) / (FL.reuse.taken + FL.reuse.worked))}% of the work used again`,
+    `${Math.round((100 * FL.reuse.taken) / (FL.reuse.taken + FL.reuse.worked))}% of its reading kept, in a speed test`,
     json('media/film/facts.json').credits.konomi + '.',
   ]) assert.ok(text.includes(said), 'the page does not say: ' + said);
   // a failed goal is on the page in red; a test still running says so and gives no score
