@@ -46,7 +46,7 @@ const states = '\n  <div class="states">\n'
   + '    <div class="state next"><h3>Next</h3><ul>' + H.next.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></div>\n  </div>\n';
 const K = F.credits;
 const credits = '\n  <p class="credits">' + esc(K.konomi) + '. ' + esc(K.maccubeface) + '. fall-os draws on Thomas Frumkin’s assos. '
-  + 'The estate’s dream-state memory draws on ' + esc(K.garyDream) + '; its Dual-Map decision gate draws on ' + esc(K.garyDualMap) + '. '
+  + 'The estate’s dream-state memory draws on ' + esc(K.garyDream) + '. Its Dual-Map decision gate draws on ' + esc(K.garyDualMap) + '. '
   + esc(K.forge) + '. The film, the brochure and every build here are ' + esc(K.license) + '-licensed; the cited works remain their authors’ own.</p>\n';
 const path = join(root, 'explainer.html'); let page = readFileSync(path, 'utf8');
 for (const [key, html] of [['FACTS', table], ['STATES', states], ['CREDITS', credits]]) {

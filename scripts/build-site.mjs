@@ -39,14 +39,14 @@ if (!/Lumiea Systems Research Division/.test(GARY_DREAM || '')) { console.error(
 
 // ── the portal: flagships curated (real links only), the whole live estate searchable ──
 const FLAGSHIPS = [
-  { name: 'fallcorp', line: 'The AI-first company — a 100-person firm designed AI-first, seat by seat, with the human doors named' },
-  { name: 'fallcorp-demo', line: 'Northgate Claims — that company RUNNING: a fictional working day, live in your browser' },
-  { name: 'fallforce', line: 'FallForce — the whole owned stack: CRM flagship, the catalogue, the regulated shelf' },
-  { name: 'fallworld', line: 'Fall World — the estate as a place: install a didy, fit tools, play the ladder' },
-  { name: 'fallkard-forge', line: 'The Forge — software that travels as pictures: a PNG that openly carries a runnable build' },
-  { name: 'sididy-catalogue', line: 'The si-didy catalogue — tools composed autonomously by the estate\u2019s operator, released through signed doors' },
-  { name: 'falljustice', line: 'falljustice — consumer legal letters and data-request deadlines, computed not guessed' },
-  { name: 'generative-estate', line: 'The generative estate — a field of possibilities that collapses to verified code on demand' },
+  { name: 'fallcorp', line: 'A firm of 100 people, planned around AI from the start. It shows, seat by seat, which jobs still need a person.' },
+  { name: 'fallcorp-demo', line: 'That firm at work. A made-up working day at Northgate Claims, running live in your browser.' },
+  { name: 'fallforce', line: 'FallForce: all the software a firm needs, and the firm owns it. A tool for customer records, a catalogue, and a shelf of tools for regulated work.' },
+  { name: 'fallworld', line: 'Fall World: all we built, as a place you can walk round. Set up a helper, fit it with tools, and climb the ladder.' },
+  { name: 'fallkard-forge', line: 'The Forge: software that travels as a picture. One picture file openly carries a build you can run.' },
+  { name: 'sididy-catalogue', line: 'The si-didy catalogue: tools put together by the system\u2019s own operator, with no one steering. Each one is let out through a signed door.' },
+  { name: 'falljustice', line: 'falljustice: letters about a shopper\u2019s legal rights, and the date a firm must answer a data request by. Worked out, not guessed.' },
+  { name: 'generative-estate', line: 'The generative estate: a field of things that could be built. Ask for one, and it turns into checked code.' },
 ];
 const byName = Object.fromEntries(idx.nodes.map(n => [n.name, n]));
 for (const f of FLAGSHIPS) {
@@ -57,8 +57,8 @@ for (const f of FLAGSHIPS) {
 const data = live.map(n => ({ n: n.name, d: (n.desc || '').slice(0, 140) }));
 const portal = `<!doctype html>
 <html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Enter the estate · AI Native Solutions</title>
-<meta name="description" content="The whole estate, live: ${live.length} running builds, drawn from the index — never typed.">
+<title>All we built · AI Native Solutions</title>
+<meta name="description" content="All we built, live: ${live.length} running builds. A program made the list. No one typed the numbers.">
 <style>
 :root{--bg:#0b0a0f;--card:#141218;--ink:#d8d2c4;--gold:#d4a017;--line:#2b251f;--soft:#8a8272}
 *{box-sizing:border-box}
@@ -81,23 +81,23 @@ a{color:var(--gold)}
 footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-size:.8em;color:var(--soft)}
 </style></head><body>
 <p><a href="index.html" style="text-decoration:none">← AI Native Solutions</a></p>
-<h1>The estate</h1>
-<p class="sub">${live.length.toLocaleString('en-GB')} live builds of ${pub.length.toLocaleString('en-GB')} public repositories —
-this page is generated from the estate index of ${esc(String(idx.generated || '').slice(0, 10))}, never typed.
-Every link below answered a live check on ${esc(String(idx.verified || deadlist.verified || 'the last verification'))}. Helper builds, which let other programs use a main build, are not listed here.</p>
+<h1>All we built</h1>
+<p class="sub">We have ${pub.length.toLocaleString('en-GB')} public projects. ${live.length.toLocaleString('en-GB')} of them are main builds with a live page.
+A program made this list on ${esc(String(idx.generated || '').slice(0, 10))}. No one typed the numbers.
+We tried each link on ${esc(String(idx.verified || deadlist.verified || 'the last verification'))}, and each one opened. Helper builds, which let other programs use a main build, are not listed here.</p>
 
 <h2 style="color:var(--gold);font-size:1.05rem">Start here</h2>
 <div class="flag">
 ${FLAGSHIPS.map(f => `<div class="fcard"><a href="https://sjgant80-hub.github.io/${esc(f.name)}/">${esc(f.name)} →</a><p>${esc(f.line)}</p></div>`).join('\n')}
 </div>
 
-<h2 style="color:var(--gold);font-size:1.05rem">All of it</h2>
+<h2 style="color:var(--gold);font-size:1.05rem">Every live build</h2>
 <div class="search"><input id="q" placeholder="search ${live.length.toLocaleString('en-GB')} live builds…" aria-label="search the estate"></div>
 <div class="count" id="count"></div>
 <div class="grid" id="grid"></div>
 
-<footer>Generated from the estate index — no number typed by hand. Every build is MIT-licensed source
-you can read, fork, and keep. · <a href="index.html">AI Native Solutions</a> · Powered by the <a href="konomi.html">Konomi architecture</a>, created by Thomas Frumkin
+<footer>A program made this page from our list of projects. No number was typed by hand. Every build is open code under the MIT licence.
+You can read it, copy it and keep it. · <a href="index.html">AI Native Solutions</a> · Powered by the <a href="konomi.html">Konomi architecture</a>, created by Thomas Frumkin
 <p>The estate's dream-state memory builds draw on dream-state design Gary W. Floyd shared with the estate: ${esc(GARY_DREAM)}.</p></footer>
 
 <script>
