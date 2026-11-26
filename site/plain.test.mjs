@@ -11,6 +11,8 @@ import PLAIN from '../vendor/house-standard/src/plain.mjs';
 const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 // held to the bar. A page joins this list when it passes; it never leaves it.
 const PLAIN_PAGES = ['index.html', 'deep.html', 'talk.html', 'explainer.html', 'estate.html', 'credits/index.html', 'prospectus.html', 'deck.html', 'classic.html', 'konomi.html'];
+// in the sitemap but not linked from the front door's pages: held to the bar all the same
+const ALSO_PLAIN = ['os.html'];
 // reachable, and not held to the bar, each for a written reason. An exemption is a reason, not a convenience.
 const NOT_HELD = {
   'legacy/prospectus-2026-09.html': 'the first edition of the booklet (September 2026), kept exactly as it was published; the plain-words edition replaces it and links to it',
@@ -18,7 +20,7 @@ const NOT_HELD = {
   'ai.html': 'written for AI agents to read, and drawn word for word from the agent records (scripts/build-agent.mjs); a person is sent to the front door instead',
 };
 
-for (const page of PLAIN_PAGES) test('a twelve-year-old can read ' + page, () => {
+for (const page of [...PLAIN_PAGES, ...ALSO_PLAIN]) test('a twelve-year-old can read ' + page, () => {
   const r = PLAIN.check(read(page));
   assert.equal(r.pass, true, r.rules.filter((x) => !x.pass).map((x) => x.id + ' ' + x.name + ': ' + x.why).join(' | '));
 });

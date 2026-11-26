@@ -17,11 +17,18 @@ const b = board(data.stages, data.doors);
 if (!b.ok) { console.error('REFUSED: ' + b.why); process.exit(1); }
 
 // real estate scale for the header
-let repos = null, live = null;
+// The index's own "live" flag only says a page was switched on; many of those never answered. So "live" here is
+// what scripts/build-site.mjs counts for estate.html: a main build whose page opened when its link was tried
+// (deadlist.json holds the ones that did not).
+let repos = null, live = null, tried = null;
 try {
   const idx = JSON.parse(readFileSync(process.argv[2] || 'C:/Users/sjgan/.claude/projects/C--Users-sjgan--claude/memory/estate-index.json', 'utf8'));
-  repos = idx.nodes.filter(n => !n.private).length;
-  live = idx.nodes.filter(n => !n.private && !n.archived && !n.fork && n.live).length;
+  const deadlist = JSON.parse(readFileSync(join(here, '..', 'deadlist.json'), 'utf8')), dead = new Set(deadlist.dead || []);
+  const pub = idx.nodes.filter(n => !n.private && !n.archived && !n.fork);
+  repos = pub.length;
+  live = pub.filter(n => n.live && !/-(api|mcp|sdk)$/.test(n.name) && !dead.has(n.name)).length;
+  tried = String(deadlist.verified || '');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(tried)) { repos = null; live = null; }
 } catch { /* header degrades to no counts */ }
 
 // Gary W. Floyd's dream-state credit, full form, from the ONE facts file (media/film/facts.json) — any page that
@@ -34,8 +41,9 @@ const DOORICON = { money: '💷', legal: '⚖', taste: '◈', 'client-trust': '�
 const STATECLASS = { LIVE: 'live', BUILT: 'built', PLANNED: 'planned' };
 const STATEWORD = { LIVE: 'LIVE', BUILT: 'BUILT · waiting', PLANNED: 'PLANNED' };
 
-const doorCard = (d) => `<div class="door"><b>${DOORICON[d]} the ${esc(d)} door</b>
-  <div class="held">held by a human — Simon</div>
+const DOORNAME = { money: 'money', legal: 'legal', taste: 'taste', 'client-trust': 'client trust' };
+const doorCard = (d) => `<div class="door"><b>${DOORICON[d]} the ${esc(DOORNAME[d] || d)} door</b>
+  <div class="held">held by a person: Simon</div>
   <div class="dn">${esc(data.doorNotes[d] || '')}</div></div>`;
 
 const stageCard = (s) => `<div class="stage ${STATECLASS[s.state]}">
@@ -48,8 +56,8 @@ const stageCard = (s) => `<div class="stage ${STATECLASS[s.state]}">
 
 const html = `<!doctype html>
 <html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The company running itself · AI Native Solutions</title>
-<meta name="description" content="AI Native Solutions runs itself on the same architecture it sells: agents on every operational seat, humans on the four doors. This is the live board — honest about what's running and what's one step away.">
+<title>The company that runs itself · AI Native Solutions</title>
+<meta name="description" content="AI Native Solutions runs itself with its own tools: AI workers on the everyday seats, and a person on four doors. This is the live board. It says what runs today and what is one step away.">
 <style>
 :root{--bg:#0b0a0f;--bg2:#100d15;--card:#141218;--ink:#e2d9c8;--gold:#d4a017;--gold2:#ffb648;--line:#2b251f;--soft:#8f8778;--good:#9fb89f;--wait:#c9a24a}
 *{box-sizing:border-box}
@@ -89,45 +97,45 @@ footer a{color:var(--soft)}footer .k{float:right}
 </style></head><body>
 <header><div class="wrap nav">
   <span class="mark">AI <span>Native</span> Solutions</span>
-  <a href="index.html">Home</a><a href="konomi.html">Konomi</a><a href="estate.html">The estate</a>
+  <a href="index.html">Home</a><a href="konomi.html">Konomi</a><a href="estate.html">All we built</a>
   <a href="mailto:ainativesolutions@gmail.com">Talk to us</a>
 </div></header>
 
 <div class="hero"><div class="wrap">
-  <h1>We run ourselves on the architecture we sell.</h1>
-  <p>AI Native Solutions is an AI-first company that operates itself: agents hold every operational
-  seat, and a human holds the four doors that must stay human — money, legal, taste, client-trust.
-  This is the live board, honest about what's running today and what's one step away.</p>
-  <div class="summary">${b.why}${repos ? ` · drawn from a working estate of ${repos.toLocaleString('en-GB')} builds (${live.toLocaleString('en-GB')} live)` : ''}</div>
+  <h1>We run ourselves with what we sell.</h1>
+  <p>AI Native Solutions is a company built around AI, and it runs itself. AI workers hold every
+  everyday seat. A person holds the four doors that must stay human: money, legal, taste and client
+  trust. This is the live board. It is honest about what runs today and what is one step away.</p>
+  <div class="summary">${b.why}${repos ? ` · from ${repos.toLocaleString('en-GB')} public projects; ${live.toLocaleString('en-GB')} are main builds with a live page (each link tried on ${esc(tried)})` : ''}</div>
 </div></div>
 
 <section><div class="wrap">
-  <h2>The four doors — held by a human</h2>
-  <p class="lede">Nothing an agent does crosses these. They're the 10% — and they're also the core
-  claim of what we sell, so we live it: an agent at a door would poison the pitch.</p>
+  <h2>The four doors, each held by a person</h2>
+  <p class="lede">Nothing an AI worker does goes through these. They are the one part in ten that
+  stays human. They are also the heart of what we sell, so we live by it.</p>
   <div class="doors">${DOORS.map(doorCard).join('')}</div>
 </div></section>
 
 <section><div class="wrap">
-  <h2>The agent seats — the six-stage build</h2>
-  <p class="lede">Each seat both <b>operates</b> (does real work) and <b>demonstrates</b> (proves
-  the thesis). A seat is only marked LIVE if you can click through to it running.</p>
+  <h2>The AI seats: six stages</h2>
+  <p class="lede">Each seat <b>does real work</b> and <b>shows that the idea works</b>. A seat is
+  marked LIVE only if you can click through and see it running.</p>
   <div class="stages">${data.stages.slice().sort((a, c) => a.n - c.n).map(stageCard).join('')}</div>
 </div></section>
 
 <section><div class="wrap">
-  <div class="honest"><b>The honest state, said plainly.</b> The product seat already runs nightly —
-  that's real. The marketing seat is built and gated, one token-paste from going public. Delivery
-  and the learning loop are built and proven; they're waiting on a first sale, not a first build.
-  No door has been turned yet: no money has moved, no engagement is signed. That's not a gap we
-  hide — it's exactly where a human is supposed to stand. We'll sell the FallCorp install from
-  lived proof, and this page is that proof, kept honest by the same gate that runs the rest.</div>
-  <p><a href="https://sjgant80-hub.github.io/fallcorp/">Walk the company we build for clients →</a>
+  <div class="honest"><b>The honest state, said plainly.</b> The product seat already runs every
+  night. That is real. The marketing seat is built and tested, and is one fix away from going
+  public. Delivery and the learning loop are built and proved. They wait for a first sale, not a
+  first build. No door has been opened yet. No money has moved, and no deal is signed. We do not
+  hide that. It is just where a person is meant to stand. We will sell the FallCorp set-up from
+  lived proof. This page is that proof, kept honest by the same test that runs the rest.</div>
+  <p><a href="https://sjgant80-hub.github.io/fallcorp/">Walk through the company we build for clients →</a>
   &nbsp;·&nbsp; <a href="konomi.html">Built on Konomi →</a></p>
 </div></section>
 
 <footer><div class="wrap">
-  <span>© AI Native Solutions · generated from stages-data.json through the gated board — no status typed by hand</span>
+  <span>© AI Native Solutions · A program made this page from stages-data.json, through the tested board. No status was typed by hand.</span>
   <span class="k">Powered by the <a href="konomi.html">Konomi architecture</a>, created by Thomas Frumkin</span>
   <p style="clear:both;margin:10px 0 0">${esc(DREAM_CREDIT('The nightly dream step'))}</p>
 </div></footer>
