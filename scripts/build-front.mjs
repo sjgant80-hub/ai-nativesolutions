@@ -217,11 +217,15 @@ const kept = { wrong: (DOCDEC.demoQuestions || []).filter((q) => q.label === 'dd
 if (kept.all !== 12 || kept.wrong !== 4) refuse('the question box\'s kept questions changed: the page says twelve, and four that ours gets wrong');
 const houseCss = read('vendor/house-standard/kit/house.css').trim();
 if (houseCss.includes('</style')) refuse('the house style sheet cannot be put on the page as it is');
+// the honest line about the learning test: what the record holds, and no more
+const learnLine = L.headline
+  ? 'The learning test has been run once. It got ' + esc(L.headline.was) + ' right before it studied and ' + esc(L.headline.now) + ' after, on ' + L.headline.of + ' new problems. That is one test, on one kind of problem. Its own page shows where it did not get better.'
+  : 'The learning test is still running. Its score goes on this page when it is done, pass or fail.';
 const FRONT = {
   'HOUSE-STYLE': '<style>\n' + houseCss + '\n</style>',
   RECEIPTS: receipts + '\n    ', LOOP: loop + '\n    ', BUILDS: builds + '\n    ', 'SCHOOL-ROW': schoolRow,
   REUSE: reuse + '% of the work used again', FAILS: fails, 'READ-ON': Number(day[3]) + ' ' + MONTHS[Number(day[2]) - 1] + ' ' + day[1],
-  'DOC-N': String(DOCDEC.counts.paragraphs), 'ASK-SCORE': askScore, 'N-BUILDS': num(counted.builds), 'KONOMI-CREDIT': esc(F.credits.konomi) + '.',
+  'DOC-N': String(DOCDEC.counts.paragraphs), 'LEARN-LINE': learnLine, 'ASK-SCORE': askScore, 'N-BUILDS': num(counted.builds), 'KONOMI-CREDIT': esc(F.credits.konomi) + '.',
 };
 const front = fill('site/front.html', FRONT);
 

@@ -1,6 +1,6 @@
 {
  "v": "house-standard-flagships/1",
- "read": "2026-11-25",
+ "read": "2026-11-26",
  "builds": [
   {
    "repo": "the-climb",
@@ -235,7 +235,7 @@
    "verb": "It grows itself.",
    "line": "A handful of files that grows verified software, one cell at a time.",
    "live": "https://sjgant80-hub.github.io/the-seed/",
-   "commit": "ae53731e9cd537c8ed52e488e4921551fbd19c23",
+   "commit": "859205260e4a3c5e42d7a2cf3b4f0aaee8c77eea",
    "headline": null,
    "extra": [
     {
@@ -269,7 +269,7 @@
      {
       "id": "H2",
       "pass": true,
-      "why": "565 words before any click (at most 1250); the longest paragraph is 28 words (at most 45)"
+      "why": "574 words before any click (at most 1250); the longest paragraph is 28 words (at most 45)"
      },
      {
       "id": "H3",
@@ -294,10 +294,10 @@
      {
       "id": "H7",
       "pass": true,
-      "why": "the credit line is left off, and the page says why: left off on the owner's instruction for this build, until he rules on it; no price; no private shorthand"
+      "why": "the credit line is on the page; no price; no private shorthand"
      }
     ],
-    "viewWords": 565,
+    "viewWords": 574,
     "longest": 28
    },
    "gate": {
@@ -312,14 +312,19 @@
    "verb": "It learns.",
    "line": "Trained only on its own verified work. Tested cold on problems it never saw.",
    "live": "https://sjgant80-hub.github.io/the-distillation/",
-   "commit": "bae43fcb3c9898a58c0d87dc4348f10d832fc767",
-   "headline": null,
+   "commit": "c2d64f11962aa2a9b9e13843c8902419c8d285c3",
+   "headline": {
+    "was": "24.7%",
+    "now": "48.9%",
+    "of": 231,
+    "label": "held-out problems right, cold: before, then after training on its own verified work"
+   },
    "extra": [],
    "claims": {
     "n": 6,
-    "pass": 0,
+    "pass": 6,
     "fail": 0,
-    "sealing": 6,
+    "sealing": 0,
     "failed": []
    },
    "standard": {
@@ -328,12 +333,12 @@
      {
       "id": "H1",
       "pass": true,
-      "why": "crystal hero, 3 receipts, 25 stack rows, 20 controls on the glass, 11 expanders"
+      "why": "crystal hero, 3 receipts, 23 stack rows, 20 controls on the glass, 11 expanders"
      },
      {
       "id": "H2",
       "pass": true,
-      "why": "989 words before any click (at most 1250); the longest paragraph is 27 words (at most 45)"
+      "why": "1155 words before any click (at most 1250); the longest paragraph is 27 words (at most 45)"
      },
      {
       "id": "H3",
@@ -348,7 +353,7 @@
      {
       "id": "H5",
       "pass": true,
-      "why": "31 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
+      "why": "34 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
      },
      {
       "id": "H6",
@@ -361,7 +366,7 @@
       "why": "the credit line is on the page; no price; no private shorthand"
      }
     ],
-    "viewWords": 989,
+    "viewWords": 1155,
     "longest": 27
    },
    "gate": {
@@ -389,26 +394,111 @@
  "loop": {
   "v": "the-distillation-live/1",
   "round": 1,
-  "stage": "harvest",
+  "stage": "judged",
   "harvest": {
-   "done": 300,
+   "done": 573,
    "total": 573,
-   "complete": 296,
-   "calls": 2297
+   "complete": 555,
+   "calls": 4831
   },
-  "train": null,
+  "train": {
+   "step": 201,
+   "steps": 201,
+   "loss": [
+    0.4193,
+    0.2276,
+    0.4877,
+    0.1953,
+    0.1747,
+    0.1848,
+    0.0589,
+    0.1102,
+    0.0856,
+    0.1583,
+    0.1111,
+    0.1045,
+    0.1592,
+    0.1891,
+    0.1444,
+    0.1077,
+    0.045,
+    0.0312,
+    0.1817,
+    0.0134,
+    0.0641,
+    0.0554,
+    0.1245,
+    0.0237,
+    0.229,
+    0.0781,
+    0.0954,
+    0.085,
+    0.1366,
+    0.056,
+    0.0943,
+    0.0739,
+    0.0101,
+    0.0348,
+    0.1171,
+    0.0939,
+    0.0096,
+    0.1446,
+    0.1256,
+    0.0124,
+    0.0843,
+    0.0558,
+    0.0627,
+    0.0172,
+    0.0766,
+    0.007,
+    0.0472,
+    0.0104
+   ]
+  },
   "cold": {
-   "base": null,
-   "distilled": null
+   "base": {
+    "done": 231,
+    "total": 231
+   },
+   "distilled": {
+    "done": 231,
+    "total": 231
+   }
   },
-  "verdict": null,
-  "done": false,
+  "verdict": [
+   {
+    "id": "K1",
+    "pass": true
+   },
+   {
+    "id": "K2",
+    "pass": true
+   },
+   {
+    "id": "K3",
+    "pass": true
+   },
+   {
+    "id": "K4",
+    "pass": true
+   },
+   {
+    "id": "K5",
+    "pass": true
+   },
+   {
+    "id": "K6",
+    "pass": true
+   }
+  ],
+  "done": true,
   "failed": false,
-  "at": "2026-11-25T22:53:51.377Z"
+  "examples": 536,
+  "at": "2026-11-26T07:49:30.070Z"
  },
  "gate": {
-  "killed": 80,
-  "total": 80,
+  "killed": 113,
+  "total": 113,
   "clean": true
  }
 }

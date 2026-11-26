@@ -51,8 +51,12 @@ section{position:relative;z-index:2}
 .lede b{color:var(--ink);font-weight:600}
 
 /* RECEIPTS: the number is the hero */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:64px;border-top:1px solid var(--line);padding-top:48px}
-.stat .n{font-family:var(--mono);font-weight:700;font-size:clamp(38px,6.6vw,76px);line-height:1;letter-spacing:-.02em;white-space:nowrap}
+/* a receipt's number is sized by its own column (cqi), so a long before→after never pushes a receipt off the page:
+   by default a number of up to 11 characters fits; a row of short numbers (7 or fewer) may be marked .loud */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:64px;border-top:1px solid var(--line);padding-top:48px}
+.stats.loud{--fit:21cqi}
+.stat{min-width:0;container-type:inline-size}
+.stat .n{font-family:var(--mono);font-weight:700;font-size:clamp(30px,4.2vw,56px);font-size:clamp(30px,var(--fit,14.2cqi),76px);line-height:1;letter-spacing:-.02em;white-space:nowrap}
 .stat .n .was{color:var(--muted)}.stat .n .arrow{color:var(--cyan-dim);padding:0 .12em}.stat .n .now{color:var(--cyan)}.stat .n .bad{color:var(--red)}.stat .n .wait{color:var(--gold)}
 .stat .lab{color:var(--soft);font-size:14px;margin-top:16px;line-height:1.5;max-width:28ch}
 .stat .lab b{color:var(--ink);font-weight:600}

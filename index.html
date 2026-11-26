@@ -68,8 +68,12 @@ section{position:relative;z-index:2}
 .lede b{color:var(--ink);font-weight:600}
 
 /* RECEIPTS: the number is the hero */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:64px;border-top:1px solid var(--line);padding-top:48px}
-.stat .n{font-family:var(--mono);font-weight:700;font-size:clamp(38px,6.6vw,76px);line-height:1;letter-spacing:-.02em;white-space:nowrap}
+/* a receipt's number is sized by its own column (cqi), so a long before→after never pushes a receipt off the page:
+   by default a number of up to 11 characters fits; a row of short numbers (7 or fewer) may be marked .loud */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:64px;border-top:1px solid var(--line);padding-top:48px}
+.stats.loud{--fit:21cqi}
+.stat{min-width:0;container-type:inline-size}
+.stat .n{font-family:var(--mono);font-weight:700;font-size:clamp(30px,4.2vw,56px);font-size:clamp(30px,var(--fit,14.2cqi),76px);line-height:1;letter-spacing:-.02em;white-space:nowrap}
 .stat .n .was{color:var(--muted)}.stat .n .arrow{color:var(--cyan-dim);padding:0 .12em}.stat .n .now{color:var(--cyan)}.stat .n .bad{color:var(--red)}.stat .n .wait{color:var(--gold)}
 .stat .lab{color:var(--soft);font-size:14px;margin-top:16px;line-height:1.5;max-width:28ch}
 .stat .lab b{color:var(--ink);font-weight:600}
@@ -244,7 +248,7 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
       <div class="act reveal"><span class="num">03</span><h3>It studies the right ones.</h3><p>Then it takes a test it has never seen. We keep the new AI only if it does better.</p></div>
     </div>
     <div class="stats"><!--LOOP-->
-      <div class="stat reveal" data-face="2" data-say="Its first real test is running now"><div class="n"><span class="wait">—</span></div><div class="lab"><b>Its first real test is running now.</b> The score goes here when it is done, pass or fail. <span class="tag gd">sealing now</span></div><a class="src" href="https://sjgant80-hub.github.io/the-distillation/">watch it: The Distillation ↗</a></div>
+      <div class="stat reveal" data-face="1" data-say="Its first real test: 24.7% before it studied, 48.9% after"><div class="n"><span class="was">24.7%</span><span class="arrow">→</span><span class="now">48.9%</span></div><div class="lab"><b>Its first real test.</b> On 231 new problems, it got 24.7% right before it studied, and 48.9% after.</div><a class="src" href="https://sjgant80-hub.github.io/the-distillation/">proof: The Distillation ↗</a></div>
       <div class="stat reveal" data-face="2" data-say="The practice run: 31 right, then 44, of 89. Not a score we claim"><div class="n"><span class="was">31</span><span class="arrow">→</span><span class="wait">44</span></div><div class="lab"><b>The practice run</b>, on 89 new problems. It helped us set up the real test. It is not a score we claim. <span class="tag gd">not a claim</span></div><a class="src" href="https://sjgant80-hub.github.io/the-distillation/">the practice run: The Distillation ↗</a></div>
       <div class="stat reveal" data-face="1" data-say="No change to the AI without a person saying yes"><div class="n"><span class="now">0</span></div><div class="lab"><b>Changes to the AI with no person saying yes.</b> A new version waits for a human.</div><a class="src" href="https://sjgant80-hub.github.io/the-distillation/#loop">proof: the lock on new versions ↗</a></div>
     <!--/LOOP--></div>
@@ -260,7 +264,7 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
       <a class="act reveal" href="https://sjgant80-hub.github.io/the-crystal/" data-face="1" data-say="The Crystal: 31.0% right at first, 85.7% grown piece by piece"><span class="num">02 — THE CRYSTAL</span><h3>It grows the answer.</h3><p>It builds the answer from pieces it has proved. A piece it cannot prove melts away. <b style="color:var(--ink)">31.0% → 85.7%</b> right, on 84 problems.</p><span class="go">Open the proof →</span></a>
       <a class="act reveal" href="https://sjgant80-hub.github.io/the-verifier-set/" data-face="1" data-say="The Verifier Set: 34 right alone, 139 with the checker"><span class="num">03 — THE VERIFIER SET</span><h3>It will not lie.</h3><p>Each answer is checked against the maths, or the page it came from. If it cannot be checked, you do not get it. <b style="color:var(--ink)">34 → 139</b> right, of 144 problems.</p><span class="go">Open the proof →</span></a>
       <a class="act reveal" href="https://sjgant80-hub.github.io/the-seed/" data-face="1" data-say="The Seed: 3 of 5 pieces passed, 2 thrown away"><span class="num">04 — THE SEED</span><h3>It plants itself.</h3><p>A few small files that grow working software, one checked piece at a time. <b style="color:var(--ink)">3 of 5</b> pieces passed. 2 failed and were thrown away.</p><span class="go">Open the proof →</span></a>
-      <a class="act reveal" href="https://sjgant80-hub.github.io/the-distillation/" data-face="2" data-say="The Distillation: its first real test is running now"><span class="num">05 — THE DISTILLATION</span><h3>It learns.</h3><p>It studies only its own proved work. Then it takes a test it has never seen. <span class="tag gd">sealing now</span></p><span class="go">Open the proof →</span></a>
+      <a class="act reveal" href="https://sjgant80-hub.github.io/the-distillation/" data-face="1" data-say="The Distillation: 24.7% before it studied, 48.9% after"><span class="num">05 — THE DISTILLATION</span><h3>It learns.</h3><p>It studies only its own proved work. Then it takes a test it has never seen. <b style="color:var(--ink)">24.7% → 48.9%</b> right, on 231 problems.</p><span class="go">Open the proof →</span></a>
     <!--/BUILDS--></div>
     <p class="lede reveal">These are the newest. We have made <!--N-BUILDS-->1,615<!--/N-BUILDS--> public builds in all. <a href="estate.html">See them all →</a></p>
   </div>
@@ -275,7 +279,7 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
       <div class="srow" data-face="1" data-say="A checker: code that marks each step"><div class="d">02</div><div class="nm"><b>A checker</b><span>Code that marks each step right or wrong. It is maths, not a guess.</span></div></div>
       <div class="srow" data-face="1" data-say="A wall: what it cannot check, it will not answer"><div class="d">03</div><div class="nm"><b>A wall</b><span>What it cannot check, it will not answer. It says “I can’t tell.”</span></div></div>
       <div class="srow" data-face="1" data-say="A memory: it uses again what it has proved"><div class="d">04</div><div class="nm"><b>A memory</b><span>It uses again what it has proved, so it does less work twice.</span><span class="tag cy"><!--REUSE-->94% of the work used again<!--/REUSE--></span></div></div>
-      <!--SCHOOL-ROW--><div class="srow gold" data-face="2" data-say="A school: it studies its own proved work. Its first real test is running now"><div class="d">05</div><div class="nm"><b>A school</b><span>It studies its own proved work to get better.</span><span class="tag gd">sealing now</span></div></div><!--/SCHOOL-ROW-->
+      <!--SCHOOL-ROW--><div class="srow" data-face="1" data-say="A school: it studies its own proved work"><div class="d">05</div><div class="nm"><b>A school</b><span>It studies its own proved work to get better.</span><span class="tag cy">24.7% → 48.9%</span></div></div><!--/SCHOOL-ROW-->
       <div class="srow" data-face="1" data-say="A person: big changes wait for a human to say yes"><div class="d">06</div><div class="nm"><b>A person</b><span>Big changes wait for a human to say yes.</span></div></div>
     </div>
   </div>
@@ -299,9 +303,9 @@ dialog#ledger .scroll{overflow-x:auto}dialog#ledger .note{font-size:13.5px;color
       <p><b>It is narrow on purpose.</b> It works where a computer can check the answer: sums, logic, and facts copied from a page. For the rest it says “I can’t tell.”</p>
       <p><b>Copied is not the same as true.</b> If a page is wrong, an answer copied from it is wrong too. We mark which answers are proved and which are copied.</p>
       <p><b>The question box is small, and it slips.</b> It knows <!--DOC-N-->130<!--/DOC-N--> short pieces of text: about the Normans, about oxygen, and about how hard some problems are. The twelve questions come from a public test set, spelled as that set spells them. In four of them ours is wrong. We kept those, and you can pick them.</p>
-      <p><b>Nothing is claimed early.</b> The learning test is still running. Its score goes on this page when it is done, pass or fail.</p>
+      <p><b>Nothing is claimed early.</b> <!--LEARN-LINE-->The learning test has been run once. It got 24.7% right before it studied and 48.9% after, on 231 new problems. That is one test, on one kind of problem. Its own page shows where it did not get better.<!--/LEARN-LINE--></p>
       <p><b>Some of our tests failed.</b> <!--FAILS-->The Climb failed 1 of its 8 goals. Each failed goal is still on its page, in red. <a href="deep.html#receipts">The long version lists more.</a><!--/FAILS--></p>
-      <p><b>These scores were read on <!--READ-ON-->25 November 2026<!--/READ-ON-->.</b> Each one comes from the page that proves it. This page does not change them.</p></div></details>
+      <p><b>These scores were read on <!--READ-ON-->26 November 2026<!--/READ-ON-->.</b> Each one comes from the page that proves it. This page does not change them.</p></div></details>
   </div>
 </section>
 
