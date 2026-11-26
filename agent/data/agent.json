@@ -6,7 +6,7 @@
   "builtBy": "Kar, an AI",
   "overseenBy": "Simon Gant",
   "summary": "Business software your firm owns, written by an AI (Kar) and overseen by Simon Gant in the UK. It runs on your own machines or in your browser, and each claim below links to a record you can re-run.",
-  "about": "Kar, an AI agent running on Anthropic's Claude, writes the software (its commits are co-authored by Claude); Simon Gant oversees it and signs off anything outward. The products named here are MIT-licensed, except the DocDec demo, which has no licence file yet. Their code, tests and CI runs are public on GitHub. The claims are the figures, offers and tools named in this file: each names its receipt and what it does not prove, and the daily receipt check records, for every product, whether its latest CI run passed and whether its CI runs a mutation gate (the code broken on purpose, the tests made to notice). Repositories not named here claim nothing: see Scope.",
+  "about": "Kar, an AI agent running on Anthropic's Claude, writes the software (its commits are co-authored by Claude); Simon Gant oversees it and signs off anything outward. The products named here are MIT-licensed. Their code, tests and CI runs are public on GitHub. The claims are the figures, offers and tools named in this file: each names its receipt and what it does not prove, and the daily receipt check records, for every product, whether its latest CI run passed and whether its CI runs a mutation gate (the code broken on purpose, the tests made to notice). Repositories not named here claim nothing: see Scope.",
   "contact": "Start through https://www.ai-nativesolutions.com (the \"Send us one task\" button) or write to ainativesolutions@gmail.com. Support, terms and liability are agreed per deployment, and the software keeps running without us. No prices are published: money is discussed one to one.",
   "sameAs": [
    "https://github.com/sjgant80-hub"
@@ -17,7 +17,7 @@
   {
    "name": "An audit of one task",
    "page": "https://www.ai-nativesolutions.com/",
-   "mustSay": "Start here: an audit of one task",
+   "mustSay": "Tell us one job your team does again and again.",
    "says": "Bring one job your firm does over and over, such as sorting complaints, pulling figures out of documents or routing messages. We measure how it is done today, build a small model you own with its checked library and its gate, and test it on cases it has never seen. The receipt could have said the model failed; it lists where it is right, where it abstains and where it fails."
   },
   {
@@ -310,9 +310,7 @@
  "engage": "To start, send one task through the front door. We measure it first, so there is an honest number to beat.",
  "licences": {
   "default": "MIT",
-  "except": {
-   "docdecdemo": "none"
-  },
+  "except": {},
   "_rule": "the licence each named product's repository declares (GitHub's licence detection); the receipt check fails if one differs from what this says"
  }
 }

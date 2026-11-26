@@ -168,5 +168,6 @@ test('the licence expectation is carried into the facts for the receipt check to
   assert.deepEqual(facts(agent({ licences: { default: 'MIT', except: { demo: 'none' } } })).licences, { default: 'MIT', except: { demo: 'none' } });
   assert.deepEqual(facts(agent({ licences: { default: 'MIT', except: 'x' } })).licences, { default: 'MIT', except: {} });
   assert.deepEqual(facts(agent({ licences: 7 })).licences, { default: '', except: {} });
-  assert.deepEqual(A.build(REAL).licences.except, { docdecdemo: 'none' });
+  // every product named today declares the MIT licence: the DocDec demo was the one exception until it gained its licence file
+  assert.deepEqual(A.build(REAL).licences, { default: 'MIT', except: {} });
 });
