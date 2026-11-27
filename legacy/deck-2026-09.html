@@ -362,7 +362,7 @@ img.fig{display:block;width:100%;max-width:980px;height:auto;border-radius:12px;
 <script>
   const slides=[...document.querySelectorAll('.slide')];
   const dots=document.getElementById('dots');
-  dots.innerHTML=slides.map(s=>'<a href="#'+s.id+'" title="'+s.id+'"></a>').join('');
+  dots.innerHTML=slides.map(s=>'<a href="legacy/deck-2026-09.html#'+s.id+'" title="'+s.id+'"></a>').join('');
   const links=[...dots.children];
   const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
     const i=slides.indexOf(e.target); links.forEach((l,j)=>l.classList.toggle('on',i===j));}});},{threshold:.5});
