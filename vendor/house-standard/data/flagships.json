@@ -1,6 +1,6 @@
 {
  "v": "house-standard-flagships/1",
- "read": "2026-11-26",
+ "read": "2026-11-27",
  "builds": [
   {
    "repo": "the-climb",
@@ -8,7 +8,7 @@
    "verb": "It climbs.",
    "line": "A problem it fails cold, broken into steps it can do. Each step checked.",
    "live": "https://sjgant80-hub.github.io/the-climb/",
-   "commit": "ebe420b3a23fa6c894bbbeac8613b6f28edcb3d4",
+   "commit": "62edfc6f7d853ed8b527cd7131c067caa0e2136c",
    "headline": {
     "was": "36.5%",
     "now": "70.8%",
@@ -82,7 +82,7 @@
    "verb": "It crystallises.",
    "line": "The answer grown from proven pieces. What cannot be proven dissolves.",
    "live": "https://sjgant80-hub.github.io/the-crystal/",
-   "commit": "89880559b9984fe50e587f3908f13e669d99f591",
+   "commit": "aee09b41dad10265f77efe5c18388e643cec807d",
    "headline": {
     "was": "31.0%",
     "now": "85.7%",
@@ -158,7 +158,7 @@
    "verb": "It refuses to lie.",
    "line": "Checked against the arithmetic or the cited source, or not released.",
    "live": "https://sjgant80-hub.github.io/the-verifier-set/",
-   "commit": "6b645d57435fad49341f6cc7ab06ca36f04a6474",
+   "commit": "e2cfe5fdfb9ba73cbb38da1e25fa4ccce4cb8413",
    "headline": {
     "was": "34",
     "now": "139",
@@ -235,7 +235,7 @@
    "verb": "It grows itself.",
    "line": "A handful of files that grows verified software, one cell at a time.",
    "live": "https://sjgant80-hub.github.io/the-seed/",
-   "commit": "859205260e4a3c5e42d7a2cf3b4f0aaee8c77eea",
+   "commit": "b3de41914ee31b9c9c3cd121770ef040b9d45dc3",
    "headline": null,
    "extra": [
     {
@@ -312,7 +312,7 @@
    "verb": "It learns.",
    "line": "Trained only on its own verified work. Tested cold on problems it never saw.",
    "live": "https://sjgant80-hub.github.io/the-distillation/",
-   "commit": "c2d64f11962aa2a9b9e13843c8902419c8d285c3",
+   "commit": "a618325480a44523a5426dae69eab6fae0a2eeb1",
    "headline": {
     "was": "24.7%",
     "now": "48.9%",
@@ -333,12 +333,12 @@
      {
       "id": "H1",
       "pass": true,
-      "why": "crystal hero, 3 receipts, 23 stack rows, 20 controls on the glass, 11 expanders"
+      "why": "crystal hero, 3 receipts, 24 stack rows, 20 controls on the glass, 12 expanders"
      },
      {
       "id": "H2",
       "pass": true,
-      "why": "1155 words before any click (at most 1250); the longest paragraph is 27 words (at most 45)"
+      "why": "1248 words before any click (at most 1250); the longest paragraph is 32 words (at most 45)"
      },
      {
       "id": "H3",
@@ -353,7 +353,7 @@
      {
       "id": "H5",
       "pass": true,
-      "why": "34 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
+      "why": "48 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
      },
      {
       "id": "H6",
@@ -366,12 +366,12 @@
       "why": "the credit line is on the page; no price; no private shorthand"
      }
     ],
-    "viewWords": 1155,
-    "longest": 27
+    "viewWords": 1248,
+    "longest": 32
    },
    "gate": {
-    "killed": 277,
-    "total": 277,
+    "killed": 294,
+    "total": 294,
     "clean": true
    }
   }
