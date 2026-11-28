@@ -97,6 +97,8 @@ a.act:hover,.act.lift:hover{border-color:var(--cyan);transform:translateY(-4px);
 .tag.cy{color:var(--cyan);border:1px solid rgba(73,232,200,.32)}
 .tag.gd{color:var(--gold);border:1px solid rgba(255,207,106,.34);animation:breathe 2.4s ease-in-out infinite}
 .tag.rd{color:var(--red);border:1px solid rgba(255,107,107,.4)}
+/* in a stack row the words are soft; a verdict tag keeps its own colour there, so a failure reads red */
+.srow .nm .tag.off{color:var(--muted)}.srow .nm .tag.cy{color:var(--cyan)}.srow .nm .tag.gd{color:var(--gold)}.srow .nm .tag.rd{color:var(--red)}
 @keyframes breathe{50%{opacity:.55}}
 
 /* THE GLASS: it runs here, on the visitor's own device */

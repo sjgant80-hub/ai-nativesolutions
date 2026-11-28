@@ -66,7 +66,8 @@ export function measure(html) {
     longest: paragraphs.length ? Math.max(...paragraphs) : 0, viewWords: words(open), allWords: words(b),
     sourced: stats.filter((s) => /<a\b[^>]*\bclass="[^"]*\bsrc\b[^"]*"[^>]*\bhref="[^"]+"/i.test(s) || /sealing now/i.test(s)).length,
     unfinished: count(strip(b), /not measured yet|lorem ipsum|coming soon|\bTODO\b|\bTBD\b/gi),
-    shown: /class="[^"]*\b(tag rd|fail|bad)\b/.test(b) || /sealing now/i.test(b),
+    // red is a claim that was tested and failed; gold is a part still unfinished (in build, sealing, no record yet)
+    shown: /class="[^"]*\b(tag rd|tag gd|srow gold|fail|bad|wait)\b/.test(b) || /sealing now/i.test(b),
     tokens: TOKENS.filter((t) => page.toLowerCase().includes(t)).length, faces: FACES.filter((f) => page.includes(f)).length,
     clashes: twice(b), credit: b.includes(CREDIT), exempt: exempt(page), priced: PRICED.test(strip(b)), shorthand: SHORTHAND.test(b),
   };

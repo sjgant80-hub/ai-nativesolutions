@@ -175,6 +175,12 @@ const FL = json('vendor/house-standard/data/flagships.json'), DOCDEC = json('ven
 const flag = (repo) => { const b = (FL.builds || []).find((x) => x.repo === repo); if (!b) refuse('the flagship record has no ' + repo); return b; };
 const extra = (b, key) => { const x = b.extra.find((e) => e.key === key); if (!x) refuse(b.repo + ' states no "' + key + '" on its page'); return x; };
 const V = flag('the-verifier-set'), C = flag('the-crystal'), K = flag('the-climb'), S = flag('the-seed'), L = flag('the-distillation');
+// which round of the learning test the score is from, and whether that round's weights were kept: from the record
+const ROUND = FL.loop && Number.isInteger(FL.loop.round) && FL.loop.round > 0 ? FL.loop.round : 1;
+const KEPT = !(FL.loop && Array.isArray(FL.loop.verdict) && FL.loop.verdict.some((v) => v.pass === false));
+const TIMES = ['', 'once', 'twice'][ROUND] || ROUND + ' times';
+const testName = ROUND === 1 ? 'Its first real test.' : 'Its real test, round ' + ROUND + '.';
+const before = ROUND === 1 ? 'before it studied' : 'before this round of study';
 if (!V.headline || !C.headline || !K.headline) refuse('a sealed build states no headline result on its page');
 const face = (state, say) => ' data-face="' + state + '" data-say="' + esc(say) + '"';
 const stat = (n, lab, href, what, state, say) => '\n      <div class="stat reveal"' + face(state, say) + '><div class="n">' + n + '</div><div class="lab">' + lab + '</div><a class="src" href="' + esc(href) + '">' + esc(what) + ' ↗</a></div>';
@@ -187,7 +193,7 @@ const receipts = stat(arrow(unans.value, unans.after), '<b>Made-up answers.</b> 
 const SEALING = '<span class="tag gd">sealing now</span>';
 const dev = FL.dev && FL.dev.cold ? FL.dev.cold : null;
 const loop = (L.headline
-  ? stat(arrow(L.headline.was, L.headline.now), '<b>Its first real test.</b> On ' + L.headline.of + ' new problems, it got ' + esc(L.headline.was) + ' right before it studied, and ' + esc(L.headline.now) + ' after.', L.live, 'proof: The Distillation', 1, 'Its first real test: ' + L.headline.was + ' before it studied, ' + L.headline.now + ' after')
+  ? stat(arrow(L.headline.was, L.headline.now), '<b>' + testName + '</b> On ' + L.headline.of + ' new problems, it got ' + esc(L.headline.was) + ' right ' + before + ', and ' + esc(L.headline.now) + ' after.' + (KEPT ? '' : ' <span class="bad">It did not get better, so that round was dropped and the learning stopped.</span>'), L.live, 'proof: The Distillation', 1, testName + ' ' + L.headline.was + ' ' + before + ', ' + L.headline.now + ' after')
   : '\n      <div class="stat reveal"' + face(2, 'Its first real test is running now') + '><div class="n"><span class="wait">—</span></div><div class="lab"><b>Its first real test is running now.</b> The score goes here when it is done, pass or fail. ' + SEALING + '</div><a class="src" href="' + esc(L.live) + '">watch it: The Distillation ↗</a></div>')
   + (dev ? stat(arrow(String(dev.base.right), String(dev.distilled.right), 'wait'), '<b>The practice run</b>, on ' + dev.n + ' new problems. It helped us set up the real test. It is not a score we claim. <span class="tag gd">not a claim</span>', L.live, 'the practice run: The Distillation', 2, 'The practice run: ' + dev.base.right + ' right, then ' + dev.distilled.right + ', of ' + dev.n + '. Not a score we claim') : '')
   + stat('<span class="now">0</span>', '<b>Changes to the AI with no person saying yes.</b> A new version waits for a human.', L.live + '#loop', 'proof: the lock on new versions', 1, 'No change to the AI without a person saying yes');
@@ -198,7 +204,7 @@ const builds = card(1, K, 'It climbs.', 'It fails a hard sum. So it breaks the s
   + card(2, C, 'It grows the answer.', 'It builds the answer from pieces it has proved. A piece it cannot prove melts away. ' + score(C, 'on') + goals(C), C.claims.fail ? 3 : 1, 'The Crystal: ' + C.headline.was + ' right at first, ' + C.headline.now + ' grown piece by piece')
   + card(3, V, 'It will not lie.', 'Each answer is checked against the maths, or the page it came from. If it cannot be checked, you do not get it. ' + score(V, 'of') + goals(V), V.claims.fail ? 3 : 1, 'The Verifier Set: ' + V.headline.was + ' right alone, ' + V.headline.now + ' with the checker')
   + card(4, S, 'It plants itself.', 'A few small files that grow working software, one checked piece at a time. <b style="color:var(--ink)">' + esc(sealed.value) + ' of ' + sealed.of + '</b> pieces passed. ' + esc(dissolved.value) + ' failed and were thrown away.', 1, 'The Seed: ' + sealed.value + ' of ' + sealed.of + ' pieces passed, ' + dissolved.value + ' thrown away')
-  + card(5, L, 'It learns.', 'It studies only its own proved work. Then it takes a test it has never seen. ' + (L.headline ? score(L, 'on') + goals(L) : SEALING), L.headline ? 1 : 2, 'The Distillation: ' + (L.headline ? L.headline.was + ' before it studied, ' + L.headline.now + ' after' : 'its first real test is running now'));
+  + card(5, L, 'It learns until the gains stop.', 'It studies only its own proved work. Then it takes a test it has never seen. ' + (L.headline ? score(L, 'on') + goals(L) : SEALING), L.headline ? 1 : 2, 'The Distillation: ' + (L.headline ? L.headline.was + ' before it studied, ' + L.headline.now + ' after' : 'its first real test is running now'));
 const reuse = FL.reuse ? Math.round((100 * FL.reuse.taken) / (FL.reuse.taken + FL.reuse.worked)) : null;
 if (reuse === null) refuse('the flagship record has no reuse figure');
 const schoolRow = '<div class="srow' + (L.headline ? '' : ' gold') + '"' + face(L.headline ? 1 : 2, 'A school: it studies its own proved work' + (L.headline ? '' : '. Its first real test is running now')) + '><div class="d">05</div><div class="nm"><b>A school</b><span>It studies its own proved work to get better.</span>' + (L.headline ? '<span class="tag cy">' + esc(L.headline.was) + ' → ' + esc(L.headline.now) + '</span>' : SEALING) + '</div></div>';
@@ -219,7 +225,7 @@ const houseCss = read('vendor/house-standard/kit/house.css').trim();
 if (houseCss.includes('</style')) refuse('the house style sheet cannot be put on the page as it is');
 // the honest line about the learning test: what the record holds, and no more
 const learnLine = L.headline
-  ? 'The learning test has been run once. It got ' + esc(L.headline.was) + ' right before it studied and ' + esc(L.headline.now) + ' after, on ' + L.headline.of + ' new problems. That is one test, on one kind of problem. Its own page shows where it did not get better.'
+  ? 'The learning test has been run ' + TIMES + '. ' + (ROUND === 1 ? 'It got ' : 'In round ' + ROUND + ' it got ') + esc(L.headline.was) + ' right ' + before + ' and ' + esc(L.headline.now) + ' after, on ' + L.headline.of + ' new problems. ' + (KEPT ? '' : 'It did not get better, so that round was dropped and the learning stopped. ') + 'That is one kind of problem. Its own page shows every round, and where it did not get better.'
   : 'The learning test is still running. Its score goes on this page when it is done, pass or fail.';
 const FRONT = {
   'HOUSE-STYLE': '<style>\n' + houseCss + '\n</style>',

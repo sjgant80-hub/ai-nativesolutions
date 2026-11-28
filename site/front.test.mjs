@@ -103,7 +103,15 @@ test('every number on the page is the one its record gives', () => {
   ]) assert.ok(text.includes(said), 'the page does not say: ' + said);
   // a failed goal is on the page in red; a test still running says so and gives no score
   for (const b of FL.builds.filter((b) => b.claims.fail > 0)) assert.ok(built.includes(`<span class="bad">${b.claims.fail} of its ${b.claims.n} goals failed.`), b.name + '\'s failed goal is shown in red');
-  if (L.headline) assert.ok(text.includes(`${L.headline.was} → ${L.headline.now}`), 'the learning test\'s score is on the page');
+  if (L.headline) {
+    assert.ok(text.includes(`${L.headline.was} → ${L.headline.now}`), 'the learning test\'s score is on the page');
+    // which round the score is from, and whether it was kept, as the record has them: never "first" after the first
+    const round = FL.loop && FL.loop.round, dropped = Boolean(FL.loop) && FL.loop.verdict.some((v) => v.pass === false);
+    assert.equal(text.includes('Its first real test.'), round === 1, 'the page calls the test the first only when it is round 1');
+    if (round > 1) assert.ok(text.includes(`Its real test, round ${round}.`) && text.includes('before this round of study'));
+    assert.equal(text.includes('It did not get better, so that round was dropped and the learning stopped.'), dropped, 'a dropped round is said to be dropped, and only then');
+    assert.ok(!text.includes('has been run once') || round === 1, 'run once, only after one round');
+  }
   else { assert.ok(text.includes('Its first real test is running now.') && text.includes('sealing now'), 'the learning test says it is still running'); assert.ok(!/Its first real test\. On \d+ new problems/.test(text), 'no score is given before it lands'); }
   // every result card names where its proof is, and the proof is one of the estate's own public pages
   const stats = [...shown(built).matchAll(/<div class="stat reveal"[^>]*>[\s\S]*?<\/a><\/div>/g)].map((m) => m[0]);

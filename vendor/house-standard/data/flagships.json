@@ -1,6 +1,6 @@
 {
  "v": "house-standard-flagships/1",
- "read": "2026-11-27",
+ "read": "2026-11-28",
  "builds": [
   {
    "repo": "the-climb",
@@ -8,7 +8,7 @@
    "verb": "It climbs.",
    "line": "A problem it fails cold, broken into steps it can do. Each step checked.",
    "live": "https://sjgant80-hub.github.io/the-climb/",
-   "commit": "62edfc6f7d853ed8b527cd7131c067caa0e2136c",
+   "commit": "74dece20d26f1b0c7982e99ae0c527fe46a4a12c",
    "headline": {
     "was": "36.5%",
     "now": "70.8%",
@@ -82,7 +82,7 @@
    "verb": "It crystallises.",
    "line": "The answer grown from proven pieces. What cannot be proven dissolves.",
    "live": "https://sjgant80-hub.github.io/the-crystal/",
-   "commit": "aee09b41dad10265f77efe5c18388e643cec807d",
+   "commit": "e7ae0717702c5b15f3337795be37def9917081fc",
    "headline": {
     "was": "31.0%",
     "now": "85.7%",
@@ -158,7 +158,7 @@
    "verb": "It refuses to lie.",
    "line": "Checked against the arithmetic or the cited source, or not released.",
    "live": "https://sjgant80-hub.github.io/the-verifier-set/",
-   "commit": "e2cfe5fdfb9ba73cbb38da1e25fa4ccce4cb8413",
+   "commit": "2f5493f19b8583b79b703ba894f36c09fa9d0b73",
    "headline": {
     "was": "34",
     "now": "139",
@@ -235,7 +235,7 @@
    "verb": "It grows itself.",
    "line": "A handful of files that grows verified software, one cell at a time.",
    "live": "https://sjgant80-hub.github.io/the-seed/",
-   "commit": "b3de41914ee31b9c9c3cd121770ef040b9d45dc3",
+   "commit": "95eb9c528d90ee3e975d0af032ce2ccac9769ca8",
    "headline": null,
    "extra": [
     {
@@ -252,8 +252,8 @@
     }
    ],
    "claims": {
-    "n": 0,
-    "pass": 0,
+    "n": 6,
+    "pass": 6,
     "fail": 0,
     "sealing": 0,
     "failed": []
@@ -264,12 +264,12 @@
      {
       "id": "H1",
       "pass": true,
-      "why": "crystal hero, 5 receipts, 10 stack rows, 4 controls on the glass, 9 expanders"
+      "why": "crystal hero, 5 receipts, 16 stack rows, 4 controls on the glass, 9 expanders"
      },
      {
       "id": "H2",
       "pass": true,
-      "why": "574 words before any click (at most 1250); the longest paragraph is 28 words (at most 45)"
+      "why": "771 words before any click (at most 1250); the longest paragraph is 34 words (at most 45)"
      },
      {
       "id": "H3",
@@ -297,8 +297,8 @@
       "why": "the credit line is on the page; no price; no private shorthand"
      }
     ],
-    "viewWords": 574,
-    "longest": 28
+    "viewWords": 771,
+    "longest": 34
    },
    "gate": {
     "killed": 142,
@@ -309,23 +309,32 @@
   {
    "repo": "the-distillation",
    "name": "The Distillation",
-   "verb": "It learns.",
+   "verb": "It learns until the gains stop.",
    "line": "Trained only on its own verified work. Tested cold on problems it never saw.",
    "live": "https://sjgant80-hub.github.io/the-distillation/",
-   "commit": "a618325480a44523a5426dae69eab6fae0a2eeb1",
+   "commit": "ff234a6220645f0d6f60ca66596c8155b25e48d1",
    "headline": {
-    "was": "24.7%",
-    "now": "48.9%",
-    "of": 231,
+    "was": "50.7%",
+    "now": "50.7%",
+    "of": 229,
     "label": "held-out problems right, cold: before, then after training on its own verified work"
    },
    "extra": [],
    "claims": {
     "n": 6,
-    "pass": 6,
-    "fail": 0,
+    "pass": 4,
+    "fail": 2,
     "sealing": 0,
-    "failed": []
+    "failed": [
+     {
+      "id": "K1",
+      "name": "It got better"
+     },
+     {
+      "id": "K3",
+      "name": "More gained than lost"
+     }
+    ]
    },
    "standard": {
     "pass": true,
@@ -338,7 +347,7 @@
      {
       "id": "H2",
       "pass": true,
-      "why": "1248 words before any click (at most 1250); the longest paragraph is 32 words (at most 45)"
+      "why": "1212 words before any click (at most 1250); the longest paragraph is 32 words (at most 45)"
      },
      {
       "id": "H3",
@@ -353,7 +362,7 @@
      {
       "id": "H5",
       "pass": true,
-      "why": "48 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
+      "why": "47 limits behind a click (at least 3); a failure or an unfinished part is shown as one"
      },
      {
       "id": "H6",
@@ -366,7 +375,7 @@
       "why": "the credit line is on the page; no price; no private shorthand"
      }
     ],
-    "viewWords": 1248,
+    "viewWords": 1212,
     "longest": 32
    },
    "gate": {
@@ -393,82 +402,82 @@
  },
  "loop": {
   "v": "the-distillation-live/1",
-  "round": 1,
+  "round": 2,
   "stage": "judged",
   "harvest": {
-   "done": 573,
-   "total": 573,
-   "complete": 555,
-   "calls": 4831
+   "done": 566,
+   "total": 566,
+   "complete": 554,
+   "calls": 4835
   },
   "train": {
-   "step": 201,
-   "steps": 201,
+   "step": 204,
+   "steps": 204,
    "loss": [
-    0.4193,
-    0.2276,
-    0.4877,
-    0.1953,
-    0.1747,
-    0.1848,
-    0.0589,
-    0.1102,
-    0.0856,
-    0.1583,
-    0.1111,
-    0.1045,
-    0.1592,
-    0.1891,
-    0.1444,
-    0.1077,
-    0.045,
-    0.0312,
-    0.1817,
-    0.0134,
-    0.0641,
-    0.0554,
-    0.1245,
-    0.0237,
-    0.229,
-    0.0781,
-    0.0954,
-    0.085,
-    0.1366,
-    0.056,
-    0.0943,
-    0.0739,
-    0.0101,
-    0.0348,
-    0.1171,
-    0.0939,
-    0.0096,
-    0.1446,
-    0.1256,
-    0.0124,
-    0.0843,
-    0.0558,
-    0.0627,
-    0.0172,
-    0.0766,
-    0.007,
-    0.0472,
+    0.1912,
+    0.0157,
+    0.0259,
+    0.0551,
+    0.1026,
+    0.0709,
+    0.0484,
+    0.1484,
+    0.0778,
+    0.1842,
+    0.032,
+    0.1737,
+    0.116,
+    0.069,
+    0.0585,
+    0.0764,
+    0.1024,
+    0.1125,
+    0.0118,
+    0.0179,
+    0.022,
+    0.0159,
+    0.1386,
+    0.0607,
+    0.0058,
+    0.084,
+    0.0682,
+    0.1098,
+    0.0322,
+    0.04,
+    0.1294,
+    0.0129,
+    0.0686,
+    0.0017,
+    0.0588,
+    0.078,
+    0.0129,
+    0.0125,
+    0.1343,
+    0.0477,
+    0.0262,
+    0.0185,
+    0.009,
+    0.0132,
+    0.0801,
+    0.0805,
+    0.0327,
     0.0104
    ]
   },
   "cold": {
    "base": {
-    "done": 231,
-    "total": 231
+    "done": 229,
+    "total": 229
    },
    "distilled": {
-    "done": 231,
-    "total": 231
+    "done": 229,
+    "total": 229
    }
   },
   "verdict": [
    {
     "id": "K1",
-    "pass": true
+    "pass": false
    },
    {
     "id": "K2",
@@ -476,7 +485,7 @@
    },
    {
     "id": "K3",
-    "pass": true
+    "pass": false
    },
    {
     "id": "K4",
@@ -493,8 +502,8 @@
   ],
   "done": true,
   "failed": false,
-  "examples": 536,
-  "at": "2026-11-26T07:49:30.070Z"
+  "examples": 539,
+  "at": "2026-11-28T14:30:05.851Z"
  },
  "gate": {
   "killed": 113,

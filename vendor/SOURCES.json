@@ -65,16 +65,16 @@
     {
       "id": "house-standard",
       "repo": "sjgant80-hub/house-standard",
-      "commit": "022ba331e39037df743c563d8ba5f864a55ec492",
+      "commit": "2c7f3d7c138b4c4ed662d5137119a2e1580eb573",
       "licence": "MIT",
       "what": "the house kit (the crystal, the token sheet, the motion), the ship gate, the reading-age check, and the results of the newest builds as read from their own pages",
       "files": {
-        "kit/house.css": "fa23959670f67f746ae772f763dfd477e556c67fb18c70804378aed1786669e1",
+        "kit/house.css": "96532de9a84b7b9c2ca27af0a82f9633dfce6da13683c1b644c4de972a82bda6",
         "kit/crystal.js": "c165c90a3b964c7025f8ac40bf928dac06e3b3932ed4f39fcbbbbbd0c2eb6d90",
         "kit/house.js": "8afae023907be78426828a08a802e94d06eb3c3c0840d2f92cefc463f9a5e4d1",
-        "src/standard.mjs": "5452b429ff224d76ef7be9b0e82b04094f62b6aa32a390a94b8aee64631b5335",
+        "src/standard.mjs": "33a7485f58feefb26d8ff0c00313f924d5d8a3b79e769fc9500b769fc4395848",
         "src/plain.mjs": "b770c689e5f3031737f51ef481793b178542bd73f40e5ada9a2d4de153d3d02e",
-        "data/flagships.json": "12384004c8e964737792043963feeccd13f42d6748c8800f48042211f0ae0ad0"
+        "data/flagships.json": "b9102a3ed4c9b6668c4717e1139e1e245666d02222f4442b0e8fdc2cb7948905"
       }
     },
     {
